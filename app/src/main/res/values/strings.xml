@@ -2,6 +2,7 @@
     <string name="app_name">Hide My Applist</string>
     <string-array name="packages">
         <item>com.topjohnwu.magisk</item>
+        <item>de.robv.android.xposed.installer</item>
         <item>org.meowcat.edxposed.manager</item>
         <item>io.github.lsposed.manager</item>
         <item>me.weishu.exp</item>
