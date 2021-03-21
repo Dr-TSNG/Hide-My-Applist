@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_MainLayout"
+    android:id="@+id/detection_ll_MainLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <EditText
-        android:id="@+id/et_DetectionTarget"
+        android:id="@+id/detection_et_DetectionTarget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="1"
-        android:hint="Input package names you want to detect"/>
+        android:hint="@string/detection_hint_input_name"/>
     <Button
-        android:id="@+id/btn_AddPackage"
+        android:id="@+id/detection_btn_AddPackage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="add a new target package"/>
+        android:text="@string/detection_add_new_package"/>
     <TextView
-        android:id="@+id/tv_CurrentPackages"
+        android:id="@+id/detection_tv_CurrentPackages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -25,13 +25,13 @@
         android:fadeScrollbars="false"
         android:lines="5"/>
     <Button
-        android:id="@+id/btn_StartDetect"
+        android:id="@+id/detection_btn_StartDetect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="start detection"/>
+        android:text="@string/detection_start"/>
     <LinearLayout
-        android:id="@+id/ResultLayout"
+        android:id="@+id/detection_ResultLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

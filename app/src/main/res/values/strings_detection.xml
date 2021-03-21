@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detection_hint_input_name">Input package names you want to detect</string>
+    <string name="detection_add_new_package">add a new target package</string>
+    <string name="detection_start">start detection</string>
+    <string name="detection_method">Detection method</string>
+    <string name="detection_target_found">Target found</string>
+    <string name="detection_target_not_found">Target not found.</string>
+    <string name="detection_permission_denied">Permission denied.</string>
+    <string name="detection_executing_detections">Executing detections</string>
+    <string name="detection_using_method">Using method</string>
+    <string-array name="packages">
+        <item>com.topjohnwu.magisk</item>
+        <item>de.robv.android.xposed.installer</item>
+        <item>org.meowcat.edxposed.manager</item>
+        <item>io.github.lsposed.manager</item>
+        <item>me.weishu.exp</item>
+    </string-array>
+</resources>

@@ -30,7 +30,7 @@ import java.util.TreeSet;
 import java.util.List;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class DetectionActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Set<String> targets;
     LinearLayout ResultLayout;
@@ -40,21 +40,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ReadTargets();
-        TextView tv_CurrentPackages = findViewById(R.id.tv_CurrentPackages);
+        TextView tv_CurrentPackages = findViewById(R.id.detection_tv_CurrentPackages);
         tv_CurrentPackages.setMovementMethod(new ScrollingMovementMethod());
         UpdateTargetPackageView();
-        ResultLayout = findViewById(R.id.ResultLayout);
-        Button btn_AddPackage = findViewById(R.id.btn_AddPackage);
+        ResultLayout = findViewById(R.id.detection_ResultLayout);
+        Button btn_AddPackage = findViewById(R.id.detection_btn_AddPackage);
         btn_AddPackage.setOnClickListener(this);
-        Button btn_StartDetect = findViewById(R.id.btn_StartDetect);
+        Button btn_StartDetect = findViewById(R.id.detection_btn_StartDetect);
         btn_StartDetect.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_AddPackage:
-                EditText et = findViewById(R.id.et_DetectionTarget);
+            case R.id.detection_btn_AddPackage:
+                EditText et = findViewById(R.id.detection_et_DetectionTarget);
                 String text = et.getText().toString();
                 if (!text.isEmpty())
                     targets.add(text);
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 UpdateTargetPackageView();
                 et.setText(null);
                 break;
-            case R.id.btn_StartDetect:
+            case R.id.detection_btn_StartDetect:
                 DetectionTask task = new DetectionTask();
                 task.execute();
                 break;
@@ -78,17 +78,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         protected void onPreExecute() {
             ResultLayout.removeAllViews();
             progress = 1;
-            dialog = new ProgressDialog(MainActivity.this);
+            dialog = new ProgressDialog(DetectionActivity.this);
             dialog.setCancelable(false);
-            dialog.setTitle("Executing detections");
-            dialog.setMessage("Using method 1/5");
+            dialog.setTitle(getResources().getString(R.string.detection_executing_detections));
+            dialog.setMessage(getResources().getString(R.string.detection_using_method) + " 1/5");
             dialog.show();
         }
 
         @Override
         protected void onProgressUpdate(TextView... tv) {
             ResultLayout.addView(tv[0]);
-            dialog.setMessage("Using method " + (++progress) + "/5");
+            dialog.setMessage(getResources().getString(R.string.detection_using_method) + " " + (++progress) + "/5");
         }
 
         @Override
@@ -107,14 +107,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         private void Debug(Set<String> L, String method) {
-            String outputText = "Detection method: " + method + "\n";
+            String outputText = getResources().getString(R.string.detection_method) + ": " + method + "\n";
             if (L == null)
-                outputText += "Permission denied.\n";
+                outputText += getResources().getString(R.string.detection_permission_denied) + "\n";
             else if (L.isEmpty())
-                outputText += "Target not found.\n";
+                outputText += getResources().getString(R.string.detection_target_not_found) + "\n";
             else for (String s : L)
-                    outputText += "Target found: " + s + "\n";
-            TextView tv = new TextView(MainActivity.this);
+                    outputText += getResources().getString(R.string.detection_target_found) + " " + s + "\n";
+            TextView tv = new TextView(DetectionActivity.this);
             tv.setText(outputText);
             publishProgress(tv);
         }
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void UpdateTargetPackageView() {
-        TextView tv = findViewById(R.id.tv_CurrentPackages);
+        TextView tv = findViewById(R.id.detection_tv_CurrentPackages);
         String str = "";
         for (String name : targets)
             str += name + "\n";
