@@ -1,6 +1,4 @@
-package com.tsng.hidemyapplist;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.tsng.hidemyapplist.ui.detection;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,11 +12,18 @@ import android.os.Process;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import com.tsng.hidemyapplist.R;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,35 +31,36 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.TreeSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
-public class DetectionActivity extends AppCompatActivity implements View.OnClickListener {
+public class DetectionFragment extends Fragment implements View.OnClickListener {
 
-    private Set<String> targets;
+    View root;
     LinearLayout ResultLayout;
+    private Set<String> targets;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.fragment_detection, container, false);
         ReadTargets();
-        TextView tv_CurrentPackages = findViewById(R.id.detection_tv_CurrentPackages);
+        TextView tv_CurrentPackages = root.findViewById(R.id.detection_tv_CurrentPackages);
         tv_CurrentPackages.setMovementMethod(new ScrollingMovementMethod());
         UpdateTargetPackageView();
-        ResultLayout = findViewById(R.id.detection_ResultLayout);
-        Button btn_AddPackage = findViewById(R.id.detection_btn_AddPackage);
+        ResultLayout = root.findViewById(R.id.detection_ResultLayout);
+        Button btn_AddPackage = root.findViewById(R.id.detection_btn_AddPackage);
         btn_AddPackage.setOnClickListener(this);
-        Button btn_StartDetect = findViewById(R.id.detection_btn_StartDetect);
+        Button btn_StartDetect = root.findViewById(R.id.detection_btn_StartDetect);
         btn_StartDetect.setOnClickListener(this);
+        return root;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.detection_btn_AddPackage:
-                EditText et = findViewById(R.id.detection_et_DetectionTarget);
+                EditText et = root.findViewById(R.id.detection_et_DetectionTarget);
                 String text = et.getText().toString();
                 if (!text.isEmpty())
                     targets.add(text);
@@ -63,12 +69,11 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
                 et.setText(null);
                 break;
             case R.id.detection_btn_StartDetect:
-                DetectionTask task = new DetectionTask();
+                DetectionFragment.DetectionTask task = new DetectionFragment.DetectionTask();
                 task.execute();
                 break;
         }
     }
-
     private class DetectionTask extends AsyncTask<Void, TextView, Void> {
         int progress;
         List<String> Results;
@@ -78,7 +83,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
         protected void onPreExecute() {
             ResultLayout.removeAllViews();
             progress = 1;
-            dialog = new ProgressDialog(DetectionActivity.this);
+            dialog = new ProgressDialog(getActivity());
             dialog.setCancelable(false);
             dialog.setTitle(getResources().getString(R.string.detection_executing_detections));
             dialog.setMessage(getResources().getString(R.string.detection_using_method) + " 1/5");
@@ -114,7 +119,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
                 outputText += getResources().getString(R.string.detection_target_not_found) + "\n";
             else for (String s : L)
                     outputText += getResources().getString(R.string.detection_target_found) + " " + s + "\n";
-            TextView tv = new TextView(DetectionActivity.this);
+            TextView tv = new TextView(getActivity());
             tv.setText(outputText);
             publishProgress(tv);
         }
@@ -147,7 +152,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
         private Set<String> method_api() {
             Set<String> packages = new TreeSet<>();
             try {
-                List<PackageInfo> packageInfos = getPackageManager().getInstalledPackages(0);
+                List<PackageInfo> packageInfos = getActivity().getPackageManager().getInstalledPackages(0);
                 for (PackageInfo info : packageInfos)
                     packages.add(info.packageName);
             } catch (Throwable t) {
@@ -160,7 +165,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             Set<String> packages = new TreeSet<>();
             try {
                 Intent intent = new Intent(Intent.ACTION_MAIN);
-                List<ResolveInfo> infos = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_ALL);
+                List<ResolveInfo> infos = getActivity().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_ALL);
                 for (ResolveInfo i : infos)
                     packages.add(i.activityInfo.packageName);
             } catch (Throwable t) {
@@ -173,7 +178,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             Set<String> packages = new TreeSet<>();
             try {
                 for (int i = Process.SYSTEM_UID; i <= Process.LAST_APPLICATION_UID; i++) {
-                    String[] uid = getPackageManager().getPackagesForUid(i);
+                    String[] uid = getActivity().getPackageManager().getPackagesForUid(i);
                     if (uid != null)
                         Collections.addAll(packages, uid);
                 }
@@ -208,7 +213,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void UpdateTargetPackageView() {
-        TextView tv = findViewById(R.id.detection_tv_CurrentPackages);
+        TextView tv = root.findViewById(R.id.detection_tv_CurrentPackages);
         String str = "";
         for (String name : targets)
             str += name + "\n";
@@ -216,18 +221,18 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void SaveTarget() {
-        SharedPreferences.Editor editor = getSharedPreferences("DetectionTarget", MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences("DetectionTarget", getActivity().MODE_PRIVATE).edit();
         editor.putStringSet("targetSet", targets);
         editor.apply();
     }
 
     private void ReadTargets() {
-        targets = getSharedPreferences("target", MODE_PRIVATE).getStringSet("DetectionTarget", null);
+        targets = getActivity().getSharedPreferences("target", getActivity().MODE_PRIVATE).getStringSet("DetectionTarget", null);
         if(targets == null)
             targets = new TreeSet<>(Arrays.asList(getResources().getStringArray(R.array.packages)));
         else
             targets = new TreeSet<>(targets);
-        SharedPreferences self = getSharedPreferences("com.tsng.hidemyapplist", MODE_PRIVATE);
+        SharedPreferences self = getActivity().getSharedPreferences("com.tsng.hidemyapplist", getActivity().MODE_PRIVATE);
         if(self.getStringSet("hideSet", new HashSet<>()).isEmpty())
             self.edit().putStringSet("hideSet", targets).apply();
     }

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="xposed_activated">Xposed状态: 已激活</string>
+    <string name="xposed_not_activated">Xposed状态: 未激活</string>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_detection">
+
+    <fragment
+        android:id="@+id/navigation_detection"
+        android:name="com.tsng.hidemyapplist.ui.detection.DetectionFragment"
+        android:label="@string/title_detection"
+        tools:layout="@layout/fragment_detection" />
+
+    <fragment
+        android:id="@+id/navigation_xposed"
+        android:name="com.tsng.hidemyapplist.ui.xposed.XposedFragment"
+        android:label="@string/title_xposed"
+        tools:layout="@layout/fragment_xposed" />
+
+    <fragment
+        android:id="@+id/navigation_about"
+        android:name="com.tsng.hidemyapplist.ui.about.AboutFragment"
+        android:label="@string/title_about"
+        tools:layout="@layout/fragment_about" />
+</navigation>

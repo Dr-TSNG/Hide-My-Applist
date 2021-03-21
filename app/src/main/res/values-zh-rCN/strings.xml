@@ -1,3 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">隐藏应用列表</string>
+    <string name="title_activity_main">隐藏应用列表</string>
+    <string name="title_detection">检测</string>
+    <string name="title_about">关于</string>
 </resources>
