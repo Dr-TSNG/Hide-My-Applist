@@ -4,4 +4,6 @@
     <string name="title_activity_main">隐藏应用列表</string>
     <string name="title_detection">检测</string>
     <string name="title_about">关于</string>
+    <string name="accept">确认</string>
+    <string name="cancel">取消</string>
 </resources>

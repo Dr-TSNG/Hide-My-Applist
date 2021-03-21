@@ -1,38 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/detection_ll_MainLayout"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <EditText style="@style/Default"
-        android:id="@+id/detection_et_DetectionTarget"
-        android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="22sp"
-        android:maxLines="1"
-        android:hint="@string/detection_hint_input_name"/>
-    <Button
-        android:id="@+id/detection_btn_AddPackage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/detection_add_new_package"/>
-    <LinearLayout style="@style/HorizontalDivisionLine" />
-    <TextView style="@style/Default"
-        android:id="@+id/detection_tv_CurrentPackages"
-        android:gravity="center"
-        android:scrollbars="vertical"
-        android:fadeScrollbars="false"
-        android:lines="5"/>
-    <LinearLayout style="@style/HorizontalDivisionLine" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/Default"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/detection_et_DetectionTarget"
+            style="@style/Default"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="@string/detection_hint_input_name"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/detection_btn_AddPackage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/detection_add_new_package" />
+    </LinearLayout>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/detection_tv_CurrentPackagesCard"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginVertical="10dp"
+        app:cardCornerRadius="10dp">
+
+        <ListView
+            android:id="@+id/detection_lv_CurrentPackages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.card.MaterialCardView>
+
     <Button
         android:id="@+id/detection_btn_StartDetect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/detection_start"/>
-    <LinearLayout style="@style/Default"
-        android:id="@+id/detection_ResultLayout"
-        android:orientation="vertical"/>
+        android:text="@string/detection_start" />
 
 </LinearLayout>

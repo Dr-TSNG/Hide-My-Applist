@@ -5,4 +5,6 @@
     <string name="title_detection">Detection</string>
     <string name="title_xposed" translatable="false">Xposed</string>
     <string name="title_about">About</string>
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
 </resources>

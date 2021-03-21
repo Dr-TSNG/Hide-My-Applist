@@ -10,24 +10,28 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Process;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.tsng.hidemyapplist.R;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -35,24 +39,38 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.xml.transform.Result;
+
 public class DetectionFragment extends Fragment implements View.OnClickListener {
 
     View root;
-    LinearLayout ResultLayout;
     private Set<String> targets;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_detection, container, false);
         ReadTargets();
-        TextView tv_CurrentPackages = root.findViewById(R.id.detection_tv_CurrentPackages);
-        tv_CurrentPackages.setMovementMethod(new ScrollingMovementMethod());
         UpdateTargetPackageView();
-        ResultLayout = root.findViewById(R.id.detection_ResultLayout);
-        Button btn_AddPackage = root.findViewById(R.id.detection_btn_AddPackage);
-        btn_AddPackage.setOnClickListener(this);
-        Button btn_StartDetect = root.findViewById(R.id.detection_btn_StartDetect);
-        btn_StartDetect.setOnClickListener(this);
+        root.findViewById(R.id.detection_btn_AddPackage).setOnClickListener(this);
+        root.findViewById(R.id.detection_btn_StartDetect).setOnClickListener(this);
+        ((ListView) root.findViewById(R.id.detection_lv_CurrentPackages)).setOnItemLongClickListener((parent, view, position, id) -> {
+            String s = ((TextView) view).getText().toString();
+            new MaterialAlertDialogBuilder(getActivity())
+                    .setTitle(getString(R.string.detection_delete_confirm))
+                    .setMessage(s)
+                    .setNegativeButton(getString(R.string.cancel), null)
+                    .setPositiveButton(getString(R.string.accept), ((dialog, which) -> {
+                        targets.remove(s);
+                        SaveTargets();
+                        UpdateTargetPackageView();
+                    })).show();
+            return true;
+        });
+
+        //debug
+        getActivity().getSharedPreferences("com.tsng.hidemyapplist", getActivity().MODE_PRIVATE)
+                .edit().putStringSet("hideSet", targets).apply();
+
         return root;
     }
 
@@ -64,7 +82,7 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
                 String text = et.getText().toString();
                 if (!text.isEmpty())
                     targets.add(text);
-                SaveTarget();
+                SaveTargets();
                 UpdateTargetPackageView();
                 et.setText(null);
                 break;
@@ -74,14 +92,14 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
                 break;
         }
     }
-    private class DetectionTask extends AsyncTask<Void, TextView, Void> {
+
+    private class DetectionTask extends AsyncTask<Void, String, Void> {
         int progress;
-        List<String> Results;
+        String Results = "";
         ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
-            ResultLayout.removeAllViews();
             progress = 1;
             dialog = new ProgressDialog(getActivity());
             dialog.setCancelable(false);
@@ -91,8 +109,8 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
         }
 
         @Override
-        protected void onProgressUpdate(TextView... tv) {
-            ResultLayout.addView(tv[0]);
+        protected void onProgressUpdate(String... str) {
+            Results += str[0] + "\n";
             dialog.setMessage(getResources().getString(R.string.detection_using_method) + " " + (++progress) + "/5");
         }
 
@@ -109,6 +127,10 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
         @Override
         protected void onPostExecute(Void aVoid) {
             dialog.dismiss();
+            new MaterialAlertDialogBuilder(getActivity())
+                    .setTitle(getString(R.string.detection_finished))
+                    .setMessage(Results)
+                    .setPositiveButton(getString(R.string.accept), null).show();
         }
 
         private void Debug(Set<String> L, String method) {
@@ -119,9 +141,7 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
                 outputText += getResources().getString(R.string.detection_target_not_found) + "\n";
             else for (String s : L)
                     outputText += getResources().getString(R.string.detection_target_found) + " " + s + "\n";
-            TextView tv = new TextView(getActivity());
-            tv.setText(outputText);
-            publishProgress(tv);
+            publishProgress(outputText);
         }
 
         private Set<String> method_pm() {
@@ -213,27 +233,24 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
     }
 
     private void UpdateTargetPackageView() {
-        TextView tv = root.findViewById(R.id.detection_tv_CurrentPackages);
-        String str = "";
-        for (String name : targets)
-            str += name + "\n";
-        tv.setText(str);
+        ListView lv = root.findViewById(R.id.detection_lv_CurrentPackages);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, targets.toArray(new String[0]));
+        lv.setAdapter(adapter);
     }
 
-    private void SaveTarget() {
+    private void SaveTargets() {
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("DetectionTarget", getActivity().MODE_PRIVATE).edit();
-        editor.putStringSet("targetSet", targets);
-        editor.apply();
+        editor.putStringSet("TargetSet", targets).apply();
     }
 
     private void ReadTargets() {
-        targets = getActivity().getSharedPreferences("target", getActivity().MODE_PRIVATE).getStringSet("DetectionTarget", null);
-        if(targets == null)
+        targets = getActivity().getSharedPreferences("DetectionTarget", getActivity().MODE_PRIVATE).getStringSet("targetSet", null);
+        if (targets == null)
             targets = new TreeSet<>(Arrays.asList(getResources().getStringArray(R.array.packages)));
         else
             targets = new TreeSet<>(targets);
-        SharedPreferences self = getActivity().getSharedPreferences("com.tsng.hidemyapplist", getActivity().MODE_PRIVATE);
-        if(self.getStringSet("hideSet", new HashSet<>()).isEmpty())
-            self.edit().putStringSet("hideSet", targets).apply();
+        SharedPreferences self = getActivity().getSharedPreferences("DetectionTarget", getActivity().MODE_PRIVATE);
+        if (self.getStringSet("targetSet", new HashSet<>()).isEmpty())
+            self.edit().putStringSet("targetSet", targets).apply();
     }
 }
