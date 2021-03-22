@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,20 +25,15 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.tsng.hidemyapplist.R;
 
-import org.w3c.dom.Text;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
-import javax.xml.transform.Result;
 
 public class DetectionFragment extends Fragment implements View.OnClickListener {
 
@@ -240,7 +234,7 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
 
     private void SaveTargets() {
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("DetectionTarget", getActivity().MODE_PRIVATE).edit();
-        editor.putStringSet("TargetSet", targets).apply();
+        editor.putStringSet("targetSet", targets).apply();
     }
 
     private void ReadTargets() {

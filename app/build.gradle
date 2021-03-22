@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.tsng.hidemyapplist"
-        minSdkVersion 25
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 3
         versionName "0.3"

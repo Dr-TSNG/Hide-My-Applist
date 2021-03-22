@@ -1,46 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/xposed_ll_MainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.google.android.material.card.MaterialCardView
+    <com.google.android.material.card.MaterialCardView style="@style/DefaultCard"
         android:id="@+id/xposed_activated"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
         app:cardBackgroundColor="@color/teal"
-        android:layout_marginVertical="12dp"
-        android:layout_marginHorizontal="18dp"
-        android:clickable="true"
         android:visibility="gone">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="16dp"
-            android:layout_marginStart="22dp"
-            android:textSize="20sp"
+        <TextView style="@style/DefaultCardText"
             android:textColor="@color/white"
             android:text="@string/xposed_activated"/>
     </com.google.android.material.card.MaterialCardView>
-    <com.google.android.material.card.MaterialCardView
+    <com.google.android.material.card.MaterialCardView style="@style/DefaultCard"
         android:id="@+id/xposed_not_activated"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
         app:cardBackgroundColor="@color/gray"
-        android:layout_marginVertical="12dp"
-        android:layout_marginHorizontal="18dp"
-        android:clickable="true"
         android:visibility="gone">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="16dp"
-            android:layout_marginStart="22dp"
-            android:textSize="20sp"
+        <TextView style="@style/DefaultCardText"
             android:textColor="@color/white"
             android:text="@string/xposed_not_activated"/>
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView style="@style/DefaultCard"
+        android:id="@+id/xposed_tv_template_manage">
+        <TextView style="@style/DefaultCardText"
+            android:text="@string/xposed_template_manage"/>
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView style="@style/DefaultCard"
+        android:id="@+id/xposed_tv_scope_manage">
+        <TextView style="@style/DefaultCardText"
+            android:text="@string/xposed_scope_manage"/>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

@@ -13,14 +13,30 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
-    <style name="HorizontalDivisionLine">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0.5dp</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:background">#dddddd</item>
-    </style>
     <style name="Default">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="DefaultCard" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">70dp</item>
+        <item name="cardCornerRadius">10dp</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginHorizontal">18dp</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <style name="DefaultCardText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginVertical">16dp</item>
+        <item name="android:textSize">21sp</item>
+    </style>
+    <style name="ListCard" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">400dp</item>
+        <item name="android:layout_marginHorizontal">60dp</item>
+        <item name="android:layout_marginVertical">10dp</item>
+        <item name="cardCornerRadius">10dp</item>
     </style>
 </resources>

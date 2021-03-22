@@ -1,5 +1,6 @@
 package com.tsng.hidemyapplist.ui.xposed;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,21 +10,35 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.tsng.hidemyapplist.R;
+import com.tsng.hidemyapplist.TemplateManageActivity;
 
-public class XposedFragment extends Fragment {
+public class XposedFragment extends Fragment implements View.OnClickListener {
+
+    View root;
+    private boolean getXposedStatus() { return false; }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_xposed, container, false);
+        root = inflater.inflate(R.layout.fragment_xposed, container, false);
         boolean isXposedActivated = getXposedStatus();
         if(isXposedActivated)
             root.findViewById(R.id.xposed_activated).setVisibility(View.VISIBLE);
         else
             root.findViewById(R.id.xposed_not_activated).setVisibility(View.VISIBLE);
+        root.findViewById(R.id.xposed_tv_template_manage).setOnClickListener(this);
+        root.findViewById(R.id.xposed_tv_scope_manage).setOnClickListener(this);
         return root;
     }
 
-    private boolean getXposedStatus() {
-        return false;
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.xposed_tv_template_manage:
+                startActivity(new Intent(getActivity(), TemplateManageActivity.class));
+                break;
+            case R.id.xposed_tv_scope_manage:
+
+                break;
+        }
     }
 }

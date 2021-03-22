@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/detection_ll_MainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -29,14 +27,7 @@
     </LinearLayout>
 
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/detection_tv_CurrentPackagesCard"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginHorizontal="60dp"
-        android:layout_marginVertical="10dp"
-        app:cardCornerRadius="10dp">
-
+    <com.google.android.material.card.MaterialCardView style="@style/ListCard">
         <ListView
             android:id="@+id/detection_lv_CurrentPackages"
             android:layout_width="match_parent"

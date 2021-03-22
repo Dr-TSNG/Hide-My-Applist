@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="xposed_activated">Xposed状态: 已激活</string>
-    <string name="xposed_not_activated">Xposed状态: 未激活</string>
+    <string name="xposed_activated">Xposed状态: 已激活 🛡️</string>
+    <string name="xposed_not_activated">Xposed状态: 未激活 🔓</string>
+    <string name="xposed_template_manage">模板管理</string>
+    <string name="xposed_scope_manage">选择生效应用</string>
+    <string name="xposed_template_list">模板列表</string>
+    <string name="xposed_new_template">新建模板</string>
 </resources>
