@@ -1,0 +1,30 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Hook">
+        <SwitchPreferenceCompat
+            app:disableDependentsState="true"
+            app:key="EnableAllHooks"
+            app:title="@string/xposed_template_enable_all_hooks" />
+        <MultiSelectListPreference
+            app:dependency="EnableAllHooks"
+            app:entries="@array/detect_methods_entries"
+            app:entryValues="@array/detect_methods_values"
+            app:key="ApplyHooks"
+            app:title="@string/xposed_template_apply_hooks">
+
+        </MultiSelectListPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/xposed_template_hide_apps">
+        <SwitchPreferenceCompat
+            app:disableDependentsState="true"
+            app:key="HideAllApps"
+            app:summary="@string/xposed_template_hide_all_apps_summary"
+            app:title="@string/xposed_template_hide_all_apps" />
+    </PreferenceCategory>
+    <MultiSelectListPreference
+        app:dependency="HideAllApps"
+        app:key="HideApps"
+        app:title="@string/xposed_template_choose_apps_to_hide" />
+
+</PreferenceScreen>

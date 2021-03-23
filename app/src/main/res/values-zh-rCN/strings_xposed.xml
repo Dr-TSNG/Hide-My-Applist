@@ -2,10 +2,18 @@
 <resources>
     <string name="xposed_activated">Xposed状态: 已激活 🛡️</string>
     <string name="xposed_not_activated">Xposed状态: 未激活 🔓</string>
+    <string name="xposed_restart_to_apply">重启目标APP以应用更改</string>
     <string name="xposed_template_manage">模板管理</string>
     <string name="xposed_scope_manage">选择生效应用</string>
     <string name="xposed_template_list">模板列表</string>
     <string name="xposed_new_template">新建模板</string>
     <string name="xposed_template_already_exists">模板名称为空或已存在</string>
     <string name="xposed_edit_template">编辑模板</string>
+    <string name="xposed_template_delete_confirm">删除模板?</string>
+    <string name="xposed_template_enable_all_hooks">启用所有隐藏方式</string>
+    <string name="xposed_template_apply_hooks">选择隐藏方式</string>
+    <string name="xposed_template_hide_apps">隐藏应用</string>
+    <string name="xposed_template_hide_all_apps">禁止读取应用列表</string>
+    <string name="xposed_template_hide_all_apps_summary">这会使目标应用无法获取到任何安装信息</string>
+    <string name="xposed_template_choose_apps_to_hide">选择要隐藏的应用</string>
 </resources>

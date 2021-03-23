@@ -3,23 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:textSize="21sp"
-        android:text="@string/xposed_template_list"/>
+        android:text="@string/xposed_template_list"
+        android:textSize="21sp" />
+
     <com.google.android.material.card.MaterialCardView style="@style/ListCard">
+
         <ListView
             android:id="@+id/xposed_lv_template"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.google.android.material.card.MaterialCardView>
+
     <Button
         android:id="@+id/xposed_btn_new_template"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/xposed_new_template"/>
+        android:text="@string/xposed_new_template" />
 </LinearLayout>

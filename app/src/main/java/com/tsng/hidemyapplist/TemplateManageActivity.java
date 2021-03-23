@@ -1,15 +1,11 @@
 package com.tsng.hidemyapplist;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -31,6 +27,7 @@ public class TemplateManageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_template_manage);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         InitTemplateList();
         findViewById(R.id.xposed_btn_new_template).setOnClickListener(v -> {
             final EditText ev = new EditText(this);
@@ -49,11 +46,17 @@ public class TemplateManageActivity extends AppCompatActivity {
                         else {
                             templates.add(name);
                             adapter.add(name);
-                            list_pref.edit().putStringSet("List", templates).apply();
+                            list_pref.edit().clear().putStringSet("List", templates).apply();
                             EditTemplate(name);
                         }
                     })).setCancelable(false).show();
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private void InitTemplateList() {
@@ -63,10 +66,25 @@ public class TemplateManageActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new ArrayList<>(templates));
         lv.setAdapter(adapter);
         lv.setOnItemClickListener((parent, view, position, id) -> EditTemplate(((TextView) view).getText().toString()));
+        lv.setOnItemLongClickListener((parent, view, position, id) -> {
+            String s = ((TextView) view).getText().toString();
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle(getString(R.string.xposed_template_delete_confirm))
+                    .setMessage(s)
+                    .setNegativeButton(getString(R.string.cancel), null)
+                    .setPositiveButton(getString(R.string.accept), ((dialog, which) -> {
+                        templates.remove(s);
+                        adapter.remove(s);
+                        list_pref.edit().clear().putStringSet("List", templates).apply();
+                    })).show();
+            return true;
+        });
     }
 
     private void EditTemplate(String name) {
-
+        Intent intent = new Intent(this, TemplateSettingsActivity.class);
+        intent.putExtra("template", name);
+        startActivity(intent);
     }
 
 }

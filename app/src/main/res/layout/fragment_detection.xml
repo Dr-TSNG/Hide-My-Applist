@@ -28,6 +28,7 @@
 
 
     <com.google.android.material.card.MaterialCardView style="@style/ListCard">
+
         <ListView
             android:id="@+id/detection_lv_CurrentPackages"
             android:layout_width="match_parent"

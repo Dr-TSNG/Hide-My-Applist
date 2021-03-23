@@ -49,7 +49,7 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_detection, container, false);
-        default_pref= PreferenceManager.getDefaultSharedPreferences(getContext());
+        default_pref = PreferenceManager.getDefaultSharedPreferences(getContext());
         main = getActivity();
         ReadTargets();
         UpdateTargetPackageView();
@@ -68,11 +68,6 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
                     })).show();
             return true;
         });
-
-        //debug
-        main.getSharedPreferences("com.tsng.hidemyapplist", Context.MODE_PRIVATE)
-                .edit().putStringSet("HideSet", targets).apply();
-
         return root;
     }
 
@@ -118,11 +113,11 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
 
         @Override
         protected Void doInBackground(Void... voids) {
-            Debug(method_pm(), "db_method_pm");
-            Debug(method_api(), "db_method_api");
-            Debug(method_intent(), "db_method_intent");
-            Debug(method_uid(), "db_method_uid");
-            Debug(method_datafile(), "db_method_datafile");
+            Debug(method_pm(), "pm command");
+            Debug(method_api(), "API request");
+            Debug(method_intent(), "intent query");
+            Debug(method_uid(), "uid getname");
+            Debug(method_datafile(), "datafile detection");
             return null;
         }
 

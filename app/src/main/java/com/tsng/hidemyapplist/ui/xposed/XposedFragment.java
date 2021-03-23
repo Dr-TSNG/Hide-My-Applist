@@ -17,14 +17,17 @@ public class XposedFragment extends Fragment implements View.OnClickListener {
 
     View root;
     Activity main;
-    private boolean getXposedStatus() { return false; }
+
+    private boolean getXposedStatus() {
+        return false;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_xposed, container, false);
         main = getActivity();
         boolean isXposedActivated = getXposedStatus();
-        if(isXposedActivated)
+        if (isXposedActivated)
             root.findViewById(R.id.xposed_activated).setVisibility(View.VISIBLE);
         else
             root.findViewById(R.id.xposed_not_activated).setVisibility(View.VISIBLE);

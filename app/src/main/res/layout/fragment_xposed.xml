@@ -4,30 +4,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.google.android.material.card.MaterialCardView style="@style/DefaultCard"
+
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/xposed_activated"
-        app:cardBackgroundColor="@color/teal"
-        android:visibility="gone">
-        <TextView style="@style/DefaultCardText"
-            android:textColor="@color/white"
-            android:text="@string/xposed_activated"/>
+        style="@style/DefaultCard"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/teal">
+
+        <TextView
+            style="@style/DefaultCardText"
+            android:text="@string/xposed_activated"
+            android:textColor="@color/white" />
     </com.google.android.material.card.MaterialCardView>
-    <com.google.android.material.card.MaterialCardView style="@style/DefaultCard"
+
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/xposed_not_activated"
-        app:cardBackgroundColor="@color/gray"
-        android:visibility="gone">
-        <TextView style="@style/DefaultCardText"
-            android:textColor="@color/white"
-            android:text="@string/xposed_not_activated"/>
+        style="@style/DefaultCard"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/gray">
+
+        <TextView
+            style="@style/DefaultCardText"
+            android:text="@string/xposed_not_activated"
+            android:textColor="@color/white" />
     </com.google.android.material.card.MaterialCardView>
-    <com.google.android.material.card.MaterialCardView style="@style/DefaultCard"
-        android:id="@+id/xposed_tv_template_manage">
-        <TextView style="@style/DefaultCardText"
-            android:text="@string/xposed_template_manage"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/xposed_tv_template_manage"
+        style="@style/DefaultCard">
+
+        <TextView
+            style="@style/DefaultCardText"
+            android:text="@string/xposed_template_manage" />
     </com.google.android.material.card.MaterialCardView>
-    <com.google.android.material.card.MaterialCardView style="@style/DefaultCard"
-        android:id="@+id/xposed_tv_scope_manage">
-        <TextView style="@style/DefaultCardText"
-            android:text="@string/xposed_scope_manage"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/xposed_tv_scope_manage"
+        style="@style/DefaultCard">
+
+        <TextView
+            style="@style/DefaultCardText"
+            android:text="@string/xposed_scope_manage" />
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

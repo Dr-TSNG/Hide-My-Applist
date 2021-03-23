@@ -6,7 +6,5 @@
     <string name="title_about">关于</string>
     <string name="accept">确认</string>
     <string name="cancel">取消</string>
-    <string name="cancelsave">取消保存?</string>
     <string name="error">错误</string>
-    <string name="delete">删除</string>
 </resources>

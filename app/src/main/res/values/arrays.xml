@@ -1,0 +1,16 @@
+<resources>
+    <string-array name="detect_methods_entries">
+        <item>pm command</item>
+        <item>API request</item>
+        <item>intent query</item>
+        <item>uid getname</item>
+        <item>datafile detection</item>
+    </string-array>
+    <string-array name="detect_methods_values">
+        <item>method_pm</item>
+        <item>method_api</item>
+        <item>method_intent</item>
+        <item>method_uid</item>
+        <item>method_datafile</item>
+    </string-array>
+</resources>
