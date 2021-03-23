@@ -6,4 +6,6 @@
     <string name="xposed_scope_manage">Select Effective Apps</string>
     <string name="xposed_template_list">Template List</string>
     <string name="xposed_new_template">New Template</string>
+    <string name="xposed_template_already_exists">Template name is empty or already exists.</string>
+    <string name="xposed_edit_template">Edit template</string>
 </resources>

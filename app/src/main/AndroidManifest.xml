@@ -17,8 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HideMyApplist">
-        <activity android:name=".TemplateManageActivity"
-            android:label="@string/xposed_template_manage"/>
+        <activity android:name=".ui.xposed.EditTemplatePreference"></activity>
+        <activity
+            android:name=".TemplateManageActivity"
+            android:label="@string/xposed_template_manage" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main">

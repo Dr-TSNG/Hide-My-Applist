@@ -1,5 +1,6 @@
 package com.tsng.hidemyapplist.ui.xposed;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,11 +16,13 @@ import com.tsng.hidemyapplist.TemplateManageActivity;
 public class XposedFragment extends Fragment implements View.OnClickListener {
 
     View root;
+    Activity main;
     private boolean getXposedStatus() { return false; }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_xposed, container, false);
+        main = getActivity();
         boolean isXposedActivated = getXposedStatus();
         if(isXposedActivated)
             root.findViewById(R.id.xposed_activated).setVisibility(View.VISIBLE);
@@ -34,7 +37,7 @@ public class XposedFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.xposed_tv_template_manage:
-                startActivity(new Intent(getActivity(), TemplateManageActivity.class));
+                startActivity(new Intent(main, TemplateManageActivity.class));
                 break;
             case R.id.xposed_tv_scope_manage:
 

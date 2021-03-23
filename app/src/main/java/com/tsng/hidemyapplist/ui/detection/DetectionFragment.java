@@ -1,6 +1,8 @@
 package com.tsng.hidemyapplist.ui.detection;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -21,6 +23,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.tsng.hidemyapplist.R;
@@ -38,18 +42,22 @@ import java.util.TreeSet;
 public class DetectionFragment extends Fragment implements View.OnClickListener {
 
     View root;
-    private Set<String> targets;
+    Activity main;
+    Set<String> targets;
+    SharedPreferences default_pref;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_detection, container, false);
+        default_pref= PreferenceManager.getDefaultSharedPreferences(getContext());
+        main = getActivity();
         ReadTargets();
         UpdateTargetPackageView();
         root.findViewById(R.id.detection_btn_AddPackage).setOnClickListener(this);
         root.findViewById(R.id.detection_btn_StartDetect).setOnClickListener(this);
         ((ListView) root.findViewById(R.id.detection_lv_CurrentPackages)).setOnItemLongClickListener((parent, view, position, id) -> {
             String s = ((TextView) view).getText().toString();
-            new MaterialAlertDialogBuilder(getActivity())
+            new MaterialAlertDialogBuilder(main)
                     .setTitle(getString(R.string.detection_delete_confirm))
                     .setMessage(s)
                     .setNegativeButton(getString(R.string.cancel), null)
@@ -62,8 +70,8 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
         });
 
         //debug
-        getActivity().getSharedPreferences("com.tsng.hidemyapplist", getActivity().MODE_PRIVATE)
-                .edit().putStringSet("hideSet", targets).apply();
+        main.getSharedPreferences("com.tsng.hidemyapplist", Context.MODE_PRIVATE)
+                .edit().putStringSet("HideSet", targets).apply();
 
         return root;
     }
@@ -95,7 +103,7 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
         @Override
         protected void onPreExecute() {
             progress = 1;
-            dialog = new ProgressDialog(getActivity());
+            dialog = new ProgressDialog(main);
             dialog.setCancelable(false);
             dialog.setTitle(getResources().getString(R.string.detection_executing_detections));
             dialog.setMessage(getResources().getString(R.string.detection_using_method) + " 1/5");
@@ -121,7 +129,7 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
         @Override
         protected void onPostExecute(Void aVoid) {
             dialog.dismiss();
-            new MaterialAlertDialogBuilder(getActivity())
+            new MaterialAlertDialogBuilder(main)
                     .setTitle(getString(R.string.detection_finished))
                     .setMessage(Results)
                     .setPositiveButton(getString(R.string.accept), null).show();
@@ -166,7 +174,7 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
         private Set<String> method_api() {
             Set<String> packages = new TreeSet<>();
             try {
-                List<PackageInfo> packageInfos = getActivity().getPackageManager().getInstalledPackages(0);
+                List<PackageInfo> packageInfos = main.getPackageManager().getInstalledPackages(0);
                 for (PackageInfo info : packageInfos)
                     packages.add(info.packageName);
             } catch (Throwable t) {
@@ -179,7 +187,7 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
             Set<String> packages = new TreeSet<>();
             try {
                 Intent intent = new Intent(Intent.ACTION_MAIN);
-                List<ResolveInfo> infos = getActivity().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_ALL);
+                List<ResolveInfo> infos = main.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_ALL);
                 for (ResolveInfo i : infos)
                     packages.add(i.activityInfo.packageName);
             } catch (Throwable t) {
@@ -192,7 +200,7 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
             Set<String> packages = new TreeSet<>();
             try {
                 for (int i = Process.SYSTEM_UID; i <= Process.LAST_APPLICATION_UID; i++) {
-                    String[] uid = getActivity().getPackageManager().getPackagesForUid(i);
+                    String[] uid = main.getPackageManager().getPackagesForUid(i);
                     if (uid != null)
                         Collections.addAll(packages, uid);
                 }
@@ -228,23 +236,19 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
 
     private void UpdateTargetPackageView() {
         ListView lv = root.findViewById(R.id.detection_lv_CurrentPackages);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, targets.toArray(new String[0]));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(main, android.R.layout.simple_list_item_1, targets.toArray(new String[0]));
         lv.setAdapter(adapter);
     }
 
     private void SaveTargets() {
-        SharedPreferences.Editor editor = getActivity().getSharedPreferences("DetectionTarget", getActivity().MODE_PRIVATE).edit();
-        editor.putStringSet("targetSet", targets).apply();
+        default_pref.edit().putStringSet("DetectionSet", targets).apply();
     }
 
     private void ReadTargets() {
-        targets = getActivity().getSharedPreferences("DetectionTarget", getActivity().MODE_PRIVATE).getStringSet("targetSet", null);
+        targets = default_pref.getStringSet("DetectionSet", null);
         if (targets == null)
             targets = new TreeSet<>(Arrays.asList(getResources().getStringArray(R.array.packages)));
         else
             targets = new TreeSet<>(targets);
-        SharedPreferences self = getActivity().getSharedPreferences("DetectionTarget", getActivity().MODE_PRIVATE);
-        if (self.getStringSet("targetSet", new HashSet<>()).isEmpty())
-            self.edit().putStringSet("targetSet", targets).apply();
     }
 }
