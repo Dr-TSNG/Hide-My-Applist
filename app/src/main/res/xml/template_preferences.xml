@@ -1,30 +1,30 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory app:title="Hook">
+    <PreferenceCategory android:title="Hook">
         <SwitchPreferenceCompat
-            app:disableDependentsState="true"
-            app:key="EnableAllHooks"
-            app:title="@string/xposed_template_enable_all_hooks" />
+            android:disableDependentsState="true"
+            android:key="EnableAllHooks"
+            android:title="@string/xposed_template_enable_all_hooks" />
         <MultiSelectListPreference
-            app:dependency="EnableAllHooks"
-            app:entries="@array/detect_methods_entries"
-            app:entryValues="@array/detect_methods_values"
-            app:key="ApplyHooks"
-            app:title="@string/xposed_template_apply_hooks">
+            android:dependency="EnableAllHooks"
+            android:entries="@array/detect_methods_entries"
+            android:entryValues="@array/detect_methods_values"
+            android:key="ApplyHooks"
+            android:title="@string/xposed_template_apply_hooks">
 
         </MultiSelectListPreference>
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/xposed_template_hide_apps">
+    <PreferenceCategory android:title="@string/xposed_template_hide_apps">
         <SwitchPreferenceCompat
-            app:disableDependentsState="true"
-            app:key="HideAllApps"
-            app:summary="@string/xposed_template_hide_all_apps_summary"
-            app:title="@string/xposed_template_hide_all_apps" />
+            android:disableDependentsState="true"
+            android:key="HideAllApps"
+            android:summary="@string/xposed_template_hide_all_apps_summary"
+            android:title="@string/xposed_template_hide_all_apps" />
     </PreferenceCategory>
-    <MultiSelectListPreference
-        app:dependency="HideAllApps"
-        app:key="HideApps"
-        app:title="@string/xposed_template_choose_apps_to_hide" />
+    <Preference
+        android:dependency="HideAllApps"
+        android:fragment="com.tsng.hidemyapplist.TemplateSettingsActivity$HideAppsFragment"
+        android:title="@string/xposed_template_choose_apps_to_hide" />
 
 </PreferenceScreen>

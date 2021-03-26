@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -69,8 +70,8 @@ public class HookApplist implements IXposedHookLoadPackage {
                     try {
                         XposedHelpers.findAndHookMethod(param.getResult().getClass(), "getInputStream", new XC_MethodHook() {
                             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                                BufferedReader br = new BufferedReader(new InputStreamReader((InputStream) param.getResult(), "utf-8"));
-                                String line = null;
+                                BufferedReader br = new BufferedReader(new InputStreamReader((InputStream) param.getResult(), StandardCharsets.UTF_8));
+                                String line;
                                 StringBuilder sb = new StringBuilder();
                                 while ((line = br.readLine()) != null) {
                                     boolean flg = false;
@@ -80,9 +81,9 @@ public class HookApplist implements IXposedHookLoadPackage {
                                             break;
                                         }
                                     if (flg) continue;
-                                    sb.append(line + "\n");
+                                    sb.append(line).append("\n");
                                 }
-                                InputStream result = new ByteArrayInputStream(sb.toString().getBytes("UTF-8"));
+                                InputStream result = new ByteArrayInputStream(sb.toString().getBytes(StandardCharsets.UTF_8));
                                 param.setResult(result);
                             }
                         });

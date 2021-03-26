@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -46,7 +47,7 @@ public class TemplateManageActivity extends AppCompatActivity {
                         else {
                             templates.add(name);
                             adapter.add(name);
-                            list_pref.edit().clear().putStringSet("List", templates).apply();
+                            list_pref.edit().putStringSet("List", new HashSet<>(templates)).apply();
                             EditTemplate(name);
                         }
                     })).setCancelable(false).show();
@@ -61,7 +62,7 @@ public class TemplateManageActivity extends AppCompatActivity {
 
     private void InitTemplateList() {
         list_pref = getSharedPreferences("Templates", Context.MODE_PRIVATE);
-        templates = list_pref.getStringSet("List", new HashSet<>());
+        templates = new HashSet<>(list_pref.getStringSet("List", new HashSet<>()));
         ListView lv = findViewById(R.id.xposed_lv_template);
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new ArrayList<>(templates));
         lv.setAdapter(adapter);
@@ -75,7 +76,8 @@ public class TemplateManageActivity extends AppCompatActivity {
                     .setPositiveButton(getString(R.string.accept), ((dialog, which) -> {
                         templates.remove(s);
                         adapter.remove(s);
-                        list_pref.edit().clear().putStringSet("List", templates).apply();
+                        new File(getFilesDir().getParent() + "/shared_prefs/tpl_" + s + ".xml").delete();
+                        list_pref.edit().putStringSet("List", new HashSet<>(templates)).apply();
                     })).show();
             return true;
         });
