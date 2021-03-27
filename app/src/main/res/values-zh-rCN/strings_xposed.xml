@@ -5,6 +5,7 @@
     <string name="xposed_hook_self">Hook模块自身</string>
     <string name="xposed_restart_self_to_apply">重启模块以应用更改</string>
     <string name="xposed_restart_to_apply">重启目标APP以应用更改</string>
+    <string name="xposed_actvate_first">请先激活模块</string>
     <string name="xposed_disable_hook_self_first">请先禁用Hook模块自身并重启模块</string>
     <string name="xposed_template_manage">模板管理</string>
     <string name="xposed_scope_manage">选择生效应用</string>

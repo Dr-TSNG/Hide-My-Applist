@@ -45,7 +45,9 @@ public class XposedFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        if(!getXposedStatus())
+            Toast.makeText(getContext(), getString(R.string.xposed_actvate_first), Toast.LENGTH_SHORT).show();
+        else switch (v.getId()) {
             case R.id.hook_self:
                 isHookSelf = !isHookSelf;
                 PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("HookSelf", isHookSelf).apply();

@@ -44,7 +44,7 @@
             android:value="Reject applist detection." />
         <meta-data
             android:name="xposedminversion"
-            android:value="53" />
+            android:value="93" />
     </application>
 
 </manifest>

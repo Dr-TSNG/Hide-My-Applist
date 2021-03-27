@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
 import mehdi.sakout.aboutpage.AboutPage
 import mehdi.sakout.aboutpage.Element
@@ -15,7 +16,7 @@ class AboutFragment : Fragment() {
         return AboutPage(activity)
                 .setDescription(getString(R.string.about_my_description))
                 .addItem(Element().apply {
-                    title = "Version " + requireContext().packageManager.getPackageInfo(requireContext().packageName, 0).versionName
+                    title = "Version " + BuildConfig.VERSION_NAME
                     iconDrawable = R.drawable.ic_baseline_language_24
                 })
                 .addItem(Element().apply {

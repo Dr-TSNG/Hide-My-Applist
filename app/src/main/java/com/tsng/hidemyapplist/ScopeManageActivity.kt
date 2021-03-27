@@ -40,10 +40,11 @@ class ScopeManageActivity : AppCompatActivity() {
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             preferenceManager.sharedPreferencesName = "Scope"
+            preferenceManager.sharedPreferencesMode = MODE_WORLD_READABLE
             setPreferencesFromResource(R.xml.scope_preferences, rootKey)
             map = preferenceManager.sharedPreferences.all as MutableMap<String, String>
             templates = setOf("<close>") +
-                    requireActivity().getSharedPreferences("Templates", MODE_PRIVATE).getStringSet("List", setOf())!!
+                    requireActivity().getSharedPreferences("Templates", MODE_WORLD_READABLE).getStringSet("List", setOf())!!
             refresh()
         }
 

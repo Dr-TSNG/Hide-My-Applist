@@ -23,7 +23,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class HookApplist implements IXposedHookLoadPackage {
     public static final String LOG = "hma_log";
-    public static final String APPNAME = "com.tsng.hidemyapplist";
+    public static final String APPNAME = BuildConfig.APPLICATION_ID;
 
     @Override
     public void handleLoadPackage(final LoadPackageParam lpp) {

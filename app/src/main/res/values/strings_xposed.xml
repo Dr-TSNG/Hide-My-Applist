@@ -5,6 +5,7 @@
     <string name="xposed_hook_self">Hook Self</string>
     <string name="xposed_restart_self_to_apply">Restart the module to apply changes</string>
     <string name="xposed_restart_to_apply">Restart target apps to apply changes</string>
+    <string name="xposed_actvate_first">Please activate module first</string>
     <string name="xposed_disable_hook_self_first">Please disable hook self and restart the module</string>
     <string name="xposed_template_manage">Manage Templates</string>
     <string name="xposed_scope_manage">Select Effective Apps</string>
