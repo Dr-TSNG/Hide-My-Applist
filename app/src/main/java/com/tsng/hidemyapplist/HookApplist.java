@@ -27,14 +27,17 @@ public class HookApplist implements IXposedHookLoadPackage {
 
     @Override
     public void handleLoadPackage(final LoadPackageParam lpp) {
-        if (lpp.packageName.equals(APPNAME))
+        if (lpp.packageName.equals(APPNAME)) {
             XposedHelpers.findAndHookMethod("com.tsng.hidemyapplist.ui.xposed.XposedFragment", lpp.classLoader, "getXposedStatus", new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) {
                     param.setResult(true);
                 }
             });
-        //判断模块是否生效用
+            if (!new XSharedPreferences(APPNAME, APPNAME + "_preferences").getBoolean("HookSelf", false))
+                return;
+        }
+        //判断模块是否生效
 
         XSharedPreferences pref = new XSharedPreferences(APPNAME, "Scope");
         final String template = pref.getString(lpp.packageName, null);

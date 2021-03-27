@@ -29,6 +29,13 @@
             android:textColor="@color/white" />
     </com.google.android.material.card.MaterialCardView>
 
+    <Button
+        android:id="@+id/hook_self"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/xposed_hook_self"/>
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/xposed_tv_template_manage"
         style="@style/DefaultCard">

@@ -2,7 +2,10 @@
 <resources>
     <string name="xposed_activated">Xposed Status: Activated 🛡️</string>
     <string name="xposed_not_activated">Xposed Status: Not Activated 🔓</string>
+    <string name="xposed_hook_self">Hook Self</string>
+    <string name="xposed_restart_self_to_apply">Restart the module to apply changes</string>
     <string name="xposed_restart_to_apply">Restart target apps to apply changes</string>
+    <string name="xposed_disable_hook_self_first">Please disable hook self and restart the module</string>
     <string name="xposed_template_manage">Manage Templates</string>
     <string name="xposed_scope_manage">Select Effective Apps</string>
     <string name="xposed_template_list">Template List</string>
@@ -16,4 +19,5 @@
     <string name="xposed_template_hide_all_apps">Reject applist requests</string>
     <string name="xposed_template_hide_all_apps_summary">This will prevent target apps to find any app installed</string>
     <string name="xposed_template_choose_apps_to_hide">Choose apps to hide</string>
+    <string name="xposed_teplate_select">Select a template</string>
 </resources>

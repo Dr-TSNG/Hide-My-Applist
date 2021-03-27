@@ -86,8 +86,8 @@ class TemplateSettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.O
                     title = pkg.applicationInfo.loadLabel(requireActivity().packageManager)
                     icon = pkg.applicationInfo.loadIcon(requireActivity().packageManager)
                     isChecked = list.contains(pkg.packageName)
-                    setOnPreferenceClickListener {
-                        if (isChecked)
+                    setOnPreferenceChangeListener { _, newValue ->
+                        if (newValue == true)
                             list.add(pkg.packageName)
                         else
                             list.remove(pkg.packageName)
