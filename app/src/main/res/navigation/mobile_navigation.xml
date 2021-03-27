@@ -19,6 +19,5 @@
     <fragment
         android:id="@+id/navigation_about"
         android:name="com.tsng.hidemyapplist.ui.about.AboutFragment"
-        android:label="@string/title_about"
-        tools:layout="@layout/fragment_about" />
+        android:label="@string/title_about"/>
 </navigation>

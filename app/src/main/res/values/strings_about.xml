@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_my_description">
+        About this module\nAlthough "It is incorrect to detect specific app's installation", yet not every app using root provides random packagename support. In this case, detected apps that use root (such as Fake Location and Storage Isolation) is equal to detected root itself.\nAt the same time, some "smart" apps use various loopholes to acquire your applist, so that it can draw a persona for you.\nThis module provides some methods to test whether you have already hided your applist nicely.\nAlso, it can work as an Xposed module to hide some apps or reject applist requests to protect your privacy.
+    </string>
+    <string name="about_my_how_to_use_title">How to use this module</string>
+    <string name="about_my_how_to_use_message">
+        First create a template, then apply the template in "Select Effective Apps", and restart target apps, OK.\nHow to confirm whether hide is successful\nApply a template to the module itself, then activate "Hook Self" button, and restart the app, start detection.\nDifferences between hide methods\nNormal apps use API request to acquire applist, but "bad" apps will use other methods (loopholes) to detect it. Attention, under global mode (Reject applist requests) if hide "intent query" there may be some problems with share, start browser, etc.\nKnown bugs\nHide datafile detection does not work using EdXposed YAHFA (tested version: 4683). Please switch to Sandhook or LSPosed instead.
+    </string>
+    <string name="about_my_project_address">Project address</string>
+    <string name="about_my_author">Author: Dr-TSNG (CoolMarket)</string>
+</resources>
