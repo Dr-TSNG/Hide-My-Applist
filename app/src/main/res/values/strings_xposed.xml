@@ -19,6 +19,8 @@
     <string name="xposed_template_hide_apps">Hide apps</string>
     <string name="xposed_template_hide_all_apps">Reject applist requests</string>
     <string name="xposed_template_hide_all_apps_summary">This will prevent target apps to find any app installed</string>
+    <string name="xposed_template_exclude_self">Exclude self</string>
+    <string name="xposed_template_exclude_self_summary">This will prevent that a app cannot detect itself</string>
     <string name="xposed_template_choose_apps_to_hide">Choose apps to hide</string>
     <string name="xposed_teplate_select">Select a template</string>
 </resources>

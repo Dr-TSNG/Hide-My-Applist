@@ -12,7 +12,11 @@ Attension: Xposed API version lower than 93 is NOT supported due to a permission
 与此同时，部分“不安分”的app会使用各种漏洞绕过系统权限来获取你的应用列表，从而对你建立用户画像。（如陈叔叔将安装了V2Ray的用户分为一类）  
 该模块提供了一些检测方式用于测试您是否成功的隐藏了带有root印记的包名，如Magisk/Edxposed Manager。  
 同时可作为Xposed模块用于隐藏应用列表或特定应用，保护你的隐私。  
-注意：由于一个权限问题，XPosed API至少为93才能正常使用该模块  
+注意：由于一个权限问题，Xposed API至少为93才能正常使用该模块  
+
+## Update Log/更新日志
+V1.1  
+Add exclude self support/增加了排除自身功能
 
 ## TODO
 + Add native detection 
