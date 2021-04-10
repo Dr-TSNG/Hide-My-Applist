@@ -1,4 +1,4 @@
-package com.tsng.hidemyapplist
+package com.tsng.hidemyapplist.ui
 
 import android.content.pm.ApplicationInfo
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
+import com.tsng.hidemyapplist.R
 import kotlin.collections.set
 
 class ScopeManageActivity : AppCompatActivity() {

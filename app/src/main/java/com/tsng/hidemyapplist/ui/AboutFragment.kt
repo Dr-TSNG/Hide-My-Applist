@@ -1,4 +1,4 @@
-package com.tsng.hidemyapplist.ui.about
+package com.tsng.hidemyapplist.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

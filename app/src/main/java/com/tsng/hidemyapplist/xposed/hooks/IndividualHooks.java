@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -22,50 +21,24 @@ import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-import static com.tsng.hidemyapplist.xposed.XposedEntry.LOG;
 import static com.tsng.hidemyapplist.xposed.XposedEntry.APPNAME;
+import static com.tsng.hidemyapplist.xposed.XposedEntry.LOG;
+import static com.tsng.hidemyapplist.xposed.XposedEntry.getTemplatePref;
+import static com.tsng.hidemyapplist.xposed.XposedEntry.isToHide;
 
 public class IndividualHooks implements IXposedHookLoadPackage {
     @Override
     public void handleLoadPackage(final LoadPackageParam lpp) {
-        if (lpp.packageName.equals(APPNAME)) {
-            XposedHelpers.findAndHookMethod("com.tsng.hidemyapplist.ui.xposed.XposedFragment", lpp.classLoader, "getXposedStatus", new XC_MethodHook() {
-                @Override
-                protected void afterHookedMethod(MethodHookParam param) {
-                    param.setResult(true);
-                }
-            });
-            if (!new XSharedPreferences(APPNAME, APPNAME + "_preferences").getBoolean("HookSelf", false))
-                return;
-        }
-        //判断模块是否生效
-
-        XSharedPreferences pref = new XSharedPreferences(APPNAME, "Scope");
-        final String template = pref.getString(lpp.packageName, null);
-        if (template == null) return;
-        //判断是否hook该应用
-
-        pref = new XSharedPreferences(APPNAME, "tpl_" + template);
+        final XSharedPreferences pref = getTemplatePref(lpp.packageName);
+        if (pref == null) return;
         final boolean enable_all_hooks = pref.getBoolean("EnableAllHooks", false);
         final Set<String> enabled = pref.getStringSet("ApplyHooks", null);
-        //获取模板
 
         if (enable_all_hooks || enabled.contains("method_pm")) pmHook(lpp, pref);
         if (enable_all_hooks || enabled.contains("method_api")) apiHook(lpp, pref);
         if (enable_all_hooks || enabled.contains("method_intent")) intentHook(lpp, pref);
         if (enable_all_hooks || enabled.contains("method_uid")) uidHook(lpp, pref);
         if (enable_all_hooks || enabled.contains("method_datafile")) fileHook(lpp, pref);
-        //下钩子
-    }
-
-    boolean isToHide(final XSharedPreferences pref, String lppname, String pkgstr) {
-        if (pref.getBoolean("ExcludeSelf", false) && pkgstr.contains(lppname)) return false;
-        if (pref.getBoolean("HideAllApps", false)) return true;
-        Set<String> set = pref.getStringSet("HideApps", new HashSet<>());
-        for (String pkg : set)
-            if (pkgstr.contains(pkg))
-                return true;
-        return false;
     }
 
     void pmHook(final LoadPackageParam lpp, final XSharedPreferences pref) {

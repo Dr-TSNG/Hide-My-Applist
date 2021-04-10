@@ -1,4 +1,7 @@
 <resources>
+    <string-array name="xposed_scope">
+        <item>android</item>
+    </string-array>
     <string-array name="detect_methods_entries">
         <item>pm command</item>
         <item>API request</item>

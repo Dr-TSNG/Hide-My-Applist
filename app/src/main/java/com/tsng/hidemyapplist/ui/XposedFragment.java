@@ -1,6 +1,7 @@
-package com.tsng.hidemyapplist.ui.xposed;
+package com.tsng.hidemyapplist.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,11 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
 
 import com.tsng.hidemyapplist.R;
-import com.tsng.hidemyapplist.ScopeManageActivity;
-import com.tsng.hidemyapplist.TemplateManageActivity;
 
 public class XposedFragment extends Fragment implements View.OnClickListener {
 
@@ -35,7 +33,7 @@ public class XposedFragment extends Fragment implements View.OnClickListener {
         main = getActivity();
         root.findViewById(getXposedStatus() ? R.id.xposed_activated : R.id.xposed_not_activated).setVisibility(View.VISIBLE);
         Button btn_HookSelf = root.findViewById(R.id.hook_self);
-        isHookSelf = isHookSelfOnCreate = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("HookSelf", false);
+        isHookSelf = isHookSelfOnCreate = getActivity().getSharedPreferences("Templates", Context.MODE_WORLD_READABLE).getBoolean("HookSelf", false);
         btn_HookSelf.setBackgroundColor(isHookSelf ? ContextCompat.getColor(getContext(), R.color.cyan_A700) : Color.GRAY);
         btn_HookSelf.setOnClickListener(this);
         root.findViewById(R.id.xposed_tv_template_manage).setOnClickListener(this);
@@ -50,7 +48,7 @@ public class XposedFragment extends Fragment implements View.OnClickListener {
         else switch (v.getId()) {
             case R.id.hook_self:
                 isHookSelf = !isHookSelf;
-                PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("HookSelf", isHookSelf).apply();
+                getActivity().getSharedPreferences("Templates", Context.MODE_WORLD_READABLE).edit().putBoolean("HookSelf", isHookSelf).apply();
                 v.setBackgroundColor(isHookSelf ? ContextCompat.getColor(getContext(), R.color.cyan_A700) : Color.GRAY);
                 Toast.makeText(getContext(), getString(R.string.xposed_restart_self_to_apply), Toast.LENGTH_SHORT).show();
                 break;

@@ -3,10 +3,6 @@
     <string name="detection_hint_input_name">Input package name</string>
     <string name="detection_add_new_package">add</string>
     <string name="detection_start">start detection</string>
-    <string name="detection_method">Detection method</string>
-    <string name="detection_target_found">Target found</string>
-    <string name="detection_target_not_found">Target not found.</string>
-    <string name="detection_permission_denied">Permission denied.</string>
     <string name="detection_executing_detections">Executing detections</string>
     <string name="detection_finished">Detection finished</string>
     <string name="detection_using_method">Using method</string>
@@ -15,7 +11,7 @@
         <item>com.topjohnwu.magisk</item>
         <item>de.robv.android.xposed.installer</item>
         <item>org.meowcat.edxposed.manager</item>
-        <item>io.github.lsposed.manager</item>
+        <item>org.lsposed.manager</item>
         <item>me.weishu.exp</item>
     </string-array>
 </resources>

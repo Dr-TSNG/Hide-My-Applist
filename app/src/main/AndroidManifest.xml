@@ -18,13 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HideMyApplist">
         <activity
-            android:name=".ScopeManageActivity"
+            android:name=".ui.ScopeManageActivity"
             android:label="@string/xposed_scope_manage"/>
         <activity
-            android:name=".TemplateSettingsActivity"
+            android:name=".ui.TemplateSettingsActivity"
             android:label="@string/xposed_edit_template" />
         <activity
-            android:name=".TemplateManageActivity"
+            android:name=".ui.TemplateManageActivity"
             android:label="@string/xposed_template_manage" />
         <activity
             android:name=".MainActivity"
@@ -45,6 +45,9 @@
         <meta-data
             android:name="xposedminversion"
             android:value="93" />
+        <meta-data
+            android:name="xposedscope"
+            android:resource="@array/xposed_scope" />
     </application>
 
 </manifest>

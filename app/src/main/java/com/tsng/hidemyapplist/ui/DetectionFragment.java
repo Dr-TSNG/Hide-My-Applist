@@ -1,10 +1,10 @@
-package com.tsng.hidemyapplist.ui.detection;
+package com.tsng.hidemyapplist.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
@@ -30,11 +30,17 @@ import com.tsng.hidemyapplist.R;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.IntFunction;
 
 public class DetectionFragment extends Fragment implements View.OnClickListener {
 
@@ -87,10 +93,30 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    private class DetectionTask extends AsyncTask<Void, String, Void> {
+    private class DetectionTask extends AsyncTask<Void, Void, Void> {
         int progress;
-        String Results = "";
+        int[][] methodStatus = new int[5][30];
         ProgressDialog dialog;
+
+        final Map<String, Integer> M0 = new LinkedHashMap<String, Integer>() {{
+            put("pm", 0);
+            put("getInstalledPackages", 1);
+            put("getInstalledApplications", 2);
+            put("getPackagesHoldingPermissions", 3);
+            put("queryInstrumentation", 4);
+        }};
+
+        final Map<String, Integer> M1 = new LinkedHashMap<String, Integer>() {{
+            put("queryIntentActivities", 0);
+        }};
+
+        final Map<String, Integer> M2 = new LinkedHashMap<String, Integer>() {{
+            put("getPackagesForUid", 0);
+        }};
+
+        final Map<String, Integer> M3 = new LinkedHashMap<String, Integer>() {{
+            put("javaFile", 0);
+        }};
 
         @Override
         protected void onPreExecute() {
@@ -103,47 +129,78 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
         }
 
         @Override
-        protected void onProgressUpdate(String... str) {
-            Results += str[0] + "\n";
+        protected void onProgressUpdate(Void... voids) {
             dialog.setMessage(getResources().getString(R.string.detection_using_method) + " " + (++progress) + "/5");
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            Debug(method_pm(), "pm command");
-            Debug(method_api(), "API request");
-            Debug(method_intent(), "intent query");
-            Debug(method_uid(), "uid getname");
-            Debug(method_datafile(), "datafile detection");
+            method_pm();
+            publishProgress();
+            checkList(0, M0.get("getInstalledPackages"), main.getPackageManager().getInstalledPackages(0));
+            publishProgress();
+            checkList(0, M0.get("getInstalledApplications"), main.getPackageManager().getInstalledApplications(0));
+            publishProgress();
+            method_getPackagesHoldingPermissions();
+            publishProgress();
+            checkList(0, M0.get("queryInstrumentation"), main.getPackageManager().queryInstrumentation(null, PackageManager.GET_META_DATA));
+            publishProgress();
+
+            method_intent();
+            publishProgress();
+
+            method_uid();
+            publishProgress();
+
+            method_datafile();
+            publishProgress();
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             dialog.dismiss();
+
+            IntFunction res = (int r) -> r == 1 ? "\uD83D\uDFE5" : r == 0 ? "\uD83D\uDFE9" : "\uD83D\uDFE8";
+            StringBuilder br = new StringBuilder();
+            br.append("API requests:\n");
+            for (Map.Entry<String, Integer> entry : M0.entrySet())
+                br.append(res.apply(methodStatus[0][entry.getValue()])).append(entry.getKey()).append('\n');
+            br.append("Intent queries:\n");
+            for (Map.Entry<String, Integer> entry : M1.entrySet())
+                br.append(res.apply(methodStatus[1][entry.getValue()])).append(entry.getKey()).append('\n');
+            br.append("UID detections:\n");
+            for (Map.Entry<String, Integer> entry : M2.entrySet())
+                br.append(res.apply(methodStatus[2][entry.getValue()])).append(entry.getKey()).append('\n');
+            br.append("File detections:\n");
+            for (Map.Entry<String, Integer> entry : M3.entrySet())
+                br.append(res.apply(methodStatus[3][entry.getValue()])).append(entry.getKey()).append('\n');
+
             new MaterialAlertDialogBuilder(main)
                     .setTitle(getString(R.string.detection_finished))
-                    .setMessage(Results)
+                    .setMessage(br.toString())
                     .setPositiveButton(getString(R.string.accept), null).show();
         }
 
-        private void Debug(Set<String> L, String method) {
-            String outputText = getResources().getString(R.string.detection_method) + ": " + method + "\n";
-            if (L == null)
-                outputText += getResources().getString(R.string.detection_permission_denied) + "\n";
-            else if (L.isEmpty())
-                outputText += getResources().getString(R.string.detection_target_not_found) + "\n";
-            else for (String s : L)
-                    outputText += getResources().getString(R.string.detection_target_found) + " " + s + "\n";
-            publishProgress(outputText);
+        private void checkList(int generalId, int methodId, List list) {
+            if (list == null) {
+                methodStatus[generalId][methodId] = -1;
+                return;
+            }
+            Set<String> packages = new TreeSet<>();
+            try {
+                for (Object it : list)
+                    packages.add((String) it.getClass().getField("packageName").get(it));
+            } catch (Exception ignored) { }
+            methodStatus[generalId][methodId] = findPackages(packages);
         }
 
-        private Set<String> method_pm() {
+        private void method_pm() {
             Set<String> packages = new TreeSet<>();
             try {
                 java.lang.Process p = Runtime.getRuntime().exec("pm list packages");
-                BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream(), "utf-8"));
-                String line = null;
+                BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream(), StandardCharsets.UTF_8));
+                String line;
                 while ((line = br.readLine()) != null) {
                     line = line.trim();
                     if (line.length() > 8) {
@@ -157,52 +214,43 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
                 }
                 br.close();
                 p.destroy();
-            } catch (Throwable t) {
-                Log.e("db_method_pm", t.toString());
-            }
-            return findPackages(packages);
+            } catch (Exception ignored) { }
+            if (packages.isEmpty()) packages = null;
+            methodStatus[0][M0.get("pm")] = findPackages(packages);
         }
 
-        private Set<String> method_api() {
+        private void method_getPackagesHoldingPermissions() {
+            List<String> permissions = new ArrayList<>();
+            for (Field field : Manifest.permission.class.getFields()) {
+                try {
+                    if (field.getType() == String.class)
+                        permissions.add((String) field.get(null));
+                } catch (Exception ignored) { }
+            }
+            checkList(0, M0.get("getPackagesHoldingPermissions"), main.getPackageManager().getPackagesHoldingPermissions(permissions.toArray(new String[0]), 0));
+        }
+
+        private void method_intent() {
             Set<String> packages = new TreeSet<>();
-            try {
-                List<PackageInfo> packageInfos = main.getPackageManager().getInstalledPackages(0);
-                for (PackageInfo info : packageInfos)
-                    packages.add(info.packageName);
-            } catch (Throwable t) {
-                Log.e("db_method_api", t.toString());
-            }
-            return findPackages(packages);
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            List<ResolveInfo> infos = main.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_ALL);
+            for (ResolveInfo i : infos)
+                packages.add(i.activityInfo.packageName);
+            if (packages.isEmpty()) packages = null;
+            methodStatus[1][M1.get("queryIntentActivities")] = findPackages(packages);
         }
 
-        private Set<String> method_intent() {
+        private void method_uid() {
             Set<String> packages = new TreeSet<>();
-            try {
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                List<ResolveInfo> infos = main.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_ALL);
-                for (ResolveInfo i : infos)
-                    packages.add(i.activityInfo.packageName);
-            } catch (Throwable t) {
-                Log.e("db_method_intent", t.toString());
+            for (int i = Process.SYSTEM_UID; i <= Process.LAST_APPLICATION_UID; i++) {
+                String[] uid = main.getPackageManager().getPackagesForUid(i);
+                if (uid != null)
+                    Collections.addAll(packages, uid);
             }
-            return findPackages(packages);
+            methodStatus[2][M2.get("getPackagesForUid")] = findPackages(packages);
         }
 
-        private Set<String> method_uid() {
-            Set<String> packages = new TreeSet<>();
-            try {
-                for (int i = Process.SYSTEM_UID; i <= Process.LAST_APPLICATION_UID; i++) {
-                    String[] uid = main.getPackageManager().getPackagesForUid(i);
-                    if (uid != null)
-                        Collections.addAll(packages, uid);
-                }
-            } catch (Throwable t) {
-                Log.e("db_method_uid", t.toString());
-            }
-            return findPackages(packages);
-        }
-
-        private Set<String> method_datafile() {
+        private void method_datafile() {
             Set<String> packages = new TreeSet<>();
             try {
                 for (String pkg : targets) {
@@ -212,17 +260,15 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
             } catch (Throwable t) {
                 Log.e("db_method_datafile", t.toString());
             }
-            return findPackages(packages);
+            methodStatus[3][M3.get("javaFile")] = findPackages(packages);
         }
 
-        private Set<String> findPackages(Set<String> packages) {
-            if (packages.isEmpty()) return null;
-            Set<String> found = new TreeSet<>();
-            for (String name : packages) {
+        private int findPackages(Set<String> packages) {
+            if (packages == null) return -1;
+            for (String name : packages)
                 if (targets.contains(name))
-                    found.add(name);
-            }
-            return found;
+                    return 1;
+            return 0;
         }
     }
 

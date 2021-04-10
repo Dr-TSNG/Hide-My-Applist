@@ -6,18 +6,18 @@
 
     <fragment
         android:id="@+id/navigation_detection"
-        android:name="com.tsng.hidemyapplist.ui.detection.DetectionFragment"
+        android:name="com.tsng.hidemyapplist.ui.DetectionFragment"
         android:label="@string/title_detection"
         tools:layout="@layout/fragment_detection" />
 
     <fragment
         android:id="@+id/navigation_xposed"
-        android:name="com.tsng.hidemyapplist.ui.xposed.XposedFragment"
+        android:name="com.tsng.hidemyapplist.ui.XposedFragment"
         android:label="@string/title_xposed"
         tools:layout="@layout/fragment_xposed" />
 
     <fragment
         android:id="@+id/navigation_about"
-        android:name="com.tsng.hidemyapplist.ui.about.AboutFragment"
+        android:name="com.tsng.hidemyapplist.ui.AboutFragment"
         android:label="@string/title_about"/>
 </navigation>
