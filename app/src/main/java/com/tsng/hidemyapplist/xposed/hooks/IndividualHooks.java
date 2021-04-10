@@ -1,4 +1,4 @@
-package com.tsng.hidemyapplist;
+package com.tsng.hidemyapplist.xposed.hooks;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -22,10 +22,10 @@ import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class HookApplist implements IXposedHookLoadPackage {
-    public static final String LOG = "hma_log";
-    public static final String APPNAME = BuildConfig.APPLICATION_ID;
+import static com.tsng.hidemyapplist.xposed.XposedEntry.LOG;
+import static com.tsng.hidemyapplist.xposed.XposedEntry.APPNAME;
 
+public class IndividualHooks implements IXposedHookLoadPackage {
     @Override
     public void handleLoadPackage(final LoadPackageParam lpp) {
         if (lpp.packageName.equals(APPNAME)) {

@@ -19,4 +19,5 @@ V1.1
 Add exclude self support/增加了排除自身功能
 
 ## TODO
-+ Add native detection 
++ 增加检测方式
++ 以系统服务形式hook，实现不设置作用域也能隐藏
