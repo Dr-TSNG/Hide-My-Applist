@@ -25,12 +25,18 @@
         <item name="android:layout_marginHorizontal">18dp</item>
         <item name="android:clickable">true</item>
     </style>
+    <style name="DefaultCardImage">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginStart">20dp</item>
+    </style>
     <style name="DefaultCardText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_marginVertical">16dp</item>
-        <item name="android:textSize">21sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
     <style name="ListCard" parent="Widget.MaterialComponents.CardView">
         <item name="android:layout_width">match_parent</item>

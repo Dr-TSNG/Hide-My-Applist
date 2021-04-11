@@ -10,6 +10,7 @@ import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Process;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -61,10 +62,10 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
         ((ListView) root.findViewById(R.id.detection_lv_CurrentPackages)).setOnItemLongClickListener((parent, view, position, id) -> {
             String s = ((TextView) view).getText().toString();
             new MaterialAlertDialogBuilder(main)
-                    .setTitle(getString(R.string.detection_delete_confirm))
+                    .setTitle(R.string.detection_delete_confirm)
                     .setMessage(s)
-                    .setNegativeButton(getString(R.string.cancel), null)
-                    .setPositiveButton(getString(R.string.accept), ((dialog, which) -> {
+                    .setNegativeButton(R.string.cancel, null)
+                    .setPositiveButton(R.string.accept, ((dialog, which) -> {
                         targets.remove(s);
                         SaveTargets();
                         UpdateTargetPackageView();
@@ -99,7 +100,7 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
         ProgressDialog dialog;
 
         final Map<String, Integer> M0 = new LinkedHashMap<String, Integer>() {{
-            put("pm", 0);
+            put("pm list packages", 0);
             put("getInstalledPackages", 1);
             put("getInstalledApplications", 2);
             put("getPackagesHoldingPermissions", 3);
@@ -118,19 +119,21 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
             put("javaFile", 0);
         }};
 
+        final int ALL_METHODS = M0.size() + M1.size() + M2.size() + M3.size();
+
         @Override
         protected void onPreExecute() {
             progress = 1;
             dialog = new ProgressDialog(main);
             dialog.setCancelable(false);
             dialog.setTitle(getResources().getString(R.string.detection_executing_detections));
-            dialog.setMessage(getResources().getString(R.string.detection_using_method) + " 1/5");
+            dialog.setMessage(getResources().getString(R.string.detection_using_method) + " 1/" + ALL_METHODS);
             dialog.show();
         }
 
         @Override
         protected void onProgressUpdate(Void... voids) {
-            dialog.setMessage(getResources().getString(R.string.detection_using_method) + " " + (++progress) + "/5");
+            dialog.setMessage(getResources().getString(R.string.detection_using_method) + " " + (++progress) + "/" + ALL_METHODS);
         }
 
         @Override
@@ -163,23 +166,24 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
 
             IntFunction res = (int r) -> r == 1 ? "\uD83D\uDFE5" : r == 0 ? "\uD83D\uDFE9" : "\uD83D\uDFE8";
             StringBuilder br = new StringBuilder();
-            br.append("API requests:\n");
+            br.append(getString(R.string.detection_color_means)).append("<br/>");
+            br.append("<h5><b>API requests</b><h5/>");
             for (Map.Entry<String, Integer> entry : M0.entrySet())
-                br.append(res.apply(methodStatus[0][entry.getValue()])).append(entry.getKey()).append('\n');
-            br.append("Intent queries:\n");
+                br.append(res.apply(methodStatus[0][entry.getValue()])).append(entry.getKey()).append("<br/>");
+            br.append("<h5><b>Intent queries</b><h5/>");
             for (Map.Entry<String, Integer> entry : M1.entrySet())
-                br.append(res.apply(methodStatus[1][entry.getValue()])).append(entry.getKey()).append('\n');
-            br.append("UID detections:\n");
+                br.append(res.apply(methodStatus[1][entry.getValue()])).append(entry.getKey()).append("<br/>");
+            br.append("<h5><b>UID detections</b><h5/>");
             for (Map.Entry<String, Integer> entry : M2.entrySet())
-                br.append(res.apply(methodStatus[2][entry.getValue()])).append(entry.getKey()).append('\n');
-            br.append("File detections:\n");
+                br.append(res.apply(methodStatus[2][entry.getValue()])).append(entry.getKey()).append("<br/>");
+            br.append("<h5><b>File detections</b><h5/>");
             for (Map.Entry<String, Integer> entry : M3.entrySet())
-                br.append(res.apply(methodStatus[3][entry.getValue()])).append(entry.getKey()).append('\n');
+                br.append(res.apply(methodStatus[3][entry.getValue()])).append(entry.getKey()).append("<br/>");
 
             new MaterialAlertDialogBuilder(main)
-                    .setTitle(getString(R.string.detection_finished))
-                    .setMessage(br.toString())
-                    .setPositiveButton(getString(R.string.accept), null).show();
+                    .setTitle(R.string.detection_finished)
+                    .setMessage(Html.fromHtml(br.toString(),Html.FROM_HTML_MODE_COMPACT))
+                    .setPositiveButton(R.string.accept, null).show();
         }
 
         private void checkList(int generalId, int methodId, List list) {
@@ -216,7 +220,7 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
                 p.destroy();
             } catch (Exception ignored) { }
             if (packages.isEmpty()) packages = null;
-            methodStatus[0][M0.get("pm")] = findPackages(packages);
+            methodStatus[0][M0.get("pm list packages")] = findPackages(packages);
         }
 
         private void method_getPackagesHoldingPermissions() {

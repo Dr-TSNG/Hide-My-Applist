@@ -33,16 +33,16 @@ public class TemplateManageActivity extends AppCompatActivity {
         findViewById(R.id.xposed_btn_new_template).setOnClickListener(v -> {
             final EditText ev = new EditText(this);
             new MaterialAlertDialogBuilder(this)
-                    .setTitle(getString(R.string.xposed_new_template))
+                    .setTitle(R.string.xposed_new_template)
                     .setView(ev)
-                    .setNegativeButton(getString(R.string.cancel), null)
-                    .setPositiveButton(getString(R.string.accept), ((dialog, which) -> {
+                    .setNegativeButton(R.string.cancel, null)
+                    .setPositiveButton(R.string.accept, ((dialog, which) -> {
                         String name = ev.getText().toString();
                         if (templates.contains(name) || name.isEmpty())
                             new MaterialAlertDialogBuilder(this)
-                                    .setTitle(getString(R.string.error))
-                                    .setMessage(getString(R.string.xposed_template_already_exists))
-                                    .setPositiveButton(getString(R.string.accept), null)
+                                    .setTitle(R.string.error)
+                                    .setMessage(R.string.xposed_template_already_exists)
+                                    .setPositiveButton(R.string.accept, null)
                                     .show();
                         else {
                             templates.add(name);
@@ -70,10 +70,10 @@ public class TemplateManageActivity extends AppCompatActivity {
         lv.setOnItemLongClickListener((parent, view, position, id) -> {
             String s = ((TextView) view).getText().toString();
             new MaterialAlertDialogBuilder(this)
-                    .setTitle(getString(R.string.xposed_template_delete_confirm))
+                    .setTitle(R.string.xposed_template_delete_confirm)
                     .setMessage(s)
-                    .setNegativeButton(getString(R.string.cancel), null)
-                    .setPositiveButton(getString(R.string.accept), ((dialog, which) -> {
+                    .setNegativeButton(R.string.cancel, null)
+                    .setPositiveButton(R.string.accept, ((dialog, which) -> {
                         templates.remove(s);
                         adapter.remove(s);
                         getSharedPreferences("tpl_" + s, MODE_WORLD_READABLE).edit().clear().apply();

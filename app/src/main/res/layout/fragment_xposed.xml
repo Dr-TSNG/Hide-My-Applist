@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/xposed_hook_self"/>
+        android:text="@string/xposed_hook_self" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/xposed_tv_template_manage"
@@ -52,5 +52,47 @@
         <TextView
             style="@style/DefaultCardText"
             android:text="@string/xposed_scope_manage" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/menu_about"
+        style="@style/DefaultCard"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            style="@style/Default"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/DefaultCardImage"
+                android:src="@drawable/ic_about" />
+
+            <TextView
+                style="@style/DefaultCardText"
+                android:layout_marginStart="10dp"
+                android:text="@string/title_about" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/menu_settings"
+        style="@style/DefaultCard"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            style="@style/Default"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/DefaultCardImage"
+                android:src="@drawable/ic_settings" />
+
+            <TextView
+                style="@style/DefaultCardText"
+                android:layout_marginStart="10dp"
+                android:text="@string/title_settings" />
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

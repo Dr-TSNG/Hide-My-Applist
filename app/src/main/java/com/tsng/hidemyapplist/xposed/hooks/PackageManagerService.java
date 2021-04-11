@@ -1,6 +1,5 @@
 package com.tsng.hidemyapplist.xposed.hooks;
 
-import android.content.pm.PackageInfo;
 import android.content.pm.ParceledListSlice;
 import android.os.Binder;
 import android.util.Log;

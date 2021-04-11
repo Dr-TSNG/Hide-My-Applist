@@ -25,8 +25,8 @@ class AboutFragment : Fragment() {
                     setOnClickListener {
                         MaterialAlertDialogBuilder(requireContext())
                                 .setTitle(title)
-                                .setMessage(getString(R.string.about_my_how_to_use_message))
-                                .setPositiveButton(getString(R.string.accept), null)
+                                .setMessage(R.string.about_my_how_to_use_message)
+                                .setPositiveButton(R.string.accept, null)
                                 .show()
                     }
                 })

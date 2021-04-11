@@ -3,6 +3,7 @@
     <string name="detection_hint_input_name">输入要检测的包名</string>
     <string name="detection_add_new_package">添加</string>
     <string name="detection_start">开始检测</string>
+    <string name="detection_color_means">🟩:未找到目标 🟥:找到目标 🟨:拒绝访问</string>
     <string name="detection_executing_detections">检测中</string>
     <string name="detection_finished">检测结束</string>
     <string name="detection_using_method">执行检测方法</string>
