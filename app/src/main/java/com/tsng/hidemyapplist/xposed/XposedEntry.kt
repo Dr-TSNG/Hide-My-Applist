@@ -12,9 +12,9 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 class XposedEntry : IXposedHookLoadPackage {
     override fun handleLoadPackage(lpp: LoadPackageParam) {
         if (lpp.packageName == APPNAME) {
-            XposedHelpers.findAndHookMethod("com.tsng.hidemyapplist.ui.XposedFragment", lpp.classLoader, "getXposedStatus", object : XC_MethodHook() {
+            XposedHelpers.findAndHookMethod("com.tsng.hidemyapplist.MainActivity", lpp.classLoader, "getXposedStatus", object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
-                    param.result = true
+                    param.result = 0b01
                 }
             })
         }

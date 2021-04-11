@@ -1,7 +1,6 @@
 package com.tsng.hidemyapplist.ui;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,17 +11,14 @@ import android.os.Bundle;
 import android.os.Process;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -43,25 +39,23 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.IntFunction;
 
-public class DetectionFragment extends Fragment implements View.OnClickListener {
+public class DetectionActivity extends AppCompatActivity implements View.OnClickListener {
 
-    View root;
-    Activity main;
     Set<String> targets;
     SharedPreferences default_pref;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_detection, container, false);
-        default_pref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        main = getActivity();
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detection);
+        default_pref = PreferenceManager.getDefaultSharedPreferences(this);
         ReadTargets();
         UpdateTargetPackageView();
-        root.findViewById(R.id.detection_btn_AddPackage).setOnClickListener(this);
-        root.findViewById(R.id.detection_btn_StartDetect).setOnClickListener(this);
-        ((ListView) root.findViewById(R.id.detection_lv_CurrentPackages)).setOnItemLongClickListener((parent, view, position, id) -> {
+        findViewById(R.id.detection_btn_AddPackage).setOnClickListener(this);
+        findViewById(R.id.detection_btn_StartDetect).setOnClickListener(this);
+        ((ListView) findViewById(R.id.detection_lv_CurrentPackages)).setOnItemLongClickListener((parent, view, position, id) -> {
             String s = ((TextView) view).getText().toString();
-            new MaterialAlertDialogBuilder(main)
+            new MaterialAlertDialogBuilder(this)
                     .setTitle(R.string.detection_delete_confirm)
                     .setMessage(s)
                     .setNegativeButton(R.string.cancel, null)
@@ -72,14 +66,13 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
                     })).show();
             return true;
         });
-        return root;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.detection_btn_AddPackage:
-                EditText et = root.findViewById(R.id.detection_et_DetectionTarget);
+                EditText et = findViewById(R.id.detection_et_DetectionTarget);
                 String text = et.getText().toString();
                 if (!text.isEmpty())
                     targets.add(text);
@@ -88,7 +81,7 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
                 et.setText(null);
                 break;
             case R.id.detection_btn_StartDetect:
-                DetectionFragment.DetectionTask task = new DetectionFragment.DetectionTask();
+                DetectionActivity.DetectionTask task = new DetectionActivity.DetectionTask();
                 task.execute();
                 break;
         }
@@ -124,7 +117,7 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
         @Override
         protected void onPreExecute() {
             progress = 1;
-            dialog = new ProgressDialog(main);
+            dialog = new ProgressDialog(DetectionActivity.this);
             dialog.setCancelable(false);
             dialog.setTitle(getResources().getString(R.string.detection_executing_detections));
             dialog.setMessage(getResources().getString(R.string.detection_using_method) + " 1/" + ALL_METHODS);
@@ -140,13 +133,13 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
         protected Void doInBackground(Void... voids) {
             method_pm();
             publishProgress();
-            checkList(0, M0.get("getInstalledPackages"), main.getPackageManager().getInstalledPackages(0));
+            checkList(0, M0.get("getInstalledPackages"), getPackageManager().getInstalledPackages(0));
             publishProgress();
-            checkList(0, M0.get("getInstalledApplications"), main.getPackageManager().getInstalledApplications(0));
+            checkList(0, M0.get("getInstalledApplications"), getPackageManager().getInstalledApplications(0));
             publishProgress();
             method_getPackagesHoldingPermissions();
             publishProgress();
-            checkList(0, M0.get("queryInstrumentation"), main.getPackageManager().queryInstrumentation(null, PackageManager.GET_META_DATA));
+            checkList(0, M0.get("queryInstrumentation"), getPackageManager().queryInstrumentation(null, PackageManager.GET_META_DATA));
             publishProgress();
 
             method_intent();
@@ -180,9 +173,9 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
             for (Map.Entry<String, Integer> entry : M3.entrySet())
                 br.append(res.apply(methodStatus[3][entry.getValue()])).append(entry.getKey()).append("<br/>");
 
-            new MaterialAlertDialogBuilder(main)
+            new MaterialAlertDialogBuilder(DetectionActivity.this)
                     .setTitle(R.string.detection_finished)
-                    .setMessage(Html.fromHtml(br.toString(),Html.FROM_HTML_MODE_COMPACT))
+                    .setMessage(Html.fromHtml(br.toString(), Html.FROM_HTML_MODE_COMPACT))
                     .setPositiveButton(R.string.accept, null).show();
         }
 
@@ -231,13 +224,13 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
                         permissions.add((String) field.get(null));
                 } catch (Exception ignored) { }
             }
-            checkList(0, M0.get("getPackagesHoldingPermissions"), main.getPackageManager().getPackagesHoldingPermissions(permissions.toArray(new String[0]), 0));
+            checkList(0, M0.get("getPackagesHoldingPermissions"), getPackageManager().getPackagesHoldingPermissions(permissions.toArray(new String[0]), 0));
         }
 
         private void method_intent() {
             Set<String> packages = new TreeSet<>();
             Intent intent = new Intent(Intent.ACTION_MAIN);
-            List<ResolveInfo> infos = main.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_ALL);
+            List<ResolveInfo> infos = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_ALL);
             for (ResolveInfo i : infos)
                 packages.add(i.activityInfo.packageName);
             if (packages.isEmpty()) packages = null;
@@ -247,7 +240,7 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
         private void method_uid() {
             Set<String> packages = new TreeSet<>();
             for (int i = Process.SYSTEM_UID; i <= Process.LAST_APPLICATION_UID; i++) {
-                String[] uid = main.getPackageManager().getPackagesForUid(i);
+                String[] uid = getPackageManager().getPackagesForUid(i);
                 if (uid != null)
                     Collections.addAll(packages, uid);
             }
@@ -256,13 +249,9 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
 
         private void method_datafile() {
             Set<String> packages = new TreeSet<>();
-            try {
-                for (String pkg : targets) {
-                    File f = new File("/storage/emulated/0/Android/data/" + pkg);
-                    if (f.exists()) packages.add(pkg);
-                }
-            } catch (Throwable t) {
-                Log.e("db_method_datafile", t.toString());
+            for (String pkg : targets) {
+                File f = new File("/storage/emulated/0/Android/data/" + pkg);
+                if (f.exists()) packages.add(pkg);
             }
             methodStatus[3][M3.get("javaFile")] = findPackages(packages);
         }
@@ -277,8 +266,8 @@ public class DetectionFragment extends Fragment implements View.OnClickListener 
     }
 
     private void UpdateTargetPackageView() {
-        ListView lv = root.findViewById(R.id.detection_lv_CurrentPackages);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(main, android.R.layout.simple_list_item_1, targets.toArray(new String[0]));
+        ListView lv = findViewById(R.id.detection_lv_CurrentPackages);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, targets.toArray(new String[0]));
         lv.setAdapter(adapter);
     }
 

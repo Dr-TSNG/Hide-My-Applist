@@ -3,7 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#FF607D8B</color>
-    <color name="indigo">#FF3F51B5</color>
+    <color name="colorPrimary">#FF3F51B5</color>
     <color name="indigo_700">#FF303F9F</color>
     <color name="teal">#FF009688</color>
     <color name="teal_200">#FF03DAC5</color>

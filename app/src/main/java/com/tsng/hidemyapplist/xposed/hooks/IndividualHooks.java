@@ -21,7 +21,6 @@ import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-import static com.tsng.hidemyapplist.xposed.XposedEntry.APPNAME;
 import static com.tsng.hidemyapplist.xposed.XposedEntry.LOG;
 import static com.tsng.hidemyapplist.xposed.XposedEntry.getTemplatePref;
 import static com.tsng.hidemyapplist.xposed.XposedEntry.isToHide;
