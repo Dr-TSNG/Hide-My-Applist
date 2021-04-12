@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Hide My Applist</string>
     <string name="title_activity_main">Hide My Applist</string>
-    <string name="title_detection_test">Detection test</string>
+    <string name="title_detection_test">Detection Test</string>
     <string name="title_template_manage">Manage Templates</string>
     <string name="title_scope_manage">Select Effective Apps</string>
     <string name="title_settings">Settings</string>

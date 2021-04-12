@@ -3,7 +3,7 @@
 Although "It is incorrect to detect specific app's installation", yet not every app using root provides random packagename support.
 In this case, detected apps that use root (such as Fake Location and Storage Isolation) is equal to detected root itself.  
 At the same time, some "smart" apps use various loopholes to acquire your applist, so that it can draw a persona for you.  
-This module provides some methods to test whether you have already hided your applist nicely.  
+This module provides some methods to test whether you have already hidden your applist nicely.  
 Also, it can work as an Xposed module to hide some apps or reject applist requests to protect your privacy.   
 Attension: Xposed API version lower than 93 is NOT supported due to a permission problem  
 ## Compilation

@@ -2,11 +2,11 @@
 <resources>
     <string name="about_title">About this module</string>
     <string name="about_description">
-        Although "It is incorrect to detect specific app's installation", yet not every app using root provides random packagename support. In this case, detected apps that use root (such as Fake Location and Storage Isolation) is equal to detected root itself.\n\nAt the same time, some "smart" apps use various loopholes to acquire your applist, so that it can draw a persona for you.\n\nThis module provides some methods to test whether you have already hided your applist nicely. Also, it can work as an Xposed module to hide some apps or reject applist requests to protect your privacy.
+        Although &quot;It is incorrect to detect specific app&apos;s installation&quot;, yet not every app using root provides random packagename support. In this case, detected apps that use root (such as Fake Location and Storage Isolation) is equal to detected root itself.\n\nAt the same time, some &quot;smart&quot; apps use various loopholes to acquire your applist, so that it can draw a persona for you.\n\nThis module provides some methods to test whether you have already hidden your applist nicely. Also, it can work as an Xposed module to hide some apps or reject applist requests to protect your privacy.
     </string>
     <string name="about_how_to_use_title">How to use this module</string>
     <string name="about_how_to_use_message">
-        #How to enable hide#\nFirst create a template in "Manage Templates", then apply the template in "Select Effective Apps", and restart target apps.\n\n#How to confirm whether hide is successful#\nApply a template to the module itself, then activate "Hook Self" button, and restart the app, start detection.
+        #How to enable hide#\nFirst create a template in &quot;Manage Templates&quot;, then apply the template in &quot;Select Effective Apps&quot;. Xposed module scope configs refer to the next tip.\n\n#How to confirm whether hide is successful#\nApply a template to the module itself, then activate &quot;Hook Self&quot; in settings, and restart the module, start detection test.
     </string>
     <string name="about_mode_differences_title">Differences between two modes</string>
     <string name="about_mode_differences_description">
@@ -14,7 +14,7 @@
     </string>
     <string name="about_hook_differences_title">Differences among hook methods</string>
     <string name="about_hook_differences_description">
-        Normal apps use some of API requests to acquire applist, but "bad" apps will use other methods (loopholes) to detect it. Attention, under global mode (Reject applist requests) if hide "intent query" there may be some problems with share, start browser, etc.
+        Normal apps use some of API requests to acquire applist, but &quot;bad&quot; apps will use other methods (loopholes) to detect it. Attention, under global mode (Reject applist requests) if hide &quot;intent query&quot; there may be some problems with share, start browser, etc.
     </string>
     <string name="about_developer">Developer</string>
     <string name="about_support">Support and feedback</string>

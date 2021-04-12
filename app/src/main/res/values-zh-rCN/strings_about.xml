@@ -6,7 +6,7 @@
     </string>
     <string name="about_how_to_use_title">如何使用该模块</string>
     <string name="about_how_to_use_message">
-        #如何启用隐藏#\n&#12288;&#12288;首先在模板管理里创建一个模板，之后在选择生效应用里对目标应用启用模板，重启目标应用。Xposed模块作用域参见下方“hook方式”一栏。\n\n#如何测试隐藏是否成功#\n&#12288;&#12288;对本模块自身启用一个模板，之后在设置里启用“Hook模块自身”，划掉重启模块，开始检测。
+        #如何启用隐藏#\n&#12288;&#12288;首先在模板管理里创建一个模板，然后在选择生效应用里对目标应用启用模板。Xposed模块作用域参见下方“hook方式”一栏。\n\n#如何测试隐藏是否成功#\n&#12288;&#12288;对本模块自身启用一个模板，之后在设置里启用“Hook模块自身”，划掉重启模块，开始检测。
     </string>
     <string name="about_mode_differences_title">两种hook模式区别</string>
     <string name="about_mode_differences_description">
