@@ -19,10 +19,14 @@ class AboutActivity : AbsAboutActivity() {
         items.add(Card(getString(R.string.about_description)))
 
         items.add(Category(getString(R.string.about_how_to_use_title)))
-        items.add(Card(getString(R.string.about_how_to_use_message)))
+        items.add(Card(getString(R.string.about_how_to_use_description_1)))
+        items.add(Line())
+        items.add(Card(getString(R.string.about_how_to_use_description_2)))
 
         items.add(Category(getString(R.string.about_mode_differences_title)))
-        items.add(Card(getString(R.string.about_mode_differences_description)))
+        items.add(Card(getString(R.string.about_mode_differences_description_1)))
+        items.add(Line())
+        items.add(Card(getString(R.string.about_mode_differences_description_2)))
 
         items.add(Category(getString(R.string.about_hook_differences_title)))
         items.add(Card(getString(R.string.about_hook_differences_description)))

@@ -1,0 +1,14 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="HookMode"
+        android:title="@string/settings_hook_mode"
+        android:entries="@array/hook_mode"
+        android:entryValues="@array/hook_mode"
+        android:defaultValue="Individual Hook"
+        android:icon="@drawable/ic_hook_mode"/>
+    <SwitchPreferenceCompat
+        android:key="HookSelf"
+        android:title="@string/settings_hook_self"
+        android:defaultValue="false"/>
+
+</PreferenceScreen>

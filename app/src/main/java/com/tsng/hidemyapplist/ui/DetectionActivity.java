@@ -48,6 +48,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detection);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         default_pref = PreferenceManager.getDefaultSharedPreferences(this);
         ReadTargets();
         UpdateTargetPackageView();
@@ -66,6 +67,12 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
                     })).show();
             return true;
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
@@ -166,7 +173,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             br.append("<h5><b>Intent queries</b><h5/>");
             for (Map.Entry<String, Integer> entry : M1.entrySet())
                 br.append(res.apply(methodStatus[1][entry.getValue()])).append(entry.getKey()).append("<br/>");
-            br.append("<h5><b>UID detections</b><h5/>");
+            br.append("<h5><b>ID detections</b><h5/>");
             for (Map.Entry<String, Integer> entry : M2.entrySet())
                 br.append(res.apply(methodStatus[2][entry.getValue()])).append(entry.getKey()).append("<br/>");
             br.append("<h5><b>File detections</b><h5/>");

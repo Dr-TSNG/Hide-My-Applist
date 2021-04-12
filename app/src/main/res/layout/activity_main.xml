@@ -31,7 +31,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="2dp"
-                    android:textColor="@color/white"
+                    android:textColor="@android:color/white"
                     android:textSize="20sp" />
 
                 <TextView
@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:textColor="@color/white" />
+                    android:textColor="@android:color/white" />
             </LinearLayout>
 
         </LinearLayout>
@@ -97,7 +97,7 @@
 
             <ImageView
                 style="@style/DefaultCardImage"
-                android:src="@drawable/ic_scope" />
+                android:src="@drawable/ic_apps" />
 
             <TextView
                 style="@style/DefaultCardText"

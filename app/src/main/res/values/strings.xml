@@ -12,9 +12,13 @@
     <string name="error">Error</string>
     <string name="updates">New features</string>
     <string name="updates_log">
-        <b>V1.2</b>\n
-        [+] Add a lot of new detection methods\n
-        [+] Add a new hook mode which allows the module only hook system framework, even the target app is out of xposed whitelist or module scope\n
-        <b>Known bugs</b>\nHide file detection does not work using EdXposed YAHFA (tested version: 4683). Please switch to Sandhook or LSPosed instead.\n
+        <b>Please read the about page carefully!</b>\n
+        <b>V1.2 Beta</b>\n
+        <i>Warning: this is a beta version and System Hook mode is not finished</i>\n
+        [+] Add new detection methods\n
+        [+] Add System Hook mode\n
+        [+] UI redesign with more help information in about page\n
+        [+] Due to the big changes to V1.1, if there are problems please uninstall and reinstall the module\n
+        <b>Known bugs</b>\nUnder Edxposed YAHFA file detection hide does not work. (test version: 4683), please switch to Sandhook or LSPosed instead.\n
     </string>
 </resources>

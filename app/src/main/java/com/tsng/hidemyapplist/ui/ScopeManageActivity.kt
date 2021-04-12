@@ -28,12 +28,6 @@ class ScopeManageActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 0)
-            Toast.makeText(this, getString(R.string.xposed_restart_to_apply), Toast.LENGTH_SHORT).show();
-        super.onBackPressed()
-    }
-
     class SettingsFragment : PreferenceFragmentCompat() {
 
         private lateinit var map: MutableMap<String, String>

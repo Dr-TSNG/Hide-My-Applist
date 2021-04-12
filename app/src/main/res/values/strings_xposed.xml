@@ -4,13 +4,13 @@
     <string name="xposed_not_activated">Module Not Activated</string>
     <string name="xposed_hook_disabled">Hook mode: N/A</string>
     <string name="xposed_hook_mode_not_selected">Hook mode not selected</string>
-    <string name="xposed_hook_mode_system">Hook mode: Systeam Hook</string>
+    <string name="xposed_hook_mode_system">Hook mode: System Hook</string>
     <string name="xposed_hook_mode_individual">Hook mode: Individual Hook</string>
     <string name="xposed_hook_mode_mixed">Hook mode: Mixed</string>
     <string name="xposed_restart_self_to_apply">Restart the module to apply changes</string>
     <string name="xposed_restart_to_apply">Restart target apps to apply changes</string>
     <string name="xposed_actvate_first">Please activate module first</string>
-    <string name="xposed_disable_hook_self_first">Please disable hook self and restart the module</string>
+    <string name="xposed_disable_hook_self_first">Please disable hook self first</string>
     <string name="xposed_template_list">Template List</string>
     <string name="xposed_new_template">New Template</string>
     <string name="xposed_template_already_exists">Template name is empty or already exists.</string>

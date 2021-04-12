@@ -12,9 +12,13 @@
     <string name="error">错误</string>
     <string name="updates">新版本特性</string>
     <string name="updates_log">
-        <b>V1.2</b>\n
-        [+] 增加了大量新检测方式\n
-        [+] 增加hook系统框架模式，可以拦截除文件检测外所有方法，并且无需将目标应用放入模块作用域或是白名单\n
+        <b>请仔细阅读关于页面的使用帮助！</b>\n
+        <b>V1.2 Beta</b>\n
+        <i>警告：这是一个测试版本，System Hook工作模式尚未写完</i>\n
+        [+] 增加新的检测方式\n
+        [+] 增加System Hook工作模式，无需将目标应用放入模块作用域或是白名单\n
+        [+] UI重修，关于页面添加更多使用帮助\n
+        [+] 由于较V1.1改动大，遇到问题请卸载重装模块\n
         <b>目前已知的bug</b>\nEdXposed YAHFA后端无法进行file detection隐藏（测试版本：4683），请更换Sandhook后端或LSPosed。\n
     </string>
 </resources>

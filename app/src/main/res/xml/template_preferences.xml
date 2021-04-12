@@ -1,5 +1,4 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
     <PreferenceCategory android:title="Hook">
         <SwitchPreferenceCompat
             android:disableDependentsState="true"
@@ -7,8 +6,8 @@
             android:title="@string/xposed_template_enable_all_hooks" />
         <MultiSelectListPreference
             android:dependency="EnableAllHooks"
-            android:entries="@array/detect_methods_entries"
-            android:entryValues="@array/detect_methods_values"
+            android:entries="@array/detect_methods"
+            android:entryValues="@array/detect_methods"
             android:key="ApplyHooks"
             android:title="@string/xposed_template_apply_hooks">
 
@@ -30,6 +29,4 @@
         android:dependency="HideAllApps"
         android:fragment="com.tsng.hidemyapplist.ui.TemplateSettingsActivity$HideAppsFragment"
         android:title="@string/xposed_template_choose_apps_to_hide" />
-
-
 </PreferenceScreen>
