@@ -32,6 +32,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,9 @@ import java.util.TreeSet;
 import java.util.function.IntFunction;
 
 public class DetectionActivity extends AppCompatActivity implements View.OnClickListener {
+    static {
+        System.loadLibrary("native_detections");
+    }
 
     Set<String> targets;
     SharedPreferences default_pref;
@@ -104,7 +108,6 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             put("getInstalledPackages", 1);
             put("getInstalledApplications", 2);
             put("getPackagesHoldingPermissions", 3);
-            put("queryInstrumentation", 4);
         }};
 
         final Map<String, Integer> M1 = new LinkedHashMap<String, Integer>() {{
@@ -117,6 +120,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
 
         final Map<String, Integer> M3 = new LinkedHashMap<String, Integer>() {{
             put("javaFile", 0);
+            put("nativeFile", 1);
         }};
 
         final int ALL_METHODS = M0.size() + M1.size() + M2.size() + M3.size();
@@ -146,16 +150,15 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             publishProgress();
             method_getPackagesHoldingPermissions();
             publishProgress();
-            checkList(0, M0.get("queryInstrumentation"), getPackageManager().queryInstrumentation(null, PackageManager.GET_META_DATA));
-            publishProgress();
 
             method_intent();
             publishProgress();
 
-            method_uid();
+            method_getPackagesForUid();
             publishProgress();
 
-            method_datafile();
+            method_file();
+            publishProgress();
             publishProgress();
             return null;
         }
@@ -191,16 +194,17 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
                 methodStatus[generalId][methodId] = -1;
                 return;
             }
-            Set<String> packages = new TreeSet<>();
+            Set<String> packages = new HashSet<>();
             try {
                 for (Object it : list)
                     packages.add((String) it.getClass().getField("packageName").get(it));
             } catch (Exception ignored) { }
+            if (packages.isEmpty()) packages = null;
             methodStatus[generalId][methodId] = findPackages(packages);
         }
 
         private void method_pm() {
-            Set<String> packages = new TreeSet<>();
+            Set<String> packages = new HashSet<>();
             try {
                 java.lang.Process p = Runtime.getRuntime().exec("pm list packages");
                 BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream(), StandardCharsets.UTF_8));
@@ -235,7 +239,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
         }
 
         private void method_intent() {
-            Set<String> packages = new TreeSet<>();
+            Set<String> packages = new HashSet<>();
             Intent intent = new Intent(Intent.ACTION_MAIN);
             List<ResolveInfo> infos = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_ALL);
             for (ResolveInfo i : infos)
@@ -244,23 +248,26 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             methodStatus[1][M1.get("queryIntentActivities")] = findPackages(packages);
         }
 
-        private void method_uid() {
-            Set<String> packages = new TreeSet<>();
+        private void method_getPackagesForUid() {
+            Set<String> packages = new HashSet<>();
             for (int i = Process.SYSTEM_UID; i <= Process.LAST_APPLICATION_UID; i++) {
                 String[] uid = getPackageManager().getPackagesForUid(i);
                 if (uid != null)
                     Collections.addAll(packages, uid);
             }
+            if (packages.isEmpty()) packages = null;
             methodStatus[2][M2.get("getPackagesForUid")] = findPackages(packages);
         }
 
-        private void method_datafile() {
-            Set<String> packages = new TreeSet<>();
+        private native boolean isFileExists(String path);
+        private void method_file() {
+            methodStatus[3][M3.get("javaFile")] = 0;
+            methodStatus[3][M3.get("nativeFile")] = 0;
             for (String pkg : targets) {
-                File f = new File("/storage/emulated/0/Android/data/" + pkg);
-                if (f.exists()) packages.add(pkg);
+                final String path = "/storage/emulated/0/Android/data/" + pkg;
+                if (new File(path).exists()) methodStatus[3][M3.get("javaFile")] = 1;
+                if (isFileExists(path)) methodStatus[3][M3.get("nativeFile")] = 1;
             }
-            methodStatus[3][M3.get("javaFile")] = findPackages(packages);
         }
 
         private int findPackages(Set<String> packages) {
@@ -286,7 +293,6 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
         targets = default_pref.getStringSet("DetectionSet", null);
         if (targets == null)
             targets = new TreeSet<>(Arrays.asList(getResources().getStringArray(R.array.packages)));
-        else
-            targets = new TreeSet<>(targets);
+        else targets = new TreeSet<>(targets);
     }
 }

@@ -45,12 +45,6 @@ class TemplateSettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.O
         return true
     }
 
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 0)
-            Toast.makeText(this, R.string.xposed_restart_to_apply, Toast.LENGTH_SHORT).show();
-        super.onBackPressed()
-    }
-
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             preferenceManager.sharedPreferencesName = "tpl_" + arguments?.getString("template")

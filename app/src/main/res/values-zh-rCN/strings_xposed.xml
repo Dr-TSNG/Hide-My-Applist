@@ -22,7 +22,7 @@
     <string name="xposed_template_hide_all_apps">禁止读取应用列表</string>
     <string name="xposed_template_hide_all_apps_summary">这会使目标应用无法获取到任何安装信息</string>
     <string name="xposed_template_exclude_self">排除自身</string>
-    <string name="xposed_template_exclude_self_summary">这会避免应用无法检测到自己</string>
+    <string name="xposed_template_exclude_self_summary">这会避免应用无法检测到自己而导致闪退</string>
     <string name="xposed_template_choose_apps_to_hide">选择要隐藏的应用</string>
     <string name="xposed_teplate_select">选择一个模板</string>
 </resources>

@@ -9,6 +9,7 @@
     <SwitchPreferenceCompat
         android:key="HookSelf"
         android:title="@string/settings_hook_self"
+        android:summary="@string/settings_need_restart"
         android:defaultValue="false"/>
 
 </PreferenceScreen>

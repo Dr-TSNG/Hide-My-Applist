@@ -26,8 +26,8 @@ open class XposedBase {
         return enableAllHooks or enabled.contains(hook)
     }
 
-    fun isToHide(pref: XSharedPreferences?, callerName: String, pkgstr: String): Boolean {
-        if (pref == null) return false
+    fun isToHide(pref: XSharedPreferences?, callerName: String, pkgstr: String?): Boolean {
+        if (pref == null || pkgstr == null) return false
         if (pref.getBoolean("ExcludeSelf", false) && pkgstr.contains(callerName)) return false
         if (pref.getBoolean("HideAllApps", false)) return true
         val set = pref.getStringSet("HideApps", HashSet())
@@ -39,12 +39,12 @@ open class XposedBase {
     }
 
     fun ld(log: String) {
-        XposedBridge.log("$APPNAME DEBUG: $log")
+        XposedBridge.log("[HMA DEBUG] $log")
         Log.d(LOG, log)
     }
 
     fun le(log: String) {
-        XposedBridge.log("$APPNAME ERROR: $log")
+        XposedBridge.log("[HMA ERROR] $log")
         Log.e(LOG, log)
     }
 }

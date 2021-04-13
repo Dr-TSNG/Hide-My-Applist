@@ -21,6 +21,7 @@ class XposedEntry : IXposedHookLoadPackage, XposedBase() {
             IndividualHooks().handleLoadPackage(lpp)
         else
             PackageManagerService().handleLoadPackage(lpp)
+        XSharedPreferences(APPNAME, "Settings").makeWorldReadable()
     }
 
     fun getHookMode(): String {

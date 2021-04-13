@@ -13,26 +13,26 @@
     </string>
     <string name="about_mode_differences_title">两种工作模式区别</string>
     <string name="about_mode_differences_description_1">
-        #Individual Hook#\n&#12288;&#12288;此模式通过劫持目标应用的方法调用进行阻断请求，因此需要在作用域中勾选所有目标应用。\n\n
-        @ 由于需要hook目标应用，Xposed本身可能被检测到。\n
-        @ 模块更新/重装后只需重启目标应用。\n
-        @ 修改模板后需要重启目标应用。\n
-        @ 支持虚拟框架（如太极阴）。\n
-        @ 更多样的拦截手段（如文件检测）。\n
-        @ 受Xposed框架本身限制，isolated process无法被hook上（如农业银行）。
+        #Individual Hook#\n&#12288;&#12288;此模式通过劫持目标应用的方法调用进行阻断请求，因此需要在作用域中勾选所有目标应用\n\n
+        @ 由于需要hook目标应用，Xposed本身可能被检测到\n
+        @ 模块更新/重装后只需重启目标应用\n
+        @ 修改模板后需要重启目标应用\n
+        @ 支持虚拟框架（如太极阴）\n
+        @ 支持拦截文件检测\n
+        @ 受Xposed框架本身限制，isolated process无法被hook上（如农业银行）
     </string>
     <string name="about_mode_differences_description_2">
-        #System Hook#\n&#12288;&#12288;此模式通过劫持PackageManagerService通信进行阻断请求，因此只需要在作用域中勾选“Android系统”即可。\n\n
-        @ 由于无需hook目标应用，Xposed本身不会被检测出。\n
-        @ 模块更新/重装后必须重启手机。\n
-        @ 修改模板后实时生效，无需重启目标应用。\n
-        @ 不支持虚拟框架（如太极阴）。\n
-        @ 无法拦截文件检测，若目标应用涉及文件检测推荐同时配合存储重定向（Storage Isolation）使用。\n
-        @ 理论上可以拦截所有app的请求。
+        #System Hook#\n&#12288;&#12288;此模式通过劫持PackageManagerService通信进行阻断请求，因此只需要在作用域中勾选“Android系统”即可\n\n
+        @ 由于无需hook目标应用，Xposed本身不会被检测出\n
+        @ 模块更新/重装后必须重启手机\n
+        @ 修改模板后实时生效，无需重启目标应用\n
+        @ 不支持虚拟框架（如太极阴）\n
+        @ 无法拦截文件检测\n
+        @ 理论上可以拦截所有app的请求
     </string>
     <string name="about_hook_differences_title">几种hook方式区别</string>
     <string name="about_hook_differences_description">
-        &#12288;&#12288;正常app读取应用列表会使用API request中的部分方法，“不安分”的app会使用其他几种方式（相当于漏洞）进行检测。不过请注意，全局模式（禁止读取应用列表）下禁止intent query可能会影响分享、启动浏览器等功能。
+        &#12288;&#12288;正常app读取应用列表会使用API requests中的部分方法，“不安分”的app会使用其他几种方式（相当于漏洞）进行检测。不过请注意，全局模式（禁止读取应用列表）下禁止intent query可能会影响分享、启动浏览器等功能。\n\n一些例子\nAPI requests - 农行\nIntent queries - B站\nFile detections - 步道乐跑
     </string>
     <string name="about_developer">开发者</string>
     <string name="about_support">支持和反馈</string>

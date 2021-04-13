@@ -13,10 +13,22 @@
     </string>
     <string name="about_mode_differences_title">Differences between two modes</string>
     <string name="about_mode_differences_description_1">
-        Not translated yet.
+        #Individual Hook#\nIn this mode, the requests are blocked by hijacking the method call of target apps, so all target apps need to be checked in the Xposed module scope\n\n
+        @ Due to the need for hooking target apps, Xposed itself may be detected\n
+        @ Only need to restart target apps after module update / reinstall\n
+        @ After modifying templates, you need to restart target apps\n
+        @ Support virtual frameworks\n
+        @ Able to handle file detections\n
+        @ Restricted by Xposed framework itself, isolated process cannot be hooked (Example: a Chinese bank app)
     </string>
     <string name="about_mode_differences_description_2">
-        Not translated yet.
+        #System Hook#\nIn this mode, the requests are blocked by hijacking the PackageManagerService communication, so only need to check "Android System" in the  Xposed module scope\n\n
+        @ Since not hooking target apps, Xposed itself will not be detected\n
+        @ Need to reboot after module update / reinstall\n
+        @ After modifying templates, it takes effect in real time without restarting target apps\n
+        @ Not support virtual frameworks\n
+        @ Unable to handle file detections\n
+        @ Theoretically, all the requests can be intercepted
     </string>
     <string name="about_hook_differences_title">Differences among hook methods</string>
     <string name="about_hook_differences_description">
