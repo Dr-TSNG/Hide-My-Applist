@@ -3,5 +3,4 @@
     <string name="settings_hook_mode">Hook mode</string>
     <string name="settings_hook_self">Hook self</string>
     <string name="settings_need_reboot">Reboot to apply mode switch</string>
-    <string name="settings_need_restart">Under Individual Hook mode need to restart the app</string>
 </resources>

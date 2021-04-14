@@ -2,7 +2,12 @@ package com.tsng.hidemyapplist.xposed.hooks
 
 import android.content.pm.ParceledListSlice
 import android.os.Binder
-import com.tsng.hidemyapplist.xposed.XposedBase
+import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.APPNAME
+import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.getRecursiveField
+import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.getTemplatePref
+import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.isToHide
+import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.isUseHook
+import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.ld
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
@@ -10,7 +15,7 @@ import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 import java.lang.reflect.Method
 
-class PackageManagerService : XposedBase(), IXposedHookLoadPackage {
+class PackageManagerService : IXposedHookLoadPackage {
     override fun handleLoadPackage(lpp: LoadPackageParam) {
         if (lpp.packageName != "android") return
         val PKMS = XposedHelpers.findClass("com.android.server.pm.PackageManagerService", lpp.classLoader)
@@ -53,13 +58,6 @@ class PackageManagerService : XposedBase(), IXposedHookLoadPackage {
         }
     }
 
-    private fun getRecursiveField(entry: Any, list: List<String>) : Any? {
-        var field : Any? = entry
-        for (it in list)
-            field = XposedHelpers.getObjectField(field, it) ?: return null
-        return field
-    }
-
     private fun removeList(method: Method, hookName: String, pkgNameObjList: List<String>) {
         XposedBridge.hookMethod(method, object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
@@ -80,6 +78,10 @@ class PackageManagerService : XposedBase(), IXposedHookLoadPackage {
         XposedBridge.hookMethod(method, object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
                 val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", Binder.getCallingUid()) as String
+                if (callerName == APPNAME && param.args[0] == "checkHMAServiceStatus") {
+                    param.result = 1
+                    return
+                }
                 val pref = getTemplatePref(callerName)
                 if (!isUseHook(pref, callerName, hookName)) return
                 ld("PKMS caller: $callerName")

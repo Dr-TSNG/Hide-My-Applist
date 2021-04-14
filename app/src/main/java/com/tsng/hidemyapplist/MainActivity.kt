@@ -1,6 +1,7 @@
 package com.tsng.hidemyapplist
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -11,28 +12,46 @@ import com.tsng.hidemyapplist.ui.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+    private var permissionError = false
 
-    private fun getXposedStatus(): Int { return -1 }
+    private fun isModuleActivated(): Boolean { return false }
+    private fun isHookSelf(): Boolean { return getSharedPreferences("Settings", MODE_WORLD_READABLE).getBoolean("HookSelf", false) }
+    private fun isServiceWorking(): Boolean {
+        return try {
+            packageManager.getPackageUid("checkHMAServiceStatus", 0)
+            true
+        } catch (e : PackageManager.NameNotFoundException) { false }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (getXposedStatus() != -1) {
-            xposed_status.setCardBackgroundColor(getColor(R.color.teal))
-            xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_activited))
-            xposed_status_text.text = getString(R.string.xposed_activated)
-            xposed_status_sub_text.text = when (getXposedStatus()) {
-                0b00 -> getString(R.string.xposed_hook_mode_not_selected)
-                0b01 -> getString(R.string.xposed_hook_mode_individual)
-                0b10 -> getString(R.string.xposed_hook_mode_system)
-                0b11 -> getString(R.string.xposed_hook_mode_mixed)
-                else -> "Unknown hook mode"
+        try {
+            getSharedPreferences("Settings", MODE_WORLD_READABLE)
+            if (isModuleActivated()) {
+                if (isServiceWorking()) {
+                    xposed_status.setCardBackgroundColor(getColor(R.color.teal))
+                    xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_activited))
+                    xposed_status_text.text = getString(R.string.xposed_activated)
+                    xposed_status_sub_text.text = getString(R.string.xposed_service_on)
+                } else {
+                    xposed_status.setCardBackgroundColor(getColor(R.color.info))
+                    xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_activited))
+                    xposed_status_text.text = getString(R.string.xposed_activated)
+                    xposed_status_sub_text.text = getString(R.string.xposed_service_off)
+                }
+            } else {
+                xposed_status.setCardBackgroundColor(getColor(R.color.gray))
+                xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_not_activated))
+                xposed_status_text.text = getString(R.string.xposed_not_activated)
+                xposed_status_sub_text.text = getString(if(isServiceWorking())R.string.xposed_service_on else R.string.xposed_service_off)
             }
-        } else {
-            xposed_status.setCardBackgroundColor(getColor(R.color.gray))
+        } catch (e : SecurityException) {
+            permissionError = true
+            xposed_status.setCardBackgroundColor(getColor(R.color.error))
             xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_not_activated))
-            xposed_status_text.text = getString(R.string.xposed_not_activated)
-            xposed_status_sub_text.text = getString(R.string.xposed_hook_disabled)
+            xposed_status_text.text = getString(R.string.xposed_permition_error)
+            xposed_status_sub_text.text = getString(R.string.xposed_permition_error_i)
         }
         makeUpdateAlert()
         menu_detection_test.setOnClickListener(this)
@@ -43,20 +62,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        val isHookSelf = getSharedPreferences("Settings", MODE_WORLD_READABLE).getBoolean("HookSelf", false)
         when (v.id) {
             R.id.menu_detection_test -> startActivity(Intent(this, DetectionActivity::class.java))
             R.id.menu_template_manage ->
-                if (isHookSelf)
-                    Toast.makeText(this, R.string.xposed_disable_hook_self_first, Toast.LENGTH_SHORT).show()
-                else
-                    startActivity(Intent(this, TemplateManageActivity::class.java))
+                if (permissionError) Toast.makeText(this, R.string.xposed_permition_error_i, Toast.LENGTH_SHORT).show()
+                else if (isHookSelf()) Toast.makeText(this, R.string.xposed_disable_hook_self_first, Toast.LENGTH_SHORT).show()
+                else startActivity(Intent(this, TemplateManageActivity::class.java))
             R.id.menu_scope_manage ->
-                if (isHookSelf)
-                    Toast.makeText(this, R.string.xposed_disable_hook_self_first, Toast.LENGTH_SHORT).show()
-                else
-                    startActivity(Intent(this, ScopeManageActivity::class.java))
-            R.id.menu_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+                if (permissionError) Toast.makeText(this, R.string.xposed_permition_error_i, Toast.LENGTH_SHORT).show()
+                else if (isHookSelf()) Toast.makeText(this, R.string.xposed_disable_hook_self_first, Toast.LENGTH_SHORT).show()
+                else startActivity(Intent(this, ScopeManageActivity::class.java))
+            R.id.menu_settings ->
+                if (permissionError) Toast.makeText(this, R.string.xposed_permition_error_i, Toast.LENGTH_SHORT).show()
+                else startActivity(Intent(this, SettingsActivity::class.java))
             R.id.menu_about -> startActivity(Intent(this, AboutActivity::class.java))
         }
     }

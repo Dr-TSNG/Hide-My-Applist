@@ -16,10 +16,11 @@
         <b>V1.3</b>\n
         [+] 支持更低Android版本\n
         [+] 增加新的检测方式和拦截方式\n
-        [+] 增加System Hook工作模式，无需将目标应用放入模块作用域或是白名单\n
+        [+] 修改模板实时生效，无需重启目标应用（除File detections）\n
         [+] UI重修，关于页面添加更多使用帮助\n
         [+] 由于较V1.1改动大，遇到问题请卸载重装模块\n
-        [@] nativeFile拦截尚未完成，旧工作模式尚未加入新的拦截方式，请等待后续更新\n
+        [-] 移除旧的工作模式，放弃支持虚拟框架\n
+        [%] nativeFile拦截尚未完成\n
         <b>目前已知的bug</b>\nEdXposed YAHFA后端无法进行file detection隐藏（测试版本：4683），请更换Sandhook后端或LSPosed。\n
     </string>
 </resources>

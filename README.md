@@ -9,11 +9,13 @@ Attension: Xposed API version lower than 93 is NOT supported due to a permission
 ## Compilation
 This project uses Hidden API, so you should replace android.jar in Android Studio. [Reference](https://github.com/anggrayudi/android-hidden-api)  
 ## Update Log
-V1.2  
-+ Add new detection methods  
-+ Add System Hook mode  
+V1.3  
++ Downgrade minSdkVersion  
++ Add new detection methods and interception methods  
++ Modifying templates takes effect in real time without restarting target apps (except for file detections)  
 + UI redesign with more help information in about page  
-+ Bug fixes ~with adding new bugs~
++ Due to the big changes to V1.1, if there are problems please uninstall and reinstall the module  
++ Remove old hook mode and abandon trying to support virtual frameworks  
 
 V1.1  
 + Add exclude self support  
@@ -25,11 +27,13 @@ V1.1
 同时可作为Xposed模块用于隐藏应用列表或特定应用，保护你的隐私。  
 注意：由于一个权限问题，Xposed API至少为93才能正常使用该模块  
 ## 更新日志
-V1.2  
-+ 增加新的检测方式  
-+ 增加System Hook工作模式，无需将目标应用放入模块作用域或是白名单  
+V1.3  
++ 支持更低Android版本  
++ 增加新的检测方式和拦截方式  
++ 修改模板实时生效，无需重启目标应用（除File detections）  
 + UI重修，关于页面添加更多使用帮助  
-+ 修复了一些bug，~引入了新的bug~
++ 由于较V1.1改动大，遇到问题请卸载重装模块  
++ 移除旧的工作模式，放弃支持虚拟框架  
 
 V1.1  
 + 增加了排除自身功能  

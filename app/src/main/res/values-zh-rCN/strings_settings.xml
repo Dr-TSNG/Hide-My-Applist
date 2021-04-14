@@ -3,5 +3,4 @@
     <string name="settings_hook_mode">工作模式</string>
     <string name="settings_hook_self">Hook模块自身</string>
     <string name="settings_need_reboot">重启手机以应用更改</string>
-    <string name="settings_need_restart">Individual Hook模式需要重启模块APP</string>
 </resources>

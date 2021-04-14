@@ -22,17 +22,14 @@ class AboutActivity : AbsAboutActivity() {
         items.add(Card(getString(R.string.about_how_to_use_description_1)))
         items.add(Line())
         items.add(Card(getString(R.string.about_how_to_use_description_2)))
-
-        items.add(Category(getString(R.string.about_mode_differences_title)))
-        items.add(Card(getString(R.string.about_mode_differences_description_1)))
         items.add(Line())
-        items.add(Card(getString(R.string.about_mode_differences_description_2)))
+        items.add(Card(getString(R.string.about_how_to_use_description_3)))
 
         items.add(Category(getString(R.string.about_hook_differences_title)))
         items.add(Card(getString(R.string.about_hook_differences_description)))
 
         items.add(Category(getString(R.string.about_developer)))
-        items.add(Contributor(0, "Dr.TSNG", "Developer", "https://github.com/Dr-TSNG"))
+        items.add(Contributor(R.drawable.avatar, "Dr.TSNG", "Developer", "https://github.com/Dr-TSNG"))
 
         items.add(Category(getString(R.string.about_support)))
         items.add(Card("Github Page\nhttps://github.com/Dr-TSNG/Hide-My-Applist"))
