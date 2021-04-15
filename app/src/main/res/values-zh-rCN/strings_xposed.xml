@@ -4,7 +4,7 @@
     <string name="xposed_not_activated">未激活模块</string>
     <string name="xposed_permition_error">权限错误</string>
     <string name="xposed_permition_error_i">不受支持的Xposed版本</string>
-    <string name="xposed_service_on">系统服务运行中</string>
+    <string name="xposed_service_on">系统服务运行中 [版本 </string>
     <string name="xposed_service_off">系统服务未运行</string>
     <string name="xposed_disable_hook_self_first">请先禁用Hook模块自身</string>
     <string name="xposed_template_list">模板列表</string>

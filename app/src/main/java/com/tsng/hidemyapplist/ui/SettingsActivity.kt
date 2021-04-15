@@ -1,8 +1,8 @@
 package com.tsng.hidemyapplist.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.tsng.hidemyapplist.R
@@ -33,7 +33,7 @@ class SettingsActivity : AppCompatActivity() {
                 summary = entry
                 setOnPreferenceChangeListener { _, newValue ->
                     summary = newValue as CharSequence?
-                    if(value != newValue)
+                    if (value != newValue)
                         Toast.makeText(activity, R.string.settings_need_reboot, Toast.LENGTH_SHORT).show()
                     true
                 }

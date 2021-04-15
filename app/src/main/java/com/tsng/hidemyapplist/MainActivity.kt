@@ -16,11 +16,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun isModuleActivated(): Boolean { return false }
     private fun isHookSelf(): Boolean { return getSharedPreferences("Settings", MODE_WORLD_READABLE).getBoolean("HookSelf", false) }
-    private fun isServiceWorking(): Boolean {
+    private fun getServiceVersion(): Int {
         return try {
-            packageManager.getPackageUid("checkHMAServiceStatus", 0)
-            true
-        } catch (e : PackageManager.NameNotFoundException) { false }
+            packageManager.getPackageUid("checkHMAServiceVersion", 0)
+        } catch (e : PackageManager.NameNotFoundException) { 0 }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,24 +27,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_main)
         try {
             getSharedPreferences("Settings", MODE_WORLD_READABLE)
+            val serviceVersion = getServiceVersion()
             if (isModuleActivated()) {
-                if (isServiceWorking()) {
+                if (serviceVersion != 0) {
                     xposed_status.setCardBackgroundColor(getColor(R.color.teal))
                     xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_activited))
                     xposed_status_text.text = getString(R.string.xposed_activated)
-                    xposed_status_sub_text.text = getString(R.string.xposed_service_on)
                 } else {
                     xposed_status.setCardBackgroundColor(getColor(R.color.info))
                     xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_activited))
                     xposed_status_text.text = getString(R.string.xposed_activated)
-                    xposed_status_sub_text.text = getString(R.string.xposed_service_off)
                 }
             } else {
                 xposed_status.setCardBackgroundColor(getColor(R.color.gray))
                 xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_not_activated))
                 xposed_status_text.text = getString(R.string.xposed_not_activated)
-                xposed_status_sub_text.text = getString(if(isServiceWorking())R.string.xposed_service_on else R.string.xposed_service_off)
             }
+            if (serviceVersion != 0)
+                xposed_status_sub_text.text = getString(R.string.xposed_service_on) + "$serviceVersion]"
+            else xposed_status_sub_text.text = getString(R.string.xposed_service_off)
         } catch (e : SecurityException) {
             permissionError = true
             xposed_status.setCardBackgroundColor(getColor(R.color.error))

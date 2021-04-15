@@ -13,7 +13,7 @@
     <string name="updates">New features</string>
     <string name="updates_log">
         <b>Please read the about page carefully!</b>\n
-        <b>V1.3.1</b>\n
+        <b>V1.3.2</b>\n
         [+] Performance optimization\n
         <b>V1.3</b>\n
         [+] Downgrade minSdkVersion\n

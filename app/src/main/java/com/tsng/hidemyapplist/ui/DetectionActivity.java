@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Process;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -31,7 +30,6 @@ import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -115,7 +113,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
         }};
 
         final Map<String, Integer> M2 = new LinkedHashMap<String, Integer>() {{
-            put("getPackagesForUid", 0);
+            put("getPackageUid", 0);
         }};
 
         final Map<String, Integer> M3 = new LinkedHashMap<String, Integer>() {{
@@ -154,7 +152,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             method_intent();
             publishProgress();
 
-            method_getPackagesForUid();
+            method_getPackageUid();
             publishProgress();
 
             method_file();
@@ -248,18 +246,18 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             methodStatus[1][M1.get("queryIntentActivities")] = findPackages(packages);
         }
 
-        private void method_getPackagesForUid() {
-            Set<String> packages = new HashSet<>();
-            for (int i = Process.SYSTEM_UID; i <= Process.LAST_APPLICATION_UID; i++) {
-                String[] uid = getPackageManager().getPackagesForUid(i);
-                if (uid != null)
-                    Collections.addAll(packages, uid);
-            }
-            if (packages.isEmpty()) packages = null;
-            methodStatus[2][M2.get("getPackagesForUid")] = findPackages(packages);
+        private void method_getPackageUid() {
+            for (String pkg : targets)
+                try {
+                    getPackageManager().getPackageUid(pkg, 0);
+                    methodStatus[2][M2.get("getPackageUid")] = 1;
+                    return;
+                } catch (PackageManager.NameNotFoundException ignored) { }
+            methodStatus[2][M2.get("getPackageUid")] = 0;
         }
 
         private native boolean isFileExists(String path);
+
         private void method_file() {
             methodStatus[3][M3.get("javaFile")] = 0;
             methodStatus[3][M3.get("nativeFile")] = 0;

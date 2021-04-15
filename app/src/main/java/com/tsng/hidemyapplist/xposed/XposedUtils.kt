@@ -1,5 +1,7 @@
 package com.tsng.hidemyapplist.xposed
 
+import android.content.Context
+import android.content.pm.PackageManager
 import android.util.Log
 import com.tsng.hidemyapplist.BuildConfig
 import de.robv.android.xposed.XSharedPreferences
@@ -12,6 +14,13 @@ class XposedUtils {
         const val APPNAME = BuildConfig.APPLICATION_ID
 
         @JvmStatic
+        fun callServiceUpdatePref(context: Context) {
+            try {
+                context.packageManager.getPackageUid("updatePreference", 0)
+            } catch (e: PackageManager.NameNotFoundException) { }
+        }
+
+        @JvmStatic
         fun getTemplatePref(pkg: String?): XSharedPreferences? {
             val pref = XSharedPreferences(APPNAME, "Scope")
             if (!pref.file.exists()) return null
@@ -20,32 +29,8 @@ class XposedUtils {
         }
 
         @JvmStatic
-        fun isUseHook(pref: XSharedPreferences?, callerName: String?, hook: String): Boolean {
-            if (pref == null) return false
-            if (callerName == APPNAME)
-                if (!XSharedPreferences(APPNAME, "Settings").getBoolean("HookSelf", false))
-                    return false
-            val enableAllHooks = pref.getBoolean("EnableAllHooks", false)
-            val enabled = pref.getStringSet("ApplyHooks", HashSet())
-            return enableAllHooks or enabled.contains(hook)
-        }
-
-        @JvmStatic
-        fun isToHide(pref: XSharedPreferences?, callerName: String, pkgstr: String?): Boolean {
-            if (pref == null || pkgstr == null) return false
-            if (pref.getBoolean("ExcludeSelf", false) && pkgstr.contains(callerName)) return false
-            if (pref.getBoolean("HideAllApps", false)) return true
-            val set = pref.getStringSet("HideApps", HashSet())
-            for (pkg in set) if (pkgstr.contains(pkg)) {
-                ld("HIDE $pkgstr")
-                return true
-            }
-            return false
-        }
-
-        @JvmStatic
-        fun getRecursiveField(entry: Any, list: List<String>) : Any? {
-            var field : Any? = entry
+        fun getRecursiveField(entry: Any, list: List<String>): Any? {
+            var field: Any? = entry
             for (it in list)
                 field = XposedHelpers.getObjectField(field, it) ?: return null
             return field

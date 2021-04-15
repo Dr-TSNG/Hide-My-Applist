@@ -4,7 +4,7 @@
     <string name="xposed_not_activated">Module Not Activated</string>
     <string name="xposed_permition_error">Permission Error</string>
     <string name="xposed_permition_error_i">Unsupported Xposed version</string>
-    <string name="xposed_service_on">System service is running</string>
+    <string name="xposed_service_on">System service is running [Version </string>
     <string name="xposed_service_off">System service is not running</string>
     <string name="xposed_disable_hook_self_first">Please disable hook self first</string>
     <string name="xposed_template_list">Template List</string>

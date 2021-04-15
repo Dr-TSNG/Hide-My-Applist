@@ -8,7 +8,6 @@ import de.robv.android.xposed.XSharedPreferences
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 import java.io.*
-import java.nio.charset.StandardCharsets
 
 class IndividualHooks : IXposedHookLoadPackage {
     override fun handleLoadPackage(lpp: LoadPackageParam) {
