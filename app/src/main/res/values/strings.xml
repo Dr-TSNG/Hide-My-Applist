@@ -13,13 +13,14 @@
     <string name="updates">New features</string>
     <string name="updates_log">
         <b>Please read the about page carefully!</b>\n
+        <b>V1.3.1</b>\n
+        [+] Performance optimization\n
         <b>V1.3</b>\n
         [+] Downgrade minSdkVersion\n
         [+] Add new detection methods and interception methods\n
         [+] Modifying templates takes effect in real time without restarting target apps (except for file detections)\n
         [+] UI redesign with more help information in about page\n
         [+] Due to the big changes to V1.1, if there are problems please uninstall and reinstall the module\n
-        [-] Remove old hook mode and abandon trying to support virtual frameworks\n
         [@] nativeFile interception has not been completed, wait for next updates\n
         <b>Known bugs</b>\nUnder Edxposed YAHFA file detection hide does not work. (test version: 4683), please switch to Sandhook or LSPosed instead.\n
     </string>

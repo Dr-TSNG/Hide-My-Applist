@@ -2,6 +2,7 @@ package com.tsng.hidemyapplist.xposed.hooks
 
 import android.content.pm.ParceledListSlice
 import android.os.Binder
+import android.os.Process
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.APPNAME
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.getRecursiveField
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.getTemplatePref
@@ -39,7 +40,9 @@ class PackageManagerService : IXposedHookLoadPackage {
             "getPackageUid" -> setResult(method, "ID detections", -1)
             "getPackagesForUid" -> XposedBridge.hookMethod(method, object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
-                    val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", Binder.getCallingUid()) as String
+                    val callerUid = Binder.getCallingUid()
+                    if (callerUid <= Process.SYSTEM_UID) return
+                    val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String
                     val pref = getTemplatePref(callerName)
                     if (!isUseHook(pref, callerName, "ID detections")) return
                     ld("PKMS caller: $callerName")
@@ -61,7 +64,9 @@ class PackageManagerService : IXposedHookLoadPackage {
     private fun removeList(method: Method, hookName: String, pkgNameObjList: List<String>) {
         XposedBridge.hookMethod(method, object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
-                val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", Binder.getCallingUid()) as String
+                val callerUid = Binder.getCallingUid()
+                if (callerUid <= Process.SYSTEM_UID) return
+                val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String
                 val pref = getTemplatePref(callerName)
                 if (!isUseHook(pref, callerName, hookName)) return
                 ld("PKMS caller: $callerName")
@@ -77,7 +82,9 @@ class PackageManagerService : IXposedHookLoadPackage {
     private fun setResult(method: Method, hookName: String, result: Any?) {
         XposedBridge.hookMethod(method, object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
-                val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", Binder.getCallingUid()) as String
+                val callerUid = Binder.getCallingUid()
+                if (callerUid <= Process.SYSTEM_UID) return
+                val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String
                 if (callerName == APPNAME && param.args[0] == "checkHMAServiceStatus") {
                     param.result = 1
                     return

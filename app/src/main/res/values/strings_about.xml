@@ -6,7 +6,7 @@
     </string>
     <string name="about_how_to_use_title">How to use this module</string>
     <string name="about_how_to_use_description_1">
-        #Activation and updates#\nNeed to reboot after installation and updates. In addition, virtual Xposed frameworks are not supported. (If anyone knows how to deal with MODE_WORLD_READABLE welcome to put a GitHub issue)
+        #Activation and updates#\nNeed to reboot after installation and updates. In addition, virtual Xposed frameworks are not supported currently.
     </string>
     <string name="about_how_to_use_description_2">
         #How to enable hide#\nFirst create a template in Manage Templates, then apply the template in Select Effective Apps. You should check Android System in Xposed module scope/whitelist. For file detections interception, you should check target apps extra. (Do not check many: it makes you device slower)
