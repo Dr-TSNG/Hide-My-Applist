@@ -165,7 +165,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
         protected void onPostExecute(Void aVoid) {
             dialog.dismiss();
 
-            IntFunction res = (int r) -> r == 1 ? "\uD83D\uDFE5" : r == 0 ? "\uD83D\uDFE9" : "\uD83D\uDFE8";
+            IntFunction res = (int r) -> r == 1 ? "[F] " : r == 0 ? "[N] " : "[D] ";
             StringBuilder br = new StringBuilder();
             br.append(getString(R.string.detection_color_means)).append("<br/>");
             br.append("<h5><b>API requests</b><h5/>");

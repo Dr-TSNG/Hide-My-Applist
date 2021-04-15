@@ -6,6 +6,7 @@
     <string name="xposed_permition_error_i">不受支持的Xposed版本</string>
     <string name="xposed_service_on">系统服务运行中 [版本 </string>
     <string name="xposed_service_off">系统服务未运行</string>
+    <string name="xposed_service_old">模块已更新，请重启</string>
     <string name="xposed_disable_hook_self_first">请先禁用Hook模块自身</string>
     <string name="xposed_template_list">模板列表</string>
     <string name="xposed_new_template">新建模板</string>
@@ -17,8 +18,6 @@
     <string name="xposed_template_hide_apps">隐藏应用</string>
     <string name="xposed_template_hide_all_apps">禁止读取应用列表</string>
     <string name="xposed_template_hide_all_apps_summary">这会使目标应用无法获取到任何安装信息</string>
-    <string name="xposed_template_exclude_self">排除自身</string>
-    <string name="xposed_template_exclude_self_summary">这会避免应用无法检测到自己而导致闪退</string>
     <string name="xposed_template_choose_apps_to_hide">选择要隐藏的应用</string>
     <string name="xposed_teplate_select">选择一个模板</string>
 </resources>

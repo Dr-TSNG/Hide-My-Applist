@@ -17,7 +17,27 @@ class XposedUtils {
         fun callServiceUpdatePref(context: Context) {
             try {
                 context.packageManager.getPackageUid("updatePreference", 0)
-            } catch (e: PackageManager.NameNotFoundException) { }
+            } catch (e: PackageManager.NameNotFoundException) {
+                le("callServiceUpdatePref: Service not found")
+            }
+        }
+
+        fun callServiceIsUseHook(context: Context, callerName: String?, hookMethod: String): Boolean {
+            return try {
+                context.packageManager.getPackageUid("callIsUseHook#$callerName#$hookMethod", 0) == 1
+            } catch (e: PackageManager.NameNotFoundException) {
+                le("callServiceIsUseHook: Service not found")
+                false
+            }
+        }
+
+        fun callServiceIsToHide(context: Context, callerName: String?, pkgstr: String?): Boolean {
+            return try {
+                context.packageManager.getPackageUid("callIsUseHook#$callerName#$pkgstr", 0) == 1
+            } catch (e: PackageManager.NameNotFoundException) {
+                le("callServiceIsUseHook: Service not found")
+                false
+            }
         }
 
         @JvmStatic
@@ -37,9 +57,9 @@ class XposedUtils {
         }
 
         @JvmStatic
-        fun ld(log: String) {
+        fun li(log: String) {
             XposedBridge.log("[HMA DEBUG] $log")
-            Log.d(LOG, log)
+            Log.i(LOG, log)
         }
 
         @JvmStatic

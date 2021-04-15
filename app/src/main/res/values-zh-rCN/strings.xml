@@ -13,15 +13,13 @@
     <string name="updates">新版本特性</string>
     <string name="updates_log">
         <b>请仔细阅读关于页面的使用帮助！</b>\n
+        <b>V1.3.3</b>\n
+        [+] 更改检测结果图示，因为部分设备无法显示emoji\n
+        [+] 删除“排除自身”按钮，因为不排除肯定闪退\n
+        [+] 现在所有模板修改都是实时生效的了\n
+        [+] 更改日志记录\n
         <b>V1.3.2</b>\n
         [+] 性能优化\n
-        <b>V1.3</b>\n
-        [+] 支持更低Android版本\n
-        [+] 增加新的检测方式和拦截方式\n
-        [+] 修改模板实时生效，无需重启目标应用（除File detections）\n
-        [+] UI重修，关于页面添加更多使用帮助\n
-        [+] 由于较V1.1改动大，遇到问题请卸载重装模块\n
-        [%] nativeFile拦截尚未完成\n
         <b>目前已知的bug</b>\nEdXposed YAHFA后端无法进行file detection隐藏（测试版本：4683），请更换Sandhook后端或LSPosed。\n
     </string>
 </resources>

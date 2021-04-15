@@ -21,10 +21,6 @@
             android:summary="@string/xposed_template_hide_all_apps_summary"
             android:title="@string/xposed_template_hide_all_apps" />
     </PreferenceCategory>
-    <SwitchPreferenceCompat
-        android:key="ExcludeSelf"
-        android:summary="@string/xposed_template_exclude_self_summary"
-        android:title="@string/xposed_template_exclude_self" />
     <Preference
         android:dependency="HideAllApps"
         android:fragment="com.tsng.hidemyapplist.ui.TemplateSettingsActivity$HideAppsFragment"

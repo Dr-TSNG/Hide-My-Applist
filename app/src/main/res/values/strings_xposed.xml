@@ -4,8 +4,9 @@
     <string name="xposed_not_activated">Module Not Activated</string>
     <string name="xposed_permition_error">Permission Error</string>
     <string name="xposed_permition_error_i">Unsupported Xposed version</string>
-    <string name="xposed_service_on">System service is running [Version </string>
-    <string name="xposed_service_off">System service is not running</string>
+    <string name="xposed_service_on">System service running [Version </string>
+    <string name="xposed_service_off">System service not running</string>
+    <string name="xposed_service_old">Module updated, need reboot</string>
     <string name="xposed_disable_hook_self_first">Please disable hook self first</string>
     <string name="xposed_template_list">Template List</string>
     <string name="xposed_new_template">New Template</string>
@@ -17,8 +18,6 @@
     <string name="xposed_template_hide_apps">Hide apps</string>
     <string name="xposed_template_hide_all_apps">Reject applist requests</string>
     <string name="xposed_template_hide_all_apps_summary">This will prevent target apps to find any app installed</string>
-    <string name="xposed_template_exclude_self">Exclude self</string>
-    <string name="xposed_template_exclude_self_summary">This will prevent crashes that an app cannot access itself</string>
     <string name="xposed_template_choose_apps_to_hide">Choose apps to hide</string>
     <string name="xposed_teplate_select">Select a template</string>
 </resources>

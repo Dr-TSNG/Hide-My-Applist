@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 xposed_status_text.text = getString(R.string.xposed_not_activated)
             }
             if (serviceVersion != 0)
-                xposed_status_sub_text.text = getString(R.string.xposed_service_on) + "$serviceVersion]"
+                if (serviceVersion != BuildConfig.VERSION_CODE) xposed_status_sub_text.text = getString(R.string.xposed_service_old)
+                else xposed_status_sub_text.text = getString(R.string.xposed_service_on) + "$serviceVersion]"
             else xposed_status_sub_text.text = getString(R.string.xposed_service_off)
         } catch (e : SecurityException) {
             permissionError = true
