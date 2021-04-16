@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="@string/xposed_template_list"
+        android:text="@string/template_list"
         android:textSize="21sp" />
 
     <com.google.android.material.card.MaterialCardView style="@style/ListCard">
@@ -25,5 +25,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/xposed_new_template" />
+        android:text="@string/template_new" />
 </LinearLayout>

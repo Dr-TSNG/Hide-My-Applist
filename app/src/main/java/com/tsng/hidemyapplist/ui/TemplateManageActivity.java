@@ -33,7 +33,7 @@ public class TemplateManageActivity extends AppCompatActivity {
         findViewById(R.id.xposed_btn_new_template).setOnClickListener(v -> {
             final EditText ev = new EditText(this);
             new MaterialAlertDialogBuilder(this)
-                    .setTitle(R.string.xposed_new_template)
+                    .setTitle(R.string.template_new)
                     .setView(ev)
                     .setNegativeButton(R.string.cancel, null)
                     .setPositiveButton(R.string.accept, ((dialog, which) -> {
@@ -41,7 +41,7 @@ public class TemplateManageActivity extends AppCompatActivity {
                         if (templates.contains(name) || name.isEmpty())
                             new MaterialAlertDialogBuilder(this)
                                     .setTitle(R.string.error)
-                                    .setMessage(R.string.xposed_template_already_exists)
+                                    .setMessage(R.string.template_already_exists)
                                     .setPositiveButton(R.string.accept, null)
                                     .show();
                         else {
@@ -70,7 +70,7 @@ public class TemplateManageActivity extends AppCompatActivity {
         lv.setOnItemLongClickListener((parent, view, position, id) -> {
             String s = ((TextView) view).getText().toString();
             new MaterialAlertDialogBuilder(this)
-                    .setTitle(R.string.xposed_template_delete_confirm)
+                    .setTitle(R.string.template_delete_confirm)
                     .setMessage(s)
                     .setNegativeButton(R.string.cancel, null)
                     .setPositiveButton(R.string.accept, ((dialog, which) -> {

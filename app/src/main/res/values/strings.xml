@@ -4,6 +4,7 @@
     <string name="title_activity_main">Hide My Applist</string>
     <string name="title_detection_test">Detection Test</string>
     <string name="title_template_manage">Manage Templates</string>
+    <string name="title_edit_template">Edit Template</string>
     <string name="title_scope_manage">Select Effective Apps</string>
     <string name="title_settings">Settings</string>
     <string name="title_about">About</string>
@@ -13,13 +14,14 @@
     <string name="updates">New features</string>
     <string name="updates_log">
         <b>Please read the about page carefully!</b>\n
+        <b>V1.3.4</b>\n
+        [+] Fix file hook\n
+        [+] add hide TWRP directory function (not make sense for momo, for nativeFile interception not completed yet)\n
         <b>V1.3.3</b>\n
         [+] Change the text of Detection Test, for emojis not showing on some devices\n
         [+] Remove Exclude Self button, since if not check, the target apps are sure to crash\n
         [+] Now all template changes take effect in real time\n
         [+] Change logging\n
-        <b>V1.3.2</b>\n
-        [+] Performance optimization\n
         <b>Known bugs</b>\nUnder Edxposed YAHFA file detection hide does not work. (test version: 4683), please switch to Sandhook or LSPosed instead.\n
     </string>
 </resources>

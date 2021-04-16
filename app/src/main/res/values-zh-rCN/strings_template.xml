@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="template_list">模板列表</string>
+    <string name="template_new">新建模板</string>
+    <string name="template_already_exists">模板名称为空或已存在</string>
+    <string name="template_delete_confirm">删除模板?</string>
+    <string name="template_enable_all_hooks">启用所有隐藏方式</string>
+    <string name="template_apply_hooks">选择隐藏方式</string>
+    <string name="template_hide_apps">隐藏应用</string>
+    <string name="template_hide_all_apps">禁止读取应用列表</string>
+    <string name="template_hide_all_apps_summary">这会使目标应用无法获取到任何安装信息</string>
+    <string name="template_choose_apps_to_hide">选择要隐藏的应用</string>
+    <string name="template_others">杂项</string>
+    <string name="template_hide_twrp">隐藏TWRP文件夹</string>
+    <string name="template_hide_twrp_summary">File detections拦截</string>
+    <string name="template_select">选择一个模板</string>
+</resources>

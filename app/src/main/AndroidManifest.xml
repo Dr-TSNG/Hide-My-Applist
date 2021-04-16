@@ -29,7 +29,7 @@
             android:label="@string/title_scope_manage" />
         <activity
             android:name=".ui.TemplateSettingsActivity"
-            android:label="@string/xposed_edit_template" />
+            android:label="@string/title_edit_template" />
         <activity
             android:name=".ui.TemplateManageActivity"
             android:label="@string/title_template_manage" />

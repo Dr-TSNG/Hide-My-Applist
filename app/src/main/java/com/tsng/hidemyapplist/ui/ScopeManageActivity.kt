@@ -57,7 +57,7 @@ class ScopeManageActivity : AppCompatActivity() {
             preferenceScreen.removeAll()
             for (pkg in packages)
                 preferenceScreen.addPreference(ListPreference(context).apply {
-                    dialogTitle = getString(R.string.xposed_teplate_select)
+                    dialogTitle = getString(R.string.template_select)
                     title = pkg.applicationInfo.loadLabel(requireActivity().packageManager)
                     icon = pkg.applicationInfo.loadIcon(requireActivity().packageManager)
                     key = pkg.packageName

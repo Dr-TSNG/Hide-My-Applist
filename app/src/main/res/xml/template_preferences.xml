@@ -1,28 +1,37 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory android:title="Hook">
         <SwitchPreferenceCompat
             android:disableDependentsState="true"
             android:key="EnableAllHooks"
-            android:title="@string/xposed_template_enable_all_hooks" />
+            android:title="@string/template_enable_all_hooks" />
         <MultiSelectListPreference
             android:dependency="EnableAllHooks"
             android:entries="@array/detect_methods"
             android:entryValues="@array/detect_methods"
             android:key="ApplyHooks"
-            android:title="@string/xposed_template_apply_hooks">
+            android:title="@string/template_apply_hooks">
 
         </MultiSelectListPreference>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/xposed_template_hide_apps">
+    <PreferenceCategory android:title="@string/template_hide_apps">
         <SwitchPreferenceCompat
             android:disableDependentsState="true"
             android:key="HideAllApps"
-            android:summary="@string/xposed_template_hide_all_apps_summary"
-            android:title="@string/xposed_template_hide_all_apps" />
+            android:summary="@string/template_hide_all_apps_summary"
+            android:title="@string/template_hide_all_apps" />
     </PreferenceCategory>
     <Preference
         android:dependency="HideAllApps"
         android:fragment="com.tsng.hidemyapplist.ui.TemplateSettingsActivity$HideAppsFragment"
-        android:title="@string/xposed_template_choose_apps_to_hide" />
+        android:title="@string/template_choose_apps_to_hide" />
+
+    <PreferenceCategory android:title="@string/template_others">
+        <SwitchPreferenceCompat
+            android:key="HideTWRP"
+            android:summary="@string/template_hide_twrp_summary"
+            app:title="@string/template_hide_twrp" />
+
+    </PreferenceCategory>
 </PreferenceScreen>

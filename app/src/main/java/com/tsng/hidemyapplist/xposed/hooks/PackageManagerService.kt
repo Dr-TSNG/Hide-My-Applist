@@ -23,6 +23,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                 val applyHooks = pref.getStringSet("ApplyHooks", setOf())
                 val hideAllApps = pref.getBoolean("HideAllApps", false)
                 val hideApps = pref.getStringSet("HideApps", setOf())
+                val hideTWRP = pref.getBoolean("HideTWRP", false)
             }
 
             var hookSelf = false
@@ -51,6 +52,18 @@ class PackageManagerService : IXposedHookLoadPackage {
                 if (template.hideAllApps) return true
                 for (pkg in template.hideApps)
                     if (pkgstr.contains(pkg)) return true
+                return false
+            }
+
+            fun isHideFile(callerName: String?, path: String?): Boolean {
+                if (callerName == null || path == null) return false
+                if (path.contains(callerName)) return false
+                val tplName = scope[callerName] ?: return false
+                val template = templates[tplName] ?: return false
+                if (template.hideTWRP && path.matches(Regex("/storage/emulated/(.*)/TWRP(.*)"))) return true
+                if (template.hideAllApps && path.contains(Regex("/storage/emulated/(.*)/Android/data/(.*)"))) return true
+                for (pkg in template.hideApps)
+                    if (path.contains(pkg)) return true
                 return false
             }
 
@@ -109,11 +122,19 @@ class PackageManagerService : IXposedHookLoadPackage {
                             val split = arg.split("#")
                             if (split.size != 3) param.result = 2
                             else param.result = if (isUseHook(split[1], split[2])) 1 else 2
+                            return
                         }
                         arg.contains("callIsToHide") -> {
                             val split = arg.split("#")
                             if (split.size != 3) param.result = 2
                             else param.result = if (isToHide(split[1], split[2])) 1 else 2
+                            return
+                        }
+                        arg.contains("callIsHideFile") -> {
+                            val split = arg.split("#")
+                            if (split.size != 3) param.result = 2
+                            else param.result = if (isHideFile(split[1], split[2])) 1 else 2
+                            return
                         }
                     }
                     /* 非服务模式，正常hook */
@@ -131,7 +152,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                 thread {
                     while (true) {
                         readPreference()
-                        Thread.sleep(2000)
+                        Thread.sleep(1000)
                     }
                 }
                 for (method in PKMS.declaredMethods) when (method.name) {

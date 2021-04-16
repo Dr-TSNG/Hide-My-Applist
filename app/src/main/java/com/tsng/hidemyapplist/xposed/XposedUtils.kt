@@ -22,6 +22,7 @@ class XposedUtils {
             }
         }
 
+        @JvmStatic
         fun callServiceIsUseHook(context: Context, callerName: String?, hookMethod: String): Boolean {
             return try {
                 context.packageManager.getPackageUid("callIsUseHook#$callerName#$hookMethod", 0) == 1
@@ -31,21 +32,15 @@ class XposedUtils {
             }
         }
 
-        fun callServiceIsToHide(context: Context, callerName: String?, pkgstr: String?): Boolean {
+        @JvmStatic
+        fun callServiceIsToHide(context: Context, callerName: String?, pkgstr: String?, fileHook: Boolean): Boolean {
             return try {
-                context.packageManager.getPackageUid("callIsUseHook#$callerName#$pkgstr", 0) == 1
+                if (fileHook) context.packageManager.getPackageUid("callIsHideFile#$callerName#$pkgstr", 0) == 1
+                else context.packageManager.getPackageUid("callIsToHide#$callerName#$pkgstr", 0) == 1
             } catch (e: PackageManager.NameNotFoundException) {
-                le("callServiceIsUseHook: Service not found")
+                le("callServiceIsToHide: Service not found")
                 false
             }
-        }
-
-        @JvmStatic
-        fun getTemplatePref(pkg: String?): XSharedPreferences? {
-            val pref = XSharedPreferences(APPNAME, "Scope")
-            if (!pref.file.exists()) return null
-            val str = pref.getString(pkg, null) ?: return null
-            return XSharedPreferences(APPNAME, "tpl_$str")
         }
 
         @JvmStatic
@@ -58,7 +53,7 @@ class XposedUtils {
 
         @JvmStatic
         fun li(log: String) {
-            XposedBridge.log("[HMA DEBUG] $log")
+            XposedBridge.log("[HMA INFO] $log")
             Log.i(LOG, log)
         }
 
