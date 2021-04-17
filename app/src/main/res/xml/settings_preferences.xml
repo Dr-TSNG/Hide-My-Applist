@@ -1,15 +1,15 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
+        android:defaultValue="System Hook"
         android:enabled="false"
-        android:key="HookMode"
-        android:title="@string/settings_hook_mode"
         android:entries="@array/hook_mode"
         android:entryValues="@array/hook_mode"
-        android:defaultValue="System Hook"
-        android:icon="@drawable/ic_hook_mode"/>
+        android:icon="@drawable/ic_hook_mode"
+        android:key="HookMode"
+        android:title="@string/settings_hook_mode" />
     <SwitchPreferenceCompat
+        android:defaultValue="false"
         android:key="HookSelf"
-        android:title="@string/settings_hook_self"
-        android:defaultValue="false"/>
-
+        android:summary="@string/settings_hook_self_summary"
+        android:title="@string/settings_hook_self" />
 </PreferenceScreen>

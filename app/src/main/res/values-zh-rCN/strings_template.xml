@@ -9,6 +9,9 @@
     <string name="template_hide_apps">隐藏应用</string>
     <string name="template_hide_all_apps">禁止读取应用列表</string>
     <string name="template_hide_all_apps_summary">这会使目标应用无法获取到任何安装信息</string>
+    <string name="template_exclude_system_apps">排除系统应用</string>
+    <string name="template_exclude_webview">排除Webview</string>
+    <string name="template_exclude_webview_summary">这会避免内置浏览器崩溃</string>
     <string name="template_choose_apps_to_hide">选择要隐藏的应用</string>
     <string name="template_others">杂项</string>
     <string name="template_hide_twrp">隐藏TWRP文件夹</string>

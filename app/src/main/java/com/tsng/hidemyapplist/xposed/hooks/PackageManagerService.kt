@@ -22,6 +22,8 @@ class PackageManagerService : IXposedHookLoadPackage {
                 val enableAllHooks = pref.getBoolean("EnableAllHooks", false)
                 val applyHooks = pref.getStringSet("ApplyHooks", setOf())
                 val hideAllApps = pref.getBoolean("HideAllApps", false)
+                //val hideSystemApps = pref.getBoolean("HideSystemApps", false)
+                val ExcludeWebview = pref.getBoolean("ExcludeWebview", false)
                 val hideApps = pref.getStringSet("HideApps", setOf())
                 val hideTWRP = pref.getBoolean("HideTWRP", false)
             }
@@ -49,6 +51,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                 if (pkgstr.contains(callerName)) return false
                 val tplName = scope[callerName] ?: return false
                 val template = templates[tplName] ?: return false
+                if (template.ExcludeWebview && pkgstr.contains(Regex("[Ww]ebview"))) return false
                 if (template.hideAllApps) return true
                 for (pkg in template.hideApps)
                     if (pkgstr.contains(pkg)) return true
@@ -60,8 +63,8 @@ class PackageManagerService : IXposedHookLoadPackage {
                 if (path.contains(callerName)) return false
                 val tplName = scope[callerName] ?: return false
                 val template = templates[tplName] ?: return false
-                if (template.hideTWRP && path.matches(Regex("/storage/emulated/(.*)/TWRP(.*)"))) return true
-                if (template.hideAllApps && path.contains(Regex("/storage/emulated/(.*)/Android/data/(.*)"))) return true
+                if (template.hideTWRP && path.contains(Regex("/storage/emulated/(.*)/TWRP"))) return true
+                if (template.hideAllApps && path.contains(Regex("/storage/emulated/(.*)/Android/data/"))) return true
                 for (pkg in template.hideApps)
                     if (path.contains(pkg)) return true
                 return false

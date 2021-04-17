@@ -14,6 +14,8 @@
     <string name="updates">新版本特性</string>
     <string name="updates_log">
         <b>请仔细阅读关于页面的使用帮助！</b>\n
+        <b>V1.3.5</b>\n
+        [+] 添加排除Webview功能以避免内置浏览器崩溃\n
         <b>V1.3.4</b>\n
         [+] 修复file hook\n
         [+] 添加隐藏TWRP文件夹功能（对momo无效，因为还没写nativeFile拦截）\n

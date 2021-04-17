@@ -9,6 +9,9 @@
     <string name="template_hide_apps">Hide apps</string>
     <string name="template_hide_all_apps">Reject applist requests</string>
     <string name="template_hide_all_apps_summary">This will prevent target apps to find any app installed</string>
+    <string name="template_exclude_system_apps">Exclude system apps</string>
+    <string name="template_exclude_webview">Exclude webview</string>
+    <string name="template_exclude_webview_summary">This will prevent crashes of internal browsers</string>
     <string name="template_choose_apps_to_hide">Choose apps to hide</string>
     <string name="template_others">Others</string>
     <string name="template_hide_twrp">Hide TWRP directory</string>

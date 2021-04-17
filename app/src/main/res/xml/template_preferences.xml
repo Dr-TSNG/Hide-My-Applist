@@ -22,6 +22,16 @@
             android:summary="@string/template_hide_all_apps_summary"
             android:title="@string/template_hide_all_apps" />
     </PreferenceCategory>
+    <!--
+    <SwitchPreferenceCompat
+        android:disableDependentsState="true"
+        android:key="ExcludeSystemApps"
+        android:title="@string/template_exclude_system_apps" />
+    -->
+    <SwitchPreferenceCompat
+        android:key="ExcludeWebview"
+        android:summary="@string/template_exclude_webview_summary"
+        android:title="@string/template_exclude_webview" />
     <Preference
         android:dependency="HideAllApps"
         android:fragment="com.tsng.hidemyapplist.ui.TemplateSettingsActivity$HideAppsFragment"

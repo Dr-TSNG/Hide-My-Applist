@@ -14,9 +14,11 @@
     <string name="updates">New features</string>
     <string name="updates_log">
         <b>Please read the about page carefully!</b>\n
+        <b>V1.3.5</b>\n
+        [+] Add exclude webview to prevent crashes of internal browsers\n
         <b>V1.3.4</b>\n
         [+] Fix file hook\n
-        [+] add hide TWRP directory function (not make sense for momo, for nativeFile interception not completed yet)\n
+        [+] Add hide TWRP directory function (not make sense for momo, for nativeFile interception not completed yet)\n
         <b>V1.3.3</b>\n
         [+] Change the text of Detection Test, for emojis not showing on some devices\n
         [+] Remove Exclude Self button, since if not check, the target apps are sure to crash\n
