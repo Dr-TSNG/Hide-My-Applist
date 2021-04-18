@@ -7,7 +7,6 @@ import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.li
 import de.robv.android.xposed.*
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 import java.io.File
-import java.net.URI
 
 class IndividualHooks : IXposedHookLoadPackage {
     override fun handleLoadPackage(lpp: LoadPackageParam) {

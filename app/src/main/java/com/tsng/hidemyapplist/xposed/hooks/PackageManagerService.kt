@@ -1,13 +1,19 @@
 package com.tsng.hidemyapplist.xposed.hooks
 
+import android.content.Context
+import android.content.Intent
 import android.content.pm.ParceledListSlice
 import android.os.Binder
 import android.os.Process
 import com.tsng.hidemyapplist.BuildConfig
+import com.tsng.hidemyapplist.JSONPreference
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.APPNAME
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.getRecursiveField
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.li
-import de.robv.android.xposed.*
+import de.robv.android.xposed.IXposedHookLoadPackage
+import de.robv.android.xposed.XC_MethodHook
+import de.robv.android.xposed.XposedBridge
+import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 import java.lang.reflect.Method
 import kotlin.concurrent.thread
@@ -18,42 +24,30 @@ class PackageManagerService : IXposedHookLoadPackage {
         val PKMS = XposedHelpers.findClass("com.android.server.pm.PackageManagerService", lpp.classLoader)
         XposedBridge.hookAllConstructors(PKMS, object : XC_MethodHook() {
             /* 建立Preference缓存 */
-            inner class Template(pref: XSharedPreferences) {
-                val enableAllHooks = pref.getBoolean("EnableAllHooks", false)
-                val applyHooks = pref.getStringSet("ApplyHooks", setOf())
-                val hideAllApps = pref.getBoolean("HideAllApps", false)
-                //val hideSystemApps = pref.getBoolean("HideSystemApps", false)
-                val ExcludeWebview = pref.getBoolean("ExcludeWebview", false)
-                val hideApps = pref.getStringSet("HideApps", setOf())
-                val hideTWRP = pref.getBoolean("HideTWRP", false)
-            }
+            var initialized = false
+            var data = JSONPreference()
+            lateinit var context: Context
 
-            var hookSelf = false
-            var templates: MutableMap<String, Template> = mutableMapOf()
-            var scope: Map<String, String> = mapOf()
-
-            fun readPreference() {
-                scope = XSharedPreferences(APPNAME, "Scope").all as Map<String, String>
-                hookSelf = XSharedPreferences(APPNAME, "Settings").getBoolean("HookSelf", false)
-                for (tpl in XSharedPreferences(APPNAME, "Templates").getStringSet("List", setOf()))
-                    templates[tpl] = Template(XSharedPreferences(APPNAME, "tpl_$tpl"))
+            fun receiveJson(str: String) {
+                initialized = true
+                data = JSONPreference.fromJson(str)
             }
 
             fun isUseHook(callerName: String?, hookMethod: String): Boolean {
-                if (callerName == APPNAME && !hookSelf) return false
-                val tplName = scope[callerName] ?: return false
-                val template = templates[tplName] ?: return false
-                return template.enableAllHooks or template.applyHooks.contains(hookMethod)
+                if (callerName == APPNAME && !data.HookSelf) return false
+                val tplName = data.Scope[callerName] ?: return false
+                val template = data.Templates[tplName] ?: return false
+                return template.EnableAllHooks or template.ApplyHooks.contains(hookMethod)
             }
 
             fun isToHide(callerName: String?, pkgstr: String?): Boolean {
                 if (callerName == null || pkgstr == null) return false
                 if (pkgstr.contains(callerName)) return false
-                val tplName = scope[callerName] ?: return false
-                val template = templates[tplName] ?: return false
+                val tplName = data.Scope[callerName] ?: return false
+                val template = data.Templates[tplName] ?: return false
                 if (template.ExcludeWebview && pkgstr.contains(Regex("[Ww]ebview"))) return false
-                if (template.hideAllApps) return true
-                for (pkg in template.hideApps)
+                if (template.HideAllApps) return true
+                for (pkg in template.HideApps)
                     if (pkgstr.contains(pkg)) return true
                 return false
             }
@@ -61,11 +55,12 @@ class PackageManagerService : IXposedHookLoadPackage {
             fun isHideFile(callerName: String?, path: String?): Boolean {
                 if (callerName == null || path == null) return false
                 if (path.contains(callerName)) return false
-                val tplName = scope[callerName] ?: return false
-                val template = templates[tplName] ?: return false
-                if (template.hideTWRP && path.contains(Regex("/storage/emulated/(.*)/TWRP"))) return true
-                if (template.hideAllApps && path.contains(Regex("/storage/emulated/(.*)/Android/data/"))) return true
-                for (pkg in template.hideApps)
+                val tplName = data.Scope[callerName] ?: return false
+                val template = data.Templates[tplName] ?: return false
+                if (template.ExcludeWebview && path.contains(Regex("[Ww]ebview"))) return false
+                if (template.HideTWRP && path.contains(Regex("/storage/emulated/(.*)/TWRP"))) return true
+                if (template.HideAllApps && path.contains(Regex("/storage/emulated/(.*)/Android/data/"))) return true
+                for (pkg in template.HideApps)
                     if (path.contains(pkg)) return true
                 return false
             }
@@ -116,8 +111,8 @@ class PackageManagerService : IXposedHookLoadPackage {
                             param.result = BuildConfig.VERSION_CODE
                             return
                         }
-                        arg == "updatePreference" -> {
-                            readPreference()
+                        arg.contains("providePreference") -> {
+                            receiveJson(arg.split("#")[1])
                             param.result = 1
                             return
                         }
@@ -151,12 +146,19 @@ class PackageManagerService : IXposedHookLoadPackage {
 
             /* 载入PackageManagerService */
             override fun afterHookedMethod(param: MethodHookParam) {
+                context = XposedHelpers.getObjectField(param.thisObject, "mContext") as Context
                 li("System hook installed")
                 thread {
-                    while (true) {
-                        readPreference()
+                    li("Waiting for preference provider")
+                    while (!initialized) {
+                        try {
+                            context.startService(Intent().apply {
+                                setClassName(BuildConfig.APPLICATION_ID, BuildConfig.APPLICATION_ID + ".ProvidePreferenceService")
+                            })
+                        } catch (e: Exception) { }
                         Thread.sleep(1000)
                     }
+                    li("Preferences initialized")
                 }
                 for (method in PKMS.declaredMethods) when (method.name) {
                     "getPackageUid" -> XposedBridge.hookMethod(method, HMAService())

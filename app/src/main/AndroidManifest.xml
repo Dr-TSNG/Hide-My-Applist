@@ -17,6 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".ProvidePreferenceService"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity android:name=".ui.SettingsActivity" />
         <activity
             android:name=".ui.AboutActivity"
@@ -51,7 +56,7 @@
             android:value="Reject applist detection." />
         <meta-data
             android:name="xposedminversion"
-            android:value="93" />
+            android:value="82" />
         <meta-data
             android:name="xposedscope"
             android:resource="@array/xposed_scope" />

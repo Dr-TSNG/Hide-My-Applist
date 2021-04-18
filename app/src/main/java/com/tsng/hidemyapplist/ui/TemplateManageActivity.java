@@ -61,7 +61,7 @@ public class TemplateManageActivity extends AppCompatActivity {
     }
 
     private void InitTemplateList() {
-        list_pref = getSharedPreferences("Templates", Context.MODE_WORLD_READABLE);
+        list_pref = getSharedPreferences("Templates", Context.MODE_PRIVATE);
         templates = new HashSet<>(list_pref.getStringSet("List", new HashSet<>()));
         ListView lv = findViewById(R.id.xposed_lv_template);
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new ArrayList<>(templates));
@@ -76,7 +76,7 @@ public class TemplateManageActivity extends AppCompatActivity {
                     .setPositiveButton(R.string.accept, ((dialog, which) -> {
                         templates.remove(s);
                         adapter.remove(s);
-                        getSharedPreferences("tpl_" + s, MODE_WORLD_READABLE).edit().clear().apply();
+                        deleteSharedPreferences("tpl_" + s);
                         list_pref.edit().putStringSet("List", new HashSet<>(templates)).apply();
                     })).show();
             return true;

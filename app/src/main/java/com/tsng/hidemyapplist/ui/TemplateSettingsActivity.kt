@@ -47,7 +47,6 @@ class TemplateSettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.O
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             preferenceManager.sharedPreferencesName = "tpl_" + arguments?.getString("template")
-            preferenceManager.sharedPreferencesMode = MODE_WORLD_READABLE
             setPreferencesFromResource(R.xml.template_preferences, rootKey)
         }
     }
@@ -58,7 +57,6 @@ class TemplateSettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.O
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             preferenceManager.sharedPreferencesName = "tpl_" + arguments?.getString("template")
-            preferenceManager.sharedPreferencesMode = MODE_WORLD_READABLE
             setPreferencesFromResource(R.xml.template_hideapps_preference, rootKey)
             list = preferenceManager.sharedPreferences.getStringSet("HideApps", setOf())!!.toMutableSet()
             refresh()

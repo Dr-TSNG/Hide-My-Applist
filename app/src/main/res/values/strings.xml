@@ -14,7 +14,9 @@
     <string name="updates">New features</string>
     <string name="updates_log">
         <b>Please read the about page carefully!</b>\n
-        <b>V1.3.5</b>\n
+        <b>Due to the downgrade of API version, the storage location of module data has changed and the templates need to be reconfigured</b>\n
+        <b>V1.4</b>\n
+        [+] Finally, users of Xposed API lower than 93 can also enjoy this module now\n
         [+] Add exclude webview to prevent crashes of internal browsers\n
         <b>V1.3.4</b>\n
         [+] Fix file hook\n

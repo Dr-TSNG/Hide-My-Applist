@@ -2,8 +2,6 @@
 <resources>
     <string name="xposed_activated">已激活模块</string>
     <string name="xposed_not_activated">未激活模块</string>
-    <string name="xposed_permition_error">权限错误</string>
-    <string name="xposed_permition_error_i">不受支持的Xposed版本</string>
     <string name="xposed_service_on">系统服务运行中 [版本 </string>
     <string name="xposed_service_off">系统服务未运行</string>
     <string name="xposed_service_old">模块已更新，请重启</string>

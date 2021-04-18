@@ -27,7 +27,6 @@ class SettingsActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             preferenceManager.sharedPreferencesName = "Settings"
-            preferenceManager.sharedPreferencesMode = MODE_WORLD_READABLE
             setPreferencesFromResource(R.xml.settings_preferences, rootKey)
             preferenceScreen.findPreference<ListPreference>("HookMode")?.apply {
                 summary = entry

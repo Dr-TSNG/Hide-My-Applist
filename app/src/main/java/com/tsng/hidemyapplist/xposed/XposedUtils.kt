@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Log
 import com.tsng.hidemyapplist.BuildConfig
-import de.robv.android.xposed.XSharedPreferences
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 
@@ -12,15 +11,6 @@ class XposedUtils {
     companion object {
         const val LOG = "hma_log"
         const val APPNAME = BuildConfig.APPLICATION_ID
-
-        @JvmStatic
-        fun callServiceUpdatePref(context: Context) {
-            try {
-                context.packageManager.getPackageUid("updatePreference", 0)
-            } catch (e: PackageManager.NameNotFoundException) {
-                le("callServiceUpdatePref: Service not found")
-            }
-        }
 
         @JvmStatic
         fun callServiceIsUseHook(context: Context, callerName: String?, hookMethod: String): Boolean {
@@ -53,13 +43,13 @@ class XposedUtils {
 
         @JvmStatic
         fun li(log: String) {
-            XposedBridge.log("[HMA INFO] $log")
+            XposedBridge.log("[HMA LOG] [INFO] $log")
             Log.i(LOG, log)
         }
 
         @JvmStatic
         fun le(log: String) {
-            XposedBridge.log("[HMA ERROR] $log")
+            XposedBridge.log("[HMA LOG] [ERROR] $log")
             Log.e(LOG, log)
         }
     }
