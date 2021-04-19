@@ -12,8 +12,8 @@ android {
         applicationId "com.tsng.hidemyapplist"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 15
-        versionName "1.4.0.1"
+        versionCode 16
+        versionName "1.4.1"
     }
 
     buildTypes {
@@ -22,12 +22,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        prefab true
+    }
+
     externalNativeBuild {
         cmake {
             path "src/main/cpp/CMakeLists.txt"
             version "3.10.2"
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

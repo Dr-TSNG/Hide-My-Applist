@@ -23,8 +23,8 @@ class ProvidePreferenceService : Service() {
                     json.Templates[template] = Gson().fromJson(Gson().toJson(obj), JSONPreference.Template::class.java)
                 }
                 try {
-                    packageManager.getPackageUid("providePreference#$json", 0)
-                } catch (e: PackageManager.NameNotFoundException) { }
+                    packageManager.getInstallerPackageName("providePreference#$json")
+                } catch (e: IllegalArgumentException) { }
                 Thread.sleep(1000)
             }
         }

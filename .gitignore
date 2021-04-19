@@ -16,11 +16,11 @@ gen/
 out/
 #  Uncomment the following line in case you need and you don't have the release build type files in your app
 release/
+app/debug
 
 # Gradle files
 .gradle/
 build/
-app/debug
 
 # Local configuration file (sdk path, etc)
 local.properties

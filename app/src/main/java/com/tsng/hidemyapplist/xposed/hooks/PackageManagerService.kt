@@ -11,6 +11,9 @@ import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.APPNAME
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.getRecursiveField
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.ld
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.li
+import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.resultIllegal
+import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.resultNo
+import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.resultYes
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
@@ -99,7 +102,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                         if (callerUid < Process.FIRST_APPLICATION_UID) return
                         val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
                         if (!isUseHook(callerName, hookName)) return
-                        if (isToHide(callerName, param.args[0] as String)) {
+                        if (isToHide(callerName, param.args[0] as String?)) {
                             param.result = result
                             li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
                         }
@@ -107,48 +110,44 @@ class PackageManagerService : IXposedHookLoadPackage {
                 })
             }
 
-            /* hook getPackageUid作为通信服务 */
+            /* 劫持 getInstallerPackageName 作为通信服务 */
             inner class HMAService : XC_MethodHook() {
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     val callerUid = Binder.getCallingUid()
                     if (callerUid < Process.FIRST_APPLICATION_UID) return
                     val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
-                    /* 服务模式，执行自定义行为 */
-                    val arg = param.args[0] as String
+                    val arg = param.args[0] as String? ?: return
                     when {
-                        arg == "checkHMAServiceVersion" -> {
-                            param.result = BuildConfig.VERSION_CODE
-                            return
-                        }
+                        /* 服务模式，执行自定义行为 */
+                        arg == "checkHMAServiceVersion" -> param.result = BuildConfig.VERSION_CODE.toString()
+                        arg == "getPreference" -> param.result = data.toString()
                         arg.contains("providePreference") -> {
                             receiveJson(arg.split("#")[1])
-                            param.result = 1
-                            return
+                            param.result = resultYes
                         }
                         arg.contains("callIsUseHook") -> {
                             val split = arg.split("#")
-                            if (split.size != 3) param.result = 2
-                            else param.result = if (isUseHook(split[1], split[2])) 1 else 2
-                            return
+                            if (split.size != 3) param.result = resultIllegal
+                            else param.result = if (isUseHook(split[1], split[2])) resultYes else resultNo
                         }
                         arg.contains("callIsToHide") -> {
                             val split = arg.split("#")
-                            if (split.size != 3) param.result = 2
-                            else param.result = if (isToHide(split[1], split[2])) 1 else 2
-                            return
+                            if (split.size != 3) param.result = resultIllegal
+                            else param.result = if (isToHide(split[1], split[2])) resultYes else resultNo
                         }
                         arg.contains("callIsHideFile") -> {
                             val split = arg.split("#")
-                            if (split.size != 3) param.result = 2
-                            else param.result = if (isHideFile(split[1], split[2])) 1 else 2
-                            return
+                            if (split.size != 3) param.result = resultIllegal
+                            else param.result = if (isHideFile(split[1], split[2])) resultYes else resultNo
                         }
-                    }
-                    /* 非服务模式，正常hook */
-                    if (!isUseHook(callerName, "ID detections")) return
-                    if (isToHide(callerName, param.args[0] as String)) {
-                        param.result = -1
-                        li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
+                        /* 非服务模式，正常hook */
+                        else -> {
+                            if (!isUseHook(callerName, "API requests")) return
+                            if (isToHide(callerName, param.args[0] as String?)) {
+                                param.result = null
+                                li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
+                            }
+                        }
                     }
                 }
             }
@@ -171,7 +170,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                     li("Preferences initialized")
                 }
                 for (method in PKMS.declaredMethods) when (method.name) {
-                    "getPackageUid" -> XposedBridge.hookMethod(method, HMAService())
+                    "getInstallerPackageName" -> XposedBridge.hookMethod(method, HMAService())
 
                     "getInstalledPackages",
                     "getInstalledApplications",
@@ -180,8 +179,7 @@ class PackageManagerService : IXposedHookLoadPackage {
 
                     "getPackageInfo",
                     "getPackageGids",
-                    "getApplicationInfo",
-                    "getInstallerPackageName" -> setResult(method, "API requests", null)
+                    "getApplicationInfo" -> setResult(method, "API requests", null)
 
                     "queryIntentActivities",
                     "queryIntentActivityOptions",
@@ -189,6 +187,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                     "queryIntentServices",
                     "queryIntentContentProviders" -> removeList(method, "Intent queries", listOf("activityInfo", "packageName"))
 
+                    "getPackageUid" -> setResult(method, "ID detections", -1)
                     "getPackagesForUid" -> XposedBridge.hookMethod(method, object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
                             val callerUid = Binder.getCallingUid()

@@ -1,8 +1,6 @@
 package com.tsng.hidemyapplist.xposed
 
 import android.content.Context
-import android.content.pm.PackageManager
-import android.util.Log
 import com.tsng.hidemyapplist.BuildConfig
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -10,26 +8,46 @@ import de.robv.android.xposed.XposedHelpers
 class XposedUtils {
     companion object {
         const val LOG = "hma_log"
+        const val resultNo = "HMA No"
+        const val resultYes = "HMA Yes"
+        const val resultIllegal = "HMA Illegal"
         const val APPNAME = BuildConfig.APPLICATION_ID
 
         @JvmStatic
-        fun callServiceIsUseHook(context: Context, callerName: String?, hookMethod: String): Boolean {
+        fun getServiceVersion(context: Context): Int {
             return try {
-                context.packageManager.getPackageUid("callIsUseHook#$callerName#$hookMethod", 0) == 1
-            } catch (e: PackageManager.NameNotFoundException) {
+                context.packageManager.getInstallerPackageName("checkHMAServiceVersion").toInt()
+            } catch (e: IllegalArgumentException) { 0 }
+        }
+
+        @JvmStatic
+        fun callServiceIsUseHook(context: Context, callerName: String?, hookMethod: String): Boolean {
+            try {
+                val res = context.packageManager.getInstallerPackageName("callIsUseHook#$callerName#$hookMethod")
+                if (res == resultIllegal) {
+                    le("callServiceIsUseHook: Illegal param callIsUseHook#$callerName#$hookMethod")
+                    return false
+                }
+                return res == resultYes
+            } catch (e: IllegalArgumentException) {
                 le("callServiceIsUseHook: Service not found")
-                false
+                return false
             }
         }
 
         @JvmStatic
         fun callServiceIsToHide(context: Context, callerName: String?, pkgstr: String?, fileHook: Boolean): Boolean {
-            return try {
-                if (fileHook) context.packageManager.getPackageUid("callIsHideFile#$callerName#$pkgstr", 0) == 1
-                else context.packageManager.getPackageUid("callIsToHide#$callerName#$pkgstr", 0) == 1
-            } catch (e: PackageManager.NameNotFoundException) {
+            try {
+                val res = if (fileHook) context.packageManager.getInstallerPackageName("callIsHideFile#$callerName#$pkgstr")
+                        else context.packageManager.getInstallerPackageName("callIsToHide#$callerName#$pkgstr")
+                if (res == resultIllegal) {
+                    le("callServiceIsToHide: Illegal param callIsUseHook#$callerName#$pkgstr")
+                    return false
+                }
+                return res == resultYes
+            } catch (e: IllegalArgumentException) {
                 le("callServiceIsToHide: Service not found")
-                false
+                return false
             }
         }
 

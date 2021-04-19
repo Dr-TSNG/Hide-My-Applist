@@ -1,7 +1,6 @@
 package com.tsng.hidemyapplist
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -9,22 +8,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsng.hidemyapplist.ui.*
+import com.tsng.hidemyapplist.xposed.XposedUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun isModuleActivated(): Boolean { return false }
     private fun isHookSelf(): Boolean { return getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("HookSelf", false) }
-    private fun getServiceVersion(): Int {
-        return try {
-            packageManager.getPackageUid("checkHMAServiceVersion", 0)
-        } catch (e : PackageManager.NameNotFoundException) { 0 }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         startService(Intent(this, ProvidePreferenceService::class.java))
-        val serviceVersion = getServiceVersion()
+        val serviceVersion = XposedUtils.getServiceVersion(this)
         if (isModuleActivated()) {
             if (serviceVersion != 0) {
                 xposed_status.setCardBackgroundColor(getColor(R.color.teal))
