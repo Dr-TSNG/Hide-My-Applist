@@ -12,4 +12,8 @@
         android:key="HookSelf"
         android:summary="@string/settings_hook_self_summary"
         android:title="@string/settings_hook_self" />
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="DetailLog"
+        android:title="@string/settings_detail_log" />
 </PreferenceScreen>

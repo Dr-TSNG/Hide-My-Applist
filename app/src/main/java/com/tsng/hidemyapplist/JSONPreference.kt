@@ -13,6 +13,7 @@ class JSONPreference {
     }
 
     var HookSelf = false
+    var DetailLog = false
     var Scope = mapOf<String, String>()
     var Templates = mutableMapOf<String, Template>()
 

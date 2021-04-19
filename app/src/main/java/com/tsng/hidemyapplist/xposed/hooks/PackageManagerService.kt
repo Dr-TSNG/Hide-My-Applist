@@ -9,6 +9,7 @@ import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.JSONPreference
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.APPNAME
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.getRecursiveField
+import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.ld
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.li
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
@@ -75,10 +76,17 @@ class PackageManagerService : IXposedHookLoadPackage {
                         if (!isUseHook(callerName, hookName)) return
                         var isHidden = false
                         val iterator = (param.result as ParceledListSlice<*>).list.iterator()
-                        while (iterator.hasNext())
-                            if (isToHide(callerName, (getRecursiveField(iterator.next()!!, pkgNameObjList) as String?)))
-                                iterator.remove().also { isHidden = true }
+                        val removed = mutableListOf<String>()
+                        while (iterator.hasNext()) {
+                            val str = getRecursiveField(iterator.next(), pkgNameObjList) as String?
+                            if (isToHide(callerName, str)) {
+                                iterator.remove()
+                                isHidden = true
+                                if (data.DetailLog) removed.add(str!!)
+                            }
+                        }
                         if (isHidden) li("@Hide PKMS caller: $callerName method: ${param.method.name}")
+                        if (isHidden && data.DetailLog) ld("removeList $removed")
                     }
                 })
             }
@@ -92,7 +100,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                         if (!isUseHook(callerName, hookName)) return
                         if (isToHide(callerName, param.args[0] as String)) {
                             param.result = result
-                            li("@Hide PKMS caller: $callerName method: ${param.method.name}")
+                            li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
                         }
                     }
                 })
@@ -139,7 +147,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                     if (!isUseHook(callerName, "ID detections")) return
                     if (isToHide(callerName, param.args[0] as String)) {
                         param.result = -1
-                        li("@Hide PKMS caller: $callerName method: ${param.method.name}")
+                        li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
                     }
                 }
             }
@@ -155,7 +163,8 @@ class PackageManagerService : IXposedHookLoadPackage {
                             context.startService(Intent().apply {
                                 setClassName(BuildConfig.APPLICATION_ID, BuildConfig.APPLICATION_ID + ".ProvidePreferenceService")
                             })
-                        } catch (e: Exception) { }
+                        } catch (e: Exception) {
+                        }
                         Thread.sleep(1000)
                     }
                     li("Preferences initialized")
@@ -188,12 +197,16 @@ class PackageManagerService : IXposedHookLoadPackage {
                             if (param.result != null) {
                                 var change = false
                                 val list = mutableListOf<String>()
+                                val removed = mutableListOf<String>()
                                 for (str in param.result as Array<String>)
-                                    if (isToHide(callerName, str)) change = true
-                                    else list.add(str)
+                                    if (isToHide(callerName, str)) {
+                                        change = true
+                                        if (data.DetailLog) removed.add(str)
+                                    } else list.add(str)
                                 if (change) {
                                     param.result = list.toTypedArray()
                                     li("@Hide PKMS caller: $callerName method: ${param.method.name}")
+                                    if (data.DetailLog) ld("removeList $removed")
                                 }
                             }
                         }
