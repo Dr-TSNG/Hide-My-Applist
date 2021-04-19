@@ -42,15 +42,18 @@ class XposedUtils {
         }
 
         @JvmStatic
+        fun ld(log: String) {
+            XposedBridge.log("[HMA LOG] [DEBUG] $log")
+        }
+
+        @JvmStatic
         fun li(log: String) {
             XposedBridge.log("[HMA LOG] [INFO] $log")
-            Log.i(LOG, log)
         }
 
         @JvmStatic
         fun le(log: String) {
             XposedBridge.log("[HMA LOG] [ERROR] $log")
-            Log.e(LOG, log)
         }
     }
 }

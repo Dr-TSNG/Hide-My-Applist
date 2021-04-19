@@ -12,10 +12,8 @@ android {
         applicationId "com.tsng.hidemyapplist"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 14
-        versionName "1.4"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionCode 15
+        versionName "1.4.0.1"
     }
 
     buildTypes {

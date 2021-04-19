@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="settings_hook_mode">Hook mode</string>
+    <string name="settings_need_reboot">Reboot to apply mode switch</string>
     <string name="settings_hook_self">Hook self</string>
     <string name="settings_hook_self_summary">Remember to apply a template to the module itself</string>
-    <string name="settings_need_reboot">Reboot to apply mode switch</string>
+    <string name="settings_detail_log">Detail log for debugging</string>
 </resources>

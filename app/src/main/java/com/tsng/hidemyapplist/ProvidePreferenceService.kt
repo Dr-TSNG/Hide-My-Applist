@@ -16,6 +16,7 @@ class ProvidePreferenceService : Service() {
             while (true) {
                 val json = JSONPreference()
                 json.HookSelf = getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("HookSelf", false)
+                json.DetailLog = getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("DetailLog", false)
                 json.Scope = getSharedPreferences("Scope", MODE_PRIVATE).all as Map<String, String>
                 for (template in getSharedPreferences("Templates", MODE_PRIVATE).getStringSet("List", setOf())) {
                     val obj = getSharedPreferences("tpl_$template", MODE_PRIVATE).all

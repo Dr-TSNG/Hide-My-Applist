@@ -24,8 +24,8 @@ class IndividualHooks : IXposedHookLoadPackage {
             override fun beforeHookedMethod(param: MethodHookParam) {
                 if (XposedUtils.callServiceIsUseHook(context, pkgName, "File detections"))
                     if (XposedUtils.callServiceIsToHide(context, pkgName, param.args[0] as String, true)) {
+                        li("@Hide javaFile caller: $pkgName param: ${param.args[0]}")
                         param.args[0] = "fuck/there/is/no/file"
-                        li("@Hide javaFile caller: $pkgName")
                     }
             }
         })

@@ -22,7 +22,9 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".ui.SettingsActivity" />
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:label="@string/title_settings" />
         <activity
             android:name=".ui.AboutActivity"
             android:theme="@style/AppTheme.About" />
