@@ -32,6 +32,7 @@ class PackageManagerService : IXposedHookLoadPackage {
             fun receiveJson(str: String) {
                 initialized = true
                 data = JSONPreference.fromJson(str)
+                if (data.DetailLog) ld("Receive json: ${data}")
             }
 
             fun isUseHook(callerName: String?, hookMethod: String): Boolean {
@@ -72,7 +73,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                     override fun afterHookedMethod(param: MethodHookParam) {
                         val callerUid = Binder.getCallingUid()
                         if (callerUid < Process.FIRST_APPLICATION_UID) return
-                        val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String
+                        val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
                         if (!isUseHook(callerName, hookName)) return
                         var isHidden = false
                         val iterator = (param.result as ParceledListSlice<*>).list.iterator()
@@ -96,7 +97,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                         val callerUid = Binder.getCallingUid()
                         if (callerUid < Process.FIRST_APPLICATION_UID) return
-                        val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String
+                        val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
                         if (!isUseHook(callerName, hookName)) return
                         if (isToHide(callerName, param.args[0] as String)) {
                             param.result = result
@@ -111,7 +112,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     val callerUid = Binder.getCallingUid()
                     if (callerUid < Process.FIRST_APPLICATION_UID) return
-                    val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String
+                    val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
                     /* 服务模式，执行自定义行为 */
                     val arg = param.args[0] as String
                     when {
@@ -192,7 +193,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                         override fun afterHookedMethod(param: MethodHookParam) {
                             val callerUid = Binder.getCallingUid()
                             if (callerUid < Process.FIRST_APPLICATION_UID) return
-                            val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String
+                            val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
                             if (!isUseHook(callerName, "ID detections")) return
                             if (param.result != null) {
                                 var change = false
