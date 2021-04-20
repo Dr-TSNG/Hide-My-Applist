@@ -21,6 +21,13 @@ class XposedUtils {
         }
 
         @JvmStatic
+        fun getServicePreference(context: Context): String? {
+            return try {
+                context.packageManager.getInstallerPackageName("getPreference")
+            } catch (e: java.lang.IllegalArgumentException) { null }
+        }
+
+        @JvmStatic
         fun callServiceIsUseHook(context: Context, callerName: String?, hookMethod: String): Boolean {
             try {
                 val res = context.packageManager.getInstallerPackageName("callIsUseHook#$callerName#$hookMethod")
@@ -39,7 +46,7 @@ class XposedUtils {
         fun callServiceIsToHide(context: Context, callerName: String?, pkgstr: String?, fileHook: Boolean): Boolean {
             try {
                 val res = if (fileHook) context.packageManager.getInstallerPackageName("callIsHideFile#$callerName#$pkgstr")
-                        else context.packageManager.getInstallerPackageName("callIsToHide#$callerName#$pkgstr")
+                          else context.packageManager.getInstallerPackageName("callIsToHide#$callerName#$pkgstr")
                 if (res == resultIllegal) {
                     le("callServiceIsToHide: Illegal param callIsUseHook#$callerName#$pkgstr")
                     return false

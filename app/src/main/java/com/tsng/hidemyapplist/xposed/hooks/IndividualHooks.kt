@@ -2,22 +2,34 @@ package com.tsng.hidemyapplist.xposed.hooks
 
 import android.app.Application
 import android.content.Context
-import com.tsng.hidemyapplist.JSONPreference
+import com.tsng.hidemyapplist.xposed.XposedEntry.Companion.modulePath
 import com.tsng.hidemyapplist.xposed.XposedUtils
+import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.ld
+import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.le
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.li
-import de.robv.android.xposed.*
+import de.robv.android.xposed.IXposedHookLoadPackage
+import de.robv.android.xposed.XC_MethodHook
+import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 import java.io.File
 import kotlin.concurrent.thread
 
 class IndividualHooks : IXposedHookLoadPackage {
     override fun handleLoadPackage(lpp: LoadPackageParam) {
-        if (lpp.appInfo.isSystemApp) return
+        if (lpp.appInfo == null || lpp.appInfo.isSystemApp) return
+        var loadedNativeLib = false
+        try {
+            System.load(modulePath.substring(0, modulePath.lastIndexOf('/'))
+                    + if (android.os.Process.is64Bit()) "/lib/arm64/libnative_hooks.so" else "/lib/arm/libnative_hooks.so")
+            loadedNativeLib = true
+        } catch (e: Throwable) {
+            le("Load native_hooks library failed | caller: ${lpp.packageName}")
+        }
         XposedHelpers.findAndHookMethod(Application::class.java, "attach", Context::class.java, object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
                 val context = param.args[0] as Context
-                fileHook(context, lpp.packageName)
-                nativeHook(context)
+                if (loadedNativeLib) nativeHook(context, lpp.packageName)
+                else fileHook(context, lpp.packageName)
             }
         })
     }
@@ -34,14 +46,33 @@ class IndividualHooks : IXposedHookLoadPackage {
         })
     }
 
-    fun nativeHook(context: Context) {
+    fun nativeHook(context: Context, pkgName: String) {
+        initNative(pkgName)
         thread {
             while (true) {
-
+                val json = XposedUtils.getServicePreference(context)
+                if (json != null) {
+                    var last = "/"
+                    val messages = nativeBridge(json)
+                    val iterator = messages.iterator()
+                    while (iterator.hasNext()) {
+                        when (val str = iterator.next()) {
+                            "DEBUG" -> last = "d"
+                            "INFO" -> last = "i"
+                            "ERROR" -> last = "e"
+                            else -> when (last) {
+                                "d" -> ld(str)
+                                "i" -> li(str)
+                                "e" -> le(str)
+                            }
+                        }
+                    }
+                }
                 Thread.sleep(1000)
             }
         }
     }
 
-    external fun nativeBridge(pref: JSONPreference): String
+    private external fun initNative(pkgName: String)
+    private external fun nativeBridge(json: String): Array<String>
 }

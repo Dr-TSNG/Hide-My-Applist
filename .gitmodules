@@ -1,3 +1,6 @@
-[submodule "app/src/main/cpp/Dobby"]
-	path = app/src/main/cpp/Dobby
+[submodule "app/src/main/cpp/external/jsonxx"]
+	path = app/src/main/cpp/external/jsonxx
+	url = https://github.com/Nomango/jsonxx
+[submodule "app/src/main/cpp/external/Dobby"]
+	path = app/src/main/cpp/external/Dobby
 	url = https://github.com/jmpews/Dobby

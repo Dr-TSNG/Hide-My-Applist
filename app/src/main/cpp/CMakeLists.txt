@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.10.2)
-
 project("hidemyapplist")
 
 macro(SET_OPTION option value)
@@ -11,9 +10,10 @@ if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     SET_OPTION(DOBBY_DEBUG OFF)
 endif ()
 
-add_subdirectory(Dobby)
+add_subdirectory(external/Dobby)
 
-target_include_directories(dobby PUBLIC Dobby/include)
+target_include_directories(dobby PUBLIC external/Dobby/include)
+include_directories(external/jsonxx/include/jsonxx)
 
 add_library(native_detections SHARED NativeDetections.cpp)
 add_library(native_hooks SHARED NativeHooks.cpp)

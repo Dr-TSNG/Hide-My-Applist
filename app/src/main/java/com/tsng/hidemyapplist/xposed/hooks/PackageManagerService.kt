@@ -163,8 +163,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                             context.startService(Intent().apply {
                                 setClassName(BuildConfig.APPLICATION_ID, BuildConfig.APPLICATION_ID + ".ProvidePreferenceService")
                             })
-                        } catch (e: Exception) {
-                        }
+                        } catch (e: Exception) { }
                         Thread.sleep(1000)
                     }
                     li("Preferences initialized")

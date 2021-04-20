@@ -118,7 +118,9 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
 
         final Map<String, Integer> M3 = new LinkedHashMap<String, Integer>() {{
             put("javaFile", 0);
-            put("nativeFile", 1);
+            put("nativeAccess", 1);
+            put("nativeStat", 2);
+            put("nativeFstat", 3);
         }};
 
         final int ALL_METHODS = M0.size() + M1.size() + M2.size() + M3.size();
@@ -256,15 +258,20 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             methodStatus[2][M2.get("getPackageUid")] = 0;
         }
 
-        private native boolean isFileExists(String path);
+        private native int nativeFile(String path);
 
         private void method_file() {
             methodStatus[3][M3.get("javaFile")] = 0;
-            methodStatus[3][M3.get("nativeFile")] = 0;
+            methodStatus[3][M3.get("nativeAccess")] = 0;
+            methodStatus[3][M3.get("nativeStat")] = 0;
+            methodStatus[3][M3.get("nativeFstat")] = 0;
             for (String pkg : targets) {
                 final String path = "/storage/emulated/0/Android/data/" + pkg;
                 if (new File(path).exists()) methodStatus[3][M3.get("javaFile")] = 1;
-                if (isFileExists(path)) methodStatus[3][M3.get("nativeFile")] = 1;
+                int nativeResult = nativeFile(path);
+                if ((nativeResult & 0b001) != 0) methodStatus[3][M3.get("nativeAccess")] = 1;
+                if ((nativeResult & 0b010) != 0) methodStatus[3][M3.get("nativeStat")] = 1;
+                if ((nativeResult & 0b100) != 0) methodStatus[3][M3.get("nativeFstat")] = 1;
             }
         }
 

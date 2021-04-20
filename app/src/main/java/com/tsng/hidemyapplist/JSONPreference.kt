@@ -4,12 +4,12 @@ import com.google.gson.Gson
 
 class JSONPreference {
     class Template {
-        val EnableAllHooks = false
-        val ApplyHooks = setOf<String>()
+        val HideTWRP = false
         val HideAllApps = false
+        val EnableAllHooks = false
         val ExcludeWebview = false
         val HideApps = setOf<String>()
-        val HideTWRP = false
+        val ApplyHooks = setOf<String>()
     }
 
     var HookSelf = false
