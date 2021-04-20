@@ -14,18 +14,12 @@
     <string name="updates">新版本特性</string>
     <string name="updates_log">
         <b>请仔细阅读关于页面的使用帮助！</b>\n
-        <b>由于降低了API版本，模块数据保存位置发生了改变，需要重新配置</b>\n
+        <b>V1.4.1</b>\n
+        [+] 更改System Hook入口函数\n
+        [+] 已初步实现Native hook（momo的检测方法太强了，暂时无法拦截）\n
         <b>V1.4</b>\n
+        <b>由于降低了API版本，模块数据保存位置发生了改变，需要重新配置</b>\n
         [+] 现在Xposed API小于93的用户也能使用本模块了（包括太极阳）\n
         [+] 添加排除Webview功能以避免内置浏览器崩溃\n
-        <b>V1.3.4</b>\n
-        [+] 修复file hook\n
-        [+] 添加隐藏TWRP文件夹功能（对momo无效，因为还没写nativeFile拦截）\n
-        <b>V1.3.3</b>\n
-        [+] 更改检测结果图示，因为部分设备无法显示emoji\n
-        [+] 删除“排除自身”按钮，因为不排除肯定闪退\n
-        [+] 现在所有模板修改都是实时生效的了\n
-        [+] 更改日志记录\n
-        <b>目前已知的bug</b>\nEdXposed YAHFA后端无法进行file detection隐藏（测试版本：4683），请更换Sandhook后端或LSPosed。\n
     </string>
 </resources>

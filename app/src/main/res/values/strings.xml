@@ -14,18 +14,12 @@
     <string name="updates">New features</string>
     <string name="updates_log">
         <b>Please read the about page carefully!</b>\n
-        <b>Due to the downgrade of API version, the storage location of module data has changed and the templates need to be reconfigured</b>\n
+        <b>V1.4.1</b>\n
+        [+] Changed System Hook initialization method\n
+        [+] Elementarily realizes Native hook (Still cannot bypass momo TWRP detection)\n
         <b>V1.4</b>\n
+        <b>Due to the downgrade of API version, the storage location of module data has changed and the templates need to be reconfigured</b>\n
         [+] Finally, users of Xposed API lower than 93 can also enjoy this module now\n
         [+] Add exclude webview to prevent crashes of internal browsers\n
-        <b>V1.3.4</b>\n
-        [+] Fix file hook\n
-        [+] Add hide TWRP directory function (not make sense for momo, for nativeFile interception not completed yet)\n
-        <b>V1.3.3</b>\n
-        [+] Change the text of Detection Test, for emojis not showing on some devices\n
-        [+] Remove Exclude Self button, since if not check, the target apps are sure to crash\n
-        [+] Now all template changes take effect in real time\n
-        [+] Change logging\n
-        <b>Known bugs</b>\nUnder Edxposed YAHFA file detection hide does not work. (test version: 4683), please switch to Sandhook or LSPosed instead.\n
     </string>
 </resources>
