@@ -9,6 +9,7 @@
 #include <algorithm>
 #include "dobby.h"
 #include "json.hpp"
+
 using std::string;
 
 constexpr char APPNAME[] = "com.tsng.hidemyapplist";
@@ -58,10 +59,12 @@ void ld(const string &s) {
     messageQueue.push("DEBUG");
     messageQueue.push(s);
 }
+
 void li(const string &s) {
     messageQueue.push("INFO");
     messageQueue.push(s);
 }
+
 void le(const string &s) {
     messageQueue.push("ERROR");
     messageQueue.push(s);
@@ -73,7 +76,9 @@ bool isUseHook(const string &hookMethod) {
     const auto &tplName = data.Scope[callerName];
     if (!data.Templates.count(tplName)) return false;
     const auto &tpl = data.Templates[tplName];
-    return tpl.EnableAllHooks | std::find(tpl.ApplyHooks.begin(), tpl.ApplyHooks.end(), hookMethod) != tpl.ApplyHooks.end();
+    return tpl.EnableAllHooks |
+           std::find(tpl.ApplyHooks.begin(), tpl.ApplyHooks.end(), hookMethod) !=
+           tpl.ApplyHooks.end();
 }
 
 bool isHideFile(const char *path) {
@@ -83,10 +88,14 @@ bool isHideFile(const char *path) {
     const auto &tplName = data.Scope[callerName];
     if (!data.Templates.count(tplName)) return false;
     const auto &tpl = data.Templates[tplName];
-    if (tpl.ExcludeWebview && std::regex_search(path, std::regex("/storage/emulated/(.*)/TWRP"))) return true;
-    if (tpl.HideAllApps && std::regex_search(path, std::regex("/storage/emulated/(.*)/Android/data/"))) return true;
+    if (tpl.ExcludeWebview &&
+        std::regex_search(path, std::regex("/storage/emulated/(.*)/TWRP")))
+        return true;
+    if (tpl.HideAllApps &&
+        std::regex_search(path, std::regex("/storage/emulated/(.*)/Android/data/")))
+        return true;
     for (const auto &pkg : tpl.HideApps)
-        if(strstr(path, pkg.c_str()) != nullptr)
+        if (strstr(path, pkg.c_str()) != nullptr)
             return true;
     return false;
 }
@@ -113,23 +122,32 @@ int fake_stat(const char *path, struct stat *buf) {
     return orig_stat(path, buf);
 }
 
-int (*orig_open)(const char *path, int mode);
-int fake_open(const char *path, int mode) {
+int (*orig_open)(const char *path, int flags, ...);
+int fake_open(const char *path, int flags, ...) {
     if (isUseHook("File detections") && isHideFile(path)) {
         std::stringstream message;
         message << "@Hide nativeOpen caller: " << callerName << " param: " << path;
         li(message.str());
         return -1;
     }
-    return orig_open(path, mode);
+    mode_t mode = 0;
+    if (flags & O_CREAT) {
+        va_list args;
+        va_start(args, flags);
+        mode = (mode_t) va_arg(args, int);
+        va_end(args);
+    }
+    return orig_open(path, flags, mode);
 }
 
 extern "C" JNIEXPORT void JNICALL
 Java_com_tsng_hidemyapplist_xposed_hooks_IndividualHooks_initNative(JNIEnv *env, jobject, jstring j_pkgName) {
     callerName = env->GetStringUTFChars(j_pkgName, nullptr);
-    DobbyHook((void*)access, (void*)fake_access, (void**)&orig_access);
-    DobbyHook((void*)stat, (void*)fake_stat, (void**)&orig_stat);
-    //DobbyHook((void*)open, (void*)fake_open, (void**)&orig_open);
+    DobbyHook((void *) access, (void *) fake_access, (void **) &orig_access);
+    DobbyHook((void *) stat, (void *) fake_stat, (void **) &orig_stat);
+    int (*p_orig_open)(const char *, int) = __open_2;
+    DobbyHook((void *) p_orig_open, (void *) fake_open, (void **) &orig_open);
+    DobbyHook((void *) DobbySymbolResolver(nullptr, "open"), (void *) fake_open, (void **) &orig_open);
 }
 
 extern "C" JNIEXPORT jobjectArray JNICALL
