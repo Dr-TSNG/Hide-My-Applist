@@ -89,6 +89,9 @@ bool isHideFile(const char *path) {
     if (!data.Templates.count(tplName)) return false;
     const auto &tpl = data.Templates[tplName];
     if (tpl.ExcludeWebview &&
+        std::regex_search(path, std::regex("[Ww]ebview")))
+        return false;
+    if (tpl.HideTWRP &&
         std::regex_search(path, std::regex("/storage/emulated/(.*)/TWRP")))
         return true;
     if (tpl.HideAllApps &&
