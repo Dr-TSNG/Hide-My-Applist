@@ -10,6 +10,7 @@ import com.tsng.hidemyapplist.JSONPreference
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.APPNAME
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.getRecursiveField
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.ld
+import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.le
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.li
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.resultIllegal
 import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.resultNo
@@ -31,6 +32,7 @@ class PackageManagerService : IXposedHookLoadPackage {
             var initialized = false
             var data = JSONPreference()
             lateinit var context: Context
+            lateinit var mLock: Any
 
             fun receiveJson(str: String) {
                 initialized = true
@@ -76,21 +78,23 @@ class PackageManagerService : IXposedHookLoadPackage {
                     override fun afterHookedMethod(param: MethodHookParam) {
                         val callerUid = Binder.getCallingUid()
                         if (callerUid < Process.FIRST_APPLICATION_UID) return
-                        val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
-                        if (!isUseHook(callerName, hookName)) return
-                        var isHidden = false
-                        val iterator = (param.result as ParceledListSlice<*>).list.iterator()
-                        val removed = mutableListOf<String>()
-                        while (iterator.hasNext()) {
-                            val str = getRecursiveField(iterator.next(), pkgNameObjList) as String?
-                            if (isToHide(callerName, str)) {
-                                iterator.remove()
-                                isHidden = true
-                                if (data.DetailLog) removed.add(str!!)
+                        synchronized(mLock) {
+                            val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
+                            if (!isUseHook(callerName, hookName)) return
+                            var isHidden = false
+                            val iterator = (param.result as ParceledListSlice<*>).list.iterator()
+                            val removed = mutableListOf<String>()
+                            while (iterator.hasNext()) {
+                                val str = getRecursiveField(iterator.next(), pkgNameObjList) as String?
+                                if (isToHide(callerName, str)) {
+                                    iterator.remove()
+                                    isHidden = true
+                                    if (data.DetailLog) removed.add(str!!)
+                                }
                             }
+                            if (isHidden) li("@Hide PKMS caller: $callerName method: ${param.method.name}")
+                            if (isHidden && data.DetailLog) ld("removeList $removed")
                         }
-                        if (isHidden) li("@Hide PKMS caller: $callerName method: ${param.method.name}")
-                        if (isHidden && data.DetailLog) ld("removeList $removed")
                     }
                 })
             }
@@ -100,11 +104,13 @@ class PackageManagerService : IXposedHookLoadPackage {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                         val callerUid = Binder.getCallingUid()
                         if (callerUid < Process.FIRST_APPLICATION_UID) return
-                        val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
-                        if (!isUseHook(callerName, hookName)) return
-                        if (isToHide(callerName, param.args[0] as String?)) {
-                            param.result = result
-                            li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
+                        synchronized(mLock) {
+                            val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
+                            if (!isUseHook(callerName, hookName)) return
+                            if (isToHide(callerName, param.args[0] as String?)) {
+                                param.result = result
+                                li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
+                            }
                         }
                     }
                 })
@@ -115,37 +121,39 @@ class PackageManagerService : IXposedHookLoadPackage {
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     val callerUid = Binder.getCallingUid()
                     if (callerUid < Process.FIRST_APPLICATION_UID) return
-                    val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
-                    val arg = param.args[0] as String? ?: return
-                    when {
-                        /* 服务模式，执行自定义行为 */
-                        arg == "checkHMAServiceVersion" -> param.result = BuildConfig.VERSION_CODE.toString()
-                        arg == "getPreference" -> param.result = data.toString()
-                        arg.contains("providePreference") -> {
-                            receiveJson(arg.split("#")[1])
-                            param.result = resultYes
-                        }
-                        arg.contains("callIsUseHook") -> {
-                            val split = arg.split("#")
-                            if (split.size != 3) param.result = resultIllegal
-                            else param.result = if (isUseHook(split[1], split[2])) resultYes else resultNo
-                        }
-                        arg.contains("callIsToHide") -> {
-                            val split = arg.split("#")
-                            if (split.size != 3) param.result = resultIllegal
-                            else param.result = if (isToHide(split[1], split[2])) resultYes else resultNo
-                        }
-                        arg.contains("callIsHideFile") -> {
-                            val split = arg.split("#")
-                            if (split.size != 3) param.result = resultIllegal
-                            else param.result = if (isHideFile(split[1], split[2])) resultYes else resultNo
-                        }
-                        /* 非服务模式，正常hook */
-                        else -> {
-                            if (!isUseHook(callerName, "API requests")) return
-                            if (isToHide(callerName, param.args[0] as String?)) {
-                                param.result = null
-                                li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
+                    synchronized(mLock) {
+                        val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
+                        val arg = param.args[0] as String? ?: return
+                        when {
+                            /* 服务模式，执行自定义行为 */
+                            arg == "checkHMAServiceVersion" -> param.result = BuildConfig.VERSION_CODE.toString()
+                            arg == "getPreference" -> param.result = data.toString()
+                            arg.contains("providePreference") -> {
+                                receiveJson(arg.split("#")[1])
+                                param.result = resultYes
+                            }
+                            arg.contains("callIsUseHook") -> {
+                                val split = arg.split("#")
+                                if (split.size != 3) param.result = resultIllegal
+                                else param.result = if (isUseHook(split[1], split[2])) resultYes else resultNo
+                            }
+                            arg.contains("callIsToHide") -> {
+                                val split = arg.split("#")
+                                if (split.size != 3) param.result = resultIllegal
+                                else param.result = if (isToHide(split[1], split[2])) resultYes else resultNo
+                            }
+                            arg.contains("callIsHideFile") -> {
+                                val split = arg.split("#")
+                                if (split.size != 3) param.result = resultIllegal
+                                else param.result = if (isHideFile(split[1], split[2])) resultYes else resultNo
+                            }
+                            /* 非服务模式，正常hook */
+                            else -> {
+                                if (!isUseHook(callerName, "API requests")) return
+                                if (isToHide(callerName, param.args[0] as String?)) {
+                                    param.result = null
+                                    li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
+                                }
                             }
                         }
                     }
@@ -155,7 +163,17 @@ class PackageManagerService : IXposedHookLoadPackage {
             /* 载入PackageManagerService */
             override fun afterHookedMethod(param: MethodHookParam) {
                 context = XposedHelpers.getObjectField(param.thisObject, "mContext") as Context
-                li("System hook installed")
+                try { //Android 11+
+                    mLock = XposedHelpers.getObjectField(param.thisObject, "mLock")
+                } catch (e: NoSuchFieldError) {
+                    try { // Android 10-
+                        mLock = XposedHelpers.getObjectField(param.thisObject, "mPackages")
+                    } catch (e: NoSuchFieldError) { // Strange custom ROM, should not happen
+                        le("Unknown mLock field, running with self lock")
+                        mLock = Any()
+                    }
+                }
+                li("System hook installed (Version ${BuildConfig.VERSION_CODE})")
                 thread {
                     li("Waiting for preference provider")
                     while (!initialized) {
@@ -191,21 +209,23 @@ class PackageManagerService : IXposedHookLoadPackage {
                         override fun afterHookedMethod(param: MethodHookParam) {
                             val callerUid = Binder.getCallingUid()
                             if (callerUid < Process.FIRST_APPLICATION_UID) return
-                            val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
-                            if (!isUseHook(callerName, "ID detections")) return
-                            if (param.result != null) {
-                                var change = false
-                                val list = mutableListOf<String>()
-                                val removed = mutableListOf<String>()
-                                for (str in param.result as Array<String>)
-                                    if (isToHide(callerName, str)) {
-                                        change = true
-                                        if (data.DetailLog) removed.add(str)
-                                    } else list.add(str)
-                                if (change) {
-                                    param.result = list.toTypedArray()
-                                    li("@Hide PKMS caller: $callerName method: ${param.method.name}")
-                                    if (data.DetailLog) ld("removeList $removed")
+                            synchronized(mLock) {
+                                val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
+                                if (!isUseHook(callerName, "ID detections")) return
+                                if (param.result != null) {
+                                    var change = false
+                                    val list = mutableListOf<String>()
+                                    val removed = mutableListOf<String>()
+                                    for (str in param.result as Array<String>)
+                                        if (isToHide(callerName, str)) {
+                                            change = true
+                                            if (data.DetailLog) removed.add(str)
+                                        } else list.add(str)
+                                    if (change) {
+                                        param.result = list.toTypedArray()
+                                        li("@Hide PKMS caller: $callerName method: ${param.method.name}")
+                                        if (data.DetailLog) ld("removeList $removed")
+                                    }
                                 }
                             }
                         }

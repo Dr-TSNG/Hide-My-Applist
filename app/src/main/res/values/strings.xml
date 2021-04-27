@@ -14,12 +14,9 @@
     <string name="updates">New features</string>
     <string name="updates_log">
         <b>Please read the about page carefully!</b>\n
-        <b>V1.4.1</b>\n
-        [+] Changed System Hook initialization method\n
-        [+] Elementarily realizes Native hook (Still cannot bypass momo TWRP detection)\n
-        <b>V1.4</b>\n
-        <b>Due to the downgrade of API version, the storage location of module data has changed and the templates need to be reconfigured</b>\n
-        [+] Finally, users of Xposed API lower than 93 can also enjoy this module now\n
-        [+] Add exclude webview to prevent crashes of internal browsers\n
+        <b>Tint: Except for intercepting file detections, there is no need to check target apps in EdXposed/LSPosed module scope</b>\n
+        <b>V1.4.2</b>\n
+        [+] Fix crashes on some devices\n
+        [+] Elementarily realizes Native hook
     </string>
 </resources>

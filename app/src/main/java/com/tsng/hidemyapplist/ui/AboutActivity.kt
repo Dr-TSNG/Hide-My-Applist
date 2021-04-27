@@ -29,10 +29,12 @@ class AboutActivity : AbsAboutActivity() {
         items.add(Card(getString(R.string.about_hook_differences_description)))
 
         items.add(Category(getString(R.string.about_developer)))
-        items.add(Contributor(R.drawable.avatar, "Dr.TSNG", "Developer", "https://github.com/Dr-TSNG"))
+        items.add(Contributor(R.drawable.about_author, "Dr.TSNG", "Developer", "https://github.com/Dr-TSNG"))
 
         items.add(Category(getString(R.string.about_support)))
         items.add(Card("Github Page\nhttps://github.com/Dr-TSNG/Hide-My-Applist"))
+        items.add(Line())
+        items.add(Card("Telegram Group\nhttps://t.me/HideMyApplist"))
         items.add(Line())
         items.add(Card("CoolMarket\nhttps://www.coolapk.com/u/1911298"))
 
