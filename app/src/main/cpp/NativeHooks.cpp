@@ -14,7 +14,7 @@ using std::string;
 
 constexpr char APPNAME[] = "com.tsng.hidemyapplist";
 
-struct Preference {
+struct Config {
     struct Template {
         bool HideTWRP = false;
         bool HideAllApps = false;
@@ -28,11 +28,11 @@ struct Preference {
     bool DetailLog = false;
     std::map<string, string> Scope;
     std::map<string, Template> Templates;
-} data;
+} config;
 
 template<>
-struct jsonxx::json_bind<Preference::Template> {
-    static void from_json(const json &j, Preference::Template &v) {
+struct jsonxx::json_bind<Config::Template> {
+    static void from_json(const json &j, Config::Template &v) {
         jsonxx::from_json(j["HideTWRP"], v.HideTWRP);
         jsonxx::from_json(j["HideAllApps"], v.HideAllApps);
         jsonxx::from_json(j["EnableAllHooks"], v.EnableAllHooks);
@@ -43,8 +43,8 @@ struct jsonxx::json_bind<Preference::Template> {
 };
 
 template<>
-struct jsonxx::json_bind<Preference> {
-    static void from_json(const json &j, Preference &v) {
+struct jsonxx::json_bind<Config> {
+    static void from_json(const json &j, Config &v) {
         jsonxx::from_json(j["HookSelf"], v.HookSelf);
         jsonxx::from_json(j["DetailLog"], v.DetailLog);
         jsonxx::from_json(j["Scope"], v.Scope);
@@ -71,11 +71,11 @@ void le(const string &s) {
 }
 
 bool isUseHook(const string &hookMethod) {
-    if (strcmp(callerName, APPNAME) == 0 && !data.HookSelf) return false;
-    if (!data.Scope.count(callerName)) return false;
-    const auto &tplName = data.Scope[callerName];
-    if (!data.Templates.count(tplName)) return false;
-    const auto &tpl = data.Templates[tplName];
+    if (strcmp(callerName, APPNAME) == 0 && !config.HookSelf) return false;
+    if (!config.Scope.count(callerName)) return false;
+    const auto &tplName = config.Scope[callerName];
+    if (!config.Templates.count(tplName)) return false;
+    const auto &tpl = config.Templates[tplName];
     return tpl.EnableAllHooks |
            std::find(tpl.ApplyHooks.begin(), tpl.ApplyHooks.end(), hookMethod) !=
            tpl.ApplyHooks.end();
@@ -84,10 +84,10 @@ bool isUseHook(const string &hookMethod) {
 bool isHideFile(const char *path) {
     if (callerName == nullptr || path == nullptr) return false;
     if (strstr(path, callerName) != nullptr) return false;
-    if (!data.Scope.count(callerName)) return false;
-    const auto &tplName = data.Scope[callerName];
-    if (!data.Templates.count(tplName)) return false;
-    const auto &tpl = data.Templates[tplName];
+    if (!config.Scope.count(callerName)) return false;
+    const auto &tplName = config.Scope[callerName];
+    if (!config.Templates.count(tplName)) return false;
+    const auto &tpl = config.Templates[tplName];
     if (tpl.ExcludeWebview &&
         std::regex_search(path, std::regex("[Ww]ebview")))
         return false;
@@ -157,7 +157,7 @@ Java_com_tsng_hidemyapplist_xposed_hooks_IndividualHooks_initNative(JNIEnv *env,
 
 extern "C" JNIEXPORT jobjectArray JNICALL
 Java_com_tsng_hidemyapplist_xposed_hooks_IndividualHooks_nativeBridge(JNIEnv *env, jobject, jstring j_json) {
-    jsonxx::from_json(jsonxx::json::parse(env->GetStringUTFChars(j_json, nullptr)), data);
+    jsonxx::from_json(jsonxx::json::parse(env->GetStringUTFChars(j_json, nullptr)), config);
     int length = messageQueue.size();
     jobjectArray ret = env->NewObjectArray(length, env->FindClass("java/lang/String"), nullptr);
     for (int i = 0; i < length; i++) {

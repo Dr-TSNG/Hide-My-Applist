@@ -2,7 +2,7 @@ package com.tsng.hidemyapplist
 
 import com.google.gson.Gson
 
-class JSONPreference {
+class JsonConfig {
     class Template {
         val HideTWRP = false
         val HideAllApps = false
@@ -23,8 +23,8 @@ class JSONPreference {
 
     companion object {
         @JvmStatic
-        fun fromJson(str: String): JSONPreference {
-            return Gson().fromJson(str, JSONPreference::class.java)
+        fun fromJson(str: String): JsonConfig {
+            return Gson().fromJson(str, JsonConfig::class.java)
         }
     }
 }

@@ -15,8 +15,9 @@
     <string name="updates_log">
         <b>请仔细阅读关于页面的使用帮助！</b>\n
         <b>提示：除了拦截文件检测外，不需要在EdXposed/LSPosed作用域中勾选目标APP</b>\n
-        <b>V1.4.2</b>\n
+        <b>V1.4.3</b>\n
         [+] 修复一些卡开机/崩溃问题\n
-        [+] 已初步实现Native hook\n
+        <b>V1.4.2</b>\n
+        [+] 已初步实现native hooks (如果闪退请使用无native hooks版本)\n
     </string>
 </resources>

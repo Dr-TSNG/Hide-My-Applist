@@ -15,8 +15,9 @@
     <string name="updates_log">
         <b>Please read the about page carefully!</b>\n
         <b>Tint: Except for intercepting file detections, there is no need to check target apps in EdXposed/LSPosed module scope</b>\n
-        <b>V1.4.2</b>\n
+        <b>V1.4.3</b>\n
         [+] Fix crashes on some devices\n
-        [+] Elementarily realizes Native hook
+        <b>V1.4.2</b>\n
+        [+] Elementarily realizes Native hook (If the native hooks version crashes, please use no native hooks version instead)
     </string>
 </resources>
