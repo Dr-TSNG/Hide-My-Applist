@@ -25,13 +25,13 @@ class PackageManagerService : IXposedHookLoadPackage {
         var config = JsonConfig()
 
         fun updateConfig(str: String) {
-            if (!initialized) {
-                initialized = true
-                li("Preference initialized")
-            }
             synchronized(config) {
                 config = JsonConfig.fromJson(str)
                 if (config.DetailLog) ld("Receive json: $config")
+            }
+            if (!initialized) {
+                initialized = true
+                li("Preference initialized")
             }
         }
 

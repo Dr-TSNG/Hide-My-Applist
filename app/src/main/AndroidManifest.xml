@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.tsng.hidemyapplist">
 
     <queries>
@@ -8,7 +9,11 @@
         </intent>
     </queries>
 
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -19,10 +24,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver
+            android:name=".BootCompleteReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".ProvidePreferenceService"
-            android:enabled="true"
-            android:exported="true" />
+            android:enabled="true" />
 
         <activity
             android:name=".ui.SettingsActivity"

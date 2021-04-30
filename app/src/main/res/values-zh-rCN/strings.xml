@@ -14,6 +14,7 @@
     <string name="updates">新版本特性</string>
     <string name="updates_log">
         <b>请仔细阅读关于页面的使用帮助！</b>\n
+        <b>请允许模块开机自启以使系统服务读取配置文件（之后无需保持后台）</b>\n
         <b>提示：除了拦截文件检测外，不需要在EdXposed/LSPosed作用域中勾选目标APP</b>\n
         <b>V1.4.3</b>\n
         [+] 修复一些卡开机/崩溃问题\n
