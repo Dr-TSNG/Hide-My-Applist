@@ -67,16 +67,16 @@ object XposedUtils {
 
     @JvmStatic
     fun ld(log: String) {
-        XposedBridge.log("[HMA LOG] [DEBUG] $log")
+        XposedBridge.log("[HMA Xposed] [DEBUG] $log")
     }
 
     @JvmStatic
     fun li(log: String) {
-        XposedBridge.log("[HMA LOG] [INFO] $log")
+        XposedBridge.log("[HMA Xposed] [INFO] $log")
     }
 
     @JvmStatic
     fun le(log: String) {
-        XposedBridge.log("[HMA LOG] [ERROR] $log")
+        XposedBridge.log("[HMA Xposed] [ERROR] $log")
     }
 }

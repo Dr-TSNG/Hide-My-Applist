@@ -51,28 +51,12 @@ class IndividualHooks : IXposedHookLoadPackage {
         thread {
             while (true) {
                 val json = XposedUtils.getServicePreference(context)
-                if (json != null) {
-                    var last = "/"
-                    val messages = nativeBridge(json)
-                    val iterator = messages.iterator()
-                    while (iterator.hasNext()) {
-                        when (val str = iterator.next()) {
-                            "DEBUG" -> last = "d"
-                            "INFO" -> last = "i"
-                            "ERROR" -> last = "e"
-                            else -> when (last) {
-                                "d" -> ld(str)
-                                "i" -> li(str)
-                                "e" -> le(str)
-                            }
-                        }
-                    }
-                }
+                if (json != null) nativeBridge(json)
                 Thread.sleep(1000)
             }
         }
     }
 
     private external fun initNative(pkgName: String)
-    private external fun nativeBridge(json: String): Array<String>
+    private external fun nativeBridge(json: String)
 }
