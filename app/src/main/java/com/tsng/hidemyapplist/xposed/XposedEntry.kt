@@ -1,6 +1,6 @@
 package com.tsng.hidemyapplist.xposed
 
-import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.APPNAME
+import com.tsng.hidemyapplist.xposed.XposedUtils.APPNAME
 import com.tsng.hidemyapplist.xposed.hooks.IndividualHooks
 import com.tsng.hidemyapplist.xposed.hooks.PackageManagerService
 import de.robv.android.xposed.IXposedHookLoadPackage

@@ -43,6 +43,7 @@ class AboutActivity : AbsAboutActivity() {
         items.add(License("Gson", "Google", License.APACHE_2, "https://github.com/google/gson"))
         items.add(License("MultiType", "drakeet", License.APACHE_2, "https://github.com/drakeet/MultiType"))
         items.add(License("about-page", "drakeet", License.APACHE_2, "https://github.com/drakeet/about-page"))
+        items.add(License("SmartRefreshLayout", "scwang90", License.APACHE_2, "https://github.com/scwang90/SmartRefreshLayout"))
         items.add(License("Dobby", "jmpews", License.APACHE_2, "https://github.com/jmpews/Dobby"))
     }
 }

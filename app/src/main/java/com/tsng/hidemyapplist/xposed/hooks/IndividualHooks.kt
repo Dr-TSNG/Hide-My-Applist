@@ -4,9 +4,9 @@ import android.app.Application
 import android.content.Context
 import com.tsng.hidemyapplist.xposed.XposedEntry.Companion.modulePath
 import com.tsng.hidemyapplist.xposed.XposedUtils
-import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.ld
-import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.le
-import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.li
+import com.tsng.hidemyapplist.xposed.XposedUtils.ld
+import com.tsng.hidemyapplist.xposed.XposedUtils.le
+import com.tsng.hidemyapplist.xposed.XposedUtils.li
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
@@ -16,7 +16,7 @@ import kotlin.concurrent.thread
 
 class IndividualHooks : IXposedHookLoadPackage {
     override fun handleLoadPackage(lpp: LoadPackageParam) {
-        if (lpp.appInfo == null || lpp.appInfo.isSystemApp) return
+        if (lpp.appInfo == null) return
         var loadedNativeLib = false
         try {
             System.load(modulePath.substring(0, modulePath.lastIndexOf('/'))

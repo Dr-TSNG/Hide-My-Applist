@@ -2,24 +2,32 @@ package com.tsng.hidemyapplist.ui
 
 import android.content.pm.ApplicationInfo
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.iterator
 import com.tsng.hidemyapplist.R
+import kotlinx.android.synthetic.main.appselect.*
 import kotlinx.android.synthetic.main.toolbar.*
+import java.text.Collator
+import java.util.*
 import kotlin.collections.set
+import kotlin.concurrent.thread
 
 class ScopeManageActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_scope_manage)
+        setContentView(R.layout.appselect)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         if (savedInstanceState == null) {
             supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.xposed_score_container, SettingsFragment())
+                    .replace(R.id.appselect_container, SelectAppsFragment())
                     .commit()
         }
     }
@@ -29,23 +37,59 @@ class ScopeManageActivity : AppCompatActivity() {
         return true
     }
 
-    class SettingsFragment : PreferenceFragmentCompat() {
-
+    class SelectAppsFragment : PreferenceFragmentCompat() {
         private lateinit var map: MutableMap<String, String>
         private lateinit var templates: Set<String>
 
+        private var showSystemApps = false
+
+        override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+            inflater.inflate(R.menu.toolbar_appselect, menu)
+            val searchView = menu.findItem(R.id.toolbar_search).actionView as SearchView
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    for (pref in preferenceScreen)
+                        pref.isVisible = pref.title.contains(newText)
+                    return false
+                }
+            })
+        }
+
+        override fun onOptionsItemSelected(item: MenuItem): Boolean {
+            return when (item.itemId) {
+                R.id.toolbar_show_system_apps -> {
+                    item.isChecked = !item.isChecked
+                    showSystemApps = item.isChecked
+                    requireActivity().refresh_layout.autoRefresh()
+                    true
+                }
+                else -> super.onOptionsItemSelected(item)
+            }
+        }
+
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setHasOptionsMenu(true)
             preferenceManager.sharedPreferencesName = "Scope"
-            setPreferencesFromResource(R.xml.scope_preferences, rootKey)
+            setPreferencesFromResource(R.xml.empty_preferences, rootKey)
             map = preferenceManager.sharedPreferences.all as MutableMap<String, String>
             templates = setOf("<close>") +
                     requireActivity().getSharedPreferences("Templates", MODE_PRIVATE).getStringSet("List", setOf())!!
-            refresh()
+            requireActivity().refresh_layout.apply {
+                setOnRefreshListener {
+                    thread { refresh() }
+                }
+                autoRefresh()
+            }
         }
 
         private fun refresh() {
             val packages = requireActivity().packageManager.getInstalledPackages(0)
-            packages.removeAll { it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0 }
+            if (!showSystemApps)
+                packages.removeAll { it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0 && !map.contains(it.packageName) }
             packages.sortWith { o1, o2 ->
                 val l1 = o1.applicationInfo.loadLabel(requireActivity().packageManager) as String
                 val l2 = o2.applicationInfo.loadLabel(requireActivity().packageManager) as String
@@ -53,10 +97,10 @@ class ScopeManageActivity : AppCompatActivity() {
                     if (map.containsKey(o2.packageName)) 1
                     else -1
                 else
-                    l1.compareTo(l2)
+                    Collator.getInstance(Locale.getDefault()).compare(l1, l2)
             }
             preferenceScreen.removeAll()
-            for (pkg in packages)
+            for (pkg in packages) {
                 preferenceScreen.addPreference(ListPreference(context).apply {
                     dialogTitle = getString(R.string.template_select)
                     title = pkg.applicationInfo.loadLabel(requireActivity().packageManager)
@@ -80,6 +124,8 @@ class ScopeManageActivity : AppCompatActivity() {
                         }
                     }
                 })
+            }
+            requireActivity().refresh_layout.finishRefresh()
         }
     }
 }

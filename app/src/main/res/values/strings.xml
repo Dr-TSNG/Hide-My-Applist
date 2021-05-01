@@ -16,7 +16,9 @@
         <b>Please read the about page carefully!</b>\n
         <b>Please allow boot autostart to ensure system receives module config (No need to keep in background afterwards)</b>\n
         <b>Tint: Except for intercepting file detections, there is no need to check target apps in Xposed module scope</b>\n
-        <b>V1.4.3</b>\n
+        <b>V1.5</b>\n
+        [+] UI redesign and add search bar\n
+        [+] Add hide system apps\n
         [+] Fix crashes on some devices\n
         <b>V1.4.2</b>\n
         [+] Elementarily realizes Native hook (If the native hooks version crashes, please use no native hooks version instead)

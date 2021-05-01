@@ -5,13 +5,13 @@ import android.os.Binder
 import android.os.Process
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.JsonConfig
-import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.APPNAME
-import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.getRecursiveField
-import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.ld
-import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.li
-import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.resultIllegal
-import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.resultNo
-import com.tsng.hidemyapplist.xposed.XposedUtils.Companion.resultYes
+import com.tsng.hidemyapplist.xposed.XposedUtils.APPNAME
+import com.tsng.hidemyapplist.xposed.XposedUtils.getRecursiveField
+import com.tsng.hidemyapplist.xposed.XposedUtils.ld
+import com.tsng.hidemyapplist.xposed.XposedUtils.li
+import com.tsng.hidemyapplist.xposed.XposedUtils.resultIllegal
+import com.tsng.hidemyapplist.xposed.XposedUtils.resultNo
+import com.tsng.hidemyapplist.xposed.XposedUtils.resultYes
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
@@ -77,7 +77,6 @@ class PackageManagerService : IXposedHookLoadPackage {
             XposedBridge.hookMethod(method, object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
                     val callerUid = Binder.getCallingUid()
-                    if (callerUid < Process.FIRST_APPLICATION_UID) return
                     val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
                     if (!isUseHook(callerName, hookName)) return
                     var isHidden = false
@@ -101,7 +100,6 @@ class PackageManagerService : IXposedHookLoadPackage {
             XposedBridge.hookMethod(method, object : XC_MethodHook() {
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     val callerUid = Binder.getCallingUid()
-                    if (callerUid < Process.FIRST_APPLICATION_UID) return
                     val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
                     if (!isUseHook(callerName, hookName)) return
                     if (isToHide(callerName, param.args[0] as String?)) {
@@ -116,7 +114,6 @@ class PackageManagerService : IXposedHookLoadPackage {
         class HMAService : XC_MethodHook() {
             override fun beforeHookedMethod(param: MethodHookParam) {
                 val callerUid = Binder.getCallingUid()
-                if (callerUid < Process.FIRST_APPLICATION_UID) return
                 val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
                 val arg = param.args[0] as String? ?: return
                 when {
@@ -187,7 +184,6 @@ class PackageManagerService : IXposedHookLoadPackage {
             "getPackagesForUid" -> XposedBridge.hookMethod(method, object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
                     val callerUid = Binder.getCallingUid()
-                    if (callerUid < Process.FIRST_APPLICATION_UID) return
                     val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
                     if (!isUseHook(callerName, "ID detections")) return
                     if (param.result != null) {
