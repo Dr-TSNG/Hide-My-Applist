@@ -5,13 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar" />
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/xposed_status"
-        style="@style/DefaultCard">
+        style="@style/DefaultCard"
+        android:layout_marginTop="18dp">
 
         <LinearLayout
             style="@style/Default"
-            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:orientation="horizontal">
 
@@ -21,24 +23,24 @@
 
             <LinearLayout
                 style="@style/Default"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="25dp"
+                android:paddingBottom="25dp">
 
                 <TextView
                     android:id="@+id/xposed_status_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="2dp"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/xposed_status_sub_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="@android:color/white" />
             </LinearLayout>
 
@@ -48,7 +50,8 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/menu_detection_test"
-        style="@style/DefaultCard">
+        style="@style/DefaultCard"
+        app:cardElevation="0dp">
 
         <LinearLayout
             style="@style/Default"
@@ -61,7 +64,8 @@
 
             <TextView
                 style="@style/DefaultCardText"
-                android:text="@string/title_detection_test" />
+                android:text="@string/title_detection_test"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -81,7 +85,8 @@
 
             <TextView
                 style="@style/DefaultCardText"
-                android:text="@string/title_template_manage" />
+                android:text="@string/title_template_manage"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -101,7 +106,8 @@
 
             <TextView
                 style="@style/DefaultCardText"
-                android:text="@string/title_scope_manage" />
+                android:text="@string/title_scope_manage"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -121,7 +127,8 @@
 
             <TextView
                 style="@style/DefaultCardText"
-                android:text="@string/title_settings" />
+                android:text="@string/title_settings"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -141,7 +148,8 @@
 
             <TextView
                 style="@style/DefaultCardText"
-                android:text="@string/title_about" />
+                android:text="@string/title_about"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

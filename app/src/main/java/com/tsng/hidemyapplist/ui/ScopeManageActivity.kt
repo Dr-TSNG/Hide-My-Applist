@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.tsng.hidemyapplist.R
+import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.collections.set
 
 class ScopeManageActivity : AppCompatActivity() {
@@ -13,13 +14,14 @@ class ScopeManageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scope_manage)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         if (savedInstanceState == null) {
             supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.xposed_score_container, SettingsFragment())
                     .commit()
         }
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onSupportNavigateUp(): Boolean {

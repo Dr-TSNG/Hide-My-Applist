@@ -28,6 +28,7 @@ public class TemplateManageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_template_manage);
+        setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         InitTemplateList();
         findViewById(R.id.xposed_btn_new_template).setOnClickListener(v -> {

@@ -4,13 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:text="@string/template_list"
-        android:textSize="21sp" />
+        android:textAppearance="?attr/textAppearanceHeadline6" />
 
     <com.google.android.material.card.MaterialCardView style="@style/ListCard">
 

@@ -1,16 +1,16 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/indigo_700</item>
-
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
     </style>
 
-    <style name="AppTheme.About" parent="AppTheme">
-        <item name="android:windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="AppTheme.About" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 
     <style name="Default">
@@ -19,34 +19,40 @@
     </style>
 
     <style name="DefaultCard" parent="Widget.MaterialComponents.CardView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">70dp</item>
-        <item name="cardCornerRadius">10dp</item>
-        <item name="android:layout_marginTop">12dp</item>
-        <item name="android:layout_marginHorizontal">18dp</item>
         <item name="android:clickable">true</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginStart">18dp</item>
+        <item name="android:layout_marginEnd">18dp</item>
+        <item name="cardBackgroundColor">@color/colorBackground</item>
+        <item name="cardCornerRadius">10dp</item>
     </style>
 
     <style name="DefaultCardImage">
         <item name="android:layout_width">30dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
     </style>
 
     <style name="DefaultCardText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginVertical">16dp</item>
-        <item name="android:layout_marginStart">10dp</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:paddingTop">25dp</item>
+        <item name="android:paddingBottom">25dp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="ListCard" parent="Widget.MaterialComponents.CardView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">400dp</item>
-        <item name="android:layout_marginHorizontal">60dp</item>
-        <item name="android:layout_marginVertical">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginStart">60dp</item>
+        <item name="android:layout_marginEnd">60dp</item>
+        <item name="cardBackgroundColor">@color/colorBackground</item>
         <item name="cardCornerRadius">10dp</item>
     </style>
 </resources>

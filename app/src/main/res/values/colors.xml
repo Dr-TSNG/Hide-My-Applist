@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="gray">#FF607D8B</color>
-    <color name="info">#FF0277BD</color>
-    <color name="error">#FFFF1744</color>
-    <color name="colorPrimary">#FF3F51B5</color>
-    <color name="indigo_700">#FF303F9F</color>
-    <color name="teal">#FF009688</color>
+    <color name="gray">#607D8B</color>
+    <color name="info">#0277BD</color>
+    <color name="error">#FF1744</color>
+    <color name="teal">#009688</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorBackground">#F5F5F5</color>
 </resources>

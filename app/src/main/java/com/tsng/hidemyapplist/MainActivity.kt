@@ -10,6 +10,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsng.hidemyapplist.ui.*
 import com.tsng.hidemyapplist.xposed.XposedUtils
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun isModuleActivated(): Boolean { return false }
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
         startService(Intent(this, ProvidePreferenceService::class.java))
         val serviceVersion = XposedUtils.getServiceVersion(this)
         if (isModuleActivated()) {
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 xposed_status_text.text = getString(R.string.xposed_activated)
             } else {
                 xposed_status.setCardBackgroundColor(getColor(R.color.info))
-                xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_activited))
+                xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_service_not_running))
                 xposed_status_text.text = getString(R.string.xposed_activated)
             }
         } else {

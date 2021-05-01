@@ -7,6 +7,7 @@ import androidx.preference.CheckBoxPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.tsng.hidemyapplist.R
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 class TemplateSettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
@@ -16,8 +17,9 @@ class TemplateSettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.O
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_template_settings)
-        template = intent.getStringExtra("template")
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        template = intent.getStringExtra("template")
         if (savedInstanceState == null) {
             supportFragmentManager
                     .beginTransaction()
