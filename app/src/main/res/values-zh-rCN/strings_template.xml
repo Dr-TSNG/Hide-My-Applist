@@ -12,6 +12,7 @@
     <string name="template_exclude_webview">排除Webview</string>
     <string name="template_exclude_webview_summary">这会避免内置浏览器崩溃</string>
     <string name="template_choose_apps_to_hide">选择要隐藏的应用</string>
+    <string name="template_is_system_app">系统应用</string>
     <string name="template_others">杂项</string>
     <string name="template_hide_twrp">隐藏TWRP文件夹</string>
     <string name="template_hide_twrp_summary">File detections拦截</string>

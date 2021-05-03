@@ -16,7 +16,7 @@ import kotlin.concurrent.thread
 
 class IndividualHooks : IXposedHookLoadPackage {
     override fun handleLoadPackage(lpp: LoadPackageParam) {
-        if (lpp.appInfo == null) return
+        if (lpp.appInfo == null || lpp.appInfo.isSystemApp) return
         var loadedNativeLib = false
         try {
             System.load(modulePath.substring(0, modulePath.lastIndexOf('/'))

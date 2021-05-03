@@ -42,6 +42,7 @@ class ScopeManageActivity : AppCompatActivity() {
         private lateinit var templates: Set<String>
 
         private var showSystemApps = false
+        private var refreshThread: Thread? = null
 
         override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
             inflater.inflate(R.menu.toolbar_appselect, menu)
@@ -79,53 +80,69 @@ class ScopeManageActivity : AppCompatActivity() {
             templates = setOf("<close>") +
                     requireActivity().getSharedPreferences("Templates", MODE_PRIVATE).getStringSet("List", setOf())!!
             requireActivity().refresh_layout.apply {
-                setOnRefreshListener {
-                    thread { refresh() }
-                }
+                setOnRefreshListener { refresh() }
                 autoRefresh()
             }
         }
 
+        override fun onDestroy() {
+            refreshThread?.let {
+                it.interrupt()
+                while (it.isAlive)
+                    Thread.sleep(50)
+            }
+            super.onDestroy()
+        }
+
         private fun refresh() {
-            val packages = requireActivity().packageManager.getInstalledPackages(0)
-            if (!showSystemApps)
-                packages.removeAll { it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0 && !map.contains(it.packageName) }
-            packages.sortWith { o1, o2 ->
-                val l1 = o1.applicationInfo.loadLabel(requireActivity().packageManager) as String
-                val l2 = o2.applicationInfo.loadLabel(requireActivity().packageManager) as String
-                if (map.containsKey(o1.packageName) xor map.containsKey(o2.packageName))
-                    if (map.containsKey(o2.packageName)) 1
-                    else -1
-                else
-                    Collator.getInstance(Locale.getDefault()).compare(l1, l2)
-            }
-            preferenceScreen.removeAll()
-            for (pkg in packages) {
-                preferenceScreen.addPreference(ListPreference(context).apply {
-                    dialogTitle = getString(R.string.template_select)
-                    title = pkg.applicationInfo.loadLabel(requireActivity().packageManager)
-                    icon = pkg.applicationInfo.loadIcon(requireActivity().packageManager)
-                    key = pkg.packageName
-                    entries = templates.toTypedArray()
-                    entryValues = templates.toTypedArray()
-                    if (map.containsKey(pkg.packageName))
-                        summary = map[pkg.packageName]
-                    setOnPreferenceChangeListener { _, newValue ->
-                        if (newValue.equals("<close>")) {
-                            summary = null
-                            map.remove(pkg.packageName)
-                            value = "<close>"
-                            preferenceManager.sharedPreferences.edit().remove(pkg.packageName).apply()
-                            false
-                        } else {
-                            summary = newValue as String
-                            map[pkg.packageName] = newValue
-                            true
-                        }
+            refreshThread = thread {
+                try {
+                    val packages = requireActivity().packageManager.getInstalledPackages(0)
+                    if (!showSystemApps)
+                        packages.removeAll { it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0 && !map.contains(it.packageName) }
+                    packages.sortWith { o1, o2 ->
+                        if (Thread.interrupted()) throw InterruptedException()
+                        val l1 = o1.applicationInfo.loadLabel(requireActivity().packageManager) as String
+                        val l2 = o2.applicationInfo.loadLabel(requireActivity().packageManager) as String
+                        if (map.containsKey(o1.packageName) xor map.containsKey(o2.packageName))
+                            if (map.containsKey(o2.packageName)) 1
+                            else -1
+                        else
+                            Collator.getInstance(Locale.getDefault()).compare(l1, l2)
                     }
-                })
+                    preferenceScreen.removeAll()
+                    for (pkg in packages) {
+                        if (Thread.interrupted()) throw InterruptedException()
+                        preferenceScreen.addPreference(ListPreference(context).apply {
+                            dialogTitle = getString(R.string.template_select)
+                            title = if (pkg.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0)
+                                getString(R.string.template_is_system_app) + " - " + pkg.applicationInfo.loadLabel(requireActivity().packageManager)
+                            else
+                                pkg.applicationInfo.loadLabel(requireActivity().packageManager)
+                            icon = pkg.applicationInfo.loadIcon(requireActivity().packageManager)
+                            key = pkg.packageName
+                            entries = templates.toTypedArray()
+                            entryValues = templates.toTypedArray()
+                            if (map.containsKey(pkg.packageName))
+                                summary = map[pkg.packageName]
+                            setOnPreferenceChangeListener { _, newValue ->
+                                if (newValue.equals("<close>")) {
+                                    summary = null
+                                    map.remove(pkg.packageName)
+                                    value = "<close>"
+                                    preferenceManager.sharedPreferences.edit().remove(pkg.packageName).apply()
+                                    false
+                                } else {
+                                    summary = newValue as String
+                                    map[pkg.packageName] = newValue
+                                    true
+                                }
+                            }
+                        })
+                    }
+                    requireActivity().refresh_layout.finishRefresh()
+                } catch (e: InterruptedException) { }
             }
-            requireActivity().refresh_layout.finishRefresh()
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.tsng.hidemyapplist.ui
 
+import android.annotation.SuppressLint
 import android.content.pm.ApplicationInfo
 import android.os.Bundle
 import android.view.Menu
@@ -65,9 +66,11 @@ class TemplateSettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.O
         private lateinit var list: MutableSet<String>
 
         private var showSystemApps = false
+        private var refreshThread: Thread? = null
 
         override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
             inflater.inflate(R.menu.toolbar_appselect, menu)
+            menu.findItem(R.id.toolbar_select_all_apps).isVisible = true
             val searchView = menu.findItem(R.id.toolbar_search).actionView as SearchView
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
@@ -82,12 +85,22 @@ class TemplateSettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.O
             })
         }
 
+        @SuppressLint("RestrictedApi")
         override fun onOptionsItemSelected(item: MenuItem): Boolean {
             return when (item.itemId) {
                 R.id.toolbar_show_system_apps -> {
                     item.isChecked = !item.isChecked
                     showSystemApps = item.isChecked
                     requireActivity().refresh_layout.autoRefresh()
+                    true
+                }
+                R.id.toolbar_select_all_apps -> {
+                    var anti = true
+                    for (pref in preferenceScreen)
+                        if (!(pref as CheckBoxPreference).isChecked) anti = false
+                    for (pref in preferenceScreen)
+                        if (!(anti xor (pref as CheckBoxPreference).isChecked))
+                            pref.performClick()
                     true
                 }
                 else -> super.onOptionsItemSelected(item)
@@ -100,43 +113,59 @@ class TemplateSettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.O
             setPreferencesFromResource(R.xml.empty_preferences, rootKey)
             list = preferenceManager.sharedPreferences.getStringSet("HideApps", setOf())!!.toMutableSet()
             requireActivity().refresh_layout.apply {
-                setOnRefreshListener {
-                    thread { refresh() }
-                }
+                setOnRefreshListener { refresh() }
                 autoRefresh()
             }
         }
 
+        override fun onDestroy() {
+            refreshThread?.let {
+                it.interrupt()
+                while (it.isAlive)
+                    Thread.sleep(50)
+            }
+            super.onDestroy()
+        }
+
         private fun refresh() {
-            val packages = requireActivity().packageManager.getInstalledPackages(0)
-            if (!showSystemApps)
-                packages.removeAll { it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0 && !list.contains(it.packageName) }
-            packages.sortWith { o1, o2 ->
-                val l1 = o1.applicationInfo.loadLabel(requireActivity().packageManager) as String
-                val l2 = o2.applicationInfo.loadLabel(requireActivity().packageManager) as String
-                if (list.contains(o1.packageName) xor list.contains(o2.packageName))
-                    if (list.contains(o2.packageName)) 1
-                    else -1
-                else
-                    Collator.getInstance(Locale.getDefault()).compare(l1, l2)
-            }
-            preferenceScreen.removeAll()
-            for (pkg in packages) {
-                preferenceScreen.addPreference(CheckBoxPreference(context).apply {
-                    title = pkg.applicationInfo.loadLabel(requireActivity().packageManager)
-                    icon = pkg.applicationInfo.loadIcon(requireActivity().packageManager)
-                    isChecked = list.contains(pkg.packageName)
-                    setOnPreferenceChangeListener { _, newValue ->
-                        if (newValue == true)
-                            list.add(pkg.packageName)
+            refreshThread = thread {
+                try {
+                    val packages = requireActivity().packageManager.getInstalledPackages(0)
+                    if (!showSystemApps)
+                        packages.removeAll { it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0 && !list.contains(it.packageName) }
+                    packages.sortWith { o1, o2 ->
+                        if (Thread.interrupted()) throw InterruptedException()
+                        val l1 = o1.applicationInfo.loadLabel(requireActivity().packageManager) as String
+                        val l2 = o2.applicationInfo.loadLabel(requireActivity().packageManager) as String
+                        if (list.contains(o1.packageName) xor list.contains(o2.packageName))
+                            if (list.contains(o2.packageName)) 1
+                            else -1
                         else
-                            list.remove(pkg.packageName)
-                        preferenceManager.sharedPreferences.edit().putStringSet("HideApps", list.toSet()).apply()
-                        true
+                            Collator.getInstance(Locale.getDefault()).compare(l1, l2)
                     }
-                })
+                    preferenceScreen.removeAll()
+                    for (pkg in packages) {
+                        if (Thread.interrupted()) throw InterruptedException()
+                        preferenceScreen.addPreference(CheckBoxPreference(context).apply {
+                            title = if (pkg.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0)
+                                getString(R.string.template_is_system_app) + " - " + pkg.applicationInfo.loadLabel(requireActivity().packageManager)
+                            else
+                                pkg.applicationInfo.loadLabel(requireActivity().packageManager)
+                            icon = pkg.applicationInfo.loadIcon(requireActivity().packageManager)
+                            isChecked = list.contains(pkg.packageName)
+                            setOnPreferenceChangeListener { _, newValue ->
+                                if (newValue == true)
+                                    list.add(pkg.packageName)
+                                else
+                                    list.remove(pkg.packageName)
+                                preferenceManager.sharedPreferences.edit().putStringSet("HideApps", list.toSet()).apply()
+                                true
+                            }
+                        })
+                    }
+                    requireActivity().refresh_layout.finishRefresh()
+                } catch (e: InterruptedException) { }
             }
-            requireActivity().refresh_layout.finishRefresh()
         }
     }
 }

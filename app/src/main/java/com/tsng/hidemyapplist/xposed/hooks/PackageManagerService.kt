@@ -22,13 +22,11 @@ import java.lang.reflect.Method
 class PackageManagerService : IXposedHookLoadPackage {
     companion object {
         var initialized = false
-        var config = JsonConfig()
+        @Volatile var config = JsonConfig()
 
         fun updateConfig(str: String) {
-            synchronized(config) {
-                config = JsonConfig.fromJson(str)
-                if (config.DetailLog) ld("Receive json: $config")
-            }
+            config = JsonConfig.fromJson(str)
+            if (config.DetailLog) ld("Receive json: $config")
             if (!initialized) {
                 initialized = true
                 li("Preference initialized")
@@ -36,41 +34,35 @@ class PackageManagerService : IXposedHookLoadPackage {
         }
 
         fun isUseHook(callerName: String?, hookMethod: String): Boolean {
-            synchronized(config) {
-                if (callerName == APPNAME && !config.HookSelf) return false
-                val tplName = config.Scope[callerName] ?: return false
-                val template = config.Templates[tplName] ?: return false
-                return template.EnableAllHooks or template.ApplyHooks.contains(hookMethod)
-            }
+            if (callerName == APPNAME && !config.HookSelf) return false
+            val tplName = config.Scope[callerName] ?: return false
+            val template = config.Templates[tplName] ?: return false
+            return template.EnableAllHooks or template.ApplyHooks.contains(hookMethod)
         }
 
         fun isToHide(callerName: String?, pkgstr: String?): Boolean {
-            synchronized(config) {
-                if (callerName == null || pkgstr == null) return false
-                if (pkgstr.contains(callerName)) return false
-                val tplName = config.Scope[callerName] ?: return false
-                val template = config.Templates[tplName] ?: return false
-                if (template.ExcludeWebview && pkgstr.contains(Regex("[Ww]ebview"))) return false
-                if (template.HideAllApps) return true
-                for (pkg in template.HideApps)
-                    if (pkgstr.contains(pkg)) return true
-                return false
-            }
+            if (callerName == null || pkgstr == null) return false
+            if (pkgstr.contains(callerName)) return false
+            val tplName = config.Scope[callerName] ?: return false
+            val template = config.Templates[tplName] ?: return false
+            if (template.ExcludeWebview && pkgstr.contains(Regex("[Ww]ebview"))) return false
+            if (template.HideAllApps) return true
+            for (pkg in template.HideApps)
+                if (pkgstr.contains(pkg)) return true
+            return false
         }
 
         fun isHideFile(callerName: String?, path: String?): Boolean {
-            synchronized(config) {
-                if (callerName == null || path == null) return false
-                if (path.contains(callerName)) return false
-                val tplName = config.Scope[callerName] ?: return false
-                val template = config.Templates[tplName] ?: return false
-                if (template.ExcludeWebview && path.contains(Regex("[Ww]ebview"))) return false
-                if (template.HideTWRP && path.contains(Regex("/storage/emulated/(.*)/TWRP"))) return true
-                if (template.HideAllApps && path.contains(Regex("/storage/emulated/(.*)/Android/data/"))) return true
-                for (pkg in template.HideApps)
-                    if (path.contains(pkg)) return true
-                return false
-            }
+            if (callerName == null || path == null) return false
+            if (path.contains(callerName)) return false
+            val tplName = config.Scope[callerName] ?: return false
+            val template = config.Templates[tplName] ?: return false
+            if (template.ExcludeWebview && path.contains(Regex("[Ww]ebview"))) return false
+            if (template.HideTWRP && path.contains(Regex("/storage/emulated/(.*)/TWRP"))) return true
+            if (template.HideAllApps && path.contains(Regex("/storage/emulated/(.*)/Android/data/"))) return true
+            for (pkg in template.HideApps)
+                if (path.contains(pkg)) return true
+            return false
         }
 
         fun removeList(method: Method, hookName: String, pkgNameObjList: List<String>) {
