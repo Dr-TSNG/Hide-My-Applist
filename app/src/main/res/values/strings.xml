@@ -16,6 +16,8 @@
         <b>Please read the about page carefully!</b>\n
         <b>Please allow boot autostart to ensure system receives module config (No need to keep in background afterwards)</b>\n
         <b>Tint: Except for intercepting file detections, there is no need to check target apps in Xposed module scope</b>\n
+        <b>V1.5.2</b>\n
+        [+] Fix intent queries interception not work on realme devices.\n
         <b>V1.5.1</b>\n
         [+] Add icon\n
         [+] Add select all\n

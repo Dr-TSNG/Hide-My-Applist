@@ -20,7 +20,7 @@ class IndividualHooks : IXposedHookLoadPackage {
         var loadedNativeLib = false
         try {
             System.load(modulePath.substring(0, modulePath.lastIndexOf('/'))
-                    + if (android.os.Process.is64Bit()) "/lib/arm64/libnative_hooks.so" else "/lib/arm/libnative_hooks.so")
+                    + if (android.os.Process.is64Bit()) "/lib/arm64/libhma_native_hooks.so" else "/lib/arm/libhma_native_hooks.so")
             loadedNativeLib = true
         } catch (e: Throwable) {
             le("Load native_hooks library failed | caller: ${lpp.packageName}")

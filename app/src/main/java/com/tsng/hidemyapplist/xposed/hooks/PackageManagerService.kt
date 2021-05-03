@@ -2,7 +2,6 @@ package com.tsng.hidemyapplist.xposed.hooks
 
 import android.content.pm.ParceledListSlice
 import android.os.Binder
-import android.os.Process
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.JsonConfig
 import com.tsng.hidemyapplist.xposed.XposedUtils.APPNAME
@@ -22,7 +21,9 @@ import java.lang.reflect.Method
 class PackageManagerService : IXposedHookLoadPackage {
     companion object {
         var initialized = false
-        @Volatile var config = JsonConfig()
+
+        @Volatile
+        var config = JsonConfig()
 
         fun updateConfig(str: String) {
             config = JsonConfig.fromJson(str)
@@ -42,26 +43,26 @@ class PackageManagerService : IXposedHookLoadPackage {
 
         fun isToHide(callerName: String?, pkgstr: String?): Boolean {
             if (callerName == null || pkgstr == null) return false
-            if (pkgstr.contains(callerName)) return false
+            if (callerName in pkgstr) return false
             val tplName = config.Scope[callerName] ?: return false
             val template = config.Templates[tplName] ?: return false
             if (template.ExcludeWebview && pkgstr.contains(Regex("[Ww]ebview"))) return false
             if (template.HideAllApps) return true
             for (pkg in template.HideApps)
-                if (pkgstr.contains(pkg)) return true
+                if (pkg in pkgstr) return true
             return false
         }
 
         fun isHideFile(callerName: String?, path: String?): Boolean {
             if (callerName == null || path == null) return false
-            if (path.contains(callerName)) return false
+            if (callerName in path) return false
             val tplName = config.Scope[callerName] ?: return false
             val template = config.Templates[tplName] ?: return false
             if (template.ExcludeWebview && path.contains(Regex("[Ww]ebview"))) return false
             if (template.HideTWRP && path.contains(Regex("/storage/emulated/(.*)/TWRP"))) return true
             if (template.HideAllApps && path.contains(Regex("/storage/emulated/(.*)/Android/data/"))) return true
             for (pkg in template.HideApps)
-                if (path.contains(pkg)) return true
+                if (pkg in path) return true
             return false
         }
 
@@ -131,7 +132,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                         if (split.size != 3) param.result = resultIllegal
                         else param.result = if (isHideFile(split[1], split[2])) resultYes else resultNo
                     }
-                    /* 非服务模式，正0常hook */
+                    /* 非服务模式，正常hook */
                     else -> {
                         if (!isUseHook(callerName, "API requests")) return
                         if (isToHide(callerName, param.args[0] as String?)) {
@@ -144,17 +145,44 @@ class PackageManagerService : IXposedHookLoadPackage {
         }
     }
 
-    // Load system service
+    /* Load system service */
     override fun handleLoadPackage(lpp: LoadPackageParam) {
         if (lpp.packageName != "android") return
         val PKMS = XposedHelpers.findClass("com.android.server.pm.PackageManagerService", lpp.classLoader)
         XposedBridge.hookAllConstructors(PKMS, object : XC_MethodHook() {
-            override fun afterHookedMethod(param: MethodHookParam?) {
+            override fun afterHookedMethod(param: MethodHookParam) {
                 li("System hook installed (Version ${BuildConfig.VERSION_CODE})")
                 li("Waiting for preference provider")
             }
         })
-        for (method in PKMS.declaredMethods) when (method.name) {
+        /* ---Deal with 💩 ROMs--- */
+        val extPKMS = try {
+            when (android.os.Build.BRAND) {
+                "Oppo",
+                "realme" -> XposedHelpers.findClass("com.android.server.pm.OppoPackageManagerService", lpp.classLoader)
+                else -> null
+            }
+        } catch (e: XposedHelpers.ClassNotFoundError) {
+            null
+        }
+        val pmMethods = mutableSetOf<Method>()
+        val methodNames = mutableSetOf<String>()
+        if (extPKMS != null) {
+            XposedBridge.hookAllConstructors(extPKMS, object : XC_MethodHook() {
+                override fun afterHookedMethod(param: MethodHookParam) {
+                    li("Non-AOSP PKMS ${param.method.declaringClass.name}")
+                }
+            })
+            for (method in extPKMS.declaredMethods) {
+                pmMethods.add(method)
+                methodNames.add(method.name)
+            }
+        }
+        /* ----------------------- */
+        for (method in PKMS.declaredMethods)
+            if (method.name !in methodNames)
+                pmMethods.add(method)
+        for (method in pmMethods) when (method.name) {
             "getInstallerPackageName" -> XposedBridge.hookMethod(method, HMAService())
 
             "getInstalledPackages",

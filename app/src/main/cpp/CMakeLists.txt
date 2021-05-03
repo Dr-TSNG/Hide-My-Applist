@@ -15,7 +15,7 @@ add_subdirectory(external/Dobby)
 target_include_directories(dobby PUBLIC external/Dobby/include)
 include_directories(external/jsonxx/include/jsonxx)
 
-add_library(native_detections SHARED NativeDetections.cpp)
-add_library(native_hooks SHARED NativeHooks.cpp)
+add_library(hma_native_detections SHARED NativeDetections.cpp)
+add_library(hma_native_hooks SHARED NativeHooks.cpp)
 
-target_link_libraries(native_hooks dobby)
+target_link_libraries(hma_native_hooks dobby)
