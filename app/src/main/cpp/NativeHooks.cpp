@@ -90,14 +90,15 @@ bool isHideFile(const char *path) {
     if (tpl.HideTWRP &&
         std::regex_search(path, std::regex("/storage/emulated/(.*)/TWRP")))
         return true;
-    if (tpl.HideAllApps &&
-        (std::regex_search(path, std::regex("/storage/emulated/(.*)/Android/data/")) ||
-         std::regex_search(path, std::regex("/data/data/")) ||
-         std::regex_search(path, std::regex("/data/user/"))))
-        return true;
-    for (const auto &pkg : tpl.HideApps)
-        if (strstr(path, pkg.c_str()) != nullptr)
-            return true;
+    if (std::regex_search(path, std::regex("/storage/emulated/(.*)/Android/")) ||
+        strstr(path, "/sdcard/Android/") != nullptr ||
+        strstr(path, "/data/data/") != nullptr ||
+        strstr(path, "/data/user/") != nullptr) {
+        if (tpl.HideAllApps) return true;
+        for (const auto &pkg : tpl.HideApps)
+            if (strstr(path, pkg.c_str()) != nullptr)
+                return true;
+    }
     return false;
 }
 
