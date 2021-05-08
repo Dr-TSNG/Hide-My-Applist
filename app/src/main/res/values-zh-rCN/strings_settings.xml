@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="settings_hook_mode">工作模式</string>
-    <string name="settings_need_reboot">重启手机以应用更改</string>
+    <string name="settings_module">模块</string>
     <string name="settings_hook_self">Hook模块自身</string>
     <string name="settings_hook_self_summary">记得先对模块自己启用一个模板</string>
     <string name="settings_detail_log">记录详细日志（调试用）</string>
     <string name="settings_hide_icon">隐藏桌面图标</string>
     <string name="settings_hide_icon_summary">隐藏后可从Xposed管理器中打开</string>
+    <string name="settings_service">服务</string>
+    <string name="settings_hook_mode">工作模式</string>
+    <string name="settings_need_reboot">重启手机以应用更改</string>
+    <string name="settings_stop_system_service">终止系统服务</string>
+    <string name="settings_stop_system_service_summary">需要重启设备才能重新启动服务</string>
+    <string name="settings_is_clean_env">是否同时清理运行环境</string>
+    <string name="settings_is_clean_env_summary">移除位于 /data/misc/hide_my_applist 的系统服务缓存，这会使下次重启后需要先手动打开一次模块APP才能使拦截生效。</string>
 </resources>

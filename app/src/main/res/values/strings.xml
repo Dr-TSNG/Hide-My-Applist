@@ -13,18 +13,13 @@
     <string name="updates">New features</string>
     <string name="updates_log">
         <b>Please read the about page carefully!</b>\n
-        <b>Please allow boot autostart to ensure system receives module config (No need to keep in background afterwards)</b>\n
         <b>Tint: Except for intercepting file detections, there is no need to check target apps in Xposed module scope</b>\n
-        <b>V1.5.2</b>\n
-        [+] Fix intent queries interception not work on realme devices.\n
-        <b>V1.5.1</b>\n
-        [+] Add icon\n
-        [+] Add select all\n
-        [+] No longer load file hooks to system apps, for there is no need as well as leading to some problems\n
-        [+] Fix a crash caused by returning before loaded app list\n
-        <b>V1.5</b>\n
-        [+] UI redesign and add search bar\n
-        [+] Add hide system apps\n
-        [+] Fix crashes on some devices
+        <b>V1.5.3</b>\n
+        [+] Add hide module icon in launcher option\n
+        [+] Add stop system service option\n
+        [+] No longer need to allow module app autostart\n
+        <b>V1.5.2.1</b>\n
+        [+] Change file interception strategies to prevent some crashes\n
+        [+] Fix intent queries interception not work on realme devices
     </string>
 </resources>

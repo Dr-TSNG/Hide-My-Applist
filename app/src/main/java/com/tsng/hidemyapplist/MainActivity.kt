@@ -13,14 +13,23 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-    private fun isModuleActivated(): Boolean { return false }
-    private fun isHookSelf(): Boolean { return getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("HookSelf", false) }
+    private fun isModuleActivated(): Boolean {
+        return false
+    }
+
+    private fun isHookSelf(): Boolean {
+        return getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("HookSelf", false)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         startService(Intent(this, ProvidePreferenceService::class.java))
+    }
+
+    override fun onResume() {
+        super.onResume()
         val serviceVersion = XposedUtils.getServiceVersion(this)
         if (isModuleActivated()) {
             if (serviceVersion != 0) {

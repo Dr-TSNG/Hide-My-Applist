@@ -16,145 +16,182 @@ import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileReader
+import java.io.FileWriter
 import java.lang.reflect.Method
 
 class PackageManagerService : IXposedHookLoadPackage {
-    companion object {
-        var initialized = false
+    private val dataDir = "/data/misc/hide_my_applist"
+    private val allHooks = mutableSetOf<XC_MethodHook.Unhook>()
+    private var initialized = false
 
-        @Volatile
-        var config = JsonConfig()
+    @Volatile
+    private var config = JsonConfig()
 
-        fun updateConfig(str: String) {
-            config = JsonConfig.fromJson(str)
-            if (config.DetailLog) ld("Receive json: $config")
-            if (!initialized) {
-                initialized = true
-                li("Preference initialized")
+    private fun readConfig() {
+        FileReader("$dataDir/config.json").let {
+            config = JsonConfig.fromJson(it.readText())
+            it.close()
+        }
+        if (config.DetailLog) ld("Cached config: $config")
+        if (!initialized) {
+            initialized = true
+            li("Config initialized")
+        }
+    }
+
+    private fun updateConfig(json: String) {
+        config = JsonConfig.fromJson(json)
+        FileWriter("$dataDir/config.json").let {
+            it.write(json)
+            it.close()
+        }
+        readConfig()
+    }
+
+    private fun isUseHook(callerName: String?, hookMethod: String): Boolean {
+        if (callerName == APPNAME && !config.HookSelf) return false
+        val tplName = config.Scope[callerName] ?: return false
+        val template = config.Templates[tplName] ?: return false
+        return template.EnableAllHooks or template.ApplyHooks.contains(hookMethod)
+    }
+
+    private fun isToHide(callerName: String?, pkgstr: String?): Boolean {
+        if (callerName == null || pkgstr == null) return false
+        if (callerName in pkgstr) return false
+        val tplName = config.Scope[callerName] ?: return false
+        val template = config.Templates[tplName] ?: return false
+        if (template.ExcludeWebview && pkgstr.contains(Regex("[Ww]ebview"))) return false
+        if (template.HideAllApps) return true
+        for (pkg in template.HideApps)
+            if (pkg in pkgstr) return true
+        return false
+    }
+
+    private fun isHideFile(callerName: String?, path: String?): Boolean {
+        if (callerName == null || path == null) return false
+        if (callerName in path) return false
+        val tplName = config.Scope[callerName] ?: return false
+        val template = config.Templates[tplName] ?: return false
+        if (template.ExcludeWebview && path.contains(Regex("[Ww]ebview"))) return false
+        if (template.HideTWRP && path.contains(Regex("/storage/emulated/(.*)/TWRP"))) return true
+        if (template.HideAllApps && path.contains(Regex("/storage/emulated/(.*)/Android/data/"))) return true
+        for (pkg in template.HideApps)
+            if (pkg in path) return true
+        return false
+    }
+
+    private fun removeList(method: Method, hookName: String, pkgNameObjList: List<String>) {
+        allHooks.add(XposedBridge.hookMethod(method, object : XC_MethodHook() {
+            override fun afterHookedMethod(param: MethodHookParam) {
+                val callerUid = Binder.getCallingUid()
+                val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
+                if (!isUseHook(callerName, hookName)) return
+                var isHidden = false
+                val iterator = (param.result as ParceledListSlice<*>).list.iterator()
+                val removed = mutableListOf<String>()
+                while (iterator.hasNext()) {
+                    val str = getRecursiveField(iterator.next(), pkgNameObjList) as String?
+                    if (isToHide(callerName, str)) {
+                        iterator.remove()
+                        isHidden = true
+                        if (config.DetailLog) removed.add(str!!)
+                    }
+                }
+                if (isHidden) li("@Hide PKMS caller: $callerName method: ${param.method.name}")
+                if (isHidden && config.DetailLog) ld("removeList $removed")
             }
-        }
+        }))
+    }
 
-        fun isUseHook(callerName: String?, hookMethod: String): Boolean {
-            if (callerName == APPNAME && !config.HookSelf) return false
-            val tplName = config.Scope[callerName] ?: return false
-            val template = config.Templates[tplName] ?: return false
-            return template.EnableAllHooks or template.ApplyHooks.contains(hookMethod)
-        }
-
-        fun isToHide(callerName: String?, pkgstr: String?): Boolean {
-            if (callerName == null || pkgstr == null) return false
-            if (callerName in pkgstr) return false
-            val tplName = config.Scope[callerName] ?: return false
-            val template = config.Templates[tplName] ?: return false
-            if (template.ExcludeWebview && pkgstr.contains(Regex("[Ww]ebview"))) return false
-            if (template.HideAllApps) return true
-            for (pkg in template.HideApps)
-                if (pkg in pkgstr) return true
-            return false
-        }
-
-        fun isHideFile(callerName: String?, path: String?): Boolean {
-            if (callerName == null || path == null) return false
-            if (callerName in path) return false
-            val tplName = config.Scope[callerName] ?: return false
-            val template = config.Templates[tplName] ?: return false
-            if (template.ExcludeWebview && path.contains(Regex("[Ww]ebview"))) return false
-            if (template.HideTWRP && path.contains(Regex("/storage/emulated/(.*)/TWRP"))) return true
-            if (template.HideAllApps && path.contains(Regex("/storage/emulated/(.*)/Android/data/"))) return true
-            for (pkg in template.HideApps)
-                if (pkg in path) return true
-            return false
-        }
-
-        fun removeList(method: Method, hookName: String, pkgNameObjList: List<String>) {
-            XposedBridge.hookMethod(method, object : XC_MethodHook() {
-                override fun afterHookedMethod(param: MethodHookParam) {
-                    val callerUid = Binder.getCallingUid()
-                    val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
-                    if (!isUseHook(callerName, hookName)) return
-                    var isHidden = false
-                    val iterator = (param.result as ParceledListSlice<*>).list.iterator()
-                    val removed = mutableListOf<String>()
-                    while (iterator.hasNext()) {
-                        val str = getRecursiveField(iterator.next(), pkgNameObjList) as String?
-                        if (isToHide(callerName, str)) {
-                            iterator.remove()
-                            isHidden = true
-                            if (config.DetailLog) removed.add(str!!)
-                        }
-                    }
-                    if (isHidden) li("@Hide PKMS caller: $callerName method: ${param.method.name}")
-                    if (isHidden && config.DetailLog) ld("removeList $removed")
-                }
-            })
-        }
-
-        fun setResult(method: Method, hookName: String, result: Any?) {
-            XposedBridge.hookMethod(method, object : XC_MethodHook() {
-                override fun beforeHookedMethod(param: MethodHookParam) {
-                    val callerUid = Binder.getCallingUid()
-                    val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
-                    if (!isUseHook(callerName, hookName)) return
-                    if (isToHide(callerName, param.args[0] as String?)) {
-                        param.result = result
-                        li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
-                    }
-                }
-            })
-        }
-
-        /* 劫持 getInstallerPackageName 作为通信服务 */
-        class HMAService : XC_MethodHook() {
+    private fun setResult(method: Method, hookName: String, result: Any?) {
+        allHooks.add(XposedBridge.hookMethod(method, object : XC_MethodHook() {
             override fun beforeHookedMethod(param: MethodHookParam) {
                 val callerUid = Binder.getCallingUid()
                 val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
-                val arg = param.args[0] as String? ?: return
-                when {
-                    /* 服务模式，执行自定义行为 */
-                    arg == "checkHMAServiceVersion" -> param.result = BuildConfig.VERSION_CODE.toString()
-                    arg == "getPreference" -> param.result = config.toString()
-                    arg.contains("providePreference") -> {
-                        updateConfig(arg.split("#")[1])
-                        param.result = resultYes
-                    }
-                    arg.contains("callIsUseHook") -> {
-                        val split = arg.split("#")
-                        if (split.size != 3) param.result = resultIllegal
-                        else param.result = if (isUseHook(split[1], split[2])) resultYes else resultNo
-                    }
-                    arg.contains("callIsToHide") -> {
-                        val split = arg.split("#")
-                        if (split.size != 3) param.result = resultIllegal
-                        else param.result = if (isToHide(split[1], split[2])) resultYes else resultNo
-                    }
-                    arg.contains("callIsHideFile") -> {
-                        val split = arg.split("#")
-                        if (split.size != 3) param.result = resultIllegal
-                        else param.result = if (isHideFile(split[1], split[2])) resultYes else resultNo
-                    }
-                    /* 非服务模式，正常hook */
-                    else -> {
-                        if (!isUseHook(callerName, "API requests")) return
-                        if (isToHide(callerName, param.args[0] as String?)) {
-                            param.result = null
-                            li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
-                        }
+                if (!isUseHook(callerName, hookName)) return
+                if (isToHide(callerName, param.args[0] as String?)) {
+                    param.result = result
+                    li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
+                }
+            }
+        }))
+    }
+
+    /* 劫持 getInstallerPackageName 作为通信服务 */
+    inner class HMAService : XC_MethodHook() {
+        override fun beforeHookedMethod(param: MethodHookParam) {
+            val callerUid = Binder.getCallingUid()
+            val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
+            val arg = param.args[0] as String? ?: return
+            when {
+                /* 服务模式，执行自定义行为 */
+                arg == "checkHMAServiceVersion" -> param.result = BuildConfig.VERSION_CODE.toString()
+                arg == "getPreference" -> param.result = config.toString()
+                arg.contains("stopSystemService") -> {
+                    val split = arg.split("#")
+                    if (split[1] == "true") File(dataDir).deleteRecursively()
+                    stopService()
+                    param.result = resultYes
+                }
+                arg.contains("providePreference") -> {
+                    updateConfig(arg.split("#")[1])
+                    param.result = resultYes
+                }
+                arg.contains("callIsUseHook") -> {
+                    val split = arg.split("#")
+                    if (split.size != 3) param.result = resultIllegal
+                    else param.result = if (isUseHook(split[1], split[2])) resultYes else resultNo
+                }
+                arg.contains("callIsToHide") -> {
+                    val split = arg.split("#")
+                    if (split.size != 3) param.result = resultIllegal
+                    else param.result = if (isToHide(split[1], split[2])) resultYes else resultNo
+                }
+                arg.contains("callIsHideFile") -> {
+                    val split = arg.split("#")
+                    if (split.size != 3) param.result = resultIllegal
+                    else param.result = if (isHideFile(split[1], split[2])) resultYes else resultNo
+                }
+                /* 非服务模式，正常hook */
+                else -> {
+                    if (!isUseHook(callerName, "API requests")) return
+                    if (isToHide(callerName, param.args[0] as String?)) {
+                        param.result = null
+                        li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
                     }
                 }
             }
         }
     }
 
+    /* Remove all hooks */
+    private fun stopService() {
+        li("Stop system service, start to remove all hooks")
+        for (hook in allHooks) {
+            li("Remove hook at ${hook.hookedMethod.name}")
+            hook.unhook()
+        }
+        li("System service stopped")
+    }
+
     /* Load system service */
     override fun handleLoadPackage(lpp: LoadPackageParam) {
-        if (lpp.packageName != "android") return
+        File(dataDir).let { if (!it.exists()) it.mkdir() }
+        try {
+            readConfig()
+        } catch (e: FileNotFoundException) {
+            li("Config not cached, waiting for preference provider")
+        }
+
         val PKMS = XposedHelpers.findClass("com.android.server.pm.PackageManagerService", lpp.classLoader)
-        XposedBridge.hookAllConstructors(PKMS, object : XC_MethodHook() {
+        allHooks.addAll(XposedBridge.hookAllConstructors(PKMS, object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
                 li("System hook installed (Version ${BuildConfig.VERSION_CODE})")
-                li("Waiting for preference provider")
             }
-        })
+        }))
         /* ---Deal with 💩 ROMs--- */
         val extPKMS = try {
             when (android.os.Build.BRAND) {
@@ -168,11 +205,11 @@ class PackageManagerService : IXposedHookLoadPackage {
         val pmMethods = mutableSetOf<Method>()
         val methodNames = mutableSetOf<String>()
         if (extPKMS != null) {
-            XposedBridge.hookAllConstructors(extPKMS, object : XC_MethodHook() {
+            allHooks.addAll(XposedBridge.hookAllConstructors(extPKMS, object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
                     li("Non-AOSP PKMS ${param.method.declaringClass.name}")
                 }
-            })
+            }))
             for (method in extPKMS.declaredMethods) {
                 pmMethods.add(method)
                 methodNames.add(method.name)
@@ -183,7 +220,7 @@ class PackageManagerService : IXposedHookLoadPackage {
             if (method.name !in methodNames)
                 pmMethods.add(method)
         for (method in pmMethods) when (method.name) {
-            "getInstallerPackageName" -> XposedBridge.hookMethod(method, HMAService())
+            "getInstallerPackageName" -> allHooks.add(XposedBridge.hookMethod(method, HMAService()))
 
             "getInstalledPackages",
             "getInstalledApplications",
@@ -201,7 +238,7 @@ class PackageManagerService : IXposedHookLoadPackage {
             "queryIntentContentProviders" -> removeList(method, "Intent queries", listOf("activityInfo", "packageName"))
 
             "getPackageUid" -> setResult(method, "ID detections", -1)
-            "getPackagesForUid" -> XposedBridge.hookMethod(method, object : XC_MethodHook() {
+            "getPackagesForUid" -> allHooks.add(XposedBridge.hookMethod(method, object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
                     val callerUid = Binder.getCallingUid()
                     val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
@@ -222,7 +259,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                         }
                     }
                 }
-            })
+            }))
         }
     }
 }

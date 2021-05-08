@@ -11,7 +11,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 
 class XposedEntry : IXposedHookLoadPackage, IXposedHookZygoteInit {
     companion object {
-        lateinit var modulePath : String
+        lateinit var modulePath: String
     }
 
     override fun initZygote(startupParam: IXposedHookZygoteInit.StartupParam) {
@@ -26,7 +26,9 @@ class XposedEntry : IXposedHookLoadPackage, IXposedHookZygoteInit {
                 }
             })
         }
-        PackageManagerService().handleLoadPackage(lpp)
-        IndividualHooks().handleLoadPackage(lpp)
+        if (lpp.packageName == "android")
+            PackageManagerService().handleLoadPackage(lpp)
+        else
+            IndividualHooks().handleLoadPackage(lpp)
     }
 }

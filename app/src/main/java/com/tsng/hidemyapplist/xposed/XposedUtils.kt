@@ -13,17 +13,30 @@ object XposedUtils {
     const val APPNAME = BuildConfig.APPLICATION_ID
 
     @JvmStatic
+    fun stopSystemService(context: Context, cleanEnv: Boolean) {
+        try {
+            context.packageManager.getInstallerPackageName("stopSystemService#$cleanEnv")
+        } catch (e: java.lang.IllegalArgumentException) {
+            le("stopSystemService: Service not found")
+        }
+    }
+
+    @JvmStatic
     fun getServiceVersion(context: Context): Int {
         return try {
             context.packageManager.getInstallerPackageName("checkHMAServiceVersion").toInt()
-        } catch (e: IllegalArgumentException) { 0 }
+        } catch (e: IllegalArgumentException) {
+            0
+        }
     }
 
     @JvmStatic
     fun getServicePreference(context: Context): String? {
         return try {
             context.packageManager.getInstallerPackageName("getPreference")
-        } catch (e: java.lang.IllegalArgumentException) { null }
+        } catch (e: java.lang.IllegalArgumentException) {
+            null
+        }
     }
 
     @JvmStatic
