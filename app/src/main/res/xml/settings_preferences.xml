@@ -16,4 +16,9 @@
         android:defaultValue="false"
         android:key="DetailLog"
         android:title="@string/settings_detail_log" />
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="HideIcon"
+        android:summary="@string/settings_hide_icon_summary"
+        android:title="@string/settings_hide_icon" />
 </PreferenceScreen>
