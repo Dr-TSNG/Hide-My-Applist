@@ -17,6 +17,7 @@
         <b>V1.5.3</b>\n
         [+] Add hide module icon in launcher option\n
         [+] Add stop system service option\n
+        [+] Add interception counts\n
         [+] No longer need to allow module app autostart\n
         <b>V1.5.2.1</b>\n
         [+] Change file interception strategies to prevent some crashes\n

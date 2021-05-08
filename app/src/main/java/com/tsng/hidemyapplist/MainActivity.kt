@@ -46,10 +46,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_not_activated))
             xposed_status_text.text = getString(R.string.xposed_not_activated)
         }
-        if (serviceVersion != 0)
+        if (serviceVersion != 0) {
             if (serviceVersion != BuildConfig.VERSION_CODE) xposed_status_sub_text.text = getString(R.string.xposed_service_old)
             else xposed_status_sub_text.text = getString(R.string.xposed_service_on) + "$serviceVersion]"
-        else xposed_status_sub_text.text = getString(R.string.xposed_service_off)
+            val text = getString(R.string.xposed_serve_times).split("#")
+            xposed_status_serve_times.visibility = View.VISIBLE
+            xposed_status_serve_times.text = text[0] + XposedUtils.getServeTimes(this) + text[2]
+        }
+        else {
+            xposed_status_serve_times.visibility = View.GONE
+            xposed_status_sub_text.text = getString(R.string.xposed_service_off)
+        }
         makeUpdateAlert()
         menu_detection_test.setOnClickListener(this)
         menu_template_manage.setOnClickListener(this)

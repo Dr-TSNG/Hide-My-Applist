@@ -12,5 +12,5 @@
     <string name="settings_stop_system_service">终止系统服务</string>
     <string name="settings_stop_system_service_summary">需要重启设备才能重新启动服务</string>
     <string name="settings_is_clean_env">是否同时清理运行环境</string>
-    <string name="settings_is_clean_env_summary">移除位于 /data/misc/hide_my_applist 的系统服务缓存，这会使下次重启后需要先手动打开一次模块APP才能使拦截生效。</string>
+    <string name="settings_is_clean_env_summary">移除位于 /data/misc/hide_my_applist 的系统服务缓存，这会使下次重启后需要先手动打开一次模块APP才能使拦截生效，同时拦截次数记录也会被清空。</string>
 </resources>

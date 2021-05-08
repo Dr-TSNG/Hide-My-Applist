@@ -39,9 +39,17 @@
                     android:id="@+id/xposed_status_sub_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="2dp"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/xposed_status_serve_times"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
             </LinearLayout>
 
         </LinearLayout>

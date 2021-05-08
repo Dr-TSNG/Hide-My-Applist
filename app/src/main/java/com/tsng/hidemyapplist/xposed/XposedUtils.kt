@@ -31,6 +31,15 @@ object XposedUtils {
     }
 
     @JvmStatic
+    fun getServeTimes(context: Context): Int {
+        return try {
+            context.packageManager.getInstallerPackageName("getServeTimes").toInt()
+        } catch (e: IllegalArgumentException) {
+            0
+        }
+    }
+
+    @JvmStatic
     fun getServicePreference(context: Context): String? {
         return try {
             context.packageManager.getInstallerPackageName("getPreference")

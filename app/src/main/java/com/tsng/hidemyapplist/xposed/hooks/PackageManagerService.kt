@@ -21,14 +21,19 @@ import java.io.FileNotFoundException
 import java.io.FileReader
 import java.io.FileWriter
 import java.lang.reflect.Method
+import kotlin.concurrent.thread
 
 class PackageManagerService : IXposedHookLoadPackage {
     private val dataDir = "/data/misc/hide_my_applist"
     private val allHooks = mutableSetOf<XC_MethodHook.Unhook>()
+    private var stopped = false
     private var initialized = false
 
     @Volatile
     private var config = JsonConfig()
+
+    @Volatile
+    private var interceptionCount = 0
 
     private fun readConfig() {
         FileReader("$dataDir/config.json").let {
@@ -38,6 +43,12 @@ class PackageManagerService : IXposedHookLoadPackage {
         if (config.DetailLog) ld("Cached config: $config")
         if (!initialized) {
             initialized = true
+            try {
+                FileReader("$dataDir/interception_cnt").let {
+                    interceptionCount = it.readText().toInt()
+                    it.close()
+                }
+            } catch (e: Exception) { }
             li("Config initialized")
         }
     }
@@ -100,7 +111,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                         if (config.DetailLog) removed.add(str!!)
                     }
                 }
-                if (isHidden) li("@Hide PKMS caller: $callerName method: ${param.method.name}")
+                if (isHidden) li("@Hide PKMS caller: $callerName method: ${param.method.name}").also { interceptionCount++ }
                 if (isHidden && config.DetailLog) ld("removeList $removed")
             }
         }))
@@ -113,6 +124,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                 val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
                 if (!isUseHook(callerName, hookName)) return
                 if (isToHide(callerName, param.args[0] as String?)) {
+                    interceptionCount++
                     param.result = result
                     li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
                 }
@@ -129,6 +141,7 @@ class PackageManagerService : IXposedHookLoadPackage {
             when {
                 /* 服务模式，执行自定义行为 */
                 arg == "checkHMAServiceVersion" -> param.result = BuildConfig.VERSION_CODE.toString()
+                arg == "getServeTimes" -> param.result = interceptionCount.toString()
                 arg == "getPreference" -> param.result = config.toString()
                 arg.contains("stopSystemService") -> {
                     val split = arg.split("#")
@@ -159,6 +172,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                 else -> {
                     if (!isUseHook(callerName, "API requests")) return
                     if (isToHide(callerName, param.args[0] as String?)) {
+                        interceptionCount++
                         param.result = null
                         li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
                     }
@@ -184,6 +198,17 @@ class PackageManagerService : IXposedHookLoadPackage {
             readConfig()
         } catch (e: FileNotFoundException) {
             li("Config not cached, waiting for preference provider")
+        }
+        thread {
+            while (!stopped) {
+                if (initialized) {
+                    FileWriter("$dataDir/interception_cnt").let {
+                        it.write(interceptionCount.toString())
+                        it.close()
+                    }
+                }
+                Thread.sleep(2000)
+            }
         }
 
         val PKMS = XposedHelpers.findClass("com.android.server.pm.PackageManagerService", lpp.classLoader)
@@ -253,6 +278,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                                 if (config.DetailLog) removed.add(str)
                             } else list.add(str)
                         if (change) {
+                            interceptionCount++
                             param.result = list.toTypedArray()
                             li("@Hide PKMS caller: $callerName method: ${param.method.name}")
                             if (config.DetailLog) ld("removeList $removed")
