@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_hook_mode">工作模式</string>
+    <string name="settings_need_reboot">重啟手機以套用更改</string>
+    <string name="settings_hook_self">Hook模組自身</string>
+    <string name="settings_hook_self_summary">記得先對模組自己啟用一個模板</string>
+    <string name="settings_detail_log">記錄詳細日誌（除錯用）</string>
+</resources>

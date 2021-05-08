@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detection_hint_input_name">輸入要檢測的包名</string>
+    <string name="detection_add_new_package">新增</string>
+    <string name="detection_start">開始檢測</string>
+    <string name="detection_color_means">[N]:未找到目標 [F]:找到目標 [D]:拒絕訪問</string>
+    <string name="detection_executing_detections">檢測中</string>
+    <string name="detection_finished">檢測結束</string>
+    <string name="detection_using_method">執行檢測方法</string>
+    <string name="detection_delete_confirm">刪除包名?</string>
+</resources>

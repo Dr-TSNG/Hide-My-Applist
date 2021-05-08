@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="template_list">模板列表</string>
+    <string name="template_new">建立模板</string>
+    <string name="template_already_exists">模板名稱為空或已存在</string>
+    <string name="template_delete_confirm">刪除模板?</string>
+    <string name="template_enable_all_hooks">啟用所有隱藏方式</string>
+    <string name="template_apply_hooks">選擇隱藏方式</string>
+    <string name="template_hide_apps">隱藏應用</string>
+    <string name="template_hide_all_apps">禁止讀取應用列表</string>
+    <string name="template_hide_all_apps_summary">這會使目標應用無法獲取到任何安裝訊息</string>
+    <string name="template_exclude_webview">排除Webview</string>
+    <string name="template_exclude_webview_summary">這會避免內建瀏覽器崩潰</string>
+    <string name="template_choose_apps_to_hide">選擇要隱藏的應用</string>
+    <string name="template_is_system_app">系統應用</string>
+    <string name="template_others">雜項</string>
+    <string name="template_hide_twrp">隱藏TWRP資料夾</string>
+    <string name="template_hide_twrp_summary">File detections攔截</string>
+    <string name="template_select">選擇一個模板</string>
+</resources>
