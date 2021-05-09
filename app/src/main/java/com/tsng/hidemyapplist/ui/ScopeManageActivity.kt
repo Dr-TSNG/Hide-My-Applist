@@ -53,8 +53,9 @@ class ScopeManageActivity : AppCompatActivity() {
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
+                    val sl = newText.toLowerCase(Locale.getDefault())
                     for (pref in preferenceScreen)
-                        pref.isVisible = pref.title.contains(newText)
+                        pref.isVisible = pref.title.toString().toLowerCase(Locale.getDefault()).contains(sl)
                     return false
                 }
             })
