@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">隱藏應用列表</string>
-    <string name="title_activity_main">隱藏應用列表</string>
     <string name="title_detection_test">檢測測試</string>
     <string name="title_template_manage">模板管理</string>
     <string name="title_edit_template">編輯模板</string>
@@ -12,21 +11,4 @@
     <string name="cancel">取消</string>
     <string name="error">錯誤</string>
     <string name="updates">新版本特性</string>
-    <string name="updates_log">
-        <b>請仔細閱讀關於頁面的使用幫助！</b>\n
-        <b>請允許模組開機自啟以使系統服務讀取配置檔案（之後無需保持後台）</b>\n
-        <b>提示：除了攔截文件檢測外，不需要在EdXposed/LSPosed作用域中勾選目標APP</b>\n
-        <b>V1.5.2.1</b>\n
-        [+] 更改文件攔截策略，解決部分qq模組（QN、QQCleaner）崩潰的問題（用pm的模組照樣會炸）\n
-        [+] 修復intent queries攔截在realme手機上失效的問題\n
-        <b>V1.5.1</b>\n
-        [+] 新增圖示\n
-        [+] 加入全選\n
-        [+] 不再對系統app載入file hooks，因為沒必要且容易造成問題\n
-        [+] 修復未載入完列表就返回造成閃退的問題\n
-        <b>V1.5</b>\n
-        [+] 美化介面，新增搜尋框\n
-        [+] 支援隱藏系統app\n
-        [+] 修復一些卡開機/崩潰問題
-    </string>
 </resources>

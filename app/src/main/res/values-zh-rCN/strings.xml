@@ -11,16 +11,4 @@
     <string name="cancel">取消</string>
     <string name="error">错误</string>
     <string name="updates">新版本特性</string>
-    <string name="updates_log">
-        <b>请仔细阅读关于页面的使用帮助！</b>\n
-        <b>提示：除了拦截文件检测外，不需要在EdXposed/LSPosed作用域中勾选目标APP</b>\n
-        <b>V1.5.3</b>\n
-        [+] 添加隐藏桌面图标功能\n
-        [+] 添加停止系统服务功能\n
-        [+] 添加拦截次数统计\n
-        [+] 加入配置缓存，不再需要自启动\n
-        <b>V1.5.2.1</b>\n
-        [+] 更改文件拦截策略，解决部分qq模块（QN、QQCleaner）崩溃的问题（用pm的模块照样会炸）\n
-        [+] 修复intent queries拦截在realme手机上失效的问题
-    </string>
 </resources>
