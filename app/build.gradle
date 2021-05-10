@@ -16,10 +16,24 @@ android {
         versionName "1.5.3.1"
     }
 
+    android.applicationVariants.all {
+        variant ->
+            if (variant.buildType.name != "debug")
+                variant.outputs.all {
+                    variant.getPackageApplication().outputDirectory = new File("release")
+                    outputFileName = "V${variant.versionName}.apk"
+                }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            versionNameSuffix ".Native"
+        }
+        non_native {
+            versionNameSuffix ".Non-Native"
+            externalNativeBuild.cmake {
+                cppFlags "-DNON_NATIVE"
+            }
         }
     }
 
@@ -27,11 +41,9 @@ android {
         prefab true
     }
 
-    externalNativeBuild {
-        cmake {
-            path "src/main/cpp/CMakeLists.txt"
-            version "3.10.2"
-        }
+    externalNativeBuild.cmake {
+        path "src/main/cpp/CMakeLists.txt"
+        version "3.10.2"
     }
 
     compileOptions {

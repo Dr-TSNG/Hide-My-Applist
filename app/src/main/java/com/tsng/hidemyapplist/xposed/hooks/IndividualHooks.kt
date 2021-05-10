@@ -2,9 +2,9 @@ package com.tsng.hidemyapplist.xposed.hooks
 
 import android.app.Application
 import android.content.Context
+import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.xposed.XposedEntry.Companion.modulePath
 import com.tsng.hidemyapplist.xposed.XposedUtils
-import com.tsng.hidemyapplist.xposed.XposedUtils.ld
 import com.tsng.hidemyapplist.xposed.XposedUtils.le
 import com.tsng.hidemyapplist.xposed.XposedUtils.li
 import de.robv.android.xposed.IXposedHookLoadPackage
@@ -18,7 +18,7 @@ class IndividualHooks : IXposedHookLoadPackage {
     override fun handleLoadPackage(lpp: LoadPackageParam) {
         if (lpp.appInfo == null || lpp.appInfo.isSystemApp) return
         var loadedNativeLib = false
-        try {
+        if (BuildConfig.BUILD_TYPE != "non_native") try {
             System.load(modulePath.substring(0, modulePath.lastIndexOf('/'))
                     + if (android.os.Process.is64Bit()) "/lib/arm64/libhma_native_hooks.so" else "/lib/arm/libhma_native_hooks.so")
             loadedNativeLib = true
