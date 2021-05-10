@@ -5,6 +5,7 @@
         <b>Tint: Except for intercepting file detections, there is no need to check target apps in Xposed module scope</b>\n
         <b>V1.5.3.1</b>\n
         [+] Add syscall detections (Impossible to intercept for a while)\n
+        [+] Add invalid template name notification\n
         [+] Make search bar case insensitive\n
         <b>V1.5.3</b>\n
         [+] Add hide module icon in launcher option\n

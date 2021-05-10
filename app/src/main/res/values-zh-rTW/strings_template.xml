@@ -2,7 +2,7 @@
 <resources>
     <string name="template_list">模板列表</string>
     <string name="template_new">建立模板</string>
-    <string name="template_already_exists">模板名稱為空或已存在</string>
+    <string name="template_name_invalid">模板名稱不合法或已存在</string>
     <string name="template_delete_confirm">刪除模板?</string>
     <string name="template_enable_all_hooks">啟用所有隱藏方式</string>
     <string name="template_apply_hooks">選擇隱藏方式</string>

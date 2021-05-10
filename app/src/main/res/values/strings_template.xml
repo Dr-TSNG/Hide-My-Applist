@@ -2,7 +2,7 @@
 <resources>
     <string name="template_list">Template List</string>
     <string name="template_new">New Template</string>
-    <string name="template_already_exists">Template name is empty or already exists.</string>
+    <string name="template_name_invalid">Template name is invalid or already exists.</string>
     <string name="template_delete_confirm">Delete template?</string>
     <string name="template_enable_all_hooks">Enable all hide methods</string>
     <string name="template_apply_hooks">Select hide methods</string>

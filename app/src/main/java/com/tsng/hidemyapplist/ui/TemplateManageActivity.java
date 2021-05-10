@@ -39,10 +39,10 @@ public class TemplateManageActivity extends AppCompatActivity {
                     .setNegativeButton(R.string.cancel, null)
                     .setPositiveButton(R.string.accept, ((dialog, which) -> {
                         String name = ev.getText().toString();
-                        if (templates.contains(name) || name.isEmpty())
+                        if (templates.contains(name) || name.isEmpty() || name.contains("/"))
                             new MaterialAlertDialogBuilder(this)
                                     .setTitle(R.string.error)
-                                    .setMessage(R.string.template_already_exists)
+                                    .setMessage(R.string.template_name_invalid)
                                     .setPositiveButton(R.string.accept, null)
                                     .show();
                         else {
