@@ -3,6 +3,8 @@
     <string name="updates_log">
         <b>请仔细阅读关于页面的使用帮助！</b>\n
         <b>提示：除了拦截文件检测外，不需要在EdXposed/LSPosed作用域中勾选目标APP</b>\n
+        <b>V1.5.3.2</b>\n
+        [+] 修复文件检测bug\n
         <b>V1.5.3.1</b>\n
         [+] 添加syscall检测（现目前不可能拦截）\n
         [+] 添加非法模板名提示\n

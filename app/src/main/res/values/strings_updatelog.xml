@@ -3,6 +3,8 @@
     <string name="updates_log">
         <b>Please read the about page carefully!</b>\n
         <b>Tint: Except for intercepting file detections, there is no need to check target apps in Xposed module scope</b>\n
+        <b>V1.5.3.2</b>\n
+        [+] Fix file detection bugs\n
         <b>V1.5.3.1</b>\n
         [+] Add syscall detections (Impossible to intercept for a while)\n
         [+] Add invalid template name notification\n

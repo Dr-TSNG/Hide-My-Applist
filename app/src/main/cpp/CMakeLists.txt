@@ -18,4 +18,5 @@ if(NOT "${CMAKE_CXX_FLAGS}" MATCHES "NON_NATIVE$")
     target_link_libraries(hma_native_hooks dobby)
 endif()
 
-add_library(hma_native_detections SHARED detections/native_detections.cpp)
+add_library(hma_native_detections SHARED detections/native_detections.c)
+target_link_libraries(hma_native_detections android log)

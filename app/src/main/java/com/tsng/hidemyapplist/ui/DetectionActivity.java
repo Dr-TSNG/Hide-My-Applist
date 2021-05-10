@@ -162,7 +162,6 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
 
             method_file();
             publishProgress();
-            publishProgress();
             return null;
         }
 
@@ -261,18 +260,18 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             methodStatus[2][M2.get("getPackageUid")] = 0;
         }
 
-        private native int nativeFile(String path);
+        private native int[] nativeFile(String path);
 
         private void method_file() {
             for (String pkg : targets) {
                 final String path = "/storage/emulated/0/Android/data/" + pkg;
-                int nativeResult = nativeFile(path);
-                methodStatus[3][M3.get("java File")]     = new File(path).exists() ? 1 : 0;
-                methodStatus[3][M3.get("libc access")]   = (nativeResult & 0b00001) != 0 ? 1 : 0;
-                methodStatus[3][M3.get("libc stat")]     = (nativeResult & 0b00010) != 0 ? 1 : 0;
-                methodStatus[3][M3.get("libc fstat")]    = (nativeResult & 0b00100) != 0 ? 1 : 0;
-                methodStatus[3][M3.get("syscall stat")]  = (nativeResult & 0b01000) != 0 ? 1 : 0;
-                methodStatus[3][M3.get("syscall fstat")] = (nativeResult & 0b10000) != 0 ? 1 : 0;
+                int[] nativeResult = nativeFile(path);
+                methodStatus[3][M3.get("java File")]     |= new File(path).exists() ? 1 : 0;
+                methodStatus[3][M3.get("libc access")]   |= nativeResult[0];
+                methodStatus[3][M3.get("libc stat")]     |= nativeResult[1];
+                methodStatus[3][M3.get("libc fstat")]    |= nativeResult[2];
+                methodStatus[3][M3.get("syscall stat")]  |= nativeResult[3];
+                methodStatus[3][M3.get("syscall fstat")] |= nativeResult[4];
             }
         }
 

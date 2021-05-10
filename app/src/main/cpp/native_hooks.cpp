@@ -72,9 +72,7 @@ bool isUseHook(const string &hookMethod) {
     const auto &tplName = config.Scope[callerName];
     if (!config.Templates.count(tplName)) return false;
     const auto &tpl = config.Templates[tplName];
-    return tpl.EnableAllHooks |
-           std::find(tpl.ApplyHooks.begin(), tpl.ApplyHooks.end(), hookMethod) !=
-           tpl.ApplyHooks.end();
+    return tpl.EnableAllHooks | std::find(tpl.ApplyHooks.begin(), tpl.ApplyHooks.end(), hookMethod) != tpl.ApplyHooks.end();
 }
 
 bool isHideFile(const char *path) {
