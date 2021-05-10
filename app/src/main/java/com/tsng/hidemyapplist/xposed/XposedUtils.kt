@@ -6,11 +6,11 @@ import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 
 object XposedUtils {
-    const val LOG = "hma_log"
     const val resultNo = "HMA No"
     const val resultYes = "HMA Yes"
     const val resultIllegal = "HMA Illegal"
     const val APPNAME = BuildConfig.APPLICATION_ID
+    const val SERVICE_VERSION = 22
 
     @JvmStatic
     fun stopSystemService(context: Context, cleanEnv: Boolean) {

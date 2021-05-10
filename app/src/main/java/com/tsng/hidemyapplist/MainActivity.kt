@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             xposed_status_text.text = getString(R.string.xposed_not_activated)
         }
         if (serviceVersion != 0) {
-            if (serviceVersion != BuildConfig.VERSION_CODE) xposed_status_sub_text.text = getString(R.string.xposed_service_old)
+            if (serviceVersion != XposedUtils.SERVICE_VERSION) xposed_status_sub_text.text = getString(R.string.xposed_service_old)
             else xposed_status_sub_text.text = getString(R.string.xposed_service_on) + "$serviceVersion]"
             val text = getString(R.string.xposed_serve_times).split("#")
             xposed_status_serve_times.visibility = View.VISIBLE

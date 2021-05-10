@@ -12,7 +12,7 @@ android {
         applicationId "com.tsng.hidemyapplist"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 22
+        versionCode 23
         versionName "1.5.3.1"
     }
 

@@ -2,9 +2,9 @@ package com.tsng.hidemyapplist.xposed.hooks
 
 import android.content.pm.ParceledListSlice
 import android.os.Binder
-import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.JsonConfig
 import com.tsng.hidemyapplist.xposed.XposedUtils.APPNAME
+import com.tsng.hidemyapplist.xposed.XposedUtils.SERVICE_VERSION
 import com.tsng.hidemyapplist.xposed.XposedUtils.getRecursiveField
 import com.tsng.hidemyapplist.xposed.XposedUtils.ld
 import com.tsng.hidemyapplist.xposed.XposedUtils.li
@@ -140,7 +140,7 @@ class PackageManagerService : IXposedHookLoadPackage {
             val arg = param.args[0] as String? ?: return
             when {
                 /* 服务模式，执行自定义行为 */
-                arg == "checkHMAServiceVersion" -> param.result = BuildConfig.VERSION_CODE.toString()
+                arg == "checkHMAServiceVersion" -> param.result = SERVICE_VERSION.toString()
                 arg == "getServeTimes" -> param.result = interceptionCount.toString()
                 arg == "getPreference" -> param.result = config.toString()
                 arg.contains("stopSystemService") -> {
@@ -214,7 +214,7 @@ class PackageManagerService : IXposedHookLoadPackage {
         val PKMS = XposedHelpers.findClass("com.android.server.pm.PackageManagerService", lpp.classLoader)
         allHooks.addAll(XposedBridge.hookAllConstructors(PKMS, object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
-                li("System hook installed (Version ${BuildConfig.VERSION_CODE})")
+                li("System hook installed (Version $SERVICE_VERSION)")
             }
         }))
         /* ---Deal with 💩 ROMs--- */
