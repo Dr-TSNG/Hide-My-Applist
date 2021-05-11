@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                                 .setPositiveButton("GitHub") { _, _ ->
                                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Dr-TSNG/Hide-My-Applist")))
                                 }
-                                .setNegativeButton("XP Repo", ) { _, _ ->
+                                .setNegativeButton("XP Repo") { _, _ ->
                                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://repo.xposed.info/module/com.tsng.hidemyapplist")))
                                 }
                                 .setNeutralButton(R.string.cancel, null)
@@ -132,6 +132,5 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 e.printStackTrace()
             }
         }
-
     }
 }

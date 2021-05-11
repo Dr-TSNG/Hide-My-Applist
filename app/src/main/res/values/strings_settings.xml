@@ -7,7 +7,6 @@
     <string name="settings_hide_icon">Hide module icon in launcher</string>
     <string name="settings_hide_icon_summary">You can still open the app in Xposed manager</string>
     <string name="settings_service">Service</string>
-    <string name="settings_hook_mode">Hook mode</string>
     <string name="settings_need_reboot">Reboot to apply mode switch</string>
     <string name="settings_stop_system_service">Stop system service</string>
     <string name="settings_stop_system_service_summary">Need reboot to restart service</string>

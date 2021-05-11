@@ -8,8 +8,4 @@
         <item>ID detections</item>
         <item>File detections</item>
     </string-array>
-    <string-array name="hook_mode">
-        <item>Individual Hook</item>
-        <item>System Hook</item>
-    </string-array>
 </resources>

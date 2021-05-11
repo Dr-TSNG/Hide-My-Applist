@@ -7,7 +7,6 @@
     <string name="settings_hide_icon">隐藏桌面图标</string>
     <string name="settings_hide_icon_summary">隐藏后可从Xposed管理器中打开</string>
     <string name="settings_service">服务</string>
-    <string name="settings_hook_mode">工作模式</string>
     <string name="settings_need_reboot">重启手机以应用更改</string>
     <string name="settings_stop_system_service">终止系统服务</string>
     <string name="settings_stop_system_service_summary">需要重启设备才能重新启动服务</string>
