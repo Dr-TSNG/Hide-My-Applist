@@ -1,33 +1,40 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/settings_module">
         <SwitchPreferenceCompat
-            android:defaultValue="false"
             android:key="HookSelf"
             android:summary="@string/settings_hook_self_summary"
             android:title="@string/settings_hook_self" />
         <SwitchPreferenceCompat
-            android:defaultValue="false"
             android:key="DetailLog"
             android:title="@string/settings_detail_log" />
         <SwitchPreferenceCompat
-            android:defaultValue="false"
             android:key="HideIcon"
             android:summary="@string/settings_hide_icon_summary"
             android:title="@string/settings_hide_icon" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_service">
-        <ListPreference
-            android:defaultValue="System Hook"
-            android:enabled="false"
-            android:entries="@array/hook_mode"
-            android:entryValues="@array/hook_mode"
-            android:icon="@drawable/ic_hook_mode"
-            android:key="HookMode"
-            android:title="@string/settings_hook_mode" />
         <Preference
+            android:icon="@drawable/ic_stop"
             android:key="StopSystemService"
             android:summary="@string/settings_stop_system_service_summary"
             android:title="@string/settings_stop_system_service" />
+        <Preference
+            android:icon="@drawable/ic_clean"
+            android:key="ForceCleanEnv"
+            android:summary="@string/settings_force_clean_env_summary"
+            android:title="@string/settings_force_clean_env" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_update">
+        <SwitchPreferenceCompat
+            android:disableDependentsState="true"
+            android:key="DisableUpdate"
+            android:title="@string/settings_disable_update" />
+        <SwitchPreferenceCompat
+            android:dependency="DisableUpdate"
+            android:key="ReceiveBetaUpdate"
+            android:summary="@string/settings_receive_beta_update_summary"
+            android:title="@string/settings_receive_beta_update" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -12,8 +12,9 @@ android {
         applicationId "com.tsng.hidemyapplist"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 24
-        versionName "1.5.3.2"
+        versionCode 25
+        versionName "1.5.4"
+        buildConfigField "int", "SERVICE_VERSION", "25"
     }
 
     android.applicationVariants.all {
@@ -52,12 +53,18 @@ android {
     }
 }
 
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 dependencies {
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.drakeet.about:about:2.4.1'
     implementation 'com.drakeet.multitype:multitype:4.2.0'
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'
     implementation 'com.scwang.smart:refresh-header-material:2.0.3'
+    implementation "com.github.topjohnwu.libsu:core:3.1.2"
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.preference:preference-ktx:1.1.1'

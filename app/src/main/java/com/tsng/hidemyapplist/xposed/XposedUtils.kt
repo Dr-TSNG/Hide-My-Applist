@@ -10,7 +10,6 @@ object XposedUtils {
     const val resultYes = "HMA Yes"
     const val resultIllegal = "HMA Illegal"
     const val APPNAME = BuildConfig.APPLICATION_ID
-    const val SERVICE_VERSION = 22
 
     @JvmStatic
     fun stopSystemService(context: Context, cleanEnv: Boolean) {

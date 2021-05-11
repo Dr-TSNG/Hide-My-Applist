@@ -2,9 +2,9 @@ package com.tsng.hidemyapplist.xposed.hooks
 
 import android.content.pm.ParceledListSlice
 import android.os.Binder
+import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.JsonConfig
 import com.tsng.hidemyapplist.xposed.XposedUtils.APPNAME
-import com.tsng.hidemyapplist.xposed.XposedUtils.SERVICE_VERSION
 import com.tsng.hidemyapplist.xposed.XposedUtils.getRecursiveField
 import com.tsng.hidemyapplist.xposed.XposedUtils.ld
 import com.tsng.hidemyapplist.xposed.XposedUtils.li
@@ -28,6 +28,7 @@ class PackageManagerService : IXposedHookLoadPackage {
     private val allHooks = mutableSetOf<XC_MethodHook.Unhook>()
     private var stopped = false
     private var initialized = false
+    private var mLock = Any()
 
     @Volatile
     private var config = JsonConfig()
@@ -36,17 +37,18 @@ class PackageManagerService : IXposedHookLoadPackage {
     private var interceptionCount = 0
 
     private fun readConfig() {
-        FileReader("$dataDir/config.json").let {
-            config = JsonConfig.fromJson(it.readText())
-            it.close()
+        synchronized(mLock) {
+            if (stopped) return
+            FileReader("$dataDir/config.json").use {
+                config = JsonConfig.fromJson(it.readText())
+            }
         }
         if (config.DetailLog) ld("Cached config: $config")
         if (!initialized) {
             initialized = true
             try {
-                FileReader("$dataDir/interception_cnt").let {
+                FileReader("$dataDir/interception_cnt").use {
                     interceptionCount = it.readText().toInt()
-                    it.close()
                 }
             } catch (e: Exception) { }
             li("Config initialized")
@@ -55,9 +57,11 @@ class PackageManagerService : IXposedHookLoadPackage {
 
     private fun updateConfig(json: String) {
         config = JsonConfig.fromJson(json)
-        FileWriter("$dataDir/config.json").let {
-            it.write(json)
-            it.close()
+        synchronized(mLock) {
+            if (stopped) return
+            FileWriter("$dataDir/config.json").use {
+                it.write(json)
+            }
         }
         readConfig()
     }
@@ -140,13 +144,12 @@ class PackageManagerService : IXposedHookLoadPackage {
             val arg = param.args[0] as String? ?: return
             when {
                 /* 服务模式，执行自定义行为 */
-                arg == "checkHMAServiceVersion" -> param.result = SERVICE_VERSION.toString()
+                arg == "checkHMAServiceVersion" -> param.result = BuildConfig.SERVICE_VERSION.toString()
                 arg == "getServeTimes" -> param.result = interceptionCount.toString()
                 arg == "getPreference" -> param.result = config.toString()
                 arg.contains("stopSystemService") -> {
                     val split = arg.split("#")
-                    if (split[1] == "true") File(dataDir).deleteRecursively()
-                    stopService()
+                    stopService(split[1] == "true")
                     param.result = resultYes
                 }
                 arg.contains("providePreference") -> {
@@ -182,8 +185,16 @@ class PackageManagerService : IXposedHookLoadPackage {
     }
 
     /* Remove all hooks */
-    private fun stopService() {
-        li("Stop system service, start to remove all hooks")
+    private fun stopService(cleanEnv: Boolean) {
+        stopped = true
+        li("Receive stop system service signal")
+        synchronized(mLock) {
+            if (cleanEnv) {
+                li("Clean runtime environment")
+                File(dataDir).deleteRecursively()
+            }
+        }
+        li("Start to remove all hooks")
         for (hook in allHooks) {
             li("Remove hook at ${hook.hookedMethod.name}")
             hook.unhook()
@@ -201,10 +212,10 @@ class PackageManagerService : IXposedHookLoadPackage {
         }
         thread {
             while (!stopped) {
-                if (initialized) {
-                    FileWriter("$dataDir/interception_cnt").let {
+                if (initialized) synchronized(mLock) {
+                    if (stopped) return@thread
+                    FileWriter("$dataDir/interception_cnt").use {
                         it.write(interceptionCount.toString())
-                        it.close()
                     }
                 }
                 Thread.sleep(2000)
@@ -214,7 +225,7 @@ class PackageManagerService : IXposedHookLoadPackage {
         val PKMS = XposedHelpers.findClass("com.android.server.pm.PackageManagerService", lpp.classLoader)
         allHooks.addAll(XposedBridge.hookAllConstructors(PKMS, object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
-                li("System hook installed (Version $SERVICE_VERSION)")
+                li("System hook installed (Version ${BuildConfig.SERVICE_VERSION})")
             }
         }))
         /* ---Deal with 💩 ROMs--- */

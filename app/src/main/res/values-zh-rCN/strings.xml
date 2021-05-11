@@ -10,5 +10,6 @@
     <string name="accept">确认</string>
     <string name="cancel">取消</string>
     <string name="error">错误</string>
-    <string name="updates">新版本特性</string>
+    <string name="new_update">新版本可用：</string>
+    <string name="update_logs">更新日志</string>
 </resources>

@@ -1,7 +1,9 @@
 package com.tsng.hidemyapplist
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,11 @@ import com.tsng.hidemyapplist.ui.*
 import com.tsng.hidemyapplist.xposed.XposedUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import org.json.JSONObject
+import java.util.*
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun isModuleActivated(): Boolean {
@@ -26,6 +33,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         startService(Intent(this, ProvidePreferenceService::class.java))
+        makeUpdateAlert()
     }
 
     override fun onResume() {
@@ -47,17 +55,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             xposed_status_text.text = getString(R.string.xposed_not_activated)
         }
         if (serviceVersion != 0) {
-            if (serviceVersion != XposedUtils.SERVICE_VERSION) xposed_status_sub_text.text = getString(R.string.xposed_service_old)
+            if (serviceVersion != BuildConfig.SERVICE_VERSION) xposed_status_sub_text.text = getString(R.string.xposed_service_old)
             else xposed_status_sub_text.text = getString(R.string.xposed_service_on) + "$serviceVersion]"
             val text = getString(R.string.xposed_serve_times).split("#")
             xposed_status_serve_times.visibility = View.VISIBLE
             xposed_status_serve_times.text = text[0] + XposedUtils.getServeTimes(this) + text[2]
-        }
-        else {
+        } else {
             xposed_status_serve_times.visibility = View.GONE
             xposed_status_sub_text.text = getString(R.string.xposed_service_off)
         }
-        makeUpdateAlert()
         menu_detection_test.setOnClickListener(this)
         menu_template_manage.setOnClickListener(this)
         menu_scope_manage.setOnClickListener(this)
@@ -80,13 +86,52 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun makeUpdateAlert() {
-        val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        if (pref.getInt("LastVersion", 0) < BuildConfig.VERSION_CODE) {
-            pref.edit().putInt("LastVersion", BuildConfig.VERSION_CODE).apply()
-            MaterialAlertDialogBuilder(this).setTitle(R.string.updates)
-                    .setMessage(R.string.updates_log)
-                    .setPositiveButton(R.string.accept, null)
-                    .show()
+        if (getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("DisableUpdate", false)) return;
+        thread {
+            try {
+                val client = OkHttpClient()
+                val responseData = client.newCall(Request.Builder()
+                        .url("https://raw.githubusercontent.com/Dr-TSNG/Hide-My-Applist/master/updates/latest_version.json")
+                        .build()).execute().body?.string()
+                if (responseData != null) {
+                    val json = JSONObject(responseData)
+                    var data = json["Stable"] as JSONObject
+                    var updateLogURL = "https://raw.githubusercontent.com/Dr-TSNG/Hide-My-Applist/master/updates/stable-"
+                    if (getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("ReceiveBetaUpdate", false))
+                        if (json["Beta"] != false) {
+                            data = json["Beta"] as JSONObject
+                            updateLogURL = "https://raw.githubusercontent.com/Dr-TSNG/Hide-My-Applist/master/updates/beta-"
+                        }
+                    updateLogURL += if (Locale.getDefault().language.contains("zh")) "zh" else "en"
+                    updateLogURL += ".html"
+                    val updateLog = client.newCall(Request.Builder()
+                            .url(updateLogURL)
+                            .build()).execute().body?.string()
+                    val pref = PreferenceManager.getDefaultSharedPreferences(this)
+                    if (data.getInt("VersionCode") > BuildConfig.VERSION_CODE) runOnUiThread {
+                        MaterialAlertDialogBuilder(this)
+                                .setTitle(getString(R.string.new_update) + data["VersionName"])
+                                .setMessage(Html.fromHtml(updateLog, Html.FROM_HTML_MODE_COMPACT))
+                                .setPositiveButton("GitHub") { _, _ ->
+                                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Dr-TSNG/Hide-My-Applist")))
+                                }
+                                .setNegativeButton("XP Repo", ) { _, _ ->
+                                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://repo.xposed.info/module/com.tsng.hidemyapplist")))
+                                }
+                                .setNeutralButton(R.string.cancel, null)
+                                .setCancelable(false).show()
+                    } else if (pref.getInt("LastVersion", 0) < BuildConfig.VERSION_CODE) runOnUiThread {
+                        MaterialAlertDialogBuilder(this).setTitle(R.string.update_logs)
+                                .setMessage(Html.fromHtml(updateLog, Html.FROM_HTML_MODE_COMPACT))
+                                .setPositiveButton(R.string.accept, null)
+                                .setCancelable(false).show()
+                    }
+                    pref.edit().putInt("LastVersion", BuildConfig.VERSION_CODE).apply()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
+
     }
 }

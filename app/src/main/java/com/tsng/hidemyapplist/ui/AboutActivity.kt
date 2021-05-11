@@ -41,9 +41,11 @@ class AboutActivity : AbsAboutActivity() {
         items.add(Category(getString(R.string.about_open_source)))
         items.add(License("jsonxx", "Nomango", License.MIT, "https://github.com/Nomango/jsonxx"))
         items.add(License("Gson", "Google", License.APACHE_2, "https://github.com/google/gson"))
+        items.add(License("okhttp", "square", License.APACHE_2, "https://github.com/square/okhttp"))
         items.add(License("MultiType", "drakeet", License.APACHE_2, "https://github.com/drakeet/MultiType"))
         items.add(License("about-page", "drakeet", License.APACHE_2, "https://github.com/drakeet/about-page"))
         items.add(License("SmartRefreshLayout", "scwang90", License.APACHE_2, "https://github.com/scwang90/SmartRefreshLayout"))
         items.add(License("Dobby", "jmpews", License.APACHE_2, "https://github.com/jmpews/Dobby"))
+        items.add(License("libsu", "topjohnwu", License.APACHE_2, "https://github.com/topjohnwu/libsu"))
     }
 }

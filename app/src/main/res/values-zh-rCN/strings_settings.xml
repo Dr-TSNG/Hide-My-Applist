@@ -13,4 +13,12 @@
     <string name="settings_stop_system_service_summary">需要重启设备才能重新启动服务</string>
     <string name="settings_is_clean_env">是否同时清理运行环境</string>
     <string name="settings_is_clean_env_summary">移除位于 /data/misc/hide_my_applist 的系统服务缓存，这会使下次重启后需要先手动打开一次模块APP才能使拦截生效，同时拦截次数记录也会被清空。</string>
+    <string name="settings_force_clean_env">强制清理运行环境 (root)</string>
+    <string name="settings_force_clean_env_summary">当且仅当系统服务无法启动时尝试此选项，否则你应该点击终止系统服务并自动执行清理</string>
+    <string name="settings_force_clean_env_toast_success">运行环境清理完成</string>
+    <string name="settings_force_clean_env_toast_fail">拒绝访问</string>
+    <string name="settings_update">更新</string>
+    <string name="settings_disable_update">禁用更新提示</string>
+    <string name="settings_receive_beta_update">接收Beta版本更新</string>
+    <string name="settings_receive_beta_update_summary">Beta版本可能不稳定</string>
 </resources>

@@ -10,5 +10,6 @@
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
     <string name="error">Error</string>
-    <string name="updates">New features</string>
+    <string name="new_update">New update: </string>
+    <string name="update_logs">New features</string>
 </resources>
