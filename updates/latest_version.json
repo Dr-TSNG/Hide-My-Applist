@@ -1,7 +1,10 @@
 {
   "Stable": {
-    "VersionCode": "25",
+    "VersionCode": 25,
     "VersionName": "V1.5.4"
   },
-  "Beta": false
+  "Beta": {
+    "VersionCode": 26,
+    "VersionName": "V1.5.4.1"
+  }
 }

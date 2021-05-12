@@ -41,11 +41,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val serviceVersion = XposedUtils.getServiceVersion(this)
         if (isModuleActivated()) {
             if (serviceVersion != 0) {
-                xposed_status.setCardBackgroundColor(getColor(R.color.teal))
+                xposed_status.setCardBackgroundColor(getColor(R.color.colorPrimary))
                 xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_activited))
                 xposed_status_text.text = getString(R.string.xposed_activated)
             } else {
-                xposed_status.setCardBackgroundColor(getColor(R.color.info))
+                xposed_status.setCardBackgroundColor(getColor(R.color.error))
                 xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_service_not_running))
                 xposed_status_text.text = getString(R.string.xposed_activated)
             }

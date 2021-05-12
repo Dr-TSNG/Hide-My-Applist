@@ -264,14 +264,17 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
 
         private void method_file() {
             for (String pkg : targets) {
-                final String path = "/storage/emulated/0/Android/data/" + pkg;
-                int[] nativeResult = nativeFile(path);
-                methodStatus[3][M3.get("java File")]     |= new File(path).exists() ? 1 : 0;
-                methodStatus[3][M3.get("libc access")]   |= nativeResult[0];
-                methodStatus[3][M3.get("libc stat")]     |= nativeResult[1];
-                methodStatus[3][M3.get("libc fstat")]    |= nativeResult[2];
-                methodStatus[3][M3.get("syscall stat")]  |= nativeResult[3];
-                methodStatus[3][M3.get("syscall fstat")] |= nativeResult[4];
+                final String path1 = "/storage/emulated/0/Android/data/" + pkg;
+                final String path2 = "/data/data/" + pkg;
+                int[] nativeResult1 = nativeFile(path1);
+                int[] nativeResult2 = nativeFile(path2);
+                methodStatus[3][M3.get("java File")]     |= new File(path1).exists() ? 1 : 0;
+                methodStatus[3][M3.get("java File")]     |= new File(path2).exists() ? 1 : 0;
+                methodStatus[3][M3.get("libc access")]   |= nativeResult1[0] | nativeResult2[0];
+                methodStatus[3][M3.get("libc stat")]     |= nativeResult1[1] | nativeResult2[1];
+                methodStatus[3][M3.get("libc fstat")]    |= nativeResult1[2] | nativeResult2[2];
+                methodStatus[3][M3.get("syscall stat")]  |= nativeResult1[3] | nativeResult2[3];
+                methodStatus[3][M3.get("syscall fstat")] |= nativeResult1[4] | nativeResult2[4];
             }
         }
 

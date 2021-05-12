@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="gray">#607D8B</color>
-    <color name="info">#0277BD</color>
-    <color name="error">#FF1744</color>
-    <color name="teal">#009688</color>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="error">#666600</color>
+    <color name="colorPrimary">#336699</color>
+    <color name="colorPrimaryDark">#154A74</color>
 </resources>
