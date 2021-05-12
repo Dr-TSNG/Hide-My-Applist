@@ -2,6 +2,7 @@ package com.tsng.hidemyapplist.xposed
 
 import android.content.Context
 import com.tsng.hidemyapplist.BuildConfig
+import com.tsng.hidemyapplist.xposed.hooks.PackageManagerService
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 
@@ -16,7 +17,7 @@ object XposedUtils {
         try {
             context.packageManager.getInstallerPackageName("stopSystemService#$cleanEnv")
         } catch (e: java.lang.IllegalArgumentException) {
-            le("stopSystemService: Service not found")
+            L.e("stopSystemService: Service not found")
         }
     }
 
@@ -52,12 +53,12 @@ object XposedUtils {
         try {
             val res = context.packageManager.getInstallerPackageName("callIsUseHook#$callerName#$hookMethod")
             if (res == resultIllegal) {
-                le("callServiceIsUseHook: Illegal param callIsUseHook#$callerName#$hookMethod")
+                L.e("callServiceIsUseHook: Illegal param callIsUseHook#$callerName#$hookMethod", context = context)
                 return false
             }
             return res == resultYes
         } catch (e: IllegalArgumentException) {
-            le("callServiceIsUseHook: Service not found")
+            L.e("callServiceIsUseHook: Service not found")
             return false
         }
     }
@@ -68,12 +69,12 @@ object XposedUtils {
             val res = if (fileHook) context.packageManager.getInstallerPackageName("callIsHideFile#$callerName#$pkgstr")
             else context.packageManager.getInstallerPackageName("callIsToHide#$callerName#$pkgstr")
             if (res == resultIllegal) {
-                le("callServiceIsToHide: Illegal param callIsUseHook#$callerName#$pkgstr")
+                L.e("callServiceIsToHide: Illegal param callIsUseHook#$callerName#$pkgstr", context = context)
                 return false
             }
             return res == resultYes
         } catch (e: IllegalArgumentException) {
-            le("callServiceIsToHide: Service not found")
+            L.e("callServiceIsToHide: Service not found")
             return false
         }
     }
@@ -86,18 +87,46 @@ object XposedUtils {
         return field
     }
 
-    @JvmStatic
-    fun ld(log: String) {
-        XposedBridge.log("[HMA Xposed] [DEBUG] $log")
-    }
+    object L {
+        @JvmStatic
+        private fun send(str: String, PKMS: PackageManagerService?, context: Context?) {
+            XposedBridge.log(str)
+            PKMS?.addLog(str)
+            context?.let {
+                try {
+                    it.packageManager.getInstallerPackageName("addLog#$str")
+                } catch (e: IllegalArgumentException) { }
+            }
+        }
 
-    @JvmStatic
-    fun li(log: String) {
-        XposedBridge.log("[HMA Xposed] [INFO] $log")
-    }
+        @JvmStatic
+        fun d(log: String, PKMS: PackageManagerService? = null, context: Context? = null) {
+            send("[HMA Xposed] [DEBUG] $log", PKMS, context)
+        }
 
-    @JvmStatic
-    fun le(log: String) {
-        XposedBridge.log("[HMA Xposed] [ERROR] $log")
+        @JvmStatic
+        fun i(log: String, PKMS: PackageManagerService? = null, context: Context? = null) {
+            send("[HMA Xposed] [INFO] $log", PKMS, context)
+        }
+
+        @JvmStatic
+        fun e(log: String, PKMS: PackageManagerService? = null, context: Context? = null) {
+            send("[HMA Xposed] [ERROR] $log", PKMS, context)
+        }
+
+        @JvmStatic
+        fun nd(log: String, PKMS: PackageManagerService? = null, context: Context? = null) {
+            send("[HMA Native] [DEBUG] $log", PKMS, context)
+        }
+
+        @JvmStatic
+        fun ni(log: String, PKMS: PackageManagerService? = null, context: Context? = null) {
+            send("[HMA Native] [INFO] $log", PKMS, context)
+        }
+
+        @JvmStatic
+        fun ne(log: String, PKMS: PackageManagerService? = null, context: Context? = null) {
+            send("[HMA Native] [ERROR] $log", PKMS, context)
+        }
     }
 }

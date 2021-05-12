@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <android/log.h>
+#include <queue>
 #include <regex>
 #include <cstdio>
 #include <sstream>
@@ -53,16 +54,23 @@ struct jsonxx::json_bind<Config> {
 };
 
 const char *callerName;
+std::queue<string> messageQueue;
 
 inline void ld(const string &s) {
+    messageQueue.push("DEBUG");
+    messageQueue.push(s);
     __android_log_print(ANDROID_LOG_DEBUG, "[HMA Native]", "[DEBUG] %s", s.c_str());
 }
 
 inline void li(const string &s) {
+    messageQueue.push("INFO");
+    messageQueue.push(s);
     __android_log_print(ANDROID_LOG_INFO, "[HMA Native]", "[INFO] %s", s.c_str());
 }
 
 inline void le(const string &s) {
+    messageQueue.push("ERROR");
+    messageQueue.push(s);
     __android_log_print(ANDROID_LOG_ERROR, "[HMA Native]", "[ERROR] %s", s.c_str());
 }
 
@@ -150,7 +158,14 @@ Java_com_tsng_hidemyapplist_xposed_hooks_IndividualHooks_initNative(JNIEnv *env,
     DobbyHook((void *) DobbySymbolResolver(nullptr, "open"), (void *) fake_open, (void **) &orig_open);
 }
 
-extern "C" JNIEXPORT void JNICALL
+extern "C" JNIEXPORT jobjectArray JNICALL
 Java_com_tsng_hidemyapplist_xposed_hooks_IndividualHooks_nativeBridge(JNIEnv *env, jobject, jstring j_json) {
     jsonxx::from_json(jsonxx::json::parse(env->GetStringUTFChars(j_json, nullptr)), config);
+    int length = messageQueue.size();
+    jobjectArray ret = env->NewObjectArray(length, env->FindClass("java/lang/String"), nullptr);
+    for (int i = 0; i < length; i++) {
+        env->SetObjectArrayElement(ret, i, env->NewStringUTF(messageQueue.front().c_str()));
+        messageQueue.pop();
+    }
+    return ret;
 }

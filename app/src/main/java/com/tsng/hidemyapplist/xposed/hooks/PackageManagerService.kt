@@ -5,9 +5,8 @@ import android.os.Binder
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.JsonConfig
 import com.tsng.hidemyapplist.xposed.XposedUtils.APPNAME
+import com.tsng.hidemyapplist.xposed.XposedUtils.L
 import com.tsng.hidemyapplist.xposed.XposedUtils.getRecursiveField
-import com.tsng.hidemyapplist.xposed.XposedUtils.ld
-import com.tsng.hidemyapplist.xposed.XposedUtils.li
 import com.tsng.hidemyapplist.xposed.XposedUtils.resultIllegal
 import com.tsng.hidemyapplist.xposed.XposedUtils.resultNo
 import com.tsng.hidemyapplist.xposed.XposedUtils.resultYes
@@ -34,28 +33,53 @@ class PackageManagerService : IXposedHookLoadPackage {
     private var config = JsonConfig()
 
     @Volatile
+    private var configStr = "{}"
+
+    @Volatile
     private var interceptionCount = 0
 
-    private fun readConfig() {
+    fun addLog(log: String) {
         synchronized(mLock) {
-            if (stopped) return
-            FileReader("$dataDir/config.json").use {
-                config = JsonConfig.fromJson(it.readText())
+            FileWriter("$dataDir/runtime.log", true).use {
+                it.appendLine(log)
             }
-        }
-        if (config.DetailLog) ld("Cached config: $config")
-        if (!initialized) {
-            initialized = true
-            try {
-                FileReader("$dataDir/interception_cnt").use {
-                    interceptionCount = it.readText().toInt()
-                }
-            } catch (e: Exception) { }
-            li("Config initialized")
         }
     }
 
+    private fun provideLogs(): String {
+        try {
+            synchronized(mLock) {
+                if (stopped) throw InterruptedException("Service stopped")
+                FileReader("$dataDir/runtime.log").use {
+                    val sb = StringBuilder()
+                    val list = it.readLines()
+                    for (line in list) sb.append(line)
+                    return sb.toString()
+                }
+            }
+        } catch (e: Exception) {
+            return "Failed to load logs\n" + e.stackTraceToString()
+        }
+    }
+
+    private fun initConfig() {
+        FileReader("$dataDir/config.json").use {
+            configStr = it.readText()
+            config = JsonConfig.fromJson(configStr)
+        }
+        if (config.DetailLog) L.d("Cached config: $config", this)
+        initialized = true
+        try {
+            FileReader("$dataDir/interception_cnt").use {
+                interceptionCount = it.readText().toInt()
+            }
+        } catch (e: Exception) { }
+        L.i("Config initialized", this)
+    }
+
     private fun updateConfig(json: String) {
+        if (configStr == json) return
+        configStr = json
         config = JsonConfig.fromJson(json)
         synchronized(mLock) {
             if (stopped) return
@@ -63,7 +87,8 @@ class PackageManagerService : IXposedHookLoadPackage {
                 it.write(json)
             }
         }
-        readConfig()
+        if (!initialized) initConfig()
+        else if (config.DetailLog) L.d("Update config: $config", this)
     }
 
     private fun isUseHook(callerName: String?, hookMethod: String): Boolean {
@@ -115,8 +140,11 @@ class PackageManagerService : IXposedHookLoadPackage {
                         if (config.DetailLog) removed.add(str!!)
                     }
                 }
-                if (isHidden) li("@Hide PKMS caller: $callerName method: ${param.method.name}").also { interceptionCount++ }
-                if (isHidden && config.DetailLog) ld("removeList $removed")
+                if (isHidden) {
+                    interceptionCount++
+                    L.i("@Hide PKMS caller: $callerName method: ${param.method.name}", this@PackageManagerService)
+                }
+                if (isHidden && config.DetailLog) L.d("removeList $removed", this@PackageManagerService)
             }
         }))
     }
@@ -130,7 +158,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                 if (isToHide(callerName, param.args[0] as String?)) {
                     interceptionCount++
                     param.result = result
-                    li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
+                    L.i("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}", this@PackageManagerService)
                 }
             }
         }))
@@ -146,27 +174,29 @@ class PackageManagerService : IXposedHookLoadPackage {
                 /* 服务模式，执行自定义行为 */
                 arg == "checkHMAServiceVersion" -> param.result = BuildConfig.SERVICE_VERSION.toString()
                 arg == "getServeTimes" -> param.result = interceptionCount.toString()
-                arg == "getPreference" -> param.result = config.toString()
-                arg.contains("stopSystemService") -> {
+                arg == "getPreference" -> param.result = configStr
+                arg == "getLogs" -> param.result = provideLogs()
+                arg.startsWith("addLog") -> addLog(arg.substring(7)).also { param.result = resultYes }
+                arg.startsWith("stopSystemService") -> {
                     val split = arg.split("#")
                     stopService(split[1] == "true")
                     param.result = resultYes
                 }
-                arg.contains("providePreference") -> {
+                arg.startsWith("providePreference") -> {
                     updateConfig(arg.split("#")[1])
                     param.result = resultYes
                 }
-                arg.contains("callIsUseHook") -> {
+                arg.startsWith("callIsUseHook") -> {
                     val split = arg.split("#")
                     if (split.size != 3) param.result = resultIllegal
                     else param.result = if (isUseHook(split[1], split[2])) resultYes else resultNo
                 }
-                arg.contains("callIsToHide") -> {
+                arg.startsWith("callIsToHide") -> {
                     val split = arg.split("#")
                     if (split.size != 3) param.result = resultIllegal
                     else param.result = if (isToHide(split[1], split[2])) resultYes else resultNo
                 }
-                arg.contains("callIsHideFile") -> {
+                arg.startsWith("callIsHideFile") -> {
                     val split = arg.split("#")
                     if (split.size != 3) param.result = resultIllegal
                     else param.result = if (isHideFile(split[1], split[2])) resultYes else resultNo
@@ -177,7 +207,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                     if (isToHide(callerName, param.args[0] as String?)) {
                         interceptionCount++
                         param.result = null
-                        li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
+                        L.i("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}", this@PackageManagerService)
                     }
                 }
             }
@@ -187,28 +217,33 @@ class PackageManagerService : IXposedHookLoadPackage {
     /* Remove all hooks */
     private fun stopService(cleanEnv: Boolean) {
         stopped = true
-        li("Receive stop system service signal")
+        L.i("Receive stop system service signal", this)
         synchronized(mLock) {
             if (cleanEnv) {
-                li("Clean runtime environment")
+                L.i("Clean runtime environment", this)
                 File(dataDir).deleteRecursively()
             }
         }
-        li("Start to remove all hooks")
+        L.i("Start to remove all hooks", this)
         for (hook in allHooks) {
-            li("Remove hook at ${hook.hookedMethod.name}")
+            L.i("Remove hook at ${hook.hookedMethod.name}", this)
             hook.unhook()
         }
-        li("System service stopped")
+        L.i("System service stopped", this)
     }
 
     /* Load system service */
     override fun handleLoadPackage(lpp: LoadPackageParam) {
         File(dataDir).let { if (!it.exists()) it.mkdir() }
+        File("$dataDir/runtime.log").let { if (it.exists()) it.delete() }
         try {
-            readConfig()
+            initConfig()
         } catch (e: FileNotFoundException) {
-            li("Config not cached, waiting for preference provider")
+            L.i("Config not cached, waiting for preference provider", this)
+        } catch (e: Exception) {
+            configStr = "{}"
+            config = JsonConfig()
+            L.e("Failed to read cached config, waiting for preference provider\n${e.stackTraceToString()}", this)
         }
         thread {
             while (!stopped) {
@@ -225,7 +260,7 @@ class PackageManagerService : IXposedHookLoadPackage {
         val PKMS = XposedHelpers.findClass("com.android.server.pm.PackageManagerService", lpp.classLoader)
         allHooks.addAll(XposedBridge.hookAllConstructors(PKMS, object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
-                li("System hook installed (Version ${BuildConfig.SERVICE_VERSION})")
+                L.i("System hook installed (Version ${BuildConfig.SERVICE_VERSION})", this@PackageManagerService)
             }
         }))
         /* ---Deal with 💩 ROMs--- */
@@ -243,7 +278,7 @@ class PackageManagerService : IXposedHookLoadPackage {
         if (extPKMS != null) {
             allHooks.addAll(XposedBridge.hookAllConstructors(extPKMS, object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
-                    li("Non-AOSP PKMS ${param.method.declaringClass.name}")
+                    L.i("Non-AOSP PKMS ${param.method.declaringClass.name}", this@PackageManagerService)
                 }
             }))
             for (method in extPKMS.declaredMethods) {
@@ -291,8 +326,8 @@ class PackageManagerService : IXposedHookLoadPackage {
                         if (change) {
                             interceptionCount++
                             param.result = list.toTypedArray()
-                            li("@Hide PKMS caller: $callerName method: ${param.method.name}")
-                            if (config.DetailLog) ld("removeList $removed")
+                            L.i("@Hide PKMS caller: $callerName method: ${param.method.name}", this@PackageManagerService)
+                            if (config.DetailLog) L.d("removeList $removed", this@PackageManagerService)
                         }
                     }
                 }
