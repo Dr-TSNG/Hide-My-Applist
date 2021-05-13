@@ -112,13 +112,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     val updateLog = client.newCall(Request.Builder()
                             .url(updateLogURL)
                             .build()).execute().body?.string()
+                    val githubDownloadUri = Uri.parse(data["DownloadURL"] as String)
                     val pref = PreferenceManager.getDefaultSharedPreferences(this)
                     if (data.getInt("VersionCode") > BuildConfig.VERSION_CODE) runOnUiThread {
                         MaterialAlertDialogBuilder(this)
                                 .setTitle(getString(R.string.new_update) + data["VersionName"])
                                 .setMessage(Html.fromHtml(updateLog, Html.FROM_HTML_MODE_COMPACT))
                                 .setPositiveButton("GitHub") { _, _ ->
-                                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Dr-TSNG/Hide-My-Applist")))
+                                    startActivity(Intent(Intent.ACTION_VIEW, githubDownloadUri))
                                 }
                                 .setNegativeButton("XP Repo") { _, _ ->
                                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://repo.xposed.info/module/com.tsng.hidemyapplist")))
