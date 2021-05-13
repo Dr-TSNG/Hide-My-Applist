@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_activited))
                 xposed_status_text.text = getString(R.string.xposed_activated)
             } else {
-                xposed_status.setCardBackgroundColor(getColor(R.color.error))
+                xposed_status.setCardBackgroundColor(getColor(R.color.service_off))
                 xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_service_not_running))
                 xposed_status_text.text = getString(R.string.xposed_activated)
             }
@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         menu_detection_test.setOnClickListener(this)
         menu_template_manage.setOnClickListener(this)
         menu_scope_manage.setOnClickListener(this)
+        menu_logs.setOnClickListener(this)
         menu_settings.setOnClickListener(this)
         menu_about.setOnClickListener(this)
     }
@@ -80,6 +81,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.menu_scope_manage ->
                 if (isHookSelf()) Toast.makeText(this, R.string.xposed_disable_hook_self_first, Toast.LENGTH_SHORT).show()
                 else startActivity(Intent(this, ScopeManageActivity::class.java))
+            R.id.menu_logs ->
+                if (XposedUtils.getServiceVersion(this) == 0)
+                    Toast.makeText(this, R.string.xposed_service_off, Toast.LENGTH_SHORT).show()
+                else startActivity(Intent(this, LogActivity::class.java))
             R.id.menu_settings -> startActivity(Intent(this, SettingsActivity::class.java))
             R.id.menu_about -> startActivity(Intent(this, AboutActivity::class.java))
         }

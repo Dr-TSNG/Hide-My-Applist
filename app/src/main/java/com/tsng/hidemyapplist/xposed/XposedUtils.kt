@@ -16,7 +16,7 @@ object XposedUtils {
     fun stopSystemService(context: Context, cleanEnv: Boolean) {
         try {
             context.packageManager.getInstallerPackageName("stopSystemService#$cleanEnv")
-        } catch (e: java.lang.IllegalArgumentException) {
+        } catch (e: IllegalArgumentException) {
             L.e("stopSystemService: Service not found")
         }
     }
@@ -43,7 +43,16 @@ object XposedUtils {
     fun getServicePreference(context: Context): String? {
         return try {
             context.packageManager.getInstallerPackageName("getPreference")
-        } catch (e: java.lang.IllegalArgumentException) {
+        } catch (e: IllegalArgumentException) {
+            null
+        }
+    }
+
+    @JvmStatic
+    fun getLogs(context: Context): String? {
+        return try {
+            context.packageManager.getInstallerPackageName("getLogs")
+        } catch (e: IllegalArgumentException) {
             null
         }
     }

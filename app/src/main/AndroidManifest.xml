@@ -25,10 +25,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.tsng.hidemyapplist.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
+
         <service
             android:name=".ProvidePreferenceService"
             android:enabled="true" />
 
+        <activity
+            android:name=".ui.LogActivity"
+            android:label="@string/title_logs" />
         <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/title_settings" />
@@ -59,7 +72,7 @@
         <activity-alias
             android:name=".MainActivityLauncher"
             android:label="@string/app_name"
-            android:targetActivity="com.tsng.hidemyapplist.MainActivity">
+            android:targetActivity=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

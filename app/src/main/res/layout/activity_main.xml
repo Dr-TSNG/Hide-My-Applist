@@ -120,6 +120,27 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/menu_logs"
+        style="@style/DefaultCard"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            style="@style/Default"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/DefaultCardImage"
+                android:src="@drawable/ic_logs" />
+
+            <TextView
+                style="@style/DefaultCardText"
+                android:text="@string/title_logs"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/menu_settings"
         style="@style/DefaultCard"
         app:cardElevation="0dp">

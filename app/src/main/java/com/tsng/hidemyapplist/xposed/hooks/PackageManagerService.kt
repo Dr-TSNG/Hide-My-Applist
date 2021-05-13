@@ -53,7 +53,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                 FileReader("$dataDir/runtime.log").use {
                     val sb = StringBuilder()
                     val list = it.readLines()
-                    for (line in list) sb.append(line)
+                    for (line in list) sb.append(line).append("\n")
                     return sb.toString()
                 }
             }

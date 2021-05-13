@@ -6,6 +6,7 @@
     <string name="title_edit_template">编辑模板</string>
     <string name="title_scope_manage">选择生效应用</string>
     <string name="title_settings">设置</string>
+    <string name="title_logs">日志</string>
     <string name="title_about">关于</string>
     <string name="accept">确认</string>
     <string name="cancel">取消</string>

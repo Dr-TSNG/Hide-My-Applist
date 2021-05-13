@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="white">#FFFFFF</color>
     <color name="gray">#607D8B</color>
-    <color name="error">#666600</color>
+    <color name="debug">#000000</color>
+    <color name="info">#154A74</color>
+    <color name="error">#FF0000</color>
+    <color name="service_off">#666600</color>
     <color name="colorPrimary">#336699</color>
     <color name="colorPrimaryDark">#154A74</color>
 </resources>
