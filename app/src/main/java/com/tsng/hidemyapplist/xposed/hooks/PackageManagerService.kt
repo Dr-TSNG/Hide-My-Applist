@@ -40,9 +40,9 @@ class PackageManagerService : IXposedHookLoadPackage {
 
     fun addLog(log: String) {
         synchronized(mLock) {
-            FileWriter("$dataDir/runtime.log", true).use {
-                it.appendLine(log)
-            }
+            val logFile = File("$dataDir/runtime.log")
+            if (logFile.length() / 1024 > config.MaxLogSize)logFile.delete()
+            FileWriter(logFile, true).use { it.appendLine(log) }
         }
     }
 

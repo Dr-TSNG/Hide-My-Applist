@@ -14,6 +14,7 @@ class JsonConfig {
 
     var HookSelf = false
     var DetailLog = false
+    var MaxLogSize = 512
     var Scope = mapOf<String, String>()
     var Templates = mutableMapOf<String, Template>()
 

@@ -4,10 +4,10 @@
     <string name="settings_hook_self">Hook self</string>
     <string name="settings_hook_self_summary">Remember to apply a template to the module itself</string>
     <string name="settings_detail_log">Detail log for debugging</string>
+    <string name="settings_max_log_size">Logger buffer sizes</string>
     <string name="settings_hide_icon">Hide module icon in launcher</string>
     <string name="settings_hide_icon_summary">You can still open the app in Xposed manager</string>
     <string name="settings_service">Service</string>
-    <string name="settings_need_reboot">Reboot to apply mode switch</string>
     <string name="settings_stop_system_service">Stop system service</string>
     <string name="settings_stop_system_service_summary">Need reboot to restart service</string>
     <string name="settings_is_clean_env">Clean runtime environment at the same time?</string>

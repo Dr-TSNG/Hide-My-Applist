@@ -14,6 +14,7 @@ class ProvidePreferenceService : Service() {
             val json = JsonConfig()
             json.HookSelf = context.getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("HookSelf", false)
             json.DetailLog = context.getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("DetailLog", false)
+            json.MaxLogSize = context.getSharedPreferences("Settings", MODE_PRIVATE).getString("MaxLogSize", "512").toInt()
             json.Scope = context.getSharedPreferences("Scope", MODE_PRIVATE).all as Map<String, String>
             for (template in context.getSharedPreferences("Templates", MODE_PRIVATE).getStringSet("List", setOf())) {
                 val obj = context.getSharedPreferences("tpl_$template", MODE_PRIVATE).all

@@ -7,6 +7,12 @@
         <SwitchPreferenceCompat
             android:key="DetailLog"
             android:title="@string/settings_detail_log" />
+        <ListPreference
+            android:defaultValue="512"
+            android:entries="@array/max_log_size_entries"
+            android:entryValues="@array/max_log_size_values"
+            android:key="MaxLogSize"
+            android:title="@string/settings_max_log_size" />
         <SwitchPreferenceCompat
             android:key="HideIcon"
             android:summary="@string/settings_hide_icon_summary"

@@ -37,12 +37,10 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             preferenceManager.sharedPreferencesName = "Settings"
             setPreferencesFromResource(R.xml.settings_preferences, rootKey)
-            preferenceScreen.findPreference<ListPreference>("HookMode")?.apply {
+            preferenceScreen.findPreference<ListPreference>("MaxLogSize")?.apply {
                 summary = entry
-                setOnPreferenceChangeListener { _, newValue ->
-                    summary = newValue as CharSequence?
-                    if (value != newValue)
-                        Toast.makeText(activity, R.string.settings_need_reboot, Toast.LENGTH_SHORT).show()
+                setOnPreferenceChangeListener { preference, newValue ->
+                    summary = (preference as ListPreference).run { entries[findIndexOfValue(newValue as String)] }
                     true
                 }
             }
