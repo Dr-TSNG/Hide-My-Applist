@@ -28,8 +28,8 @@
     </style>
 
     <style name="DefaultCardImage">
-        <item name="android:layout_width">30dp</item>
-        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">28dp</item>
+        <item name="android:layout_height">28dp</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_marginStart">20dp</item>
         <item name="android:layout_marginEnd">16dp</item>
@@ -38,8 +38,8 @@
     <style name="DefaultCardText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">25dp</item>
-        <item name="android:paddingBottom">25dp</item>
+        <item name="android:paddingTop">21dp</item>
+        <item name="android:paddingBottom">21dp</item>
         <item name="android:textSize">18sp</item>
     </style>
 

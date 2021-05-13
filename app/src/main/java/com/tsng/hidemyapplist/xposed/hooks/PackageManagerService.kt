@@ -218,18 +218,18 @@ class PackageManagerService : IXposedHookLoadPackage {
     private fun stopService(cleanEnv: Boolean) {
         stopped = true
         L.i("Receive stop system service signal", this)
-        synchronized(mLock) {
-            if (cleanEnv) {
-                L.i("Clean runtime environment", this)
-                File(dataDir).deleteRecursively()
-            }
-        }
         L.i("Start to remove all hooks", this)
         for (hook in allHooks) {
             L.i("Remove hook at ${hook.hookedMethod.name}", this)
             hook.unhook()
         }
         L.i("System service stopped", this)
+        synchronized(mLock) {
+            if (cleanEnv) {
+                L.i("Clean runtime environment", this)
+                File(dataDir).deleteRecursively()
+            }
+        }
     }
 
     /* Load system service */
