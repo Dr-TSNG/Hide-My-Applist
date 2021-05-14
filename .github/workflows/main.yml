@@ -16,10 +16,10 @@ jobs:
       - name: Gradle wrapper validation
         uses: gradle/wrapper-validation-action@v1
 
-      - name: Set up JDK 8
+      - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
-          java-version: '8'
+          java-version: '11'
 
       - name: Cache Gradle
         uses: actions/cache@v2
@@ -33,15 +33,24 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
         
-      - name: Build Release with Gradle
+      - name: Echo ANDROID_SDK_ROOT
+        run: echo $ANDROID_SDK_ROOT
+        
+      - name: Replace android-hidden-api android.jar
+        run: wget --no-check-certificate "https://drive.google.com/uc?export=download&id=1f6YnnIKmke3qTQPUocCSS8d5-q7cqd-G" -O $ANDROID_SDK_ROOT/android-30/android.jar
+        
+      - name: Build Release with Native
         run: ./gradlew aR
         
+      - name: Build Release without Native
+        run: ./gradlew assembleNon_native
+        
       - name: List build dir
-        run: ls -l ./build/
+        run: ls -l ./app/release
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v2
         if: runner.os == 'Linux'
         with:
-          name: build
-          path: build
+          name: release
+          path: app/release
