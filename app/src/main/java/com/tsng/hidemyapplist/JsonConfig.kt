@@ -10,6 +10,7 @@ class JsonConfig {
         val ExcludeWebview = false
         val HideApps = setOf<String>()
         val ApplyHooks = setOf<String>()
+        val WhiteList = false
     }
 
     var HookSelf = false

@@ -11,6 +11,8 @@
     <string name="template_hide_all_apps_summary">This will prevent target apps to find any app installed</string>
     <string name="template_exclude_webview">Exclude webview</string>
     <string name="template_exclude_webview_summary">This will prevent crashes of internal browsers</string>
+    <string name="template_whitelist">WhiteList</string>
+    <string name="template_whitelist_summary">This will allow target apps to find app selected only</string>
     <string name="template_choose_apps_to_hide">Choose apps to hide</string>
     <string name="template_is_system_app">System app</string>
     <string name="template_others">Others</string>
