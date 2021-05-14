@@ -40,7 +40,7 @@ jobs:
         run: echo $ANDROID_SDK_ROOT
         
       - name: Replace android-hidden-api android.jar
-        run: wget --no-check-certificate "https://drive.google.com/uc?export=download&id=1f6YnnIKmke3qTQPUocCSS8d5-q7cqd-G" -O $ANDROID_SDK_ROOT/android-30/android.jar
+        run: wget --no-check-certificate "https://drive.google.com/uc?export=download&id=1f6YnnIKmke3qTQPUocCSS8d5-q7cqd-G" -O $ANDROID_SDK_ROOT/platforms/android-30/android.jar
         
       - name: Build Release with Native
         run: ./gradlew aR
