@@ -43,6 +43,7 @@ jobs:
         run: bash ./replace_android_hidden_api_jar.sh
         
       - name: Build Release with Native
+        id: buildRelease
         run: |
           ./gradlew :app:assembleRelease
           echo "::set-output name=releaseName::$(ls *.apk | head -1 | awk -F '(/|.Native.apk)' '{print $1}')-r$(git rev-list --count HEAD)-$(git rev-parse --short HEAD)"
