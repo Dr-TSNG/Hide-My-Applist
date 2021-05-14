@@ -46,7 +46,7 @@ jobs:
         id: buildRelease
         run: |
           ./gradlew :app:assembleRelease
-          echo "::set-output name=releaseName::$(ls *.apk | head -1 | awk -F '(/|.Native.apk)' '{print $1}')-r$(git rev-list --count HEAD)-$(git rev-parse --short HEAD)"
+          echo "::set-output name=releaseName::$(ls app/release/*.apk | head -1 | awk -F '(/|.Native.apk)' '{print $1}')-r$(git rev-list --count HEAD)-$(git rev-parse --short HEAD)"
         
       - name: Build Release without Native
         run: ./gradlew :app:assembleNon_native
