@@ -106,8 +106,9 @@ bool isHideFile(const char *path) {
         for (const auto &pkg : tpl.HideApps)
             if (strstr(path, pkg.c_str()) != nullptr) {
                 if(tpl.WhiteList) return false;
-                else return true;
+                return true;
             }
+        if(!tpl.WhiteList) return true;
     }
     return false;
 }

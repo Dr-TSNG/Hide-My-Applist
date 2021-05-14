@@ -102,20 +102,24 @@ class PackageManagerService : IXposedHookLoadPackage {
         val isWhiteList = WhiteList ?: false
         var found = false
         for (pkg in HideAllApps)
-            if (pkg in str) found = true
-        if (isWhiteList && !found) return true
-        if (!isWhiteList && found) return true
+            if (pkg in str) {
+                found = true
+                break
+            }
+        if ((isWhiteList && !found) ||
+            (!isWhiteList && found))
+            return true
         return false
     }
 
-	private fun isToHide(callerName: String?, pkgstr: String?): Boolean {
+    private fun isToHide(callerName: String?, pkgstr: String?): Boolean {
         if (callerName == null || pkgstr == null) return false
         if (callerName in pkgstr) return false
         val tplName = config.Scope[callerName] ?: return false
         val template = config.Templates[tplName] ?: return false
         if (template.ExcludeWebview && pkgstr.contains(Regex("[Ww]ebview"))) return false
         if (template.HideAllApps) return true
-		return isNeedHide(template.WhiteList, template.HideApps, pkgstr)
+        return isNeedHide(template.WhiteList, template.HideApps, pkgstr)
     }
 
     private fun isHideFile(callerName: String?, path: String?): Boolean {
