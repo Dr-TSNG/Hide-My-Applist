@@ -23,6 +23,7 @@ struct Config {
         bool ExcludeWebview = false;
         std::vector<string> HideApps;
         std::vector<string> ApplyHooks;
+        bool WhiteList = false;
     };
 
     bool HookSelf = false;
@@ -40,6 +41,7 @@ struct jsonxx::json_bind<Config::Template> {
         jsonxx::from_json(j["ExcludeWebview"], v.ExcludeWebview);
         jsonxx::from_json(j["HideApps"], v.HideApps);
         jsonxx::from_json(j["ApplyHooks"], v.ApplyHooks);
+        jsonxx::from_json(j["WhiteList"], v.WhiteList);
     }
 };
 
@@ -102,8 +104,10 @@ bool isHideFile(const char *path) {
         strstr(path, "/data/user/") != nullptr) {
         if (tpl.HideAllApps) return true;
         for (const auto &pkg : tpl.HideApps)
-            if (strstr(path, pkg.c_str()) != nullptr)
-                return true;
+            if (strstr(path, pkg.c_str()) != nullptr) {
+                if(tpl.WhiteList) return false;
+                else return true;
+            }
     }
     return false;
 }

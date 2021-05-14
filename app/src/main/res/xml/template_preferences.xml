@@ -36,6 +36,10 @@
         android:dependency="HideAllApps"
         android:fragment="com.tsng.hidemyapplist.ui.TemplateSettingsActivity$HideAppsFragment"
         android:title="@string/template_choose_apps_to_hide" />
+    <SwitchPreferenceCompat
+        android:key="WhiteList"
+        android:summary="@string/template_whitelist_summary"
+        android:title="@string/template_whitelist" />
 
     <PreferenceCategory android:title="@string/template_others">
         <SwitchPreferenceCompat

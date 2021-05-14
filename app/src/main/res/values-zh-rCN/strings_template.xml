@@ -11,6 +11,8 @@
     <string name="template_hide_all_apps_summary">这会使目标应用无法获取到任何安装信息</string>
     <string name="template_exclude_webview">排除Webview</string>
     <string name="template_exclude_webview_summary">这会避免内置浏览器崩溃</string>
+    <string name="template_whitelist">使用白名单</string>
+    <string name="template_whitelist_summary">这会使目标应用只能获取到选定的应用信息</string>
     <string name="template_choose_apps_to_hide">选择要隐藏的应用</string>
     <string name="template_is_system_app">系统应用</string>
     <string name="template_others">杂项</string>
