@@ -98,11 +98,11 @@ class PackageManagerService : IXposedHookLoadPackage {
         return template.EnableAllHooks or template.ApplyHooks.contains(hookMethod)
     }
 
-    private fun isNeedHide(WhiteList: Boolean?, HideAllApps: Array<String>, pkgstr: String): Boolean {
+    private fun isNeedHide(WhiteList: Boolean?, HideAllApps: Set<String>, str: String): Boolean {
         val isWhiteList = WhiteList ?: false
         var found = false
         for (pkg in HideAllApps)
-            if (pkg in pkgstr) found = true
+            if (pkg in str) found = true
         if (isWhiteList && !found) return true
         if (!isWhiteList && found) return true
         return false
@@ -126,7 +126,7 @@ class PackageManagerService : IXposedHookLoadPackage {
         if (template.ExcludeWebview && path.contains(Regex("[Ww]ebview"))) return false
         if (template.HideTWRP && path.contains(Regex("/storage/emulated/(.*)/TWRP"))) return true
         if (template.HideAllApps && path.contains(Regex("/storage/emulated/(.*)/Android/data/"))) return true
-        return isNeedHide(template.WhiteList, template.HideApps, pkgstr)
+        return isNeedHide(template.WhiteList, template.HideApps, path)
     }
 
     private fun removeList(method: Method, hookName: String, pkgNameObjList: List<String>) {
