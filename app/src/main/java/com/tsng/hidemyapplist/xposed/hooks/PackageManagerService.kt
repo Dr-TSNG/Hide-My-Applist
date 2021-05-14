@@ -98,16 +98,24 @@ class PackageManagerService : IXposedHookLoadPackage {
         return template.EnableAllHooks or template.ApplyHooks.contains(hookMethod)
     }
 
-    private fun isToHide(callerName: String?, pkgstr: String?): Boolean {
+    private fun isNeedHide(WhiteList: Boolean?, HideAllApps: Array<String>, pkgstr: String): Boolean {
+        val isWhiteList = WhiteList ?: false
+        var found = false
+        for (pkg in HideAllApps)
+            if (pkg in pkgstr) found = true
+        if (isWhiteList && !found) return true
+        if (!isWhiteList && found) return true
+        return false
+    }
+
+	private fun isToHide(callerName: String?, pkgstr: String?): Boolean {
         if (callerName == null || pkgstr == null) return false
         if (callerName in pkgstr) return false
         val tplName = config.Scope[callerName] ?: return false
         val template = config.Templates[tplName] ?: return false
         if (template.ExcludeWebview && pkgstr.contains(Regex("[Ww]ebview"))) return false
         if (template.HideAllApps) return true
-        for (pkg in template.HideApps)
-            if (pkg in pkgstr) return true
-        return false
+		return isNeedHide(template.WhiteList, template.HideApps, pkgstr)
     }
 
     private fun isHideFile(callerName: String?, path: String?): Boolean {
@@ -118,9 +126,7 @@ class PackageManagerService : IXposedHookLoadPackage {
         if (template.ExcludeWebview && path.contains(Regex("[Ww]ebview"))) return false
         if (template.HideTWRP && path.contains(Regex("/storage/emulated/(.*)/TWRP"))) return true
         if (template.HideAllApps && path.contains(Regex("/storage/emulated/(.*)/Android/data/"))) return true
-        for (pkg in template.HideApps)
-            if (pkg in path) return true
-        return false
+        return isNeedHide(template.WhiteList, template.HideApps, pkgstr)
     }
 
     private fun removeList(method: Method, hookName: String, pkgNameObjList: List<String>) {
