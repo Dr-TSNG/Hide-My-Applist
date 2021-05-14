@@ -33,6 +33,9 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
         
+      - name: Gradle prebuild
+        run: ./gradlew prebuild
+        
       - name: Echo ANDROID_SDK_ROOT
         run: echo $ANDROID_SDK_ROOT
         
