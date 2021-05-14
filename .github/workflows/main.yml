@@ -46,7 +46,7 @@ jobs:
         id: buildRelease
         run: |
           ./gradlew :app:assembleRelease
-          echo "::set-output name=releaseName::$(ls app/release/*.apk | head -1 | awk -F '(/|.Native.apk)' '{print $1}')-r$(git rev-list --count HEAD)-$(git rev-parse --short HEAD)"
+          echo "::set-output name=releaseName::Hide-My-Applist.$(ls app/release/*.apk | head -1 | awk -F '(/|.Native.apk)' '{print $3}').r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"
         
       - name: Build Release without Native
         run: ./gradlew :app:assembleNon_native
@@ -57,11 +57,11 @@ jobs:
       - name: Upload Native build artifact
         uses: actions/upload-artifact@v2
         with:
-          name: "${{ steps.buildRelease.outputs.releaseName }}-Native"
-          path: app/release/*.Native.apk
+          name: "${{ steps.buildRelease.outputs.releaseName }}.Native"
+          path: "app/release/*.Native.apk"
           
       - name: Upload Non-Native build artifact
         uses: actions/upload-artifact@v2
         with:
-          name: "${{ steps.buildRelease.outputs.releaseName }}-Non-Native"
-          path: app/release/*.Non-Native.apk
+          name: "${{ steps.buildRelease.outputs.releaseName }}.Non-Native"
+          path: "app/release/*.Non-Native.apk"
