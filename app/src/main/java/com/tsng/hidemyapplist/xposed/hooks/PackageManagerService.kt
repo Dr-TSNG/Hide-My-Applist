@@ -101,28 +101,33 @@ class PackageManagerService : IXposedHookLoadPackage {
         return template.EnableAllHooks or template.ApplyHooks.contains(hookMethod)
     }
 
-    private fun isToHide(callerName: String?, pkgstr: String?): Boolean {
-        if (callerName == null || pkgstr == null) return false
-        if (callerName in pkgstr) return false
+    private fun isToHide(callerName: String?, queryName: String?): Boolean {
+        if (callerName == null || queryName == null) return false
+        if (callerName in queryName) return false
         val tplName = config.Scope[callerName] ?: return false
         val template = config.Templates[tplName] ?: return false
-        if (template.WhiteList && template.ExcludeSystemApps)
-            for (pkg in systemApps)
-                if (pkg in pkgstr) return false
-        var inList = false
-        for (pkg in template.HideApps)
-            if (pkg in pkgstr) inList = true
+        if (template.WhiteList && template.ExcludeSystemApps && queryName in systemApps) return false
+        val inList = queryName in template.HideApps
         return template.WhiteList xor inList
+    }
+
+    private fun dealRegex(regex: Regex, matchResult: String): String {
+        val suf = Regex("(.*)/.*").find(matchResult)
+        return suf?.value ?: matchResult
     }
 
     private fun isHideFile(callerName: String?, path: String?): Boolean {
         path ?: return false
-        return if (path.contains(Regex("/storage/emulated/(.*)/Android/")) ||
-                path.contains("/sdcard/Android/") ||
-                path.contains("/data/data/") ||
-                path.contains("/data/user/"))
-            isToHide(callerName, path)
-        else false
+        val rules = setOf(
+                Regex("/storage/emulated/.*/Android/.*/(.*)"),
+                Regex("/storage/self/primary/Android/.*/(.*)"),
+                Regex("/sdcard/Android/.*/(.*)"),
+                Regex("/data/data/(.*)"),
+                Regex("/data/user/.*/(.*)")
+        )
+        for (regex in rules)
+            regex.find(path)?.let { return isToHide(callerName, dealRegex(regex, it.value)) }
+        return false
     }
 
     private fun removeList(method: Method, hookName: String, pkgNameObjList: List<String>) {
