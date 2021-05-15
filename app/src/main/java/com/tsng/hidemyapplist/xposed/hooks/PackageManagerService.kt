@@ -1,7 +1,9 @@
 package com.tsng.hidemyapplist.xposed.hooks
 
+import android.content.pm.ApplicationInfo
 import android.content.pm.ParceledListSlice
 import android.os.Binder
+import android.util.ArrayMap
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.JsonConfig
 import com.tsng.hidemyapplist.xposed.XposedUtils.APPNAME
@@ -25,6 +27,7 @@ import kotlin.concurrent.thread
 class PackageManagerService : IXposedHookLoadPackage {
     private val dataDir = "/data/misc/hide_my_applist"
     private val allHooks = mutableSetOf<XC_MethodHook.Unhook>()
+    private val systemApps = mutableSetOf<String>()
     private var stopped = false
     private var initialized = false
     private var mLock = Any()
@@ -41,7 +44,7 @@ class PackageManagerService : IXposedHookLoadPackage {
     fun addLog(log: String) {
         synchronized(mLock) {
             val logFile = File("$dataDir/runtime.log")
-            if (logFile.length() / 1024 > config.MaxLogSize)logFile.delete()
+            if (logFile.length() / 1024 > config.MaxLogSize) logFile.delete()
             FileWriter(logFile, true).use { it.appendLine(log) }
         }
     }
@@ -98,35 +101,28 @@ class PackageManagerService : IXposedHookLoadPackage {
         return template.EnableAllHooks or template.ApplyHooks.contains(hookMethod)
     }
 
-    private fun isNeedHide(WhiteList: Boolean?, HideAllApps: Set<String>, str: String): Boolean {
-        val isWhiteList = WhiteList ?: false
-        var found = false
-        for (pkg in HideAllApps)
-            if (pkg in str) found = true
-        if (isWhiteList && !found) return true
-        if (!isWhiteList && found) return true
-        return false
-    }
-
-	private fun isToHide(callerName: String?, pkgstr: String?): Boolean {
+    private fun isToHide(callerName: String?, pkgstr: String?): Boolean {
         if (callerName == null || pkgstr == null) return false
         if (callerName in pkgstr) return false
         val tplName = config.Scope[callerName] ?: return false
         val template = config.Templates[tplName] ?: return false
-        if (template.ExcludeWebview && pkgstr.contains(Regex("[Ww]ebview"))) return false
-        if (template.HideAllApps) return true
-		return isNeedHide(template.WhiteList, template.HideApps, pkgstr)
+        if (template.WhiteList && template.ExcludeSystemApps)
+            for (pkg in systemApps)
+                if (pkg in pkgstr) return false
+        var inList = false
+        for (pkg in template.HideApps)
+            if (pkg in pkgstr) inList = true
+        return template.WhiteList xor inList
     }
 
     private fun isHideFile(callerName: String?, path: String?): Boolean {
-        if (callerName == null || path == null) return false
-        if (callerName in path) return false
-        val tplName = config.Scope[callerName] ?: return false
-        val template = config.Templates[tplName] ?: return false
-        if (template.ExcludeWebview && path.contains(Regex("[Ww]ebview"))) return false
-        if (template.HideTWRP && path.contains(Regex("/storage/emulated/(.*)/TWRP"))) return true
-        if (template.HideAllApps && path.contains(Regex("/storage/emulated/(.*)/Android/data/"))) return true
-        return isNeedHide(template.WhiteList, template.HideApps, path)
+        path ?: return false
+        return if (path.contains(Regex("/storage/emulated/(.*)/Android/")) ||
+                path.contains("/sdcard/Android/") ||
+                path.contains("/data/data/") ||
+                path.contains("/data/user/"))
+            isToHide(callerName, path)
+        else false
     }
 
     private fun removeList(method: Method, hookName: String, pkgNameObjList: List<String>) {
@@ -267,8 +263,17 @@ class PackageManagerService : IXposedHookLoadPackage {
         allHooks.addAll(XposedBridge.hookAllConstructors(PKMS, object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
                 L.i("System hook installed (Version ${BuildConfig.SERVICE_VERSION})", this@PackageManagerService)
+                /* Cache system app list */
+                val mSettings = XposedHelpers.getObjectField(param.thisObject, "mSettings")
+                val mPackages = XposedHelpers.getObjectField(mSettings, "mPackages") as ArrayMap<String, *>
+                for ((name, ps) in mPackages) {
+                    if (XposedHelpers.getIntField(ps, "pkgFlags") and ApplicationInfo.FLAG_SYSTEM != 0) {
+                        systemApps.add(name)
+                    }
+                }
             }
         }))
+
         /* ---Deal with 💩 ROMs--- */
         val extPKMS = try {
             when (android.os.Build.BRAND) {
@@ -296,6 +301,7 @@ class PackageManagerService : IXposedHookLoadPackage {
         for (method in PKMS.declaredMethods)
             if (method.name !in methodNames)
                 pmMethods.add(method)
+
         for (method in pmMethods) when (method.name) {
             "getInstallerPackageName" -> allHooks.add(XposedBridge.hookMethod(method, HMAService()))
 

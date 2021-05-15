@@ -17,13 +17,10 @@ constexpr char APPNAME[] = "com.tsng.hidemyapplist";
 
 struct Config {
     struct Template {
-        bool HideTWRP = false;
-        bool HideAllApps = false;
+        bool WhiteList = false;
         bool EnableAllHooks = false;
-        bool ExcludeWebview = false;
         std::vector<string> HideApps;
         std::vector<string> ApplyHooks;
-        bool WhiteList = false;
     };
 
     bool HookSelf = false;
@@ -35,10 +32,7 @@ struct Config {
 template<>
 struct jsonxx::json_bind<Config::Template> {
     static void from_json(const json &j, Config::Template &v) {
-        jsonxx::from_json(j["HideTWRP"], v.HideTWRP);
-        jsonxx::from_json(j["HideAllApps"], v.HideAllApps);
         jsonxx::from_json(j["EnableAllHooks"], v.EnableAllHooks);
-        jsonxx::from_json(j["ExcludeWebview"], v.ExcludeWebview);
         jsonxx::from_json(j["HideApps"], v.HideApps);
         jsonxx::from_json(j["ApplyHooks"], v.ApplyHooks);
         jsonxx::from_json(j["WhiteList"], v.WhiteList);
@@ -92,23 +86,16 @@ bool isHideFile(const char *path) {
     const auto &tplName = config.Scope[callerName];
     if (!config.Templates.count(tplName)) return false;
     const auto &tpl = config.Templates[tplName];
-    if (tpl.ExcludeWebview &&
-        std::regex_search(path, std::regex("[Ww]ebview")))
-        return false;
-    if (tpl.HideTWRP &&
-        std::regex_search(path, std::regex("/storage/emulated/(.*)/TWRP")))
-        return true;
     if (std::regex_search(path, std::regex("/storage/emulated/(.*)/Android/")) ||
         strstr(path, "/sdcard/Android/") != nullptr ||
         strstr(path, "/data/data/") != nullptr ||
-        strstr(path, "/data/user/") != nullptr) {
-        if (tpl.HideAllApps) return true;
+        strstr(path, "/data/user/") != nullptr) { // 如果包含了敏感路径
         for (const auto &pkg : tpl.HideApps)
-            if (strstr(path, pkg.c_str()) != nullptr) {
-                if(tpl.WhiteList) return false;
-                else return true;
-            }
+            if (strstr(path, pkg.c_str()) != nullptr) // 如果路径包含应用列表中的APP
+                return !tpl.WhiteList; // 包含白名单，不隐藏；包含黑名单，隐藏
+        return tpl.WhiteList; // 路径不含列表中应用，白名单隐藏，黑名单不隐藏
     }
+    // 这里仍然有个问题没解决：native hooks目前无法判断白名单模式下排除系统应用，不过一般不会要读取系统应用的目录，所以暂时先不管，之后修
     return false;
 }
 

@@ -1,5 +1,4 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="Hook">
         <SwitchPreferenceCompat
             android:disableDependentsState="true"
@@ -10,42 +9,22 @@
             android:entries="@array/detect_methods"
             android:entryValues="@array/detect_methods"
             android:key="ApplyHooks"
-            android:title="@string/template_apply_hooks">
-
-        </MultiSelectListPreference>
+            android:title="@string/template_apply_hooks" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/template_hide_apps">
         <SwitchPreferenceCompat
-            android:disableDependentsState="true"
-            android:key="HideAllApps"
-            android:summary="@string/template_hide_all_apps_summary"
-            android:title="@string/template_hide_all_apps" />
-    </PreferenceCategory>
-    <!--
-    <SwitchPreferenceCompat
-        android:disableDependentsState="true"
-        android:key="ExcludeSystemApps"
-        android:title="@string/template_exclude_system_apps" />
-    -->
-    <SwitchPreferenceCompat
-        android:key="ExcludeWebview"
-        android:summary="@string/template_exclude_webview_summary"
-        android:title="@string/template_exclude_webview" />
-    <Preference
-        android:dependency="HideAllApps"
-        android:fragment="com.tsng.hidemyapplist.ui.TemplateSettingsActivity$HideAppsFragment"
-        android:title="@string/template_choose_apps_to_hide" />
-    <SwitchPreferenceCompat
-        android:key="WhiteList"
-        android:summary="@string/template_whitelist_summary"
-        android:title="@string/template_whitelist" />
-
-    <PreferenceCategory android:title="@string/template_others">
+            android:key="WhiteList"
+            android:summary="@string/template_whitelist_summary"
+            android:title="@string/template_whitelist" />
         <SwitchPreferenceCompat
-            android:key="HideTWRP"
-            android:summary="@string/template_hide_twrp_summary"
-            app:title="@string/template_hide_twrp" />
-
+            android:dependency="WhiteList"
+            android:disableDependentsState="true"
+            android:key="ExcludeSystemApps"
+            android:summary="@string/template_exclude_system_apps_summary"
+            android:title="@string/template_exclude_system_apps" />
+        <Preference
+            android:fragment="com.tsng.hidemyapplist.ui.TemplateSettingsActivity$HideAppsFragment"
+            android:title="@string/template_choose_apps" />
     </PreferenceCategory>
 </PreferenceScreen>
