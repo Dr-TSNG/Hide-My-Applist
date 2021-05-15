@@ -57,17 +57,33 @@ jobs:
       - name: Prepare Signing Keystore
         id: signKey
         run: |
-          if [ "" != "${{ secrets.KEY_STORE }}" ]; then
-          echo "${{ secrets.KEY_STORE }}" | base64 --decode > key.jks
+          if [ "" != "${KEY_STORE}" ]; then
+          echo "${KEY_STORE}" | base64 --decode > key.jks
           echo "::set-output name=key::1"
           fi
+        env: 
+          KEY_STORE: ${{ secrets.KEY_STORE }}
         
       - name: Sign Apks
         if: ${{ steps.signKey.outputs.key }}
         run: |
           mkdir app/release/signed
-          jarsigner -keystore ./key.jks -storepass ${{ secrets.KEY_STORE_PASSWORD }} -keypass ${{ secrets.KEY_PASSWORD }} -signedjar ./app/release/signed/${{ steps.buildRelease.outputs.releaseName }}.Native.apk $(ls app/release/*.Native.apk | head -1) ${{ secrets.ALIAS }}
-          jarsigner -keystore ./key.jks -storepass ${{ secrets.KEY_STORE_PASSWORD }} -keypass ${{ secrets.KEY_PASSWORD }} -signedjar ./app/release/signed/${{ steps.buildRelease.outputs.releaseName }}.Non-Native.apk $(ls app/release/*.Non-Native.apk | head -1) ${{ secrets.ALIAS }}
+          apksigner sign --ks ./key.jks \
+          --ks-pass env:KEY_STORE_PASSWORD \
+          --ks-key-alias ${ALIAS} \
+          --key-pass env:KEY_PASSWORD \
+          --in $(ls app/release/*.Native.apk | head -1) \
+          --out ./app/release/signed/${{ steps.buildRelease.outputs.releaseName }}.Native.apk
+          apksigner sign --ks ./key.jks \
+          --ks-pass env:KEY_STORE_PASSWORD \
+          --ks-key-alias ${ALIAS} \
+          --key-pass env:KEY_PASSWORD \
+          --in $(ls app/release/*.Non-Native.apk | head -1) \
+          --out ./app/release/signed/${{ steps.buildRelease.outputs.releaseName }}.Non-Native.apk
+        env: 
+          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          ALIAS: ${{ secrets.ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Upload Signed Native build artifact
         if: ${{ steps.signKey.outputs.key }}
