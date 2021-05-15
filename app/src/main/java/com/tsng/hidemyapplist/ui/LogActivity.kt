@@ -130,6 +130,14 @@ class LogActivity : AppCompatActivity() {
                 startActivity(Intent.createChooser(intent, title))
                 true
             }
+            R.id.toolbar_clean -> {
+                XposedUtils.cleanLogs(this)
+                rawLogs = null
+
+                replaceFragment(RawFragment())
+                // replaceFragment(if (showRawLogs) BuiltifulFragment() else RawFragment())
+                true
+            }
             /*
             R.id.toolbar_raw_logs -> {
                 item.isChecked = !item.isChecked

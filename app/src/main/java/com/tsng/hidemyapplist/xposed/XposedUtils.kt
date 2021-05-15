@@ -58,6 +58,13 @@ object XposedUtils {
     }
 
     @JvmStatic
+    fun cleanLogs(context: Context) {
+        try {
+            context.packageManager.getInstallerPackageName("cleanLogs")
+        } catch (e: IllegalArgumentException) { }
+    }
+
+    @JvmStatic
     fun callServiceIsUseHook(context: Context, callerName: String?, hookMethod: String): Boolean {
         try {
             val res = context.packageManager.getInstallerPackageName("callIsUseHook#$callerName#$hookMethod")

@@ -111,22 +111,20 @@ class PackageManagerService : IXposedHookLoadPackage {
         return template.WhiteList xor inList
     }
 
-    private fun dealRegex(regex: Regex, matchResult: String): String {
-        val suf = Regex("(.*)/.*").find(matchResult)
-        return suf?.value ?: matchResult
-    }
-
     private fun isHideFile(callerName: String?, path: String?): Boolean {
         path ?: return false
         val rules = setOf(
-                Regex("/storage/emulated/.*/Android/.*/(.*)"),
-                Regex("/storage/self/primary/Android/.*/(.*)"),
-                Regex("/sdcard/Android/.*/(.*)"),
-                Regex("/data/data/(.*)"),
-                Regex("/data/user/.*/(.*)")
+                Regex("/storage/emulated/.*?/Android/.*?/"),
+                Regex("/storage/self/primary/Android/.*?/"),
+                Regex("/sdcard/Android/.*?/"),
+                Regex("/data/data/"),
+                Regex("/data/user/.*?/")
         )
         for (regex in rules)
-            regex.find(path)?.let { return isToHide(callerName, dealRegex(regex, it.value)) }
+            regex.find(path)?.let {
+                val queryName = path.removePrefix(it.value).split("/")[0]
+                return isToHide(callerName, queryName)
+            }
         return false
     }
 
@@ -183,6 +181,10 @@ class PackageManagerService : IXposedHookLoadPackage {
                 arg == "getServeTimes" -> param.result = interceptionCount.toString()
                 arg == "getPreference" -> param.result = configStr
                 arg == "getLogs" -> param.result = provideLogs()
+                arg == "cleanLogs" -> {
+                    synchronized(mLock) { File("$dataDir/runtime.log").let { it.delete(); it.createNewFile() } }
+                    param.result = resultYes
+                }
                 arg.startsWith("addLog") -> addLog(arg.substring(7)).also { param.result = resultYes }
                 arg.startsWith("stopSystemService") -> {
                     val split = arg.split("#")

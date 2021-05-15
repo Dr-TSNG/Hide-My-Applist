@@ -12,6 +12,11 @@
         android:title="@string/toolbar_export"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/toolbar_clean"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/toolbar_clean"
+        app:showAsAction="ifRoom" />
+    <item
         android:checked="true"
 
         android:id="@+id/toolbar_raw_logs"

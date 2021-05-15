@@ -5,5 +5,6 @@
     <string name="toolbar_show_system_apps">显示系统应用</string>
     <string name="toolbar_refresh">刷新</string>
     <string name="toolbar_export">导出</string>
+    <string name="toolbar_clean">清理</string>
     <string name="toolbar_raw_logs">显示文本日志</string>
 </resources>
