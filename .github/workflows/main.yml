@@ -39,24 +39,60 @@ jobs:
       - name: Gradle prebuild
         run: ./gradlew prebuild
         
-      - name: Echo ANDROID_SDK_ROOT
-        run: echo $ANDROID_SDK_ROOT
-        
       - name: Replace android-hidden-api android.jar
-        run: wget --no-check-certificate "https://drive.google.com/uc?export=download&id=1f6YnnIKmke3qTQPUocCSS8d5-q7cqd-G" -O $ANDROID_SDK_ROOT/platforms/android-30/android.jar
+        run: bash ./replace_android_hidden_api_jar.sh
         
       - name: Build Release with Native
-        run: ./gradlew aR
+        id: buildRelease
+        run: |
+          ./gradlew :app:assembleRelease
+          echo "::set-output name=releaseName::Hide-My-Applist.$(ls app/release/*.apk | head -1 | awk -F '(/|.Native.apk)' '{print $3}').r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"
         
       - name: Build Release without Native
-        run: ./gradlew assembleNon_native
+        run: ./gradlew :app:assembleNon_native
         
       - name: List build dir
         run: ls -l ./app/release
+        
+      - name: Prepare Signing Keystore
+        id: signKey
+        run: |
+          if [ "" != "${{ secrets.KEY_STORE }}" ]; then
+          echo "${{ secrets.KEY_STORE }}" | base64 --decode > key.jks
+          echo "::set-output name=key::1"
+          fi
+        
+      - name: Sign Apks
+        if: ${{ steps.signKey.outputs.key }}
+        run: |
+          mkdir app/release/signed
+          jarsigner -keystore ./key.jks -storepass ${{ secrets.KEY_STORE_PASSWORD }} -keypass ${{ secrets.KEY_PASSWORD }} -signedjar ./app/release/signed/${{ steps.buildRelease.outputs.releaseName }}.Native.apk $(ls app/release/*.Native.apk | head -1) ${{ secrets.ALIAS }}
+          jarsigner -keystore ./key.jks -storepass ${{ secrets.KEY_STORE_PASSWORD }} -keypass ${{ secrets.KEY_PASSWORD }} -signedjar ./app/release/signed/${{ steps.buildRelease.outputs.releaseName }}.Non-Native.apk $(ls app/release/*.Non-Native.apk | head -1) ${{ secrets.ALIAS }}
 
-      - name: Upload build artifact
+      - name: Upload Signed Native build artifact
+        if: ${{ steps.signKey.outputs.key }}
         uses: actions/upload-artifact@v2
-        if: runner.os == 'Linux'
         with:
-          name: release
-          path: app/release
+          name: "${{ steps.buildRelease.outputs.releaseName }}.Native"
+          path: "app/release/signed/${{ steps.buildRelease.outputs.releaseName }}.Native.apk"
+          
+      - name: Upload Signed Non-Native build artifact
+        if: ${{ steps.signKey.outputs.key }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: "${{ steps.buildRelease.outputs.releaseName }}.Non-Native"
+          path: "app/release/signed/${{ steps.buildRelease.outputs.releaseName }}.Non-Native.apk"
+          
+      - name: Upload Unsigned Native build artifact
+        if: ${{ !steps.signKey.outputs.key }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: "${{ steps.buildRelease.outputs.releaseName }}.Native.Unsigned"
+          path: "app/release/*.Native.apk"
+          
+      - name: Upload Unsigned Non-Native build artifact
+        if: ${{ !steps.signKey.outputs.key }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: "${{ steps.buildRelease.outputs.releaseName }}.Non-Native.Unsigned"
+          path: "app/release/*.Non-Native.apk"
