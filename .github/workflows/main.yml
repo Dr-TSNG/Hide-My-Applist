@@ -67,14 +67,15 @@ jobs:
       - name: Sign Apks
         if: ${{ steps.signKey.outputs.key }}
         run: |
+          apksigner=${ANDROID_SDK_ROOT}/build-tools/30.0.3/apksigner
           mkdir app/release/signed
-          apksigner sign --ks ./key.jks \
+          $apksigner sign --ks ./key.jks \
           --ks-pass env:KEY_STORE_PASSWORD \
           --ks-key-alias ${ALIAS} \
           --key-pass env:KEY_PASSWORD \
           --in $(ls app/release/*.Native.apk | head -1) \
           --out ./app/release/signed/${{ steps.buildRelease.outputs.releaseName }}.Native.apk
-          apksigner sign --ks ./key.jks \
+          $apksigner sign --ks ./key.jks \
           --ks-pass env:KEY_STORE_PASSWORD \
           --ks-key-alias ${ALIAS} \
           --key-pass env:KEY_PASSWORD \
