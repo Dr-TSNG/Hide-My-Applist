@@ -4,13 +4,11 @@ import com.google.gson.Gson
 
 class JsonConfig {
     class Template {
-        val HideTWRP = false
-        val HideAllApps = false
+        val WhiteList = false
         val EnableAllHooks = false
-        val ExcludeWebview = false
+        val ExcludeSystemApps = false
         val HideApps = setOf<String>()
         val ApplyHooks = setOf<String>()
-        val WhiteList = false
     }
 
     var HookSelf = false
