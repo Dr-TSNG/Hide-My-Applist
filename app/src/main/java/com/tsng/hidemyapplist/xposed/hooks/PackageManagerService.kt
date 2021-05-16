@@ -22,6 +22,8 @@ import java.io.FileNotFoundException
 import java.io.FileReader
 import java.io.FileWriter
 import java.lang.reflect.Method
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.concurrent.thread
 
 class PackageManagerService : IXposedHookLoadPackage {
@@ -45,7 +47,8 @@ class PackageManagerService : IXposedHookLoadPackage {
         synchronized(mLock) {
             val logFile = File("$dataDir/runtime.log")
             if (logFile.length() / 1024 > config.MaxLogSize) logFile.delete()
-            FileWriter(logFile, true).use { it.appendLine(log) }
+            val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss ", Locale.getDefault()).format(Date())
+            FileWriter(logFile, true).use { it.appendLine(date + log) }
         }
     }
 
