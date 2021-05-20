@@ -7,7 +7,6 @@ import android.util.ArrayMap
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.JsonConfig
 import com.tsng.hidemyapplist.xposed.XposedUtils.APPNAME
-import com.tsng.hidemyapplist.xposed.XposedUtils.L
 import com.tsng.hidemyapplist.xposed.XposedUtils.getRecursiveField
 import com.tsng.hidemyapplist.xposed.XposedUtils.resultIllegal
 import com.tsng.hidemyapplist.xposed.XposedUtils.resultNo
@@ -43,6 +42,24 @@ class PackageManagerService : IXposedHookLoadPackage {
     @Volatile
     private var interceptionCount = 0
 
+    fun ld(log: String) {
+        val s = "[HMA Xposed] [DEBUG] $log"
+        XposedBridge.log(s)
+        addLog(s)
+    }
+
+    fun li(log: String) {
+        val s = "[HMA Xposed] [INFO] $log"
+        XposedBridge.log(s)
+        addLog(s)
+    }
+
+    fun le(log: String) {
+        val s = "[HMA Xposed] [ERROR] $log"
+        XposedBridge.log(s)
+        addLog(s)
+    }
+
     fun addLog(log: String) {
         synchronized(mLock) {
             val logFile = File("$dataDir/runtime.log")
@@ -73,14 +90,15 @@ class PackageManagerService : IXposedHookLoadPackage {
             configStr = it.readText()
             config = JsonConfig.fromJson(configStr)
         }
-        if (config.DetailLog) L.d("Cached config: $config", this)
+        if (config.DetailLog) ld("Cached config: $config")
         initialized = true
         try {
             FileReader("$dataDir/interception_cnt").use {
                 interceptionCount = it.readText().toInt()
             }
-        } catch (e: Exception) { }
-        L.i("Config initialized", this)
+        } catch (e: Exception) {
+        }
+        li("Config initialized")
     }
 
     private fun updateConfig(json: String) {
@@ -94,7 +112,7 @@ class PackageManagerService : IXposedHookLoadPackage {
             }
         }
         if (!initialized) initConfig()
-        else if (config.DetailLog) L.d("Update config: $config", this)
+        else if (config.DetailLog) ld("Update config: $config")
     }
 
     private fun isUseHook(callerName: String?, hookMethod: String): Boolean {
@@ -150,9 +168,9 @@ class PackageManagerService : IXposedHookLoadPackage {
                 }
                 if (isHidden) {
                     interceptionCount++
-                    L.i("@Hide PKMS caller: $callerName method: ${param.method.name}", this@PackageManagerService)
+                    li("@Hide PKMS caller: $callerName method: ${param.method.name}")
                 }
-                if (isHidden && config.DetailLog) L.d("removeList $removed", this@PackageManagerService)
+                if (isHidden && config.DetailLog) ld("removeList $removed")
             }
         }))
     }
@@ -166,7 +184,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                 if (isToHide(callerName, param.args[0] as String?)) {
                     interceptionCount++
                     param.result = result
-                    L.i("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}", this@PackageManagerService)
+                    li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
                 }
             }
         }))
@@ -178,7 +196,20 @@ class PackageManagerService : IXposedHookLoadPackage {
             val callerUid = Binder.getCallingUid()
             val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
             val arg = param.args[0] as String? ?: return
-            when {
+
+            /* 有其他app试图调用系统服务 */
+            if (callerName != APPNAME) {
+                if (arg.startsWith("addLog#")) addLog(arg.substring(7))
+                else {
+                    le("Someone else may be trying to call system service! caller: $callerName param: ${param.args[0]}")
+                    if (!isUseHook(callerName, "API requests")) return
+                    if (isToHide(callerName, param.args[0] as String?)) {
+                        interceptionCount++
+                        param.result = null
+                        li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
+                    }
+                }
+            } else when {
                 /* 服务模式，执行自定义行为 */
                 arg == "checkHMAServiceVersion" -> param.result = BuildConfig.SERVICE_VERSION.toString()
                 arg == "getServeTimes" -> param.result = interceptionCount.toString()
@@ -213,15 +244,6 @@ class PackageManagerService : IXposedHookLoadPackage {
                     if (split.size != 3) param.result = resultIllegal
                     else param.result = if (isHideFile(split[1], split[2])) resultYes else resultNo
                 }
-                /* 非服务模式，正常hook */
-                else -> {
-                    if (!isUseHook(callerName, "API requests")) return
-                    if (isToHide(callerName, param.args[0] as String?)) {
-                        interceptionCount++
-                        param.result = null
-                        L.i("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}", this@PackageManagerService)
-                    }
-                }
             }
         }
     }
@@ -229,16 +251,16 @@ class PackageManagerService : IXposedHookLoadPackage {
     /* Remove all hooks */
     private fun stopService(cleanEnv: Boolean) {
         stopped = true
-        L.i("Receive stop system service signal", this)
-        L.i("Start to remove all hooks", this)
+        li("Receive stop system service signal")
+        li("Start to remove all hooks")
         for (hook in allHooks) {
-            L.i("Remove hook at ${hook.hookedMethod.name}", this)
+            li("Remove hook at ${hook.hookedMethod.name}")
             hook.unhook()
         }
-        L.i("System service stopped", this)
+        li("System service stopped")
         synchronized(mLock) {
             if (cleanEnv) {
-                L.i("Clean runtime environment", this)
+                li("Clean runtime environment")
                 File(dataDir).deleteRecursively()
             }
         }
@@ -251,11 +273,11 @@ class PackageManagerService : IXposedHookLoadPackage {
         try {
             initConfig()
         } catch (e: FileNotFoundException) {
-            L.i("Config not cached, waiting for preference provider", this)
+            li("Config not cached, waiting for preference provider")
         } catch (e: Exception) {
             configStr = "{}"
             config = JsonConfig()
-            L.e("Failed to read cached config, waiting for preference provider\n${e.stackTraceToString()}", this)
+            le("Failed to read cached config, waiting for preference provider\n${e.stackTraceToString()}")
         }
         thread {
             while (!stopped) {
@@ -272,7 +294,7 @@ class PackageManagerService : IXposedHookLoadPackage {
         val PKMS = XposedHelpers.findClass("com.android.server.pm.PackageManagerService", lpp.classLoader)
         allHooks.addAll(XposedBridge.hookAllConstructors(PKMS, object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
-                L.i("System hook installed (Version ${BuildConfig.SERVICE_VERSION})", this@PackageManagerService)
+                li("System hook installed (Version ${BuildConfig.SERVICE_VERSION})")
                 /* Cache system app list */
                 val mSettings = XposedHelpers.getObjectField(param.thisObject, "mSettings")
                 val mPackages = XposedHelpers.getObjectField(mSettings, "mPackages") as ArrayMap<String, *>
@@ -299,7 +321,7 @@ class PackageManagerService : IXposedHookLoadPackage {
         if (extPKMS != null) {
             allHooks.addAll(XposedBridge.hookAllConstructors(extPKMS, object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
-                    L.i("Non-AOSP PKMS ${param.method.declaringClass.name}", this@PackageManagerService)
+                    li("Non-AOSP PKMS ${param.method.declaringClass.name}")
                 }
             }))
             for (method in extPKMS.declaredMethods) {
@@ -348,8 +370,8 @@ class PackageManagerService : IXposedHookLoadPackage {
                         if (change) {
                             interceptionCount++
                             param.result = list.toTypedArray()
-                            L.i("@Hide PKMS caller: $callerName method: ${param.method.name}", this@PackageManagerService)
-                            if (config.DetailLog) L.d("removeList $removed", this@PackageManagerService)
+                            li("@Hide PKMS caller: $callerName method: ${param.method.name}")
+                            if (config.DetailLog) ld("removeList $removed")
                         }
                     }
                 }

@@ -40,7 +40,7 @@ import java.util.function.IntFunction;
 
 public class DetectionActivity extends AppCompatActivity implements View.OnClickListener {
     static {
-        System.loadLibrary("hma_native_detections");
+        System.loadLibrary("native_detections");
     }
 
     Set<String> targets;
