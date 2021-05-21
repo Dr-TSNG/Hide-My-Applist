@@ -6,10 +6,10 @@
     </string>
     <string name="about_how_to_use_title">如何使用該模組</string>
     <string name="about_how_to_use_description_1">
-        #啟動和更新#\n&#12288;&#12288;安裝/更新模組後需要重啟。另外，本模組暫時不支援虛擬框架。
+        #我是否需要安裝riru插件#\n&#12288;&#12288;直接運行一次檢測測試，如果File detections一欄全為N，則您的ROM已對此類檢測做了攔截，無需再安裝riru插件。否則，您需要riru插件才能攔截文件檢測。註意：riru插件不穩定，可能且不限於造成卡開機、閃退等問題，請自行判斷是否需要。
     </string>
     <string name="about_how_to_use_description_2">
-        #如何啟用隱藏#\n&#12288;&#12288;首先在模板管理裡建立一個模板，然後在選擇生效應用裡對目標應用啟用模板。Xposed模組作用域需要勾選「Android 系統」，如需攔截文件檢測還需要勾選目標APP。
+        #如何啟用隱藏#\n&#12288;&#12288;首先在模板管理裏創建一個模板，然後在選擇生效應用裏對目標應用啟用模板。Xposed模塊作用域需要且*只需要*勾選“系統框架”。
     </string>
     <string name="about_how_to_use_description_3">
         #如何測試隱藏是否成功#\n&#12288;&#12288;對本模組自身啟用一個模板，之後在設定裡啟用「Hook模組自身」，開始檢測。

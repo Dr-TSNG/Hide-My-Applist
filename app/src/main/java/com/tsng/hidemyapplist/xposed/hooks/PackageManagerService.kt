@@ -246,6 +246,7 @@ class PackageManagerService : IXposedHookLoadPackage {
     /* Remove all hooks */
     private fun stopService(cleanEnv: Boolean) {
         stopped = true
+        File("$dataDir/stop").createNewFile()
         li("Receive stop system service signal")
         li("Start to remove all hooks")
         for (hook in allHooks) {
@@ -263,8 +264,9 @@ class PackageManagerService : IXposedHookLoadPackage {
 
     /* Load system service */
     override fun handleLoadPackage(lpp: LoadPackageParam) {
-        File(dataDir).let { if (!it.exists()) it.mkdir() }
-        File("$dataDir/runtime.log").let { if (it.exists()) it.delete() }
+        File(dataDir).mkdir()
+        File("$dataDir/stop").delete()
+        File("$dataDir/runtime.log").delete()
         generateToken()
         try {
             initConfig()

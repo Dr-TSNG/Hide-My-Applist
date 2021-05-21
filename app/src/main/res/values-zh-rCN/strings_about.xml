@@ -6,13 +6,16 @@
     </string>
     <string name="about_how_to_use_title">如何使用该模块</string>
     <string name="about_how_to_use_description_1">
-        #激活和更新#\n&#12288;&#12288;安装/更新模块后需要重启。另外，本模块暂时不支持虚拟框架。
+        #我是否需要安装riru插件#\n&#12288;&#12288;直接运行一次检测测试，如果File detections一栏全为N，则您的ROM已对此类检测做了拦截，无需再安装riru插件。否则，您需要riru插件才能拦截文件检测。注意：riru插件不稳定，可能且不限于造成卡开机、闪退等问题，请自行判断是否需要。
     </string>
     <string name="about_how_to_use_description_2">
-        #如何启用隐藏#\n&#12288;&#12288;首先在模板管理里创建一个模板，然后在选择生效应用里对目标应用启用模板。Xposed模块作用域需要勾选“Android 系统”，如需拦截文件检测还需要勾选目标APP。
+        #如何启用隐藏#\n&#12288;&#12288;首先在模板管理里创建一个模板，然后在选择生效应用里对目标应用启用模板。Xposed模块作用域需要且*只需要*勾选“系统框架”。
     </string>
     <string name="about_how_to_use_description_3">
         #如何测试隐藏是否成功#\n&#12288;&#12288;对本模块自身启用一个模板，之后在设置里启用“Hook模块自身”，开始检测。
+    </string>
+    <string name="about_how_to_use_description_4">
+        #模板修改是实时生效的吗#\n&#12288;&#12288;除了文件拦截，修改模板后其他几种拦截方式都是实时生效的，而文件拦截需要结束并重启目标app进程才能生效。
     </string>
     <string name="about_hook_differences_title">几种hook方式区别</string>
     <string name="about_hook_differences_description">

@@ -13,7 +13,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 33
-        versionName "1.6.2"
+        versionName "1.6.2 Beta"
         buildConfigField "int", "SERVICE_VERSION", "33"
     }
 
