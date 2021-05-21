@@ -20,9 +20,20 @@ import java.util.*
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+    companion object {
+        var riruModuleVersion = 0
+    }
+
+    init {
+        System.loadLibrary("natives")
+        if (riruModuleVersion == 0) riruModuleVersion = getRiruModuleVersion()
+    }
+
     private fun isModuleActivated(): Boolean {
         return false
     }
+
+    private external fun getRiruModuleVersion(): Int
 
     private fun isHookSelf(): Boolean {
         return getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("HookSelf", false)
@@ -60,6 +71,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val text = getString(R.string.xposed_serve_times).split("#")
             xposed_status_serve_times.visibility = View.VISIBLE
             xposed_status_serve_times.text = text[0] + XposedUtils.getServeTimes(this) + text[2]
+            riru_status_text.visibility = View.VISIBLE
+            if (riruModuleVersion == 0)
+                riru_status_text.text = getString(R.string.riru_status) + getString(R.string.riru_not_installed)
+            else
+                riru_status_text.text = getString(R.string.riru_status) + getString(R.string.riru_installed) + "$riruModuleVersion]"
         } else {
             xposed_status_serve_times.visibility = View.GONE
             xposed_status_sub_text.text = getString(R.string.xposed_service_off)

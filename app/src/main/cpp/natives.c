@@ -1,6 +1,6 @@
 #include <jni.h>
-#include <fcntl.h>
-#include <unistd.h>
+#include <time.h>
+#include <stdio.h>
 #include <sys/stat.h>
 #include <android/log.h>
 
@@ -34,4 +34,18 @@ Java_com_tsng_hidemyapplist_ui_DetectionActivity_00024DetectionTask_nativeFile(J
     jintArray ret = (*env)->NewIntArray(env, sz);
     (*env)->SetIntArrayRegion(env, ret, 0, sz, results);
     return ret;
+}
+
+JNIEXPORT jint JNICALL
+Java_com_tsng_hidemyapplist_MainActivity_getRiruModuleVersion(JNIEnv *env, jobject thiz) {
+    struct stat buf;
+    static const char path[] = "/data/data/com.tsng.hidemyapplist/cache/riru_v";
+    if (stat(path, &buf) != 0) return 0;
+    if (time(NULL) - buf.st_mtime > 15) return 0;
+    jint riru_module_version = 0;
+    FILE *riru_v = fopen(path, "r");
+    fscanf(riru_v, "%d", &riru_module_version);
+    fclose(riru_v);
+    remove(path);
+    return riru_module_version;
 }

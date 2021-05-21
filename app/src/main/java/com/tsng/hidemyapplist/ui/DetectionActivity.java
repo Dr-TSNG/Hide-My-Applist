@@ -39,10 +39,6 @@ import java.util.TreeSet;
 import java.util.function.IntFunction;
 
 public class DetectionActivity extends AppCompatActivity implements View.OnClickListener {
-    static {
-        System.loadLibrary("native_detections");
-    }
-
     Set<String> targets;
     SharedPreferences default_pref;
 

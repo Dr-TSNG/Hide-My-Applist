@@ -36,6 +36,15 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/riru_status_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="@android:color/white"
+                    android:visibility="gone" />
+
+                <TextView
                     android:id="@+id/xposed_status_sub_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -56,129 +65,139 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/menu_detection_test"
-        style="@style/DefaultCard"
-        app:cardElevation="0dp">
+    <ScrollView
+        style="@style/Default"
+        android:scrollbars="none">
 
         <LinearLayout
             style="@style/Default"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageView
-                style="@style/DefaultCardImage"
-                android:src="@drawable/ic_detection" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menu_detection_test"
+                style="@style/DefaultCard"
+                app:cardElevation="0dp">
 
-            <TextView
-                style="@style/DefaultCardText"
-                android:text="@string/title_detection_test"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
+                <LinearLayout
+                    style="@style/Default"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        style="@style/DefaultCardImage"
+                        android:src="@drawable/ic_detection" />
+
+                    <TextView
+                        style="@style/DefaultCardText"
+                        android:text="@string/title_detection_test"
+                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menu_template_manage"
+                style="@style/DefaultCard"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    style="@style/Default"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        style="@style/DefaultCardImage"
+                        android:src="@drawable/ic_template" />
+
+                    <TextView
+                        style="@style/DefaultCardText"
+                        android:text="@string/title_template_manage"
+                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menu_scope_manage"
+                style="@style/DefaultCard"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    style="@style/Default"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        style="@style/DefaultCardImage"
+                        android:src="@drawable/ic_apps" />
+
+                    <TextView
+                        style="@style/DefaultCardText"
+                        android:text="@string/title_scope_manage"
+                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menu_logs"
+                style="@style/DefaultCard"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    style="@style/Default"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        style="@style/DefaultCardImage"
+                        android:src="@drawable/ic_logs" />
+
+                    <TextView
+                        style="@style/DefaultCardText"
+                        android:text="@string/title_logs"
+                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menu_settings"
+                style="@style/DefaultCard"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    style="@style/Default"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        style="@style/DefaultCardImage"
+                        android:src="@drawable/ic_settings" />
+
+                    <TextView
+                        style="@style/DefaultCardText"
+                        android:text="@string/title_settings"
+                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menu_about"
+                style="@style/DefaultCard"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    style="@style/Default"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        style="@style/DefaultCardImage"
+                        android:src="@drawable/ic_about" />
+
+                    <TextView
+                        style="@style/DefaultCardText"
+                        android:text="@string/title_about"
+                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/menu_template_manage"
-        style="@style/DefaultCard"
-        app:cardElevation="0dp">
-
-        <LinearLayout
-            style="@style/Default"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                style="@style/DefaultCardImage"
-                android:src="@drawable/ic_template" />
-
-            <TextView
-                style="@style/DefaultCardText"
-                android:text="@string/title_template_manage"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/menu_scope_manage"
-        style="@style/DefaultCard"
-        app:cardElevation="0dp">
-
-        <LinearLayout
-            style="@style/Default"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                style="@style/DefaultCardImage"
-                android:src="@drawable/ic_apps" />
-
-            <TextView
-                style="@style/DefaultCardText"
-                android:text="@string/title_scope_manage"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/menu_logs"
-        style="@style/DefaultCard"
-        app:cardElevation="0dp">
-
-        <LinearLayout
-            style="@style/Default"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                style="@style/DefaultCardImage"
-                android:src="@drawable/ic_logs" />
-
-            <TextView
-                style="@style/DefaultCardText"
-                android:text="@string/title_logs"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/menu_settings"
-        style="@style/DefaultCard"
-        app:cardElevation="0dp">
-
-        <LinearLayout
-            style="@style/Default"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                style="@style/DefaultCardImage"
-                android:src="@drawable/ic_settings" />
-
-            <TextView
-                style="@style/DefaultCardText"
-                android:text="@string/title_settings"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/menu_about"
-        style="@style/DefaultCard"
-        app:cardElevation="0dp">
-
-        <LinearLayout
-            style="@style/Default"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                style="@style/DefaultCardImage"
-                android:src="@drawable/ic_about" />
-
-            <TextView
-                style="@style/DefaultCardText"
-                android:text="@string/title_about"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
 </LinearLayout>

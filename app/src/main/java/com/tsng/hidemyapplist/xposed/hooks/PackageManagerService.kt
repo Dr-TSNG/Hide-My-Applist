@@ -33,6 +33,8 @@ class PackageManagerService : IXposedHookLoadPackage {
     private var initialized = false
     private var mLock = Any()
 
+    private lateinit var token: String
+
     @Volatile
     private var config = JsonConfig()
 
@@ -42,25 +44,39 @@ class PackageManagerService : IXposedHookLoadPackage {
     @Volatile
     private var interceptionCount = 0
 
-    fun ld(log: String) {
+    private fun ld(log: String) {
         val s = "[HMA Xposed] [DEBUG] $log"
         XposedBridge.log(s)
         addLog(s)
     }
 
-    fun li(log: String) {
+    private fun li(log: String) {
         val s = "[HMA Xposed] [INFO] $log"
         XposedBridge.log(s)
         addLog(s)
     }
 
-    fun le(log: String) {
+    private fun le(log: String) {
         val s = "[HMA Xposed] [ERROR] $log"
         XposedBridge.log(s)
         addLog(s)
     }
 
-    fun addLog(log: String) {
+    private fun generateToken() {
+        val leftLimit = 97 // letter 'a'
+        val rightLimit = 122 // letter 'z'
+        val targetStringLength = 10
+        val random = Random()
+        val buffer = StringBuilder(targetStringLength)
+        for (i in 0 until targetStringLength) {
+            val randomLimitedInt = leftLimit + (random.nextFloat() * (rightLimit - leftLimit + 1)).toInt()
+            buffer.append(randomLimitedInt.toChar())
+        }
+        token = buffer.toString()
+        FileWriter("$dataDir/token").use { it.write(token) }
+    }
+
+    private fun addLog(log: String) {
         synchronized(mLock) {
             val logFile = File("$dataDir/runtime.log")
             if (logFile.length() / 1024 > config.MaxLogSize) logFile.delete()
@@ -132,23 +148,6 @@ class PackageManagerService : IXposedHookLoadPackage {
         return template.WhiteList xor inList
     }
 
-    private fun isHideFile(callerName: String?, path: String?): Boolean {
-        path ?: return false
-        val rules = setOf(
-                Regex("/storage/emulated/.*?/Android/.*?/"),
-                Regex("/storage/self/primary/Android/.*?/"),
-                Regex("/sdcard/Android/.*?/"),
-                Regex("/data/data/"),
-                Regex("/data/user/.*?/")
-        )
-        for (regex in rules)
-            regex.find(path)?.let {
-                val queryName = path.removePrefix(it.value).split("/")[0]
-                return isToHide(callerName, queryName)
-            }
-        return false
-    }
-
     private fun removeList(method: Method, hookName: String, pkgNameObjList: List<String>) {
         allHooks.add(XposedBridge.hookMethod(method, object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
@@ -195,21 +194,22 @@ class PackageManagerService : IXposedHookLoadPackage {
         override fun beforeHookedMethod(param: MethodHookParam) {
             val callerUid = Binder.getCallingUid()
             val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
-            val arg = param.args[0] as String? ?: return
+            var arg = param.args[0] as String? ?: return
 
-            /* 有其他app试图调用系统服务 */
+            /* 非模块调用需要验证token */
             if (callerName != APPNAME) {
-                if (arg.startsWith("addLog#")) addLog(arg.substring(7))
-                else {
-                    le("Someone else may be trying to call system service! caller: $callerName param: ${param.args[0]}")
+                if (!arg.startsWith(token)) {
                     if (!isUseHook(callerName, "API requests")) return
-                    if (isToHide(callerName, param.args[0] as String?)) {
+                    if (isToHide(callerName, arg)) {
                         interceptionCount++
                         param.result = null
                         li("@Hide PKMS caller: $callerName method: ${param.method.name} param: ${param.args[0]}")
                     }
-                }
-            } else when {
+                    return
+                } else arg = arg.removePrefix("$token#")
+            }
+
+            when {
                 /* 服务模式，执行自定义行为 */
                 arg == "checkHMAServiceVersion" -> param.result = BuildConfig.SERVICE_VERSION.toString()
                 arg == "getServeTimes" -> param.result = interceptionCount.toString()
@@ -239,11 +239,6 @@ class PackageManagerService : IXposedHookLoadPackage {
                     if (split.size != 3) param.result = resultIllegal
                     else param.result = if (isToHide(split[1], split[2])) resultYes else resultNo
                 }
-                arg.startsWith("callIsHideFile") -> {
-                    val split = arg.split("#")
-                    if (split.size != 3) param.result = resultIllegal
-                    else param.result = if (isHideFile(split[1], split[2])) resultYes else resultNo
-                }
             }
         }
     }
@@ -270,6 +265,7 @@ class PackageManagerService : IXposedHookLoadPackage {
     override fun handleLoadPackage(lpp: LoadPackageParam) {
         File(dataDir).let { if (!it.exists()) it.mkdir() }
         File("$dataDir/runtime.log").let { if (it.exists()) it.delete() }
+        generateToken()
         try {
             initConfig()
         } catch (e: FileNotFoundException) {

@@ -8,7 +8,7 @@
         android:layout_width="15dp"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textColor="@color/white" />
+        android:textColor="@android:color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
