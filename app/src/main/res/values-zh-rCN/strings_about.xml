@@ -15,7 +15,7 @@
         #如何测试隐藏是否成功#\n&#12288;&#12288;对本模块自身启用一个模板，之后在设置里启用“Hook模块自身”，开始检测。
     </string>
     <string name="about_how_to_use_description_4">
-        #模板修改是实时生效的吗#\n&#12288;&#12288;除了文件拦截，修改模板后其他几种拦截方式都是实时生效的，而文件拦截需要结束并重启目标app进程才能生效。
+        #模板修改是实时生效的吗#\n&#12288;&#12288;是的，修改模板后，规则实时生效，不需要杀死并重启目标应用。
     </string>
     <string name="about_hook_differences_title">几种hook方式区别</string>
     <string name="about_hook_differences_description">
