@@ -264,9 +264,21 @@ class PackageManagerService : IXposedHookLoadPackage {
 
     /* Load system service */
     override fun handleLoadPackage(lpp: LoadPackageParam) {
-        File(dataDir).mkdir()
-        File("$dataDir/stop").delete()
-        File("$dataDir/runtime.log").delete()
+        File("$dataDir/refuse_to_run").let {
+            if (it.exists()) {
+                it.delete()
+                le("Service status abnormal, refuse to install")
+                return
+            }
+        }
+        File("$dataDir/riru_v").let {
+            if (it.exists()) it.delete()
+            else {
+                File(dataDir).mkdir()
+                File("$dataDir/stop").delete()
+                File("$dataDir/runtime.log").delete()
+            }
+        }
         generateToken()
         try {
             initConfig()
@@ -300,6 +312,10 @@ class PackageManagerService : IXposedHookLoadPackage {
                     if (XposedHelpers.getIntField(ps, "pkgFlags") and ApplicationInfo.FLAG_SYSTEM != 0) {
                         systemApps.add(name)
                     }
+                }
+                FileWriter("$dataDir/system_apps.list").use {
+                    for (pkg in systemApps)
+                        it.write("$pkg\n")
                 }
             }
         }))
