@@ -67,8 +67,8 @@ jobs:
           --ks-pass env:KEY_STORE_PASSWORD \
           --ks-key-alias ${ALIAS} \
           --key-pass env:KEY_PASSWORD \
-          --in $(ls app/release/*.apk | head -1) \
-          --out ./app/release/signed/${{ steps.buildRelease.outputs.releaseName }}.apk
+          --in "$(ls app/release/*.apk | head -1)" \
+          --out "./app/release/signed/${{ steps.buildRelease.outputs.releaseName }}.apk"
         env: 
           KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
           ALIAS: ${{ secrets.ALIAS }}
