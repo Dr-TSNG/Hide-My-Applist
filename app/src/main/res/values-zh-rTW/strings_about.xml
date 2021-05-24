@@ -2,21 +2,21 @@
 <resources>
     <string name="about_title">關於該模組</string>
     <string name="about_description">
-        &#12288;&#12288;雖然「檢測安裝的應用是不正確的做法」，而且很蠢，但是並不是所有的外掛程式類應用都提供了隨機包名支援。這就意味著檢測到安裝了root類應用（如Fake Location、儲存重定向）與檢測到了root本身區別不大。（會使用檢測手段的app可不會認為你是在「我就蹭蹭不進去」）\n\n&#12288;&#12288;與此同時，部分「不安分」的app會使用各種漏洞繞過系統權限來獲取你的應用列表，從而對你建立使用者畫像（如陳叔叔將安裝了V2Ray的使用者分為一類），或是類似於xx校園xx樂跑的軟體會要求你移除作弊軟體。\n\n&#12288;&#12288;該模組提供了一些檢測方式用於測試您是否成功地隱藏了某些特定的包名，如Magisk/Edxposed Manager；同時可作為Xposed模組用於隱藏應用列表或特定應用，保護隱私。
+        &#12288;&#12288;雖然「檢測安裝的應用是不正確的做法」，而且很蠢，但是並不是所有的外掛程式類應用都提供了隨機包名支援。這就意味著檢測到安裝了 root 類應用（如 Fake Location、儲存重定向）與檢測到了 root 本身區別不大。（會使用檢測手段的 app 可不會認為你是在「我就蹭蹭不進去」）\n\n&#12288;&#12288;與此同時，部分「不安分」的 app 會使用各種漏洞繞過系統權限來獲取你的應用列表，從而對你建立使用者畫像（如陳叔叔將安裝了 V2Ray 的使用者分為一類），或是類似於某某校園樂跑的軟體會要求你移除作弊軟體。\n\n&#12288;&#12288;該模組提供了一些檢測方式用於測試您是否成功地隱藏了某些特定的包名，如 Magisk/Edxposed Manager；同時可作為 Xposed 模組用於隱藏應用列表或特定應用，保護隱私。
     </string>
     <string name="about_how_to_use_title">如何使用該模組</string>
     <string name="about_how_to_use_description_1">
-        #我是否需要安裝riru插件#\n&#12288;&#12288;直接運行一次檢測測試，如果File detections一欄全為N，則您的ROM已對此類檢測做了攔截，無需再安裝riru插件。否則，您需要riru插件才能攔截文件檢測。註意：riru插件不穩定，可能且不限於造成卡開機、閃退等問題，請自行判斷是否需要。
+        #我是否需要安裝 riru 插件#\n&#12288;&#12288;直接運行一次檢測測試，如果 File detections 一欄全為 N，則您的 ROM 已對此類檢測做了攔截，無需再安裝 riru 插件。否則，您需要 riru 插件才能攔截文件檢測。註意：riru 插件不穩定，可能且不限於造成卡開機、閃退等問題，請自行判斷是否需要。
     </string>
     <string name="about_how_to_use_description_2">
-        #如何啟用隱藏#\n&#12288;&#12288;首先在模板管理裏創建一個模板，然後在選擇生效應用裏對目標應用啟用模板。Xposed模塊作用域需要且*只需要*勾選“系統框架”。
+        #如何啟用隱藏#\n&#12288;&#12288;首先在模板管理裏創建一個模板，然後在選擇生效應用裏對目標應用啟用模板。Xposed 模塊作用域需要且*只需要*勾選“系統框架”。
     </string>
     <string name="about_how_to_use_description_3">
-        #如何測試隱藏是否成功#\n&#12288;&#12288;對本模組自身啟用一個模板，之後在設定裡啟用「Hook模組自身」，開始檢測。
+        #如何測試隱藏是否成功#\n&#12288;&#12288;對本模組自身啟用一個模板，之後在設定裡啟用「Hook 模組自身」，開始檢測。
     </string>
-    <string name="about_hook_differences_title">幾種hook方式區別</string>
+    <string name="about_hook_differences_title">幾種 hook 方式區別</string>
     <string name="about_hook_differences_description">
-        &#12288;&#12288;正常app讀取應用列表會使用API requests中的部分方法，「不安分」的app會使用其他幾種方式（相當於漏洞）進行檢測。不過請注意，全域模式（禁止讀取應用列表）下禁止intent query可能會影響分享、啟動瀏覽器等功能。\n\n一些例子\nAPI requests - 農行\nIntent queries - B站\nFile detections - 步道樂跑
+        &#12288;&#12288;正常 app 讀取應用列表會使用 API requests 中的部分方法，「不安分」的 app 會使用其他幾種方式（相當於漏洞）進行檢測。不過請注意，全域模式（禁止讀取應用列表）下禁止 intent query 可能會影響分享、啟動瀏覽器等功能。\n\n一些例子\nAPI requests - 農行\nIntent queries - B站\nFile detections - 步道樂跑
     </string>
     <string name="about_developer">開發者</string>
     <string name="about_support">支援和回饋</string>
