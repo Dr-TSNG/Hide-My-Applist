@@ -27,6 +27,7 @@ import kotlin.concurrent.thread
 
 class PackageManagerService : IXposedHookLoadPackage {
     private val dataDir = "/data/misc/hide_my_applist"
+    private val logFile = "$dataDir/tmp/runtime.log"
     private val allHooks = mutableSetOf<XC_MethodHook.Unhook>()
     private val systemApps = mutableSetOf<String>()
     private var stopped = false
@@ -73,12 +74,12 @@ class PackageManagerService : IXposedHookLoadPackage {
             buffer.append(randomLimitedInt.toChar())
         }
         token = buffer.toString()
-        FileWriter("$dataDir/token").use { it.write(token) }
+        FileWriter("$dataDir/tmp/token").use { it.write(token) }
     }
 
     private fun addLog(log: String) {
         synchronized(mLock) {
-            val logFile = File("$dataDir/runtime.log")
+            val logFile = File(logFile)
             if (logFile.length() / 1024 > config.MaxLogSize) logFile.delete()
             val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss ", Locale.getDefault()).format(Date())
             FileWriter(logFile, true).use { it.appendLine(date + log) }
@@ -89,7 +90,7 @@ class PackageManagerService : IXposedHookLoadPackage {
         try {
             synchronized(mLock) {
                 if (stopped) throw InterruptedException("Service stopped")
-                FileReader("$dataDir/runtime.log").use {
+                FileReader(logFile).use {
                     val sb = StringBuilder()
                     val list = it.readLines()
                     for (line in list) sb.append(line).append("\n")
@@ -216,7 +217,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                 arg == "getPreference" -> param.result = configStr
                 arg == "getLogs" -> param.result = provideLogs()
                 arg == "cleanLogs" -> {
-                    synchronized(mLock) { File("$dataDir/runtime.log").let { it.delete(); it.createNewFile() } }
+                    synchronized(mLock) { File(logFile).let { it.delete(); it.createNewFile() } }
                     param.result = resultYes
                 }
                 arg.startsWith("addLog") -> addLog(arg.substring(7)).also { param.result = resultYes }
@@ -246,7 +247,7 @@ class PackageManagerService : IXposedHookLoadPackage {
     /* Remove all hooks */
     private fun stopService(cleanEnv: Boolean) {
         stopped = true
-        File("$dataDir/stop").createNewFile()
+        File("$dataDir/tmp/stop").createNewFile()
         li("Receive stop system service signal")
         li("Start to remove all hooks")
         for (hook in allHooks) {
@@ -262,23 +263,27 @@ class PackageManagerService : IXposedHookLoadPackage {
         }
     }
 
-    /* Load system service */
-    override fun handleLoadPackage(lpp: LoadPackageParam) {
-        File("$dataDir/refuse_to_run").let {
+    private fun syncWithRiru(): Boolean {
+        File("$dataDir/tmp/refuse_to_run").let {
             if (it.exists()) {
                 it.delete()
                 le("Service status abnormal, refuse to install")
-                return
+                return false
             }
         }
-        File("$dataDir/riru_v").let {
-            if (it.exists()) it.delete()
-            else {
-                File(dataDir).mkdir()
-                File("$dataDir/stop").delete()
-                File("$dataDir/runtime.log").delete()
-            }
+
+        /* If riru extension not installed, make tmp by the service */
+        if (!File("$dataDir/tmp/riru_v").exists()) {
+            File(dataDir).mkdir()
+            File("$dataDir/tmp").deleteRecursively()
+            File("$dataDir/tmp").mkdir()
         }
+        return true
+    }
+
+    /* Load system service */
+    override fun handleLoadPackage(lpp: LoadPackageParam) {
+        if (!syncWithRiru()) return
         generateToken()
         try {
             initConfig()
@@ -313,7 +318,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                         systemApps.add(name)
                     }
                 }
-                FileWriter("$dataDir/system_apps.list").use {
+                FileWriter("$dataDir/tmp/system_apps.list").use {
                     for (pkg in systemApps)
                         it.write("$pkg\n")
                 }

@@ -72,7 +72,7 @@ class SettingsActivity : AppCompatActivity() {
                         .setTitle(R.string.settings_force_clean_env)
                         .setMessage(R.string.settings_is_clean_env_summary)
                         .setPositiveButton(R.string.accept) { _, _ ->
-                            val result = Shell.su("rm -rf /data/misc/hide_my_applist").exec().isSuccess
+                            val result = Shell.su("rm -rf /data/misc/hide_my_applist /data/misc/hma_selinux_test").exec().isSuccess
                             if (result) Toast.makeText(requireContext(), R.string.settings_force_clean_env_toast_success, Toast.LENGTH_SHORT).show()
                             else Toast.makeText(requireContext(), R.string.settings_force_clean_env_toast_fail, Toast.LENGTH_SHORT).show()
                         }
