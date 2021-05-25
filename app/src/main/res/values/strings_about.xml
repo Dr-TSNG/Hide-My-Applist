@@ -12,7 +12,7 @@
         #How to enable hide#\nFirst create a template in Manage Templates, then apply the template in Select Effective Apps. You should and ONLY should check System Framework in Xposed module scope/whitelist.
     </string>
     <string name="about_how_to_use_description_3">
-        #How to confirm whether hide is successful#\nApply a template to the module itself, then activate Hook Self in settings and start detection test.
+        #How to confirm whether hide is successful#\nApply a template to the module itself, then activate hook Self in settings and start detection test.
     </string>
     <string name="about_how_to_use_description_4">
         #Is template modification effective in real time#\nYes. After modifying template, you do not need to kill and restart target apps.
