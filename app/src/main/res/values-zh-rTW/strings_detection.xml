@@ -7,5 +7,5 @@
     <string name="detection_executing_detections">檢測中</string>
     <string name="detection_finished">檢測結束</string>
     <string name="detection_using_method">執行檢測方法</string>
-    <string name="detection_delete_confirm">刪除包名?</string>
+    <string name="detection_delete_confirm">刪除包名？</string>
 </resources>

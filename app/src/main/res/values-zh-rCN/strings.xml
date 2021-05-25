@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">隐藏应用列表</string>
-    <string name="riru_status">Riru插件</string>
+    <string name="riru_status">Riru 插件</string>
     <string name="riru_installed">已安装 [版本 </string>
     <string name="riru_not_installed">未安装</string>
     <string name="title_detection_test">检测测试</string>

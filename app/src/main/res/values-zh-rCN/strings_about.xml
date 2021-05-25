@@ -2,24 +2,24 @@
 <resources>
     <string name="about_title">关于该模块</string>
     <string name="about_description">
-        &#12288;&#12288;虽然“检测安装的应用是不正确的做法”，而且很蠢，但是并不是所有的插件类应用都提供了随机包名支持。这就意味着检测到安装了root类应用（如Fake Location、存储重定向）与检测到了root本身区别不大。（会使用检测手段的app可不会认为你是在“我就蹭蹭不进去”）\n\n&#12288;&#12288;与此同时，部分“不安分”的app会使用各种漏洞绕过系统权限来获取你的应用列表，从而对你建立用户画像（如陈叔叔将安装了V2Ray的用户分为一类），或是类似于xx校园xx乐跑的软件会要求你卸载作弊软件。\n\n&#12288;&#12288;该模块提供了一些检测方式用于测试您是否成功地隐藏了某些特定的包名，如Magisk/Edxposed Manager；同时可作为Xposed模块用于隐藏应用列表或特定应用，保护隐私。
+        &#12288;&#12288;虽然“检测安装的应用是不正确的做法”，而且很蠢，但是并不是所有的插件类应用都提供了随机包名支持。这就意味着检测到安装了 root 类应用（如 Fake Location、存储重定向）与检测到了 root 本身区别不大。（会使用检测手段的 app 可不会认为你是在“我就蹭蹭不进去”）\n\n&#12288;&#12288;与此同时，部分“不安分”的 app 会使用各种漏洞绕过系统权限来获取你的应用列表，从而对你建立用户画像（如陈叔叔将安装了 V2Ray 的用户分为一类），或是类似于某某校园某某乐跑的软件会要求你卸载作弊软件。\n\n&#12288;&#12288;该模块提供了一些检测方式用于测试您是否成功地隐藏了某些特定的包名，如 Magisk/Edxposed Manager；同时可作为 Xposed 模块用于隐藏应用列表或特定应用，保护隐私。
     </string>
     <string name="about_how_to_use_title">如何使用该模块</string>
     <string name="about_how_to_use_description_1">
-        #我是否需要安装riru插件#\n&#12288;&#12288;直接运行一次检测测试，如果File detections一栏全为N，则您的ROM已对此类检测做了拦截，无需再安装riru插件。否则，您需要riru插件才能拦截文件检测。注意：riru插件不稳定，可能且不限于造成卡开机、闪退等问题，请自行判断是否需要。
+        #我是否需要安装 riru 插件#\n&#12288;&#12288;直接运行一次检测测试，如果 File detections 一栏全为 N，则您的 ROM 已对此类检测做了拦截，无需再安装 riru 插件。否则，您需要 riru 插件才能拦截文件检测。注意：riru 插件不稳定，可能且不限于造成卡开机、闪退等问题，请自行判断是否需要。
     </string>
     <string name="about_how_to_use_description_2">
-        #如何启用隐藏#\n&#12288;&#12288;首先在模板管理里创建一个模板，然后在选择生效应用里对目标应用启用模板。Xposed模块作用域需要且*只需要*勾选“系统框架”。
+        #如何启用隐藏#\n&#12288;&#12288;首先在模板管理里创建一个模板，然后在选择生效应用里对目标应用启用模板。Xposed 模块作用域需要且*只需要*勾选“系统框架”。
     </string>
     <string name="about_how_to_use_description_3">
-        #如何测试隐藏是否成功#\n&#12288;&#12288;对本模块自身启用一个模板，之后在设置里启用“Hook模块自身”，开始检测。
+        #如何测试隐藏是否成功#\n&#12288;&#12288;对本模块自身启用一个模板，之后在设置里启用“Hook 模块自身”，开始检测。
     </string>
     <string name="about_how_to_use_description_4">
         #模板修改是实时生效的吗#\n&#12288;&#12288;是的，修改模板后，规则实时生效，不需要杀死并重启目标应用。
     </string>
-    <string name="about_hook_differences_title">几种hook方式区别</string>
+    <string name="about_hook_differences_title">几种 hook 方式区别</string>
     <string name="about_hook_differences_description">
-        &#12288;&#12288;正常app读取应用列表会使用API requests中的部分方法，“不安分”的app会使用其他几种方式（相当于漏洞）进行检测。不过请注意，全局模式（禁止读取应用列表）下禁止intent query可能会影响分享、启动浏览器等功能。\n\n一些例子\nAPI requests - 农行\nIntent queries - B站\nFile detections - 步道乐跑
+        &#12288;&#12288;正常 app 读取应用列表会使用 API requests 中的部分方法，“不安分”的 app 会使用其他几种方式（相当于漏洞）进行检测。不过请注意，全局模式（禁止读取应用列表）下禁止 intent query 可能会影响分享、启动浏览器等功能。\n\n一些例子\nAPI requests - 农行\nIntent queries - B站\nFile detections - 步道乐跑
     </string>
     <string name="about_developer">开发者</string>
     <string name="about_support">支持和反馈</string>
