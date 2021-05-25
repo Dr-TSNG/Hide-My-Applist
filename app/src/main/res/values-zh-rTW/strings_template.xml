@@ -3,14 +3,14 @@
     <string name="template_list">模板列表</string>
     <string name="template_new">建立模板</string>
     <string name="template_name_invalid">模板名稱不合法或已存在</string>
-    <string name="template_delete_confirm">刪除模板?</string>
+    <string name="template_delete_confirm">刪除模板？</string>
     <string name="template_enable_all_hooks">啟用所有隱藏方式</string>
     <string name="template_apply_hooks">選擇隱藏方式</string>
     <string name="template_hide_apps">隱藏應用</string>
     <string name="template_whitelist">使用白名單</string>
     <string name="template_whitelist_summary">這會使目標應用只能獲取到選定的應用信息</string>
     <string name="template_exclude_system_apps">排除系統應用</string>
-    <string name="template_exclude_system_apps_summary">如果未啟用此選項，請確保在白名單中選中Webview以避免內置瀏覽器崩潰</string>
+    <string name="template_exclude_system_apps_summary">如果未啟用此選項，請確保在白名單中選中 Webview 以避免內置瀏覽器崩潰</string>
     <string name="template_choose_apps">選擇要隱藏/排除的應用</string>
     <string name="template_is_system_app">系統應用</string>
     <string name="template_select">選擇一個模板</string>
