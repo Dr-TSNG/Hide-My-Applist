@@ -40,7 +40,7 @@ class PackageManagerService : IXposedHookLoadPackage {
     private var config = JsonConfig()
 
     @Volatile
-    private var configStr = "{}"
+    private var configStr = JsonConfig().toString()
 
     @Volatile
     private var interceptionCount = 0
@@ -290,8 +290,8 @@ class PackageManagerService : IXposedHookLoadPackage {
         } catch (e: FileNotFoundException) {
             li("Config not cached, waiting for preference provider")
         } catch (e: Exception) {
-            configStr = "{}"
             config = JsonConfig()
+            configStr = config.toString()
             le("Failed to read cached config, waiting for preference provider\n${e.stackTraceToString()}")
         }
         thread {

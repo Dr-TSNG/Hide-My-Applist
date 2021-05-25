@@ -12,9 +12,9 @@ android {
         applicationId "com.tsng.hidemyapplist"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 36
-        versionName "1.6.4 Beta"
-        buildConfigField "int", "SERVICE_VERSION", "36"
+        versionCode 37
+        versionName "1.6.4.1 Beta"
+        buildConfigField "int", "SERVICE_VERSION", "37"
     }
 
     android.applicationVariants.all {
