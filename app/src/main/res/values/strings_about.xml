@@ -15,7 +15,7 @@
         #How to confirm whether hide is successful#\nApply a template to the module itself, then activate Hook Self in settings and start detection test.
     </string>
     <string name="about_how_to_use_description_4">
-        #Is template modification effective in real time#\nYes. After modifying template, you do not need to kill and restart target apps.
+        #Is template modification effective in real time#\nExcept for file interceptions, yes. To update file interception policy, you need to force stop and restart target apps.
     </string>
     <string name="about_hook_differences_title">Differences among hook methods</string>
     <string name="about_hook_differences_description">
