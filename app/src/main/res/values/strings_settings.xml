@@ -8,9 +8,6 @@
     <string name="settings_hide_icon">Hide module icon in launcher</string>
     <string name="settings_hide_icon_summary">You can still open the app in Xposed manager</string>
     <string name="settings_service">Service</string>
-    <string name="settings_riru">Riru extension</string>
-    <string name="settings_riru_global_registry">Global registry</string>
-    <string name="settings_riru_global_registry_summary">If turned off, riru extension will only inject into apps that already applied templates. With a new app, you need to force stop and restart it to enable file hooks. If some apps have their own native hooks (such as some non system level dual solutions), turn off this option can solve the crashes.</string>
     <string name="settings_stop_system_service">Stop system service</string>
     <string name="settings_stop_system_service_summary">Need reboot to restart service</string>
     <string name="settings_is_clean_env">Clean runtime environment at the same time?</string>
