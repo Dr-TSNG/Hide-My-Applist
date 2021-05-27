@@ -91,7 +91,7 @@
             android:resource="@array/xposed_scope" />
         <meta-data
             android:name="minRiruModuleVersion"
-            android:value="4" />
+            android:value="10" />
     </application>
 
 </manifest>

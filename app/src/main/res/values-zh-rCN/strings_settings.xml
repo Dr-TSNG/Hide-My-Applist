@@ -8,6 +8,9 @@
     <string name="settings_hide_icon">隐藏桌面图标</string>
     <string name="settings_hide_icon_summary">隐藏后可从 Xposed 管理器中打开</string>
     <string name="settings_service">服务</string>
+    <string name="settings_riru">Riru 插件</string>
+    <string name="settings_riru_global_registry">全局注册</string>
+    <string name="settings_riru_global_registry_summary">如果关闭此选项，Riru 插件将只会注入应用了模板的 APP，这也意味着对一个新的 APP 应用模板，文件拦截不会实时生效（需要强制结束再重启它）。若部分 APP 存在自带的 Native hook（如某些非系统级双开方案），Riru 插件可能导致崩溃，关闭此选项可以解决。</string>
     <string name="settings_stop_system_service">终止系统服务</string>
     <string name="settings_stop_system_service_summary">需要重启设备才能重新启动服务</string>
     <string name="settings_is_clean_env">是否同时清理运行环境</string>

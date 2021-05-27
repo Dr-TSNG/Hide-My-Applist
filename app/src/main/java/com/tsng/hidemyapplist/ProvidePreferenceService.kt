@@ -12,9 +12,11 @@ class ProvidePreferenceService : Service() {
         @JvmStatic
         fun sendConfig(context: Context) {
             val json = JsonConfig()
-            json.HookSelf = context.getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("HookSelf", false)
-            json.DetailLog = context.getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("DetailLog", false)
-            json.MaxLogSize = context.getSharedPreferences("Settings", MODE_PRIVATE).getString("MaxLogSize", "512").toInt()
+            val settingsPref = context.getSharedPreferences("Settings", MODE_PRIVATE)
+            json.HookSelf = settingsPref.getBoolean("HookSelf", false)
+            json.DetailLog = settingsPref.getBoolean("DetailLog", false)
+            json.GlobalRegistry = settingsPref.getBoolean("GlobalRegistry", true)
+            json.MaxLogSize = settingsPref.getString("MaxLogSize", "512").toInt()
             json.Scope = context.getSharedPreferences("Scope", MODE_PRIVATE).all as Map<String, String>
             for (template in context.getSharedPreferences("Templates", MODE_PRIVATE).getStringSet("List", setOf())) {
                 val obj = context.getSharedPreferences("tpl_$template", MODE_PRIVATE).all

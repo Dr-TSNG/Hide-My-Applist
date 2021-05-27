@@ -19,6 +19,14 @@
             android:title="@string/settings_hide_icon" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/settings_riru">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="GlobalRegistry"
+            android:summary="@string/settings_riru_global_registry_summary"
+            android:title="@string/settings_riru_global_registry" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/settings_service">
         <Preference
             android:icon="@drawable/ic_stop"
