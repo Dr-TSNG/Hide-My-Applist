@@ -50,5 +50,6 @@ class AboutActivity : AbsAboutActivity() {
         items.add(License("SmartRefreshLayout", "scwang90", License.APACHE_2, "https://github.com/scwang90/SmartRefreshLayout"))
         items.add(License("Dobby", "jmpews", License.APACHE_2, "https://github.com/jmpews/Dobby"))
         items.add(License("libsu", "topjohnwu", License.APACHE_2, "https://github.com/topjohnwu/libsu"))
+        items.add(License("genuine", "brevent", "CC BY-NC-SA 4.0", "https://github.com/brevent/genuine"))
     }
 }

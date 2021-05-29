@@ -1,9 +1,10 @@
 #include <jni.h>
-#include <time.h>
-#include <stdio.h>
 #include <sys/stat.h>
 #include <android/log.h>
+#include <ctime>
+#include <cstdio>
 
+#include "sigverify.h"
 #include "linux_syscall_support.h"
 
 int syscall_result;
@@ -18,9 +19,9 @@ void signal_handler(int sig) {
     __android_log_print(ANDROID_LOG_INFO, "[HMA Detections]", "[INFO] Syscall was denied");
 }
 
-JNIEXPORT jintArray JNICALL
-Java_com_tsng_hidemyapplist_ui_DetectionActivity_00024DetectionTask_nativeFile(JNIEnv *env, jobject thiz, jstring path) {
-    const char *cpath = (*env)->GetStringUTFChars(env, path, NULL);
+extern "C" JNIEXPORT jintArray JNICALL
+Java_com_tsng_hidemyapplist_ui_DetectionActivity_00024DetectionTask_nativeFile(JNIEnv *env, jobject, jstring path) {
+    const char *cpath = env->GetStringUTFChars( path, nullptr);
     const jsize sz = 6;
     jint results[sz];
     struct stat buf;
@@ -31,17 +32,18 @@ Java_com_tsng_hidemyapplist_ui_DetectionActivity_00024DetectionTask_nativeFile(J
     results[2] = (fstat(open(cpath, O_PATH), &buf) == 0);
     results[3] = syscall_detect(sys_stat(cpath, &buf_s));
     results[4] = syscall_detect(sys_fstat(sys_open(cpath, O_PATH, 0), &buf_s));
-    jintArray ret = (*env)->NewIntArray(env, sz);
-    (*env)->SetIntArrayRegion(env, ret, 0, sz, results);
+    jintArray ret = env->NewIntArray(sz);
+    env->ReleaseStringUTFChars(path, cpath);
+    env->SetIntArrayRegion(ret, 0, sz, results);
     return ret;
 }
 
-JNIEXPORT jint JNICALL
-Java_com_tsng_hidemyapplist_MainActivity_getRiruModuleVersion(JNIEnv *env, jobject thiz) {
+extern "C" JNIEXPORT jint JNICALL
+Java_com_tsng_hidemyapplist_MainActivity_getRiruModuleVersion(JNIEnv *env, jobject) {
     struct stat buf;
     static const char path[] = "/data/data/com.tsng.hidemyapplist/cache/riru_v";
     if (stat(path, &buf) != 0) return 0;
-    if (time(NULL) - buf.st_mtime > 15) return 0;
+    if (time(nullptr) - buf.st_mtime > 15) return 0;
     jint riru_module_version = 0;
     FILE *riru_v = fopen(path, "r");
     fscanf(riru_v, "%d", &riru_module_version);

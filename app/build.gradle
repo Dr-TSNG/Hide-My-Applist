@@ -12,9 +12,9 @@ android {
         applicationId "com.tsng.hidemyapplist"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 38
-        versionName "1.6.4.2 Beta"
-        buildConfigField "int", "SERVICE_VERSION", "37"
+        versionCode 39
+        versionName "1.6.5"
+        buildConfigField "int", "SERVICE_VERSION", "38"
     }
 
     android.applicationVariants.all {
@@ -28,6 +28,15 @@ android {
 
     buildFeatures {
         prefab true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 
     externalNativeBuild.cmake {

@@ -278,6 +278,8 @@ class PackageManagerService : IXposedHookLoadPackage {
             File("$dataDir/tmp").deleteRecursively()
             File("$dataDir/tmp").mkdir()
         }
+        /* For unexpected reboot */
+        File("$dataDir/tmp/riru_v").delete()
         return true
     }
 

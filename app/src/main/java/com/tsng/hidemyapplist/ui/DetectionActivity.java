@@ -170,16 +170,16 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             br.append(getString(R.string.detection_color_means)).append("<br/>");
             br.append("<h5><b>API requests</b><h5/>");
             for (Map.Entry<String, Integer> entry : M0.entrySet())
-                br.append(res.apply(methodStatus[0][entry.getValue()])).append(entry.getKey()).append("<br/>");
+                br.append(res.apply(nativeSync(methodStatus[0][entry.getValue()]))).append(entry.getKey()).append("<br/>");
             br.append("<h5><b>Intent queries</b><h5/>");
             for (Map.Entry<String, Integer> entry : M1.entrySet())
-                br.append(res.apply(methodStatus[1][entry.getValue()])).append(entry.getKey()).append("<br/>");
+                br.append(res.apply(nativeSync(methodStatus[1][entry.getValue()]))).append(entry.getKey()).append("<br/>");
             br.append("<h5><b>ID detections</b><h5/>");
             for (Map.Entry<String, Integer> entry : M2.entrySet())
-                br.append(res.apply(methodStatus[2][entry.getValue()])).append(entry.getKey()).append("<br/>");
+                br.append(res.apply(nativeSync(methodStatus[2][entry.getValue()]))).append(entry.getKey()).append("<br/>");
             br.append("<h5><b>File detections</b><h5/>");
             for (Map.Entry<String, Integer> entry : M3.entrySet())
-                br.append(res.apply(methodStatus[3][entry.getValue()])).append(entry.getKey()).append("<br/>");
+                br.append(res.apply(nativeSync(methodStatus[3][entry.getValue()]))).append(entry.getKey()).append("<br/>");
 
             new MaterialAlertDialogBuilder(DetectionActivity.this)
                     .setTitle(R.string.detection_finished)
@@ -256,6 +256,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             methodStatus[2][M2.get("getPackageUid")] = 0;
         }
 
+        private native int nativeSync(int result);
         private native int[] nativeFile(String path);
 
         private void method_file() {

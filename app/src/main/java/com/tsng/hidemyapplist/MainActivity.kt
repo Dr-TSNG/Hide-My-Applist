@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         return false
     }
 
+    private external fun initNative(path: String)
     private external fun getRiruModuleVersion(): Int
 
     private fun isHookSelf(): Boolean {
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initNative(applicationContext.packageResourcePath)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         startService(Intent(this, ProvidePreferenceService::class.java))
