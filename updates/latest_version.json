@@ -1,12 +1,8 @@
 {
   "Stable": {
-    "VersionCode": 32,
-    "VersionName": "V1.6.1",
-    "DownloadURL": "https://github.com/Dr-TSNG/Hide-My-Applist/releases/tag/V1.6.1"
+    "VersionCode": 39,
+    "VersionName": "V1.6.5",
+    "DownloadURL": "https://github.com/Dr-TSNG/Hide-My-Applist/releases/tag/V1.6.5"
   },
-  "Beta": {
-    "VersionCode": 37,
-    "VersionName": "V1.6.4.1 Beta",
-    "DownloadURL": "https://github.com/Dr-TSNG/Hide-My-Applist/releases/tag/V1.6.4.1"
-  }
+  "Beta": false
 }
