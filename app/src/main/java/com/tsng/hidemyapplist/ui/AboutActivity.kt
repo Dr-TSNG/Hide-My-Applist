@@ -32,6 +32,7 @@ class AboutActivity : AbsAboutActivity() {
 
         items.add(Category(getString(R.string.about_developer)))
         items.add(Contributor(R.drawable.about_author, "Dr.TSNG", "Developer", "https://github.com/Dr-TSNG"))
+        items.add(Line())
         items.add(Contributor(R.drawable.about_icon_designer, "辉少菌", "Icon designer", "http://www.coolapk.com/u/1560270"))
 
         items.add(Category(getString(R.string.about_support)))

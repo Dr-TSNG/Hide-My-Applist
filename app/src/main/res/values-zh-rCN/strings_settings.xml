@@ -3,10 +3,12 @@
     <string name="settings_module">模块</string>
     <string name="settings_hook_self">Hook 模块自身</string>
     <string name="settings_hook_self_summary">记得先对模块自己启用一个模板</string>
+    <string name="settings_hook_self_toast">强制停止模块 APP 并重新打开以生效</string>
     <string name="settings_detail_log">记录详细日志（调试用）</string>
     <string name="settings_max_log_size">日志缓冲区大小</string>
     <string name="settings_hide_icon">隐藏桌面图标</string>
     <string name="settings_hide_icon_summary">隐藏后可从 Xposed 管理器中打开</string>
+
     <string name="settings_service">服务</string>
     <string name="settings_stop_system_service">终止系统服务</string>
     <string name="settings_stop_system_service_summary">需要重启设备才能重新启动服务</string>
@@ -16,6 +18,7 @@
     <string name="settings_force_clean_env_summary">当且仅当系统服务无法启动时尝试此选项，否则你应该点击终止系统服务并自动执行清理</string>
     <string name="settings_force_clean_env_toast_success">运行环境清理完成</string>
     <string name="settings_force_clean_env_toast_fail">拒绝访问</string>
+
     <string name="settings_update">更新</string>
     <string name="settings_disable_update">禁用更新提示</string>
     <string name="settings_receive_beta_update">接收 Beta 版本更新</string>

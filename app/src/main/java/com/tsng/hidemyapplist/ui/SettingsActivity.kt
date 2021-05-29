@@ -37,6 +37,12 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             preferenceManager.sharedPreferencesName = "Settings"
             setPreferencesFromResource(R.xml.settings_preferences, rootKey)
+            preferenceScreen.findPreference<SwitchPreferenceCompat>("HookSelf")?.apply {
+                setOnPreferenceClickListener {
+                    Toast.makeText(requireContext(), R.string.settings_hook_self_toast, Toast.LENGTH_SHORT).show()
+                    true
+                }
+            }
             preferenceScreen.findPreference<ListPreference>("MaxLogSize")?.apply {
                 summary = entry
                 setOnPreferenceChangeListener { preference, newValue ->
@@ -47,7 +53,7 @@ class SettingsActivity : AppCompatActivity() {
             preferenceScreen.findPreference<SwitchPreferenceCompat>("HideIcon")?.setOnPreferenceChangeListener { _, newValue ->
                 val component = ComponentName(requireContext(), "com.tsng.hidemyapplist.MainActivityLauncher")
                 val status = if (newValue == true) PackageManager.COMPONENT_ENABLED_STATE_DISABLED else PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-                requireActivity().packageManager.setComponentEnabledSetting(component, status, PackageManager.DONT_KILL_APP)
+                requireContext().packageManager.setComponentEnabledSetting(component, status, PackageManager.DONT_KILL_APP)
                 true
             }
             preferenceScreen.findPreference<Preference>("StopSystemService")?.setOnPreferenceClickListener {

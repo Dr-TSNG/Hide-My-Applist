@@ -28,6 +28,14 @@
             android:text="@string/detection_add_new_package" />
     </LinearLayout>
 
+    <TextView
+        android:text="@string/detection_hint_how_to_use"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:layout_marginHorizontal="18dp" />
 
     <com.google.android.material.card.MaterialCardView style="@style/ListCard">
 
