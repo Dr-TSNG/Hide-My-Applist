@@ -87,3 +87,15 @@ jobs:
         with:
           name: "${{ steps.buildRelease.outputs.releaseName }}.Unsigned"
           path: "app/release/*.apk"
+          
+      - name: Post to Telegram
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+        env:
+          CHANNEL_ID: ${{ secrets.TELEGRAM_TO }}
+          BOT_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          FILE=$(echo app/release/*.apk)
+          ESCAPED=`python3 -c 'import json,os,urllib.parse; print(urllib.parse.quote(json.dumps(os.environ["COMMIT_MESSAGE"])))'`
+          curl -v "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup?chat_id=${CHANNEL_ID}&media=%5B%7B%22type%22:%22document%22,%20%22media%22:%22attach://release%22,%22caption%22:${ESCAPED}%7D%5D"  -F release="@$FILE"
+
