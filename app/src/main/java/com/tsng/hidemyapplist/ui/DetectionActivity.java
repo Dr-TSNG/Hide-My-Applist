@@ -58,8 +58,8 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             new MaterialAlertDialogBuilder(this)
                     .setTitle(R.string.detection_delete_confirm)
                     .setMessage(s)
-                    .setNegativeButton(R.string.cancel, null)
-                    .setPositiveButton(R.string.accept, ((dialog, which) -> {
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(android.R.string.ok, ((dialog, which) -> {
                         targets.remove(s);
                         SaveTargets();
                         UpdateTargetPackageView();
@@ -87,8 +87,14 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
                 et.setText(null);
                 break;
             case R.id.detection_btn_StartDetect:
-                DetectionActivity.DetectionTask task = new DetectionActivity.DetectionTask();
-                task.execute();
+                new MaterialAlertDialogBuilder(this)
+                        .setTitle(R.string.detection_hint_how_to_use_title)
+                        .setMessage(Html.fromHtml(getString(R.string.detection_hint_how_to_use_message), Html.FROM_HTML_MODE_COMPACT))
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setPositiveButton(android.R.string.ok, ((dialog, which) -> {
+                            DetectionActivity.DetectionTask task = new DetectionActivity.DetectionTask();
+                            task.execute();
+                        })).show();
                 break;
         }
     }
@@ -184,7 +190,7 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             new MaterialAlertDialogBuilder(DetectionActivity.this)
                     .setTitle(R.string.detection_finished)
                     .setMessage(Html.fromHtml(br.toString(), Html.FROM_HTML_MODE_COMPACT))
-                    .setPositiveButton(R.string.accept, null).show();
+                    .setPositiveButton(android.R.string.ok, null).show();
         }
 
         private void checkList(int generalId, int methodId, List list) {

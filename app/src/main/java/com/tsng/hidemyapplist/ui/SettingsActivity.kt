@@ -61,14 +61,15 @@ class SettingsActivity : AppCompatActivity() {
                     MaterialAlertDialogBuilder(requireContext())
                             .setTitle(R.string.settings_is_clean_env)
                             .setMessage(R.string.settings_is_clean_env_summary)
-                            .setPositiveButton(R.string.accept) { _, _ ->
+                            .setPositiveButton(R.string.yes) { _, _ ->
                                 XposedUtils.stopSystemService(requireContext(), true)
                                 Toast.makeText(requireContext(), R.string.settings_stop_system_service, Toast.LENGTH_SHORT).show()
                             }
-                            .setNegativeButton(R.string.cancel) { _, _ ->
+                            .setNegativeButton(R.string.no) { _, _ ->
                                 XposedUtils.stopSystemService(requireContext(), false)
                                 Toast.makeText(requireContext(), R.string.settings_stop_system_service, Toast.LENGTH_SHORT).show()
                             }
+                            .setNeutralButton(android.R.string.cancel, null)
                             .show()
                 } else Toast.makeText(requireContext(), R.string.xposed_service_off, Toast.LENGTH_SHORT).show()
                 true
@@ -77,12 +78,12 @@ class SettingsActivity : AppCompatActivity() {
                 MaterialAlertDialogBuilder(requireContext())
                         .setTitle(R.string.settings_force_clean_env)
                         .setMessage(R.string.settings_is_clean_env_summary)
-                        .setPositiveButton(R.string.accept) { _, _ ->
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
                             val result = Shell.su("rm -rf /data/misc/hide_my_applist /data/misc/hma_selinux_test").exec().isSuccess
                             if (result) Toast.makeText(requireContext(), R.string.settings_force_clean_env_toast_success, Toast.LENGTH_SHORT).show()
                             else Toast.makeText(requireContext(), R.string.settings_force_clean_env_toast_fail, Toast.LENGTH_SHORT).show()
                         }
-                        .setNegativeButton(R.string.cancel, null)
+                        .setNegativeButton(android.R.string.cancel, null)
                         .show()
                 true
             }

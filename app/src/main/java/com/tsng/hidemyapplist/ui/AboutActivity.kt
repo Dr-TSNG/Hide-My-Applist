@@ -24,8 +24,6 @@ class AboutActivity : AbsAboutActivity() {
         items.add(Card(getString(R.string.about_how_to_use_description_2)))
         items.add(Line())
         items.add(Card(getString(R.string.about_how_to_use_description_3)))
-        items.add(Line())
-        items.add(Card(getString(R.string.about_how_to_use_description_4)))
 
         items.add(Category(getString(R.string.about_hook_differences_title)))
         items.add(Card(getString(R.string.about_hook_differences_description)))

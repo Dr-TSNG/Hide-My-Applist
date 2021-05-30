@@ -36,14 +36,14 @@ public class TemplateManageActivity extends AppCompatActivity {
             new MaterialAlertDialogBuilder(this)
                     .setTitle(R.string.template_new)
                     .setView(ev)
-                    .setNegativeButton(R.string.cancel, null)
-                    .setPositiveButton(R.string.accept, ((dialog, which) -> {
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(android.R.string.ok, ((dialog, which) -> {
                         String name = ev.getText().toString();
                         if (templates.contains(name) || name.isEmpty() || name.contains("/"))
                             new MaterialAlertDialogBuilder(this)
                                     .setTitle(R.string.error)
                                     .setMessage(R.string.template_name_invalid)
-                                    .setPositiveButton(R.string.accept, null)
+                                    .setPositiveButton(android.R.string.ok, null)
                                     .show();
                         else {
                             templates.add(name);
@@ -73,8 +73,8 @@ public class TemplateManageActivity extends AppCompatActivity {
             new MaterialAlertDialogBuilder(this)
                     .setTitle(R.string.template_delete_confirm)
                     .setMessage(s)
-                    .setNegativeButton(R.string.cancel, null)
-                    .setPositiveButton(R.string.accept, ((dialog, which) -> {
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(android.R.string.ok, ((dialog, which) -> {
                         templates.remove(s);
                         adapter.remove(s);
                         deleteSharedPreferences("tpl_" + s);

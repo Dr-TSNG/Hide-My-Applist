@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">隐藏应用列表</string>
-    <string name="riru_status">Riru 插件</string>
-    <string name="riru_installed">已安装 [版本 </string>
-    <string name="riru_not_installed">未安装</string>
+
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="error">错误</string>
+
+    <string name="new_update">新版本可用：</string>
+    <string name="update_logs">更新日志</string>
+
+    <string name="riru_installed">Riru 插件已安装</string>
+    <string name="riru_not_installed">Riru 插件未安装</string>
+
     <string name="title_detection_test">检测测试</string>
     <string name="title_template_manage">模板管理</string>
     <string name="title_edit_template">编辑模板</string>
@@ -11,9 +19,4 @@
     <string name="title_settings">设置</string>
     <string name="title_logs">日志</string>
     <string name="title_about">关于</string>
-    <string name="accept">确认</string>
-    <string name="cancel">取消</string>
-    <string name="error">错误</string>
-    <string name="new_update">新版本可用：</string>
-    <string name="update_logs">更新日志</string>
 </resources>

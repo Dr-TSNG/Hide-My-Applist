@@ -69,15 +69,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
         if (serviceVersion != 0) {
             if (serviceVersion != BuildConfig.SERVICE_VERSION) xposed_status_sub_text.text = getString(R.string.xposed_service_old)
-            else xposed_status_sub_text.text = getString(R.string.xposed_service_on) + "$serviceVersion]"
+            else xposed_status_sub_text.text = getString(R.string.xposed_service_on) + " [$serviceVersion]"
             val text = getString(R.string.xposed_serve_times).split("#")
             xposed_status_serve_times.visibility = View.VISIBLE
             xposed_status_serve_times.text = text[0] + XposedUtils.getServeTimes(this) + text[2]
             riru_status_text.visibility = View.VISIBLE
             if (riruModuleVersion == 0)
-                riru_status_text.text = getString(R.string.riru_status) + getString(R.string.riru_not_installed)
+                riru_status_text.text = getString(R.string.riru_not_installed)
             else
-                riru_status_text.text = getString(R.string.riru_status) + getString(R.string.riru_installed) + "$riruModuleVersion]"
+                riru_status_text.text = getString(R.string.riru_installed) + " [$riruModuleVersion]"
         } else {
             xposed_status_serve_times.visibility = View.GONE
             xposed_status_sub_text.text = getString(R.string.xposed_service_off)
@@ -142,12 +142,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                                 .setNegativeButton("XP Repo") { _, _ ->
                                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://repo.xposed.info/module/com.tsng.hidemyapplist")))
                                 }
-                                .setNeutralButton(R.string.cancel, null)
+                                .setNeutralButton(android.R.string.cancel, null)
                                 .setCancelable(false).show()
                     } else if (pref.getInt("LastVersion", 0) < BuildConfig.VERSION_CODE) runOnUiThread {
                         MaterialAlertDialogBuilder(this).setTitle(R.string.update_logs)
                                 .setMessage(Html.fromHtml(updateLog, Html.FROM_HTML_MODE_COMPACT))
-                                .setPositiveButton(R.string.accept, null)
+                                .setPositiveButton(android.R.string.ok, null)
                                 .setCancelable(false).show()
                     }
                     pref.edit().putInt("LastVersion", BuildConfig.VERSION_CODE).apply()

@@ -6,20 +6,17 @@
     </string>
     <string name="about_how_to_use_title">How to use this module</string>
     <string name="about_how_to_use_description_1">
-        #Do I need riru extension#\nRun a detection test directly. If the file detections column is all N, then your ROM has already intercepted this kind of detections, and there is no need to install the riru extension. Otherwise, you need the riru extension to intercept file detections. Note: the riru extension is unstable, which may or may not be limited to causing problems such as card startup and flashbacks. Please judge whether it is necessary.
+        #Do I need riru extension#\nRun a detection test directly. If the file detections column is all N, then your ROM has already intercepted this kind of detections, and there is no need to install the riru extension. Otherwise, you need the riru extension to intercept file detections.\n\nNote: the riru extension is unstable, which may or may not be limited to causing problems such as card startup and flashbacks. Please judge whether it is necessary.
     </string>
     <string name="about_how_to_use_description_2">
-        #How to enable hide#\nFirst create a template in Manage Templates, then apply the template in Select Effective Apps. You should and ONLY should check System Framework in Xposed module scope/whitelist.
+        #How to enable hide#\nFirst create a template in \"Manage Templates\", then apply the template in \"Select Effective Apps\". You should and ONLY should check \"System Framework\" in Xposed module scope/whitelist.
     </string>
     <string name="about_how_to_use_description_3">
-        #How to confirm whether hide is successful#\nApply a template to the module itself, then activate Hook Self in settings and start detection test.
-    </string>
-    <string name="about_how_to_use_description_4">
         #Is template modification effective in real time#\nExcept for file interceptions, yes. To update file interception policy, you need to force stop and restart target apps.
     </string>
     <string name="about_hook_differences_title">Differences among hook methods</string>
     <string name="about_hook_differences_description">
-        Normal apps use some of API requests to acquire applist, but bad apps will use other methods (loopholes) to detect it. Attention, under global mode (Reject applist requests) if hide Intent query there may be some problems with share, start browser, etc.
+        Normal apps use some of API requests to acquire applist, but bad apps will use other methods (loopholes) to detect it.
     </string>
     <string name="about_developer">Developer</string>
     <string name="about_support">Support and feedback</string>
