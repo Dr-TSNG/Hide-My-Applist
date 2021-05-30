@@ -11,6 +11,8 @@ This module provides some methods to test whether you have already hidden your a
 Also, it can work as an Xposed module to hide some apps or reject applist requests to protect your privacy.   
 ## Compilation
 This project uses Hidden API, so you should replace android.jar in Android Studio. [Reference](https://github.com/anggrayudi/android-hidden-api)  
+
+This project uses [genuine](https://github.com/brevent/genuine) to add some signature verification hidden tricks to prevent it from being modified by MT script kiddies for profit. For those who want to compile the code, please generate you own geniune.h to prevent tricks. Also, self-signed apk cannot load the riru extension, this should be emphasized.
 ## Update Log / 更新日志
 [Reference to the release page / 参考发布页面](https://github.com/Dr-TSNG/Hide-My-Applist/releases)  
 
