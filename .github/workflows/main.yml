@@ -1,4 +1,8 @@
-on: [push, pull_request]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
@@ -8,7 +12,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-
+    if: ${{ !startsWith(github.event.head_commit.message, 'docs:') }}
+    
     steps:
       - name: Check out
         uses: actions/checkout@v2
