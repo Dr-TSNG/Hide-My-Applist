@@ -1,13 +1,12 @@
-on: [push, pull_request]
+on:
+  push:
+    branches: [ master ]
 
 jobs:
   build:
-    name: Build on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ ubuntu-latest ]
+    runs-on: ubuntu-20.04
+    if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') }}
+
 
     steps:
       - name: Check out
