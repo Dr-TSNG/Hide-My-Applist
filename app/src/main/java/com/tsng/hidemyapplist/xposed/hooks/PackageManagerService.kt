@@ -314,7 +314,7 @@ class PackageManagerService : IXposedHookLoadPackage {
                 li("System hook installed (Version ${BuildConfig.SERVICE_VERSION})")
                 /* Cache system app list */
                 val mSettings = XposedHelpers.getObjectField(param.thisObject, "mSettings")
-                val mPackages = XposedHelpers.getObjectField(mSettings, "mPackages") as ArrayMap<String, *>
+                val mPackages = XposedHelpers.getObjectField(mSettings, "mPackages") as Map<String, *>
                 for ((name, ps) in mPackages) {
                     if (XposedHelpers.getIntField(ps, "pkgFlags") and ApplicationInfo.FLAG_SYSTEM != 0) {
                         systemApps.add(name)
