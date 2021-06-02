@@ -7,8 +7,9 @@ class JsonConfig {
         val WhiteList = false
         val EnableAllHooks = false
         val ExcludeSystemApps = false
-        val HideApps = setOf<String>()
         val ApplyHooks = setOf<String>()
+        val HideApps = setOf<String>()
+        val MapsRules = setOf<String>()
     }
 
     var HookSelf = false

@@ -10,6 +10,10 @@
             android:entryValues="@array/detect_methods"
             android:key="ApplyHooks"
             android:title="@string/template_apply_hooks" />
+        <Preference
+            android:key="CustomMapsRules"
+            android:summary="@string/template_add_custom_maps_rules_summary"
+            android:title="@string/template_add_custom_maps_rules" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/template_hide_apps">

@@ -21,10 +21,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.tsng.hidemyapplist.BuildConfig;
 import com.tsng.hidemyapplist.R;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
@@ -128,7 +130,11 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             put("syscall fstat", 5);
         }};
 
-        final int ALL_METHODS = M0.size() + M1.size() + M2.size() + M3.size();
+        final Map<String, Integer> M4 = new LinkedHashMap<String, Integer>() {{
+            put("maps scan", 0);
+        }};
+
+        final int ALL_METHODS = M0.size() + M1.size() + M2.size() + M3.size() + M4.size();
 
         @Override
         protected void onPreExecute() {
@@ -164,6 +170,14 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
 
             method_file();
             publishProgress();
+            publishProgress();
+            publishProgress();
+            publishProgress();
+            publishProgress();
+            publishProgress();
+
+            method_maps();
+
             return null;
         }
 
@@ -174,18 +188,22 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             IntFunction res = (int r) -> r == 1 ? "[F] " : r == 0 ? "[N] " : "[D] ";
             StringBuilder br = new StringBuilder();
             br.append(getString(R.string.detection_color_means)).append("<br/>");
-            br.append("<h5><b>API requests</b><h5/>");
+            br.append("<h5><b>API requests</b></h5>");
             for (Map.Entry<String, Integer> entry : M0.entrySet())
                 br.append(res.apply(nativeSync(methodStatus[0][entry.getValue()]))).append(entry.getKey()).append("<br/>");
-            br.append("<h5><b>Intent queries</b><h5/>");
+            br.append("<h5><b>Intent queries</b></h5>");
             for (Map.Entry<String, Integer> entry : M1.entrySet())
                 br.append(res.apply(nativeSync(methodStatus[1][entry.getValue()]))).append(entry.getKey()).append("<br/>");
-            br.append("<h5><b>ID detections</b><h5/>");
+            br.append("<h5><b>ID detections</b></h5>");
             for (Map.Entry<String, Integer> entry : M2.entrySet())
                 br.append(res.apply(nativeSync(methodStatus[2][entry.getValue()]))).append(entry.getKey()).append("<br/>");
-            br.append("<h5><b>File detections</b><h5/>");
+            br.append("<h5><b>File detections</b></h5>");
             for (Map.Entry<String, Integer> entry : M3.entrySet())
                 br.append(res.apply(nativeSync(methodStatus[3][entry.getValue()]))).append(entry.getKey()).append("<br/>");
+            br.append("<h5><b>Characteristics</b></h5>");
+            for (Map.Entry<String, Integer> entry : M4.entrySet())
+                br.append(res.apply(nativeSync(methodStatus[4][entry.getValue()]))).append(entry.getKey()).append("<br/>");
+
 
             new MaterialAlertDialogBuilder(DetectionActivity.this)
                     .setTitle(R.string.detection_finished)
@@ -278,6 +296,21 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
                 methodStatus[3][M3.get("libc fstat")]    |= nativeResult1[2] | nativeResult2[2];
                 methodStatus[3][M3.get("syscall stat")]  |= nativeResult1[3] | nativeResult2[3];
                 methodStatus[3][M3.get("syscall fstat")] |= nativeResult1[4] | nativeResult2[4];
+            }
+        }
+
+        private void method_maps() {
+            try (BufferedReader br = new BufferedReader(new FileReader("/proc/self/maps"))) {
+                String str;
+                while ((str = br.readLine()) != null) {
+                    if (str.contains(BuildConfig.APPLICATION_ID)) {
+                        methodStatus[4][M4.get("maps scan")] = 1;
+                        return;
+                    }
+                }
+                methodStatus[4][M4.get("maps scan")] = 0;
+            } catch (Exception e) {
+                methodStatus[4][M4.get("maps scan")] = -1;
             }
         }
 
