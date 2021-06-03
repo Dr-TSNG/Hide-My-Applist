@@ -3,7 +3,6 @@ package com.tsng.hidemyapplist.xposed.hooks
 import android.content.pm.ApplicationInfo
 import android.content.pm.ParceledListSlice
 import android.os.Binder
-import android.util.ArrayMap
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.JsonConfig
 import com.tsng.hidemyapplist.xposed.XposedUtils.APPNAME
@@ -273,13 +272,27 @@ class PackageManagerService : IXposedHookLoadPackage {
         }
 
         /* If riru extension not installed, make tmp by the service */
-        if (!File("$dataDir/tmp/riru_v").exists()) {
-            File(dataDir).mkdir()
-            File("$dataDir/tmp").deleteRecursively()
-            File("$dataDir/tmp").mkdir()
+        File("$dataDir/tmp/riru_v").let {
+            if (it.exists()) {
+                FileReader(it).use {
+                    val riruVersion = it.readText().toInt()
+                    val minApkVersion = it.readText().toInt()
+                    if (riruVersion < BuildConfig.MIN_RIRU_VERSION) {
+                        File("$dataDir/tmp/SIGERR").createNewFile()
+                        le("Riru extension version too old to work with the new system service")
+                    }
+                    if (BuildConfig.VERSION_CODE < minApkVersion) {
+                        File("$dataDir/tmp/SIGERR").createNewFile()
+                        le("System service version too old to work with the new riru extension")
+                    }
+                }
+                File(dataDir).mkdir()
+                File("$dataDir/tmp").deleteRecursively()
+                File("$dataDir/tmp").mkdir()
+            }
+            /* For unexpected reboot */
+            it.delete()
         }
-        /* For unexpected reboot */
-        File("$dataDir/tmp/riru_v").delete()
         return true
     }
 

@@ -22,15 +22,12 @@ import kotlin.concurrent.thread
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     companion object {
         var riruModuleVersion = 0
+        val isModuleActivated = false
     }
 
     init {
         System.loadLibrary("natives")
         if (riruModuleVersion == 0) riruModuleVersion = getRiruModuleVersion()
-    }
-
-    private fun isModuleActivated(): Boolean {
-        return false
     }
 
     private external fun initNative(path: String)
@@ -52,7 +49,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
         val serviceVersion = XposedUtils.getServiceVersion(this)
-        if (isModuleActivated()) {
+        if (isModuleActivated) {
             if (serviceVersion != 0) {
                 xposed_status.setCardBackgroundColor(getColor(R.color.colorPrimary))
                 xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_activited))
