@@ -31,6 +31,7 @@ class PackageManagerService : IXposedHookLoadPackage {
     private val systemApps = mutableSetOf<String>()
     private var stopped = false
     private var initialized = false
+    private var riruModuleVersion = 0
     private var mLock = Any()
 
     private lateinit var token: String
@@ -212,6 +213,7 @@ class PackageManagerService : IXposedHookLoadPackage {
             when {
                 /* 服务模式，执行自定义行为 */
                 arg == "checkHMAServiceVersion" -> param.result = BuildConfig.SERVICE_VERSION.toString()
+                arg == "checkRiruExtensionVersion" -> param.result = riruModuleVersion.toString()
                 arg == "getServeTimes" -> param.result = interceptionCount.toString()
                 arg == "getPreference" -> param.result = configStr
                 arg == "getLogs" -> param.result = provideLogs()
@@ -275,22 +277,25 @@ class PackageManagerService : IXposedHookLoadPackage {
         File("$dataDir/tmp/riru_v").let {
             if (it.exists()) {
                 FileReader(it).use {
-                    val riruVersion = it.readText().toInt()
-                    val minApkVersion = it.readText().toInt()
-                    if (riruVersion < BuildConfig.MIN_RIRU_VERSION) {
+                    val lines = it.readLines()
+                    riruModuleVersion = lines[0].toInt()
+                    val minApkVersion = lines[1].toInt()
+                    if (riruModuleVersion < BuildConfig.MIN_RIRU_VERSION) {
+                        riruModuleVersion = -1
                         File("$dataDir/tmp/SIGERR").createNewFile()
                         le("Riru extension version too old to work with the new system service")
                     }
                     if (BuildConfig.VERSION_CODE < minApkVersion) {
+                        riruModuleVersion = -2
                         File("$dataDir/tmp/SIGERR").createNewFile()
                         le("System service version too old to work with the new riru extension")
                     }
                 }
+            } else {
                 File(dataDir).mkdir()
                 File("$dataDir/tmp").deleteRecursively()
                 File("$dataDir/tmp").mkdir()
             }
-            /* For unexpected reboot */
             it.delete()
         }
         return true

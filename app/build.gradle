@@ -15,7 +15,7 @@ android {
         versionCode 43
         versionName "1.7.-0.9 Prebuild"
         buildConfigField "int", "SERVICE_VERSION", "43"
-        buildConfigField "int", "MIN_RIRU_VERSION", "12"
+        buildConfigField "int", "MIN_RIRU_VERSION", "15"
     }
 
     android.applicationVariants.all {

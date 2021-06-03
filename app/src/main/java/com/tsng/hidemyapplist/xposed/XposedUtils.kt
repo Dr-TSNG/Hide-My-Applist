@@ -28,6 +28,15 @@ object XposedUtils {
     }
 
     @JvmStatic
+    fun getRiruExtensionVersion(context: Context): Int {
+        return try {
+            context.packageManager.getInstallerPackageName("checkRiruExtensionVersion").toInt()
+        } catch (e: IllegalArgumentException) {
+            0
+        }
+    }
+
+    @JvmStatic
     fun getServeTimes(context: Context): Int {
         return try {
             context.packageManager.getInstallerPackageName("getServeTimes").toInt()

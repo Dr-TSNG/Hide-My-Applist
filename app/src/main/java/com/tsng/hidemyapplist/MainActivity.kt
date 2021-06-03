@@ -21,17 +21,14 @@ import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     companion object {
-        var riruModuleVersion = 0
         val isModuleActivated = false
     }
 
     init {
         System.loadLibrary("natives")
-        if (riruModuleVersion == 0) riruModuleVersion = getRiruModuleVersion()
     }
 
     private external fun initNative(path: String)
-    private external fun getRiruModuleVersion(): Int
 
     private fun isHookSelf(): Boolean {
         return getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("HookSelf", false)
@@ -71,10 +68,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             xposed_status_serve_times.visibility = View.VISIBLE
             xposed_status_serve_times.text = text[0] + XposedUtils.getServeTimes(this) + text[2]
             riru_status_text.visibility = View.VISIBLE
-            if (riruModuleVersion == 0)
-                riru_status_text.text = getString(R.string.riru_not_installed)
-            else
-                riru_status_text.text = getString(R.string.riru_installed) + " [$riruModuleVersion]"
+            val riruExtensionVersion = XposedUtils.getRiruExtensionVersion(this)
+            when (riruExtensionVersion) {
+                0 -> riru_status_text.text = getString(R.string.riru_not_installed)
+                -1 -> riru_status_text.text = getString(R.string.riru_version_too_old)
+                -2 -> riru_status_text.text = getString(R.string.riru_apk_version_too_old)
+                else -> riru_status_text.text = getString(R.string.riru_installed) + " [$riruExtensionVersion]"
+            }
         } else {
             xposed_status_serve_times.visibility = View.GONE
             xposed_status_sub_text.text = getString(R.string.xposed_service_off)
