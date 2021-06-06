@@ -55,7 +55,8 @@ class ScopeManageActivity : AppCompatActivity() {
                 override fun onQueryTextChange(newText: String): Boolean {
                     val sl = newText.toLowerCase(Locale.getDefault())
                     for (pref in preferenceScreen)
-                        pref.isVisible = pref.title.toString().toLowerCase(Locale.getDefault()).contains(sl)
+                        pref.isVisible = pref.title.toString().toLowerCase(Locale.getDefault()).contains(sl) ||
+                                pref.key.contains(sl)
                     return false
                 }
             })
@@ -100,7 +101,7 @@ class ScopeManageActivity : AppCompatActivity() {
                 try {
                     val packages = requireActivity().packageManager.getInstalledPackages(0)
                     if (!showSystemApps)
-                        packages.removeAll { it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0 && !map.contains(it.packageName) }
+                        packages.removeAll { it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0 && !map.containsKey(it.packageName) }
                     packages.sortWith { o1, o2 ->
                         if (Thread.interrupted()) throw InterruptedException()
                         val l1 = o1.applicationInfo.loadLabel(requireActivity().packageManager) as String

@@ -80,7 +80,8 @@ class TemplateSettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.O
                 override fun onQueryTextChange(newText: String): Boolean {
                     val sl = newText.toLowerCase(Locale.getDefault())
                     for (pref in preferenceScreen)
-                        pref.isVisible = pref.title.toString().toLowerCase(Locale.getDefault()).contains(sl)
+                        pref.isVisible = pref.title.toString().toLowerCase(Locale.getDefault()).contains(sl) ||
+                                pref.summary.toString().contains(sl)
                     return false
                 }
             })
@@ -152,6 +153,7 @@ class TemplateSettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.O
                                 getString(R.string.template_is_system_app) + " - " + pkg.applicationInfo.loadLabel(requireActivity().packageManager)
                             else
                                 pkg.applicationInfo.loadLabel(requireActivity().packageManager)
+                            summary = pkg.packageName
                             icon = pkg.applicationInfo.loadIcon(requireActivity().packageManager)
                             isChecked = list.contains(pkg.packageName)
                             setOnPreferenceChangeListener { _, newValue ->
@@ -165,7 +167,8 @@ class TemplateSettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.O
                         })
                     }
                     requireActivity().refresh_layout.finishRefresh()
-                } catch (e: InterruptedException) { }
+                } catch (e: InterruptedException) {
+                }
             }
         }
     }
