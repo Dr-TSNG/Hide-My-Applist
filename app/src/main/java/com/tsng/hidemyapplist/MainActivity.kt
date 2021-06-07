@@ -136,8 +136,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                                 .setPositiveButton("GitHub") { _, _ ->
                                     startActivity(Intent(Intent.ACTION_VIEW, githubDownloadUri))
                                 }
-                                .setNegativeButton("XP Repo") { _, _ ->
-                                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://repo.xposed.info/module/com.tsng.hidemyapplist")))
+                                .setNegativeButton("TG Channel") { _, _ ->
+                                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/HideMyApplist")))
                                 }
                                 .setNeutralButton(android.R.string.cancel, null)
                                 .setCancelable(false).show()

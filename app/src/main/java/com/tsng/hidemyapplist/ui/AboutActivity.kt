@@ -34,11 +34,11 @@ class AboutActivity : AbsAboutActivity() {
         items.add(Contributor(R.drawable.about_icon_designer, "辉少菌", "Icon designer", "http://www.coolapk.com/u/1560270"))
 
         items.add(Category(getString(R.string.about_support)))
-        items.add(Card("Github Page\nhttps://github.com/Dr-TSNG/Hide-My-Applist"))
+        items.add(Card("Github\nhttps://github.com/Dr-TSNG/Hide-My-Applist"))
         items.add(Line())
-        items.add(Card("Telegram Group\nhttps://t.me/HideMyApplist"))
+        items.add(Card("Telegram\nhttps://t.me/HideMyApplist"))
         items.add(Line())
-        items.add(Card("CoolMarket\nhttps://www.coolapk.com/u/1911298"))
+        items.add(Card("Coolapk\nhttps://www.coolapk.com/u/1911298"))
 
         items.add(Category(getString(R.string.about_open_source)))
         items.add(License("jsonxx", "Nomango", License.MIT, "https://github.com/Nomango/jsonxx"))
@@ -50,5 +50,6 @@ class AboutActivity : AbsAboutActivity() {
         items.add(License("Dobby", "jmpews", License.APACHE_2, "https://github.com/jmpews/Dobby"))
         items.add(License("libsu", "topjohnwu", License.APACHE_2, "https://github.com/topjohnwu/libsu"))
         items.add(License("genuine", "brevent", "CC BY-NC-SA 4.0", "https://github.com/brevent/genuine"))
+        items.add(License("linux-syscall-support", "Google", "Google", "https://chromium.googlesource.com/linux-syscall-support"))
     }
 }
