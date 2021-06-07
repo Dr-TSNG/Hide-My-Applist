@@ -4,10 +4,14 @@
     <string name="template_new">New Template</string>
     <string name="template_name_invalid">Template name is invalid or already exists.</string>
     <string name="template_delete_confirm">Delete template?</string>
+
     <string name="template_enable_all_hooks">Enable all hide methods</string>
     <string name="template_apply_hooks">Select hide methods</string>
-    <string name="template_add_custom_maps_rules">Add custom maps interception rules</string>
-    <string name="template_add_custom_maps_rules_summary">Default match blacklist package name (whitelist mode has no automatic rules)</string>
+    <string name="template_add_maps_rules">Add custom maps interception rules</string>
+    <string name="template_add_maps_rules_summary">Default match blacklist package name (whitelist mode has no automatic rules)</string>
+    <string name="template_add_new_maps_rule_hint">Fill in an item to be filtered</string>
+    <string name="template_delete_maps_rule">Delete the rule?</string>
+
     <string name="template_hide_apps">Hide apps</string>
     <string name="template_whitelist">WhiteList</string>
     <string name="template_whitelist_summary">This will allow target apps to find app selected only</string>

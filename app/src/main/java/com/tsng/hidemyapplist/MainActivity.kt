@@ -111,16 +111,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             try {
                 val client = OkHttpClient()
                 val responseData = client.newCall(Request.Builder()
-                        .url("https://cdn.jsdelivr.net/gh/Dr-TSNG/Hide-My-Applist@master/updates/latest_version.json")
+                        .url("https://cdn.jsdelivr.net/gh/Dr-TSNG/Hide-My-Applist@updates/updates/latest_version.json")
                         .build()).execute().body?.string()
                 if (responseData != null) {
                     val json = JSONObject(responseData)
                     var data = json["Stable"] as JSONObject
-                    var updateLogURL = "https://cdn.jsdelivr.net/gh/Dr-TSNG/Hide-My-Applist@master/updates/stable-"
+                    var updateLogURL = "https://cdn.jsdelivr.net/gh/Dr-TSNG/Hide-My-Applist@updates/updates/stable-"
                     if (getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("ReceiveBetaUpdate", false))
                         if (json["Beta"] != false) {
                             data = json["Beta"] as JSONObject
-                            updateLogURL = "https://cdn.jsdelivr.net/gh/Dr-TSNG/Hide-My-Applist@master/updates/beta-"
+                            updateLogURL = "https://cdn.jsdelivr.net/gh/Dr-TSNG/Hide-My-Applist@updates/updates/beta-"
                         }
                     updateLogURL += if (Locale.getDefault().language.contains("zh")) "zh" else "en"
                     updateLogURL += ".html"

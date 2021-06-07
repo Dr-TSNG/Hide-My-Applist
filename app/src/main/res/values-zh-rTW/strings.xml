@@ -5,6 +5,7 @@
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="error">錯誤</string>
+    <string name="add">新增</string>
 
     <string name="new_update">可用新版本： </string>
     <string name="update_logs">更新日誌</string>

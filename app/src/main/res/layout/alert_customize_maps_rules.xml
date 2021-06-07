@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
-
     <LinearLayout
         style="@style/Default"
         android:layout_marginHorizontal="18dp"
@@ -13,34 +11,23 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/detection_et_DetectionTarget"
+            android:id="@+id/template_et_new_maps_rule"
             style="@style/Default"
             android:layout_weight="1"
             android:gravity="center"
-            android:hint="@string/detection_hint_input_name"
+            android:hint="@string/template_add_new_maps_rule_hint"
             android:maxLines="1"
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/detection_btn_AddPackage"
+            android:id="@+id/template_btn_add_new_maps_rule"
+            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/add" />
     </LinearLayout>
 
-    <com.google.android.material.card.MaterialCardView style="@style/ListCard">
-
-        <ListView
-            android:id="@+id/detection_lv_CurrentPackages"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.google.android.material.card.MaterialCardView>
-
-    <Button
-        android:id="@+id/detection_btn_StartDetect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/detection_start" />
-
+    <ListView
+        android:id="@+id/template_lv_maps_rules"
+        style="@style/Default" />
 </LinearLayout>

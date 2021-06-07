@@ -6,12 +6,15 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.preference.CheckBoxPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.iterator
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsng.hidemyapplist.R
 import kotlinx.android.synthetic.main.appselect.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -59,6 +62,39 @@ class TemplateSettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.O
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             preferenceManager.sharedPreferencesName = "tpl_" + arguments?.getString("template")
             setPreferencesFromResource(R.xml.template_preferences, rootKey)
+            preferenceScreen.findPreference<Preference>("MapsRules")?.setOnPreferenceClickListener {
+                val rules = preferenceManager.sharedPreferences.getStringSet("MapsRules", setOf()).toMutableList()
+                val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, rules)
+                MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(R.string.template_add_maps_rules)
+                        .setView(View.inflate(requireContext(), R.layout.alert_customize_maps_rules, null).apply {
+                            findViewById<ListView>(R.id.template_lv_maps_rules).apply {
+                                this.adapter = adapter
+                                setOnItemLongClickListener { _, _, position, _ ->
+                                    MaterialAlertDialogBuilder(requireContext())
+                                            .setTitle(R.string.template_delete_maps_rule)
+                                            .setMessage(rules[position])
+                                            .setNegativeButton(android.R.string.cancel, null)
+                                            .setPositiveButton(android.R.string.ok) { _, _ ->
+                                                activity?.runOnUiThread { adapter.remove(rules[position]) }
+                                                preferenceManager.sharedPreferences.edit().putStringSet("MapsRules", rules.toSet()).apply()
+                                            }.show()
+                                    true
+                                }
+                            }
+                            findViewById<Button>(R.id.template_btn_add_new_maps_rule).setOnClickListener {
+                                val editText = findViewById<EditText>(R.id.template_et_new_maps_rule)
+                                val newRule = editText.text.toString()
+                                editText.text.clear()
+                                if (newRule.isEmpty() || rules.contains(newRule)) return@setOnClickListener
+                                adapter.add(newRule)
+                                preferenceManager.sharedPreferences.edit().putStringSet("MapsRules", rules.toSet()).apply()
+                            }
+                        })
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show()
+                true
+            }
         }
     }
 

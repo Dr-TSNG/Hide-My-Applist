@@ -5,6 +5,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="error">Error</string>
+    <string name="add">Add</string>
 
     <string name="new_update">New update:</string>
     <string name="update_logs">New features</string>
