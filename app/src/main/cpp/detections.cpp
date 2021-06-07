@@ -1,11 +1,11 @@
 #include <jni.h>
 #include <sys/stat.h>
 #include <android/log.h>
+#include <linux_syscall_support.h>
 #include <ctime>
 #include <cstdio>
 
 #include "sigverify.h"
-#include "linux_syscall_support.h"
 
 int syscall_result;
 jint syscall_detect(int func) {
