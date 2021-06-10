@@ -1,5 +1,6 @@
 package com.tsng.hidemyapplist
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -18,6 +19,7 @@ import okhttp3.Request
 import org.json.JSONObject
 import java.util.*
 import kotlin.concurrent.thread
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     companion object {
@@ -39,10 +41,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         initNative(applicationContext.packageResourcePath)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        startService(Intent(this, ProvidePreferenceService::class.java))
+        if(!filesDir.absolutePath.startsWith("/data/user/0/")) {
+            Toast.makeText(this, R.string.do_not_dual, Toast.LENGTH_LONG).show()
+            finish()
+            exitProcess(0)
+        }
+        if (nativeSync(0) xor 1 == 0x01)
+            startService(Intent(this, ProvidePreferenceService::class.java))
         makeUpdateAlert()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
         val serviceVersion = XposedUtils.getServiceVersion(this)
@@ -66,10 +75,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             else xposed_status_sub_text.text = getString(R.string.xposed_service_on) + " [$serviceVersion]"
             val text = getString(R.string.xposed_serve_times).split("#")
             xposed_status_serve_times.visibility = View.VISIBLE
-            xposed_status_serve_times.text = text[0] + XposedUtils.getServeTimes(this) + text[2]
+            xposed_status_serve_times.text = text[0] + nativeSync(XposedUtils.getServeTimes(this)) + text[2]
             riru_status_text.visibility = View.VISIBLE
-            val riruExtensionVersion = XposedUtils.getRiruExtensionVersion(this)
-            when (riruExtensionVersion) {
+            when (val riruExtensionVersion = XposedUtils.getRiruExtensionVersion(this)) {
                 0 -> riru_status_text.text = getString(R.string.riru_not_installed)
                 -1 -> riru_status_text.text = getString(R.string.riru_version_too_old)
                 -2 -> riru_status_text.text = getString(R.string.riru_apk_version_too_old)

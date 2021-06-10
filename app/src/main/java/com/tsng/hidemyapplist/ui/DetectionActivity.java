@@ -23,6 +23,7 @@ import androidx.preference.PreferenceManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.tsng.hidemyapplist.BuildConfig;
 import com.tsng.hidemyapplist.R;
+import com.tsng.hidemyapplist.UtilsKt;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -190,19 +191,19 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             br.append(getString(R.string.detection_color_means)).append("<br/>");
             br.append("<h5><b>API requests</b></h5>");
             for (Map.Entry<String, Integer> entry : M0.entrySet())
-                br.append(res.apply(nativeSync(methodStatus[0][entry.getValue()]))).append(entry.getKey()).append("<br/>");
+                br.append(res.apply(UtilsKt.nativeSync(methodStatus[0][entry.getValue()]))).append(entry.getKey()).append("<br/>");
             br.append("<h5><b>Intent queries</b></h5>");
             for (Map.Entry<String, Integer> entry : M1.entrySet())
-                br.append(res.apply(nativeSync(methodStatus[1][entry.getValue()]))).append(entry.getKey()).append("<br/>");
+                br.append(res.apply(UtilsKt.nativeSync(methodStatus[1][entry.getValue()]))).append(entry.getKey()).append("<br/>");
             br.append("<h5><b>ID detections</b></h5>");
             for (Map.Entry<String, Integer> entry : M2.entrySet())
-                br.append(res.apply(nativeSync(methodStatus[2][entry.getValue()]))).append(entry.getKey()).append("<br/>");
+                br.append(res.apply(UtilsKt.nativeSync(methodStatus[2][entry.getValue()]))).append(entry.getKey()).append("<br/>");
             br.append("<h5><b>File detections</b></h5>");
             for (Map.Entry<String, Integer> entry : M3.entrySet())
-                br.append(res.apply(nativeSync(methodStatus[3][entry.getValue()]))).append(entry.getKey()).append("<br/>");
+                br.append(res.apply(UtilsKt.nativeSync(methodStatus[3][entry.getValue()]))).append(entry.getKey()).append("<br/>");
             br.append("<h5><b>Characteristics</b></h5>");
             for (Map.Entry<String, Integer> entry : M4.entrySet())
-                br.append(res.apply(nativeSync(methodStatus[4][entry.getValue()]))).append(entry.getKey()).append("<br/>");
+                br.append(res.apply(UtilsKt.nativeSync(methodStatus[4][entry.getValue()]))).append(entry.getKey()).append("<br/>");
 
 
             new MaterialAlertDialogBuilder(DetectionActivity.this)
@@ -280,7 +281,6 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             methodStatus[2][M2.get("getPackageUid")] = 0;
         }
 
-        private native int nativeSync(int result);
         private native int[] nativeFile(String path);
 
         private void method_file() {

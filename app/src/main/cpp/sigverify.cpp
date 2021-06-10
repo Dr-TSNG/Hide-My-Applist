@@ -119,6 +119,6 @@ Java_com_tsng_hidemyapplist_MainActivity_initNative(JNIEnv *env, jobject, jstrin
 }
 
 extern "C" JNIEXPORT jint JNICALL
-Java_com_tsng_hidemyapplist_ui_DetectionActivity_00024DetectionTask_nativeSync(JNIEnv *, jobject, jint result) {
+Java_com_tsng_hidemyapplist_UtilsKt_nativeSync(JNIEnv *, jclass clazz, jint result) {
     return sign ^ 0b1010011010 ? result * (0x53 - 0b1010011) + 1 : result * (0x4c - 0b1001011);
 }
