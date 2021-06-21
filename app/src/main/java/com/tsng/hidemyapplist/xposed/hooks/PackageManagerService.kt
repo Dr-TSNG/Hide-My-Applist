@@ -149,14 +149,16 @@ class PackageManagerService : IXposedHookLoadPackage {
         return template.WhiteList xor inList
     }
 
-    private fun removeList(method: Method, hookName: String, pkgNameObjList: List<String>) {
+    private fun removeList(method: Method, isParceled: Boolean, hookName: String, pkgNameObjList: List<String>) {
         allHooks.add(XposedBridge.hookMethod(method, object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
+                if (param.hasThrowable()) return
                 val callerUid = Binder.getCallingUid()
                 val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
                 if (!isUseHook(callerName, hookName)) return
                 var isHidden = false
-                val iterator = (param.result as ParceledListSlice<*>).list.iterator()
+                val list = if (isParceled) (param.result as ParceledListSlice<*>).list else param.result as MutableList<Any>
+                val iterator = list.iterator()
                 val removed = mutableListOf<String>()
                 while (iterator.hasNext()) {
                     val str = getRecursiveField(iterator.next(), pkgNameObjList) as String?
@@ -376,10 +378,12 @@ class PackageManagerService : IXposedHookLoadPackage {
         for (method in pmMethods) when (method.name) {
             "getInstallerPackageName" -> allHooks.add(XposedBridge.hookMethod(method, HMAService()))
 
+            "getAllPackages" -> removeList(method, true, "API requests", listOf())
+
             "getInstalledPackages",
             "getInstalledApplications",
             "getPackagesHoldingPermissions",
-            "queryInstrumentation" -> removeList(method, "API requests", listOf("packageName"))
+            "queryInstrumentation" -> removeList(method, false, "API requests", listOf("packageName"))
 
             "getPackageInfo",
             "getPackageGids",
@@ -389,11 +393,12 @@ class PackageManagerService : IXposedHookLoadPackage {
             "queryIntentActivityOptions",
             "queryIntentReceivers",
             "queryIntentServices",
-            "queryIntentContentProviders" -> removeList(method, "Intent queries", listOf("activityInfo", "packageName"))
+            "queryIntentContentProviders" -> removeList(method, false, "Intent queries", listOf("activityInfo", "packageName"))
 
             "getPackageUid" -> setResult(method, "ID detections", -1)
             "getPackagesForUid" -> allHooks.add(XposedBridge.hookMethod(method, object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
+                    if (param.hasThrowable()) return
                     val callerUid = Binder.getCallingUid()
                     val callerName = XposedHelpers.callMethod(param.thisObject, "getNameForUid", callerUid) as String?
                     if (!isUseHook(callerName, "ID detections")) return
