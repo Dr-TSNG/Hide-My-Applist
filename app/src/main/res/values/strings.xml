@@ -7,6 +7,8 @@
     <string name="error">Error</string>
     <string name="add">Add</string>
 
+    <string name="show_crash_log">Show crash log</string>
+
     <string name="do_not_dual">Do not dual the module app, cause it will lead to config override!</string>
 
     <string name="new_update">New update:</string>

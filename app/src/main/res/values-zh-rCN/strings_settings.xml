@@ -16,8 +16,18 @@
     <string name="settings_is_clean_env_summary">移除位于 /data/misc/hide_my_applist 的系统服务缓存，这会使下次重启后需要先手动打开一次模块 APP 才能使拦截生效，同时拦截次数记录也会被清空。</string>
     <string name="settings_force_clean_env">强制清理运行环境 (root)</string>
     <string name="settings_force_clean_env_summary">当且仅当系统服务无法启动时尝试此选项，否则你应该点击终止系统服务并自动执行清理</string>
-    <string name="settings_force_clean_env_toast_success">运行环境清理完成</string>
-    <string name="settings_force_clean_env_toast_fail">拒绝访问</string>
+    <string name="settings_force_clean_env_toast_successful">运行环境清理完成</string>
+    <string name="settings_force_clean_env_toast_failed">拒绝访问</string>
+
+    <string name="settings_backup">备份</string>
+    <string name="settings_import_config">导入配置</string>
+    <string name="settings_import_successful">导入成功</string>
+    <string name="settings_import_failed">导入失败</string>
+    <string name="settings_import_app_version_too_old">模块版本低于备份版本</string>
+    <string name="settings_import_backup_version_too_old">备份版本太旧</string>
+    <string name="settings_import_file_damaged">备份文件损坏</string>
+    <string name="settings_export_config">导出配置</string>
+    <string name="settings_exported">备份完成</string>
 
     <string name="settings_update">更新</string>
     <string name="settings_disable_update">禁用更新提示</string>

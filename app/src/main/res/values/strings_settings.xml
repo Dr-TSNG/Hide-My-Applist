@@ -8,6 +8,7 @@
     <string name="settings_max_log_size">Logger buffer sizes</string>
     <string name="settings_hide_icon">Hide module icon in launcher</string>
     <string name="settings_hide_icon_summary">You can still open the app in Xposed manager</string>
+
     <string name="settings_service">Service</string>
     <string name="settings_stop_system_service">Stop system service</string>
     <string name="settings_stop_system_service_summary">Need reboot to restart service</string>
@@ -15,8 +16,19 @@
     <string name="settings_is_clean_env_summary">Remove system service cache in /data/misc/hide_my_applist. This means you need to launch the module app once manually after next reboot in order to enable interceptions, and interception counts will also be cleaned.</string>
     <string name="settings_force_clean_env">Force clean runtime environment (root)</string>
     <string name="settings_force_clean_env_summary">Only if system service fails to start, otherwise you should click the above option.</string>
-    <string name="settings_force_clean_env_toast_success">Runtime environment cleaned</string>
-    <string name="settings_force_clean_env_toast_fail">Permission denied</string>
+    <string name="settings_force_clean_env_toast_successful">Runtime environment cleaned</string>
+    <string name="settings_force_clean_env_toast_failed">Permission denied</string>
+
+    <string name="settings_backup">Backup</string>
+    <string name="settings_import_config">Import config</string>
+    <string name="settings_import_successful">Import successful</string>
+    <string name="settings_import_failed">Import failed</string>
+    <string name="settings_import_app_version_too_old">Module version lower than the backup</string>
+    <string name="settings_import_backup_version_too_old">Backup version too old</string>
+    <string name="settings_import_file_damaged">Backup file was damaged</string>
+    <string name="settings_export_config">Export config</string>
+    <string name="settings_exported">Backed up config</string>
+
     <string name="settings_update">Update</string>
     <string name="settings_disable_update">Disable update notification</string>
     <string name="settings_receive_beta_update">Receive beta update</string>

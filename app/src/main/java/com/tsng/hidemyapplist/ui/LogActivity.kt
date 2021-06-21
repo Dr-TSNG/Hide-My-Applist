@@ -8,13 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.xposed.XposedUtils
 import kotlinx.android.synthetic.main.fragment_log_raw.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.io.File
-import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -117,11 +115,9 @@ class LogActivity : AppCompatActivity() {
             }
             R.id.toolbar_export -> {
                 val date = SimpleDateFormat("MM-dd_HH-mm-ss", Locale.getDefault()).format(Date())
-                File(cacheDir.path + "/logs").let { if (!it.exists()) it.mkdir() }
+                File(cacheDir.path + "/logs").mkdirs()
                 val tmp = File(cacheDir.path + "/logs/hma_logs_$date.log")
-                FileWriter(tmp).use {
-                    it.write(rawLogs)
-                }
+                rawLogs?.let { tmp.writeText(it) }
                 val intent = Intent(Intent.ACTION_SEND).apply {
                     type = "text/*"
                     val uri = FileProvider.getUriForFile(this@LogActivity, "com.tsng.hidemyapplist.fileprovider", tmp)

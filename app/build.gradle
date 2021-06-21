@@ -18,9 +18,10 @@ android {
         }
 
         versionCode 46
-        versionName "1.7 Beta2"
+        versionName "1.7.1 Beta"
         buildConfigField "int", "SERVICE_VERSION", "46"
         buildConfigField "int", "MIN_RIRU_VERSION", "15"
+        buildConfigField "int", "MIN_BACKUP_VERSION", "46"
     }
 
     android.applicationVariants.all { variant ->

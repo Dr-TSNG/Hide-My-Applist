@@ -16,8 +16,8 @@
     <string name="settings_is_clean_env_summary">移除位於 /data/misc/hide_my_applist 的系統服務緩存，這會使下次重啟後需要先手動打開一次模組應用程式才能使攔截生效，同時攔截次數記錄也會被清空。</string>
     <string name="settings_force_clean_env">強制清理運作環境 (root)</string>
     <string name="settings_force_clean_env_summary">當且僅當系統服務無法啟動時嘗試此選項，否則你應該點擊終止系統服務並自動執行清理</string>
-    <string name="settings_force_clean_env_toast_success">運作環境清理完成</string>
-    <string name="settings_force_clean_env_toast_fail">拒絕訪問</string>
+    <string name="settings_force_clean_env_toast_successful">運作環境清理完成</string>
+    <string name="settings_force_clean_env_toast_failed">拒絕訪問</string>
 
     <string name="settings_update">更新</string>
     <string name="settings_disable_update">停用新版本提示</string>

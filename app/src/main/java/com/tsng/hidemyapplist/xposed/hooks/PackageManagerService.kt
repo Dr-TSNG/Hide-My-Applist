@@ -17,8 +17,6 @@ import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 import java.io.File
 import java.io.FileNotFoundException
-import java.io.FileReader
-import java.io.FileWriter
 import java.lang.reflect.Method
 import java.text.SimpleDateFormat
 import java.util.*
@@ -74,7 +72,7 @@ class PackageManagerService : IXposedHookLoadPackage {
             buffer.append(randomLimitedInt.toChar())
         }
         token = buffer.toString()
-        FileWriter("$dataDir/tmp/token").use { it.write(token) }
+        File("$dataDir/tmp/token").writeText(token)
     }
 
     private fun addLog(log: String) {
@@ -82,7 +80,7 @@ class PackageManagerService : IXposedHookLoadPackage {
             val logFile = File(logFile)
             if (logFile.length() / 1024 > config.MaxLogSize) logFile.delete()
             val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss ", Locale.getDefault()).format(Date())
-            FileWriter(logFile, true).use { it.appendLine(date + log) }
+            logFile.appendText(date + log + '\n')
         }
     }
 
@@ -90,12 +88,10 @@ class PackageManagerService : IXposedHookLoadPackage {
         try {
             synchronized(mLock) {
                 if (stopped) throw InterruptedException("Service stopped")
-                FileReader(logFile).use {
-                    val sb = StringBuilder()
-                    val list = it.readLines()
-                    for (line in list) sb.append(line).append("\n")
-                    return sb.toString()
-                }
+                val sb = StringBuilder()
+                val list = File(logFile).readLines()
+                for (line in list) sb.append(line).append("\n")
+                return sb.toString()
             }
         } catch (e: Exception) {
             return "Failed to load logs\n" + e.stackTraceToString()
@@ -103,16 +99,12 @@ class PackageManagerService : IXposedHookLoadPackage {
     }
 
     private fun initConfig() {
-        FileReader("$dataDir/config.json").use {
-            configStr = it.readText()
-            config = JsonConfig.fromJson(configStr)
-        }
+        configStr = File("$dataDir/config.json").readText()
+        config = JsonConfig.fromJson(configStr)
         if (config.DetailLog) ld("Cached config: $config")
         initialized = true
         try {
-            FileReader("$dataDir/interception_cnt").use {
-                interceptionCount = it.readText().toInt()
-            }
+            interceptionCount = File("$dataDir/interception_cnt").readText().toInt()
         } catch (e: Exception) {
         }
         li("Config initialized")
@@ -124,9 +116,7 @@ class PackageManagerService : IXposedHookLoadPackage {
         config = JsonConfig.fromJson(json)
         synchronized(mLock) {
             if (stopped) return
-            FileWriter("$dataDir/config.json").use {
-                it.write(json)
-            }
+            File("$dataDir/config.json").writeText(json)
         }
         if (!initialized) initConfig()
         else if (config.DetailLog) ld("Update config: $config")
@@ -276,22 +266,20 @@ class PackageManagerService : IXposedHookLoadPackage {
         }
 
         /* If riru extension not installed, make tmp by the service */
-        File("$dataDir/tmp/riru_v").let {
+        File("$dataDir/tmp/riru_v").also {
             if (it.exists()) {
-                FileReader(it).use {
-                    val lines = it.readLines()
-                    riruModuleVersion = lines[0].toInt()
-                    val minApkVersion = lines[1].toInt()
-                    if (riruModuleVersion < BuildConfig.MIN_RIRU_VERSION) {
-                        riruModuleVersion = -1
-                        File("$dataDir/tmp/SIGERR").createNewFile()
-                        le("Riru extension version too old to work with the new system service")
-                    }
-                    if (BuildConfig.VERSION_CODE < minApkVersion) {
-                        riruModuleVersion = -2
-                        File("$dataDir/tmp/SIGERR").createNewFile()
-                        le("System service version too old to work with the new riru extension")
-                    }
+                val lines = it.readLines()
+                riruModuleVersion = lines[0].toInt()
+                val minApkVersion = lines[1].toInt()
+                if (riruModuleVersion < BuildConfig.MIN_RIRU_VERSION) {
+                    riruModuleVersion = -1
+                    File("$dataDir/tmp/SIGERR").createNewFile()
+                    le("Riru extension version too old to work with the new system service")
+                }
+                if (BuildConfig.VERSION_CODE < minApkVersion) {
+                    riruModuleVersion = -2
+                    File("$dataDir/tmp/SIGERR").createNewFile()
+                    le("System service version too old to work with the new riru extension")
                 }
             } else {
                 File(dataDir).mkdir()
@@ -320,9 +308,7 @@ class PackageManagerService : IXposedHookLoadPackage {
             while (!stopped) {
                 if (initialized) synchronized(mLock) {
                     if (stopped) return@thread
-                    FileWriter("$dataDir/interception_cnt").use {
-                        it.write(interceptionCount.toString())
-                    }
+                    File("$dataDir/interception_cnt").writeText(interceptionCount.toString())
                 }
                 Thread.sleep(2000)
             }
@@ -340,10 +326,8 @@ class PackageManagerService : IXposedHookLoadPackage {
                         systemApps.add(name)
                     }
                 }
-                FileWriter("$dataDir/tmp/system_apps.list").use {
-                    for (pkg in systemApps)
-                        it.write("$pkg\n")
-                }
+                for (pkg in systemApps)
+                    File("$dataDir/tmp/system_apps.list").appendText("$pkg\n")
             }
         }))
 

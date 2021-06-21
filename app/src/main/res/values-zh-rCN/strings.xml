@@ -7,6 +7,8 @@
     <string name="error">错误</string>
     <string name="add">添加</string>
 
+    <string name="show_crash_log">查看崩溃日志</string>
+
     <string name="do_not_dual">不要双开模块 APP，这会导致配置覆盖！</string>
 
     <string name="new_update">新版本可用：</string>

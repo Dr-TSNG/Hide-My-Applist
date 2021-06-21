@@ -32,6 +32,17 @@
             android:title="@string/settings_force_clean_env" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/settings_backup">
+        <Preference
+            android:icon="@drawable/ic_import"
+            android:key="ImportConfig"
+            android:title="@string/settings_import_config" />
+        <Preference
+            android:icon="@drawable/ic_export"
+            android:key="ExportConfig"
+            android:title="@string/settings_export_config" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/settings_update">
         <SwitchPreferenceCompat
             android:disableDependentsState="true"
