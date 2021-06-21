@@ -7,6 +7,10 @@
     <string name="error">錯誤</string>
     <string name="add">新增</string>
 
+    <string name="show_crash_log">檢查崩潰日誌</string>
+
+    <string name="do_not_dual">不要雙開模塊 APP，這會導致設定遭到覆蓋！</string>
+
     <string name="new_update">可用新版本： </string>
     <string name="update_logs">更新日誌</string>
 
