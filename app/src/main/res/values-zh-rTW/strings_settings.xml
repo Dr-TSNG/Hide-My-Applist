@@ -19,6 +19,16 @@
     <string name="settings_force_clean_env_toast_successful">運作環境清理完成</string>
     <string name="settings_force_clean_env_toast_failed">拒絕訪問</string>
 
+    <string name="settings_backup">備份</string>
+    <string name="settings_import_config">匯入備份</string>
+    <string name="settings_import_successful">匯入成功</string>
+    <string name="settings_import_failed">匯入失敗</string>
+    <string name="settings_import_app_version_too_old">模塊版本低於備份版本</string>
+    <string name="settings_import_backup_version_too_old">備份版本太舊</string>
+    <string name="settings_import_file_damaged">備份檔損毀</string>
+    <string name="settings_export_config">匯出設定</string>
+    <string name="settings_exported">備份完成</string>
+
     <string name="settings_update">更新</string>
     <string name="settings_disable_update">停用新版本提示</string>
     <string name="settings_receive_beta_update">接收 Beta 版本更新</string>
