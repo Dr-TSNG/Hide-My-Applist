@@ -6,29 +6,27 @@ plugins {
 
 android {
     compileSdkVersion 30
+    ndkVersion '22.0.7026061'
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.tsng.hidemyapplist"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 45
-        versionName "1.7 Beta"
-        buildConfigField "int", "SERVICE_VERSION", "43"
+        externalNativeBuild.cmake {
+            cppFlags "-std=c++20"
+        }
+
+        versionCode 46
+        versionName "1.7 Beta2"
+        buildConfigField "int", "SERVICE_VERSION", "46"
         buildConfigField "int", "MIN_RIRU_VERSION", "15"
     }
 
-    android.applicationVariants.all {
-        variant ->
-            if (variant.buildType.name != "debug")
-                variant.outputs.all {
-                    variant.getPackageApplication().outputDirectory = new File("release")
-                    outputFileName = "V${variant.versionName}.apk"
-                }
-    }
-
-    buildFeatures {
-        prefab true
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "V${variant.versionName}.apk"
+        }
     }
 
     buildTypes {
@@ -53,6 +51,7 @@ android {
 
 repositories {
     maven { url 'https://jitpack.io' }
+    maven { url 'https://api.xposed.info/' }
 }
 
 dependencies {
