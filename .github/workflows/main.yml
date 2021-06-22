@@ -26,6 +26,16 @@ jobs:
         with:
           java-version: '11'
 
+      - name: Write key
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+        run: |
+          echo storePassword='${{ secrets.KEY_STORE_PASSWORD }}' >> local.properties
+          echo keyAlias='${{ secrets.ALIAS }}' >> local.properties
+          echo keyPassword='${{ secrets.ALIAS_KEY_PASSWORD }}' >> local.properties
+          echo fileDir='../key.jks' >> local.properties
+          echo ${{ secrets.KEY_STORE }} | base64 --decode > key.jks
+          
+
       - name: Cache Gradle
         uses: actions/cache@v2
         with:
@@ -47,15 +57,6 @@ jobs:
       - name: Replace android-hidden-api android.jar
         run: bash ./replace_android_hidden_api_jar.sh
 
-      - name: Write key
-          if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
-          run: |
-            echo storePassword='${{ secrets.KEY_STORE_PASSWORD }}' >> local.properties
-            echo keyAlias='${{ secrets.ALIAS }}' >> local.properties
-            echo keyPassword='${{ secrets.ALIAS_KEY_PASSWORD }}' >> local.properties
-            echo fileDir='../key.jks' >> local.properties
-            echo ${{ secrets.KEY_STORE }} | base64 --decode > key.jks
-
       - name: Build Release
         id: buildRelease
         run: |
@@ -69,17 +70,19 @@ jobs:
         with:
           name: "${{ steps.buildRelease.outputs.releaseName }}"
           path: "app/release/signed/*.apk"
-            - name: Upload apk
-              if: success()
-              uses: actions/upload-artifact@v2
-              with:
-                name: ${{ steps.buildRelease.outputs.releaseName }}
-                path: "app/build/outputs/apk/release/*.apk"
-            - name: Upload mappings
-              uses: actions/upload-artifact@v2
-              with:
-                name: ${{ steps.buildRelease.outputs.releaseName }}-mappings
-                path: "app/build/outputs"
+            
+      - name: Upload apk
+        if: success()
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.buildRelease.outputs.releaseName }}
+          path: "app/build/outputs/apk/release/*.apk"
+      
+      - name: Upload mappings
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.buildRelease.outputs.releaseName }}-mappings
+          path: "app/build/outputs"
           
       - name: Post to channel
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
