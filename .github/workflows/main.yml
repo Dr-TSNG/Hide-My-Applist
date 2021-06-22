@@ -46,38 +46,22 @@ jobs:
         
       - name: Replace android-hidden-api android.jar
         run: bash ./replace_android_hidden_api_jar.sh
-        
+
+      - name: Write key
+          if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+          run: |
+            echo storePassword='${{ secrets.KEY_STORE_PASSWORD }}' >> local.properties
+            echo keyAlias='${{ secrets.ALIAS }}' >> local.properties
+            echo keyPassword='${{ secrets.ALIAS_KEY_PASSWORD }}' >> local.properties
+            echo fileDir='../key.jks' >> local.properties
+            echo ${{ secrets.KEY_STORE }} | base64 --decode > key.jks
+
       - name: Build Release
         id: buildRelease
         run: |
           ./gradlew :app:assembleRelease
-          echo "::set-output name=releaseName::$(ls app/release/*.apk | head -1 | awk -F '(/|.apk)' '{print $3}').r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"
-        
-      - name: Prepare Signing Keystore
-        id: signKey
-        run: |
-          if [ "" != "${KEY_STORE}" ]; then
-          echo "${KEY_STORE}" | base64 --decode > key.jks
-          echo "::set-output name=key::1"
-          fi
-        env: 
-          KEY_STORE: ${{ secrets.KEY_STORE }}
-        
-      - name: Sign Apks
-        if: ${{ steps.signKey.outputs.key }}
-        run: |
-          apksigner=${ANDROID_SDK_ROOT}/build-tools/30.0.3/apksigner
-          mkdir app/release/signed
-          $apksigner sign --ks ./key.jks \
-          --ks-pass env:KEY_STORE_PASSWORD \
-          --ks-key-alias ${ALIAS} \
-          --key-pass env:KEY_PASSWORD \
-          --in "$(ls app/release/*.apk | head -1)" \
-          --out "./app/release/signed/${{ steps.buildRelease.outputs.releaseName }}.apk"
-        env: 
-          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
-          ALIAS: ${{ secrets.ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          echo "::set-output name=releaseName::`ls app/build/outputs/apk/release/Hide My Applist*-v*-release.apk | awk -F '(/|.apk)' '{print $6}'`"
+
 
       - name: Upload Signed build artifact
         if: ${{ steps.signKey.outputs.key }}
@@ -85,22 +69,25 @@ jobs:
         with:
           name: "${{ steps.buildRelease.outputs.releaseName }}"
           path: "app/release/signed/*.apk"
-        
-      - name: Upload Unsigned build artifact
-        if: ${{ !steps.signKey.outputs.key }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: "${{ steps.buildRelease.outputs.releaseName }}.Unsigned"
-          path: "app/release/*.apk"
+            - name: Upload apk
+              if: success()
+              uses: actions/upload-artifact@v2
+              with:
+                name: ${{ steps.buildRelease.outputs.releaseName }}
+                path: "app/build/outputs/apk/release/*.apk"
+            - name: Upload mappings
+              uses: actions/upload-artifact@v2
+              with:
+                name: ${{ steps.buildRelease.outputs.releaseName }}-mappings
+                path: "app/build/outputs"
           
-      - name: Post to Telegram
+      - name: Post to channel
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
         env:
           CHANNEL_ID: ${{ secrets.TELEGRAM_TO }}
           BOT_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          FILE: "app/build/outputs/apk/release/${{ steps.buildRelease.outputs.releaseName }}.apk"
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
-          FILE=$(echo app/release/signed/*.apk)
           ESCAPED=`python3 -c 'import json,os,urllib.parse; print(urllib.parse.quote(json.dumps(os.environ["COMMIT_MESSAGE"])))'`
           curl -v "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup?chat_id=${CHANNEL_ID}&media=%5B%7B%22type%22:%22document%22,%20%22media%22:%22attach://release%22,%22caption%22:${ESCAPED}%7D%5D"  -F release="@$FILE"
-
