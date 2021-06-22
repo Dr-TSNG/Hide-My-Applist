@@ -362,12 +362,12 @@ class PackageManagerService : IXposedHookLoadPackage {
         for (method in pmMethods) when (method.name) {
             "getInstallerPackageName" -> allHooks.add(XposedBridge.hookMethod(method, HMAService()))
 
-            "getAllPackages" -> removeList(method, true, "API requests", listOf())
+            "getAllPackages" -> removeList(method, false, "API requests", listOf())
 
             "getInstalledPackages",
             "getInstalledApplications",
             "getPackagesHoldingPermissions",
-            "queryInstrumentation" -> removeList(method, false, "API requests", listOf("packageName"))
+            "queryInstrumentation" -> removeList(method, true, "API requests", listOf("packageName"))
 
             "getPackageInfo",
             "getPackageGids",
@@ -377,7 +377,7 @@ class PackageManagerService : IXposedHookLoadPackage {
             "queryIntentActivityOptions",
             "queryIntentReceivers",
             "queryIntentServices",
-            "queryIntentContentProviders" -> removeList(method, false, "Intent queries", listOf("activityInfo", "packageName"))
+            "queryIntentContentProviders" -> removeList(method, true, "Intent queries", listOf("activityInfo", "packageName"))
 
             "getPackageUid" -> setResult(method, "ID detections", -1)
             "getPackagesForUid" -> allHooks.add(XposedBridge.hookMethod(method, object : XC_MethodHook() {

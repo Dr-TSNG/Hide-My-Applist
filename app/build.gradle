@@ -17,9 +17,9 @@ android {
             cppFlags "-std=c++20"
         }
 
-        versionCode 46
-        versionName "1.7.1 Beta"
-        buildConfigField "int", "SERVICE_VERSION", "46"
+        versionCode 47
+        versionName "1.7.1.1 Beta"
+        buildConfigField "int", "SERVICE_VERSION", "47"
         buildConfigField "int", "MIN_RIRU_VERSION", "15"
         buildConfigField "int", "MIN_BACKUP_VERSION", "46"
     }
