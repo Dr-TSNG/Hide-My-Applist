@@ -61,16 +61,9 @@ jobs:
         id: buildRelease
         run: |
           ./gradlew :app:assembleRelease
-          echo "::set-output name=releaseName::`ls app/build/outputs/apk/release/Hide My Applist*-v*-release.apk | awk -F '(/|.apk)' '{print $6}'`"
+          echo "::set-output name=releaseName::`ls app/build/outputs/apk/release/Hide\ My\ Applist*-v*-release.apk | awk -F '(/|.apk)' '{print $6}'`"
 
 
-      - name: Upload Signed build artifact
-        if: ${{ steps.signKey.outputs.key }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: "${{ steps.buildRelease.outputs.releaseName }}"
-          path: "app/release/signed/*.apk"
-            
       - name: Upload apk
         if: success()
         uses: actions/upload-artifact@v2
