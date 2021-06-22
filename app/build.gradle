@@ -24,20 +24,40 @@ android {
         buildConfigField "int", "MIN_BACKUP_VERSION", "46"
     }
 
-    android.applicationVariants.all { variant ->
-        variant.outputs.all { output ->
-            outputFileName = "V${variant.versionName}.apk"
+    signingConfigs {
+        release {
+            def properties = new Properties()
+            def inputStream = project.rootProject.file('local.properties').newDataInputStream()
+            properties.load( inputStream )
+
+            File strFile = new File (properties.getProperty('fileDir'))
+            storeFile file ( strFile )
+            storePassword properties.getProperty('storePassword')
+            keyAlias properties.getProperty('keyAlias')
+            keyPassword properties.getProperty('keyPassword')
+
         }
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "$rootProject.name-v${variant.versionName}(${variant.versionCode})-${variant.buildType.name}.apk"
+        }
+    }
+
 
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
-            zipAlignEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.release
         }
     }
+
 
     externalNativeBuild.cmake {
         path "src/main/cpp/CMakeLists.txt"
