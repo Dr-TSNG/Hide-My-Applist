@@ -19,9 +19,8 @@ android {
             cppFlags "-std=c++20"
         }
 
-        versionCode 47
-        versionName "1.7.1.1 Beta"
-        versionNameSuffix ".r${versionCode}"
+        versionCode 48
+        versionName "1.7.1.2 Beta.r${versionCode}"
         versionNameSuffix ".${gitCommitHash}"
 
         buildConfigField "int", "SERVICE_VERSION", "47"
