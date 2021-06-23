@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android-extensions'
 }
 
+def gitCommitCount = "git rev-list HEAD --count".execute().text.trim()
 def gitCommitHash = 'git rev-parse --verify --short HEAD'.execute().text.trim()
 
 android {
@@ -13,6 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.tsng.hidemyapplist"
+        versionNameSuffix ".r${gitCommitCount}.${gitCommitHash}"
         minSdkVersion 24
         targetSdkVersion 30
         externalNativeBuild.cmake {
@@ -20,9 +22,7 @@ android {
         }
 
         versionCode 48
-        versionName "1.7.1.2 Beta.r${versionCode}"
-        versionNameSuffix ".${gitCommitHash}"
-
+        versionName "1.7.1.1.Beta"
         buildConfigField "int", "SERVICE_VERSION", "47"
         buildConfigField "int", "MIN_RIRU_VERSION", "15"
         buildConfigField "int", "MIN_BACKUP_VERSION", "46"
