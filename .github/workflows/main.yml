@@ -13,7 +13,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
     if: ${{ !startsWith(github.event.head_commit.message, 'docs:') }}
-    
+
     steps:
       - name: Check out
         uses: actions/checkout@v2
@@ -34,7 +34,7 @@ jobs:
           echo keyPassword='${{ secrets.ALIAS_KEY_PASSWORD }}' >> local.properties
           echo fileDir='../key.jks' >> local.properties
           echo ${{ secrets.KEY_STORE }} | base64 --decode > key.jks
-          
+
 
       - name: Cache Gradle
         uses: actions/cache@v2
@@ -44,16 +44,16 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle-
-          
+
       - name: Update submodules
         run: git submodule init && git submodule update
-      
+
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-        
+
       - name: Gradle prebuild
         run: ./gradlew prebuild
-        
+
       - name: Replace android-hidden-api android.jar
         run: bash ./replace_android_hidden_api_jar.sh
 
@@ -61,7 +61,7 @@ jobs:
         id: buildRelease
         run: |
           ./gradlew :app:assembleRelease
-          echo "::set-output name=releaseName::`ls app/build/outputs/apk/release/Hide\ My\ Applist*-v*-release.apk | awk -F '(/|.apk)' '{print $6}'`"
+          echo "::set-output name=releaseName::`ls app/build/outputs/apk/release/V*-release.apk | awk -F '(/|.apk)' '{print $6}'`"
 
 
       - name: Upload apk
@@ -70,13 +70,13 @@ jobs:
         with:
           name: ${{ steps.buildRelease.outputs.releaseName }}
           path: "app/build/outputs/apk/release/*.apk"
-      
+
       - name: Upload mappings
         uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.buildRelease.outputs.releaseName }}-mappings
           path: "app/build/outputs"
-          
+
       - name: Post to channel
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
         env:

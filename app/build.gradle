@@ -4,6 +4,8 @@ plugins {
     id 'kotlin-android-extensions'
 }
 
+def gitCommitHash = 'git rev-parse --verify --short HEAD'.execute().text.trim()
+
 android {
     compileSdkVersion 30
     ndkVersion '22.0.7026061'
@@ -19,6 +21,9 @@ android {
 
         versionCode 47
         versionName "1.7.1.1 Beta"
+        versionNameSuffix ".r${versionCode}"
+        versionNameSuffix ".${gitCommitHash}"
+
         buildConfigField "int", "SERVICE_VERSION", "47"
         buildConfigField "int", "MIN_RIRU_VERSION", "15"
         buildConfigField "int", "MIN_BACKUP_VERSION", "46"
@@ -41,7 +46,7 @@ android {
 
     applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "$rootProject.name-v${variant.versionName}(${variant.versionCode})-${variant.buildType.name}.apk"
+            outputFileName = "V${variant.versionName}-${variant.buildType.name}.apk"
         }
     }
 
