@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Check out
         uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+          fetch-depth: 0
 
       - name: Gradle wrapper validation
         uses: gradle/wrapper-validation-action@v1
@@ -44,9 +47,6 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle-
-
-      - name: Update submodules
-        run: git submodule init && git submodule update
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
