@@ -21,7 +21,7 @@ object XposedUtils {
     @JvmStatic
     fun getServiceVersion(context: Context): Int {
         return try {
-            context.packageManager.getInstallerPackageName("checkHMAServiceVersion").toInt()
+            context.packageManager.getInstallerPackageName("checkHMAServiceVersion")!!.toInt()
         } catch (e: IllegalArgumentException) {
             0
         }
@@ -30,7 +30,7 @@ object XposedUtils {
     @JvmStatic
     fun getRiruExtensionVersion(context: Context): Int {
         return try {
-            context.packageManager.getInstallerPackageName("checkRiruExtensionVersion").toInt()
+            context.packageManager.getInstallerPackageName("checkRiruExtensionVersion")!!.toInt()
         } catch (e: IllegalArgumentException) {
             0
         }
@@ -39,7 +39,7 @@ object XposedUtils {
     @JvmStatic
     fun getServeTimes(context: Context): Int {
         return try {
-            context.packageManager.getInstallerPackageName("getServeTimes").toInt()
+            context.packageManager.getInstallerPackageName("getServeTimes")!!.toInt()
         } catch (e: IllegalArgumentException) {
             0
         }
