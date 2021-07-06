@@ -60,11 +60,25 @@ object JsonConfigManager {
         constructor()
 
         constructor(path: String) {
-            cfg = JsonParser.parseString(File(path).readText()).asJsonObject
+            File(path).run {
+                try {
+                    if (exists()) cfg = JsonParser.parseString(readText()).asJsonObject
+                } catch (thr: Throwable) {
+                    cfg = JsonObject()
+                    save()
+                }
+            }
         }
 
         constructor(file: File) {
-            cfg = JsonParser.parseString(file.readText()).asJsonObject
+            file.run {
+                try {
+                    if (exists()) cfg = JsonParser.parseString(readText()).asJsonObject
+                } catch (thr: Throwable) {
+                    cfg = JsonObject()
+                    save()
+                }
+            }
         }
 
         var autoSave: Boolean = false
