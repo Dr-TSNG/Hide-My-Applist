@@ -4,19 +4,26 @@ import com.google.gson.Gson
 
 class JsonConfig {
     class Template {
-        val WhiteList = false
-        val EnableAllHooks = false
-        val ExcludeSystemApps = false
-        val ApplyHooks = setOf<String>()
-        val HideApps = setOf<String>()
-        val MapsRules = setOf<String>()
+        val isWhiteList = false
+        val appList = setOf<String>()
+        val mapsRules = setOf<String>()
     }
 
-    var HookSelf = false
-    var DetailLog = false
-    var MaxLogSize = 512
-    var Scope = mapOf<String, String>()
-    var Templates = mutableMapOf<String, Template>()
+    class AppConfig {
+        val useWhiteList = false
+        val enableAllHooks = false
+        val excludeSystemApps = false
+        val applyHooks = setOf<String>()
+        val applyTemplates = setOf<String>()
+        val extraAppList = setOf<String>()
+        val extraMapsRules = setOf<String>()
+    }
+
+    var hookSelf = false
+    var detailLog = false
+    var maxLogSize = 512
+    var templates = mutableMapOf<String, Template>()
+    var scope = mutableMapOf<String, AppConfig>()
 
     override fun toString(): String {
         return Gson().toJson(this)

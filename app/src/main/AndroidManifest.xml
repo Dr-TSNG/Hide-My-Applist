@@ -34,7 +34,7 @@
         </provider>
 
         <service
-            android:name=".ProvidePreferenceService"
+            android:name=".SubmitConfigService"
             android:enabled="true" />
 
         <activity
