@@ -4,11 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView style="@style/Default">
-
-        <TextView
-            android:id="@+id/raw_log_text"
-            style="@style/Default" />
-    </ScrollView>
+    <include layout="@layout/toolbar" />
 
 </LinearLayout>

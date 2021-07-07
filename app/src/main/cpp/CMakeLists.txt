@@ -3,5 +3,5 @@ project("hidemyapplist")
 
 include_directories(external/linux_syscall_support)
 
-add_library(natives SHARED detections.cpp sigverify.cpp)
+add_library(natives SHARED detections.cpp)
 target_link_libraries(natives android log)

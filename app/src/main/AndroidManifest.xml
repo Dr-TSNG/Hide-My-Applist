@@ -16,11 +16,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".app.MyApplication"
         android:allowBackup="true"
+        android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/AppTheme">
 
         <provider
@@ -34,32 +36,29 @@
         </provider>
 
         <service
-            android:name=".SubmitConfigService"
+            android:name=".app.SubmitConfigService"
             android:enabled="true" />
 
         <activity
-            android:name=".ui.LogActivity"
+            android:name="com.tsng.hidemyapplist.app.ui.activities.LogActivity"
             android:label="@string/title_logs" />
         <activity
-            android:name=".ui.SettingsActivity"
+            android:name="com.tsng.hidemyapplist.app.ui.activities.SettingsActivity"
             android:label="@string/title_settings" />
         <activity
-            android:name=".ui.AboutActivity"
+            android:name="com.tsng.hidemyapplist.app.ui.activities.AboutActivity"
             android:theme="@style/AppTheme.About" />
         <activity
-            android:name=".ui.DetectionActivity"
+            android:name="com.tsng.hidemyapplist.app.ui.activities.DetectionActivity"
             android:label="@string/title_detection_test" />
         <activity
-            android:name=".ui.ScopeManageActivity"
+            android:name="com.tsng.hidemyapplist.app.ui.activities.ScopeManageActivity"
             android:label="@string/title_scope_manage" />
         <activity
-            android:name=".ui.TemplateSettingsActivity"
-            android:label="@string/title_edit_template" />
-        <activity
-            android:name=".ui.TemplateManageActivity"
+            android:name="com.tsng.hidemyapplist.app.ui.activities.TemplateManageActivity"
             android:label="@string/title_template_manage" />
         <activity
-            android:name=".MainActivity"
+            android:name=".app.ui.activities.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,7 +69,7 @@
         <activity-alias
             android:name=".MainActivityLauncher"
             android:label="@string/app_name"
-            android:targetActivity=".MainActivity">
+            android:targetActivity=".app.ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

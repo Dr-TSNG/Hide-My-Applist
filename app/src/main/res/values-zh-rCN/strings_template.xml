@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="template_list">模板列表</string>
-    <string name="template_new">新建模板</string>
-    <string name="template_name_invalid">模板名称不合法或已存在</string>
-    <string name="template_delete_confirm">删除模板？</string>
+    <string name="template_usage_hint">建立模板供“不安分”的 APP 使用，控制其可获取到的应用列表。\n\n黑名单（推荐）：模板中选中的应用对套用模板的应用不可见。\n白名单：不在模板中的应用对套用模板的应用不可见。</string>
+    <string name="template_new_blacklist">创建黑名单模板</string>
+    <string name="template_new_whitelist">创建白名单模板</string>
 
-    <string name="template_enable_all_hooks">启用所有隐藏方式</string>
-    <string name="template_apply_hooks">选择隐藏方式</string>
+    <string name="template_name">模板名称</string>
+    <string name="template_name_cannot_be_empty">模板名称不能为空</string>
+    <string name="template_name_already_exist">模板名称已存在</string>
+    <string name="template_used_count">对 # 个应用生效</string>
+    <string name="template_applist_count">模板包含 # 个应用</string>
+    <string name="template_maps_rules_count">启用 # 条 maps 规则</string>
+
     <string name="template_add_maps_rules">添加自定义 maps 拦截规则</string>
-    <string name="template_add_maps_rules_summary">默认匹配黑名单包名（白名单模式无自动规则）</string>
     <string name="template_add_new_maps_rule_hint">填入要过滤的条目</string>
     <string name="template_delete_maps_rule">删除规则？</string>
-
-    <string name="template_hide_apps">隐藏应用</string>
-    <string name="template_whitelist">使用白名单</string>
-    <string name="template_whitelist_summary">这会使目标应用只能获取到选定的应用信息</string>
-    <string name="template_exclude_system_apps">排除系统应用</string>
-    <string name="template_exclude_system_apps_summary">如果未启用此选项，请确保在白名单中选中 Webview 以避免内置浏览器崩溃</string>
-    <string name="template_choose_apps">选择要隐藏/排除的应用</string>
-    <string name="template_is_system_app">系统应用</string>
-    <string name="template_select">选择一个模板</string>
 </resources>

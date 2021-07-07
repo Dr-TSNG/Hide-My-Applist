@@ -47,6 +47,6 @@
 
 #Xposed
 -keep class com.tsng.hidemyapplist.xposed.XposedEntry
--keepclassmembers class com.tsng.hidemyapplist.MainActivity {
+-keepclassmembers class com.tsng.hidemyapplist.app.ui.activities.MainActivity {
     static final boolean isModuleActivated;
 }

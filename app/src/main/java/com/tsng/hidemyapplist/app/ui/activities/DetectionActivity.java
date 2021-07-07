@@ -1,4 +1,4 @@
-package com.tsng.hidemyapplist.ui;
+package com.tsng.hidemyapplist.app.ui.activities;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -23,7 +24,6 @@ import androidx.preference.PreferenceManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.tsng.hidemyapplist.BuildConfig;
 import com.tsng.hidemyapplist.R;
-import com.tsng.hidemyapplist.UtilsKt;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -191,19 +191,19 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
             br.append(getString(R.string.detection_color_means)).append("<br/>");
             br.append("<h5><b>API requests</b></h5>");
             for (Map.Entry<String, Integer> entry : M0.entrySet())
-                br.append(res.apply(UtilsKt.nativeSync(methodStatus[0][entry.getValue()]))).append(entry.getKey()).append("<br/>");
+                br.append(res.apply(methodStatus[0][entry.getValue()])).append(entry.getKey()).append("<br/>");
             br.append("<h5><b>Intent queries</b></h5>");
             for (Map.Entry<String, Integer> entry : M1.entrySet())
-                br.append(res.apply(UtilsKt.nativeSync(methodStatus[1][entry.getValue()]))).append(entry.getKey()).append("<br/>");
+                br.append(res.apply(methodStatus[1][entry.getValue()])).append(entry.getKey()).append("<br/>");
             br.append("<h5><b>ID detections</b></h5>");
             for (Map.Entry<String, Integer> entry : M2.entrySet())
-                br.append(res.apply(UtilsKt.nativeSync(methodStatus[2][entry.getValue()]))).append(entry.getKey()).append("<br/>");
+                br.append(res.apply(methodStatus[2][entry.getValue()])).append(entry.getKey()).append("<br/>");
             br.append("<h5><b>File detections</b></h5>");
             for (Map.Entry<String, Integer> entry : M3.entrySet())
-                br.append(res.apply(UtilsKt.nativeSync(methodStatus[3][entry.getValue()]))).append(entry.getKey()).append("<br/>");
+                br.append(res.apply(methodStatus[3][entry.getValue()])).append(entry.getKey()).append("<br/>");
             br.append("<h5><b>Characteristics</b></h5>");
             for (Map.Entry<String, Integer> entry : M4.entrySet())
-                br.append(res.apply(UtilsKt.nativeSync(methodStatus[4][entry.getValue()]))).append(entry.getKey()).append("<br/>");
+                br.append(res.apply(methodStatus[4][entry.getValue()])).append(entry.getKey()).append("<br/>");
 
 
             new MaterialAlertDialogBuilder(DetectionActivity.this)
@@ -310,6 +310,8 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
                 }
                 methodStatus[4][M4.get("maps scan")] = 0;
             } catch (Exception e) {
+                Log.w("[HMA Detections]", "Read maps failed: " + e.getMessage());
+                e.printStackTrace();
                 methodStatus[4][M4.get("maps scan")] = -1;
             }
         }

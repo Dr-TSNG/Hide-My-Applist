@@ -1,4 +1,4 @@
-package com.tsng.hidemyapplist
+package com.tsng.hidemyapplist.app.ui.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -6,14 +6,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.tsng.hidemyapplist.ui.*
-import com.tsng.hidemyapplist.xposed.XposedUtils
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.toolbar.*
+import com.tsng.hidemyapplist.BuildConfig
+import com.tsng.hidemyapplist.R
+import com.tsng.hidemyapplist.app.ServiceHelper
+import com.tsng.hidemyapplist.app.SubmitConfigService
+import com.tsng.hidemyapplist.app.makeToast
+import com.tsng.hidemyapplist.databinding.ActivityMainBinding
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject
@@ -30,83 +31,85 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         System.loadLibrary("natives")
     }
 
-    private external fun initNative(path: String)
+    private lateinit var binding: ActivityMainBinding
 
     private fun isHookSelf(): Boolean {
         return getSharedPreferences("Settings", MODE_PRIVATE).getBoolean("HookSelf", false)
     }
 
+    @SuppressLint("SdCardPath")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initNative(applicationContext.packageResourcePath)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(findViewById(R.id.toolbar))
         if(!filesDir.absolutePath.startsWith("/data/user/0/")) {
-            Toast.makeText(this, R.string.do_not_dual, Toast.LENGTH_LONG).show()
+            makeToast(R.string.do_not_dual)
             finish()
             exitProcess(0)
         }
-        if (nativeSync(0) xor 1 == 0x01)
-            startService(Intent(this, ProvidePreferenceService::class.java))
+        startService(Intent(this, SubmitConfigService::class.java))
         makeUpdateAlert()
     }
 
     @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
-        val serviceVersion = XposedUtils.getServiceVersion(this)
+        val serviceVersion = ServiceHelper.getServiceVersion()
         if (isModuleActivated) {
             if (serviceVersion != 0) {
-                xposed_status.setCardBackgroundColor(getColor(R.color.colorPrimary))
-                xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_activited))
-                xposed_status_text.text = getString(R.string.xposed_activated)
+                binding.moduleStatusCard.setCardBackgroundColor(getColor(R.color.colorPrimary))
+                binding.moduleStatusIcon.setImageDrawable(getDrawable(R.drawable.ic_activited))
+                binding.moduleStatusText.text = getString(R.string.xposed_activated)
             } else {
-                xposed_status.setCardBackgroundColor(getColor(R.color.service_off))
-                xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_service_not_running))
-                xposed_status_text.text = getString(R.string.xposed_activated)
+                binding.moduleStatusCard.setCardBackgroundColor(getColor(R.color.service_off))
+                binding.moduleStatusIcon.setImageDrawable(getDrawable(R.drawable.ic_service_not_running))
+                binding.moduleStatusText.text = getString(R.string.xposed_activated)
             }
         } else {
-            xposed_status.setCardBackgroundColor(getColor(R.color.gray))
-            xposed_status_icon.setImageDrawable(getDrawable(R.drawable.ic_not_activated))
-            xposed_status_text.text = getString(R.string.xposed_not_activated)
+            binding.moduleStatusCard.setCardBackgroundColor(getColor(R.color.gray))
+            binding.moduleStatusIcon.setImageDrawable(getDrawable(R.drawable.ic_not_activated))
+            binding.moduleStatusText.text = getString(R.string.xposed_not_activated)
         }
         if (serviceVersion != 0) {
-            if (serviceVersion != BuildConfig.SERVICE_VERSION) xposed_status_sub_text.text = getString(R.string.xposed_service_old)
-            else xposed_status_sub_text.text = getString(R.string.xposed_service_on) + " [$serviceVersion]"
+            if (serviceVersion != BuildConfig.SERVICE_VERSION) binding.serviceStatusText.text = getString(
+                R.string.xposed_service_old
+            )
+            else binding.serviceStatusText.text = getString(R.string.xposed_service_on) + " [$serviceVersion]"
             val text = getString(R.string.xposed_serve_times).split("#")
-            xposed_status_serve_times.visibility = View.VISIBLE
-            xposed_status_serve_times.text = text[0] + nativeSync(XposedUtils.getServeTimes(this)) + text[2]
-            riru_status_text.visibility = View.VISIBLE
-            when (val riruExtensionVersion = XposedUtils.getRiruExtensionVersion(this)) {
-                0 -> riru_status_text.text = getString(R.string.riru_not_installed)
-                -1 -> riru_status_text.text = getString(R.string.riru_version_too_old)
-                -2 -> riru_status_text.text = getString(R.string.riru_apk_version_too_old)
-                else -> riru_status_text.text = getString(R.string.riru_installed) + " [$riruExtensionVersion]"
+            binding.serveTimes.visibility = View.VISIBLE
+            binding.serveTimes.text = text[0] + ServiceHelper.getServeTimes() + text[2]
+            binding.riruStatusText.visibility = View.VISIBLE
+            binding.riruStatusText.text = when (val riruExtensionVersion =
+                ServiceHelper.getRiruExtensionVersion()) {
+                0 -> getString(R.string.riru_not_installed)
+                -1 -> getString(R.string.riru_version_too_old)
+                -2 -> getString(R.string.riru_apk_version_too_old)
+                else -> getString(R.string.riru_installed) + " [$riruExtensionVersion]"
             }
         } else {
-            xposed_status_serve_times.visibility = View.GONE
-            xposed_status_sub_text.text = getString(R.string.xposed_service_off)
+            binding.serveTimes.visibility = View.GONE
+            binding.serviceStatusText.text = getString(R.string.xposed_service_off)
         }
-        menu_detection_test.setOnClickListener(this)
-        menu_template_manage.setOnClickListener(this)
-        menu_scope_manage.setOnClickListener(this)
-        menu_logs.setOnClickListener(this)
-        menu_settings.setOnClickListener(this)
-        menu_about.setOnClickListener(this)
+        binding.menuDetectionTest.setOnClickListener(this)
+        binding.menuTemplateManage.setOnClickListener(this)
+        binding.menuScopeManage.setOnClickListener(this)
+        binding.menuLogs.setOnClickListener(this)
+        binding.menuSettings.setOnClickListener(this)
+        binding.menuAbout.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
         when (v.id) {
             R.id.menu_detection_test -> startActivity(Intent(this, DetectionActivity::class.java))
             R.id.menu_template_manage ->
-                if (isHookSelf()) Toast.makeText(this, R.string.xposed_disable_hook_self_first, Toast.LENGTH_SHORT).show()
+                if (isHookSelf()) makeToast(R.string.xposed_disable_hook_self_first)
                 else startActivity(Intent(this, TemplateManageActivity::class.java))
             R.id.menu_scope_manage ->
-                if (isHookSelf()) Toast.makeText(this, R.string.xposed_disable_hook_self_first, Toast.LENGTH_SHORT).show()
+                if (isHookSelf()) makeToast(R.string.xposed_disable_hook_self_first)
                 else startActivity(Intent(this, ScopeManageActivity::class.java))
             R.id.menu_logs ->
-                if (XposedUtils.getServiceVersion(this) == 0)
-                    Toast.makeText(this, R.string.xposed_service_off, Toast.LENGTH_SHORT).show()
+                if (ServiceHelper.getServiceVersion() == 0) makeToast(R.string.xposed_service_off)
                 else startActivity(Intent(this, LogActivity::class.java))
             R.id.menu_settings -> startActivity(Intent(this, SettingsActivity::class.java))
             R.id.menu_about -> startActivity(Intent(this, AboutActivity::class.java))

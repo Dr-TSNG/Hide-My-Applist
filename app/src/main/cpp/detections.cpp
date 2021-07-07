@@ -5,8 +5,6 @@
 #include <ctime>
 #include <cstdio>
 
-#include "sigverify.h"
-
 int syscall_result;
 jint syscall_detect(int func) {
     jint result = (syscall_result == 0) ? func == 0 : -1;
@@ -20,7 +18,7 @@ void signal_handler(int sig) {
 }
 
 extern "C" JNIEXPORT jintArray JNICALL
-Java_com_tsng_hidemyapplist_ui_DetectionActivity_00024DetectionTask_nativeFile(JNIEnv *env, jobject, jstring path) {
+Java_com_tsng_hidemyapplist_app_ui_activities_DetectionActivity_00024DetectionTask_nativeFile(JNIEnv *env, jobject, jstring path) {
     const char *cpath = env->GetStringUTFChars( path, nullptr);
     const jsize sz = 6;
     jint results[sz];

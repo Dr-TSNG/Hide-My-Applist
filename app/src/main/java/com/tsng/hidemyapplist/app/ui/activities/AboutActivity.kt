@@ -1,4 +1,4 @@
-package com.tsng.hidemyapplist.ui
+package com.tsng.hidemyapplist.app.ui.activities
 
 import android.widget.ImageView
 import android.widget.TextView
@@ -29,7 +29,7 @@ class AboutActivity : AbsAboutActivity() {
         items.add(Card(getString(R.string.about_hook_differences_description)))
 
         items.add(Category(getString(R.string.about_developer)))
-        items.add(Contributor(R.drawable.about_author, "Dr.TSNG", "Developer", "https://github.com/Dr-TSNG"))
+        items.add(Contributor(R.drawable.about_author, "\uD835\uDD93\uD835\uDD9A\uD835\uDD91\uD835\uDD91\uD835\uDD95\uD835\uDD99\uD835\uDD97", "Developer", "https://github.com/Dr-TSNG"))
         items.add(Line())
         items.add(Contributor(R.drawable.about_icon_designer, "辉少菌", "Icon designer", "http://www.coolapk.com/u/1560270"))
 
@@ -41,7 +41,7 @@ class AboutActivity : AbsAboutActivity() {
         items.add(Card("Coolapk\nhttps://www.coolapk.com/u/1911298"))
 
         items.add(Category(getString(R.string.about_open_source)))
-        items.add(License("jsonxx", "Nomango", License.MIT, "https://github.com/Nomango/jsonxx"))
+        items.add(License("EzXHelper", "KyuubiRan", License.GPL_V3, "https://github.com/KyuubiRan/EzXHelper"))
         items.add(License("Gson", "Google", License.APACHE_2, "https://github.com/google/gson"))
         items.add(License("okhttp", "square", License.APACHE_2, "https://github.com/square/okhttp"))
         items.add(License("MultiType", "drakeet", License.APACHE_2, "https://github.com/drakeet/MultiType"))

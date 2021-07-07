@@ -3,7 +3,6 @@ package com.tsng.hidemyapplist.xposed
 import android.content.pm.ApplicationInfo
 import com.github.kyuubiran.ezxhelper.utils.*
 import com.tsng.hidemyapplist.BuildConfig
-import com.tsng.hidemyapplist.HMA_APP
 import com.tsng.hidemyapplist.JsonConfig
 import com.tsng.hidemyapplist.xposed.ServiceUtils.getBinderCaller
 import com.tsng.hidemyapplist.xposed.ServiceUtils.getRecursiveField
@@ -17,6 +16,7 @@ import java.util.*
 import kotlin.concurrent.thread
 
 object PackageManagerService {
+    private const val hmaApp = "com.tsng.hidemyapplist"
     private const val dataDir = "/data/misc/hide_my_applist"
     private val logFile = File("$dataDir/tmp/runtime.log")
 
@@ -121,7 +121,7 @@ object PackageManagerService {
     }
 
     private fun isUseHook(caller: String?, hookMethod: String): Boolean {
-        if (caller == HMA_APP && !config.hookSelf) return false
+        if (caller == hmaApp && !config.hookSelf) return false
         val appConfig = config.scope[caller] ?: return false
         return appConfig.enableAllHooks || appConfig.applyHooks.contains(hookMethod)
     }
@@ -130,16 +130,16 @@ object PackageManagerService {
         if (caller == null || query == null) return false
         if (caller in query) return false
         val appConfig = config.scope[caller] ?: return false
-        if (appConfig.useWhiteList && appConfig.excludeSystemApps && query in systemApps) return false
+        if (appConfig.useWhitelist && appConfig.excludeSystemApps && query in systemApps) return false
 
         if (query in appConfig.extraAppList)
-            return !appConfig.useWhiteList
+            return !appConfig.useWhitelist
         for (tplName in appConfig.applyTemplates) {
             if (query in config.templates[tplName]!!.appList)
-                return !appConfig.useWhiteList
+                return !appConfig.useWhitelist
         }
 
-        return appConfig.useWhiteList
+        return appConfig.useWhitelist
     }
 
     private fun removeList(
@@ -197,7 +197,7 @@ object PackageManagerService {
             var arg = param.args[0] as String? ?: return
 
             /* Non module calls require token validation */
-            if (caller != HMA_APP) {
+            if (caller != hmaApp) {
                 if (!arg.startsWith(token)) {
                     if (!isUseHook(caller, "API requests")) return
                     if (isToHide(caller, arg)) {

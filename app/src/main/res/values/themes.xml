@@ -18,8 +18,19 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="Default.Option">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
     <style name="DefaultCard" parent="Widget.MaterialComponents.CardView">
         <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">10dp</item>
@@ -28,7 +39,7 @@
         <item name="cardCornerRadius">10dp</item>
     </style>
 
-    <style name="DefaultCardImage">
+    <style name="DefaultImage">
         <item name="android:layout_width">28dp</item>
         <item name="android:layout_height">28dp</item>
         <item name="android:layout_gravity">center_vertical</item>
@@ -36,11 +47,19 @@
         <item name="android:layout_marginEnd">16dp</item>
     </style>
 
-    <style name="DefaultCardText">
+    <style name="DefaultText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DefaultText.Option">
         <item name="android:paddingTop">21dp</item>
         <item name="android:paddingBottom">21dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
+    </style>
+
+    <style name="DefaultText.Option.Card">
         <item name="android:textSize">18sp</item>
     </style>
 

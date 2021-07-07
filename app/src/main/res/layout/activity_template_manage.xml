@@ -6,26 +6,8 @@
 
     <include layout="@layout/toolbar" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="@string/template_list"
-        android:textAppearance="?attr/textAppearanceHeadline6" />
-
-    <com.google.android.material.card.MaterialCardView style="@style/ListCard">
-
-        <ListView
-            android:id="@+id/xposed_lv_template"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.google.android.material.card.MaterialCardView>
-
-    <Button
-        android:id="@+id/xposed_btn_new_template"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/template_new" />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

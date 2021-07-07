@@ -11,7 +11,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/template_et_new_maps_rule"
+            android:id="@+id/et_new_rule"
             style="@style/Default"
             android:layout_weight="1"
             android:gravity="center"
@@ -20,7 +20,7 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/template_btn_add_new_maps_rule"
+            android:id="@+id/add_new_rule"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -28,6 +28,6 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/template_lv_maps_rules"
+        android:id="@+id/rule_list"
         style="@style/Default" />
 </LinearLayout>

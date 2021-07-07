@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="template_list">Template List</string>
-    <string name="template_new">New Template</string>
-    <string name="template_name_invalid">Template name is invalid or already exists.</string>
-    <string name="template_delete_confirm">Delete template?</string>
+    <string name="template_usage_hint">Establish templates for \"restless\" apps, controlling applist they can obtain.\n\nBlacklist (recommended): the apps selected in the template will be invisible to the apps applying the template\nWhitelist: the apps not selected in the template will be invisible to the apps applying the template.</string>
+    <string name="template_new_blacklist">Create a blacklist template</string>
+    <string name="template_new_whitelist">Create a whitelist template</string>
 
-    <string name="template_enable_all_hooks">Enable all hide methods</string>
-    <string name="template_apply_hooks">Select hide methods</string>
+    <string name="template_name">Template name</string>
+    <string name="template_name_cannot_be_empty">Template name cannot be empty</string>
+    <string name="template_name_already_exist">Template name already exist</string>
+    <string name="template_used_count">Effective for # apps</string>
+    <string name="template_applist_count">Template containing # apps</string>
+    <string name="template_maps_rules_count">Enabling # maps rules</string>
+
     <string name="template_add_maps_rules">Add custom maps interception rules</string>
-    <string name="template_add_maps_rules_summary">Default match blacklist package name (whitelist mode has no automatic rules)</string>
     <string name="template_add_new_maps_rule_hint">Fill in an item to be filtered</string>
     <string name="template_delete_maps_rule">Delete the rule?</string>
-
-    <string name="template_hide_apps">Hide apps</string>
-    <string name="template_whitelist">WhiteList</string>
-    <string name="template_whitelist_summary">This will allow target apps to find app selected only</string>
-    <string name="template_exclude_system_apps">Exclude system apps</string>
-    <string name="template_exclude_system_apps_summary">If this is not enabled, remember to check webview in whitelist to avoid crashes of built-in browser</string>
-    <string name="template_choose_apps">Choose apps to hide/exclude</string>
-    <string name="template_is_system_app">System app</string>
-    <string name="template_select">Select a template</string>
 </resources>

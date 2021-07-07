@@ -6,8 +6,12 @@
     <string name="no">No</string>
     <string name="error">Error</string>
     <string name="add">Add</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
 
+    <string name="edit_list">Edit list</string>
     <string name="show_crash_log">Show crash log</string>
+    <string name="config_damaged">Config file damaged. Please clean the app data</string>
 
     <string name="do_not_dual">Do not dual the module app, cause it will lead to config override!</string>
 
