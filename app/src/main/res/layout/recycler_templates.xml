@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:paddingHorizontal="10dp">
+    style="@style/Default.Option">
 
     <ImageView
-        style="@style/DefaultImage"
-        android:src="@drawable/ic_file" />
+        android:id="@+id/template_icon"
+        style="@style/DefaultImage" />
 
     <TextView
         android:id="@+id/template_name"

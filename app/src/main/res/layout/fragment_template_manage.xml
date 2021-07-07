@@ -35,19 +35,16 @@
         app:optionDrawable="@drawable/ic_add"
         app:optionText="@string/template_new_blacklist" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/blacklists"
-        style="@style/Default" />
-
-    <include layout="@layout/line" />
-
     <com.tsng.hidemyapplist.app.ui.views.OptionView
         android:id="@+id/create_whitelist"
         style="@style/Default"
         app:optionDrawable="@drawable/ic_add"
         app:optionText="@string/template_new_whitelist" />
 
+    <include layout="@layout/line" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/whitelists"
-        style="@style/Default" />
+        android:id="@+id/template_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

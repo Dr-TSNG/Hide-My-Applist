@@ -10,6 +10,7 @@ import com.tsng.hidemyapplist.JsonConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.JsonConfigManager
 import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
+import com.tsng.hidemyapplist.app.deepCopy
 import com.tsng.hidemyapplist.app.makeToast
 import com.tsng.hidemyapplist.databinding.FragmentTemplateSettingsBinding
 
@@ -19,6 +20,7 @@ class TemplateSettingsFragment : Fragment() {
         fun newInstance(isWhitelist: Boolean, templateName: String?) =
             TemplateSettingsFragment().apply {
                 arguments = Bundle().apply {
+                    putBoolean("isWhitelist", isWhitelist)
                     putString("templateName", templateName)
                 }
             }
@@ -36,7 +38,7 @@ class TemplateSettingsFragment : Fragment() {
         val isWhitelist = requireArguments().getBoolean("isWhitelist")
         oldTemplateName = requireArguments().getString("templateName")
         template = if (oldTemplateName == null) JsonConfig.Template(isWhitelist)
-        else globalConfig.templates[oldTemplateName]!!.copy()
+        else globalConfig.templates[oldTemplateName]!!.deepCopy()
     }
 
     override fun onCreateView(
@@ -45,6 +47,7 @@ class TemplateSettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTemplateSettingsBinding.inflate(inflater, container, false)
+        if (oldTemplateName != null) binding.templateName.setText(oldTemplateName)
         initAppListView()
         initMapsRulesView()
         return binding.root
@@ -59,7 +62,12 @@ class TemplateSettingsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.toolbar_delete -> {
-
+                JsonConfigManager.edit {
+                    for ((_, appConfig) in scope)
+                        appConfig.applyHooks.remove(oldTemplateName)
+                    templates.remove(oldTemplateName)
+                }
+                activity.onBackPressed()
                 return true
             }
             R.id.toolbar_save -> {
