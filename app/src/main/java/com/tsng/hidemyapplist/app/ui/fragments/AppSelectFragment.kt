@@ -1,17 +1,20 @@
 package com.tsng.hidemyapplist.app.ui.fragments
 
-import android.content.pm.ApplicationInfo
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
+import com.github.kyuubiran.ezxhelper.utils.runOnMainThread
+import com.tsng.hidemyapplist.R
+import com.tsng.hidemyapplist.app.helpers.AppInfoHelper.getAppInfoList
 import com.tsng.hidemyapplist.app.ui.adapters.AppSelectAdapter
 import com.tsng.hidemyapplist.databinding.FragmentAppSelectBinding
+import java.text.Collator
+import java.util.*
+import kotlin.concurrent.thread
 
 class AppSelectFragment : Fragment() {
     companion object {
@@ -23,7 +26,15 @@ class AppSelectFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentAppSelectBinding
-    private var appList = mutableListOf<Pair<ApplicationInfo, Boolean>>()
+    private lateinit var selectedApps: MutableSet<String>
+    private var adapter: AppSelectAdapter? = null
+    private var isShowSystemApp = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+        selectedApps = arguments?.getStringArray("selectedApps")?.toHashSet() ?: mutableSetOf()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,27 +42,66 @@ class AppSelectFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAppSelectBinding.inflate(inflater, container, false)
-        initAppList()
-        initAppListView()
+        binding.refreshLayout.setOnRefreshListener { refresh() }.autoRefresh()
         return binding.root
     }
 
     override fun onDestroyView() {
-        val set = mutableSetOf<String>()
-        for (pair in appList) if (pair.second) set.add(pair.first.packageName)
-        setFragmentResult("appSelectResult", bundleOf("selectedApps" to set.toTypedArray()))
+        setFragmentResult(
+            "appSelectResult",
+            bundleOf("selectedApps" to selectedApps.toTypedArray())
+        )
         super.onDestroyView()
     }
 
-    private fun initAppList() {
-        val selectedApps = arguments?.getStringArray("selectedApps")?.toHashSet() ?: setOf()
-        val allApps = appContext.packageManager.getInstalledApplications(0)
-        for (appInfo in allApps)
-            appList.add(appInfo to selectedApps.contains(appInfo.packageName))
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.appselect, menu)
+        val searchView = menu.findItem(R.id.toolbar_search).actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String) = false
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                adapter?.filter?.filter(newText.lowercase(Locale.getDefault()))
+                return true
+            }
+        })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.toolbar_show_system_apps -> {
+                isShowSystemApp = !isShowSystemApp
+                item.isChecked = isShowSystemApp
+                adapter?.isShowSystemApp = isShowSystemApp
+                adapter?.filter?.filter("")
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
+    private fun refresh() {
+        thread {
+            initAppListView()
+            runOnMainThread { binding.refreshLayout.finishRefresh() }
+        }
     }
 
     private fun initAppListView() {
-        binding.appSelect.layoutManager = LinearLayoutManager(activity)
-        binding.appSelect.adapter = AppSelectAdapter(appList)
+        try {
+            val appInfoList = getAppInfoList()
+            appInfoList.sortWith { o1, o2 ->
+                val c1 = selectedApps.contains(o1.packageName)
+                val c2 = selectedApps.contains(o2.packageName)
+                if (c1 != c2) return@sortWith if (c1) -1 else 1
+                Collator.getInstance(Locale.getDefault()).compare(o1.appName, o2.appName)
+            }
+            runOnMainThread {
+                binding.appSelect.layoutManager = LinearLayoutManager(activity)
+                adapter = AppSelectAdapter(selectedApps, appInfoList, isShowSystemApp)
+                binding.appSelect.adapter = adapter
+            }
+        } catch (e: InterruptedException) {
+        }
     }
 }

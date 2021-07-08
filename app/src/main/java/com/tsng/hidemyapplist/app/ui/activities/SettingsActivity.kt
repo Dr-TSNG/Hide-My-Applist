@@ -14,7 +14,7 @@ import com.topjohnwu.superuser.Shell
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
-import com.tsng.hidemyapplist.app.ServiceHelper
+import com.tsng.hidemyapplist.app.helpers.ServiceHelper
 import com.tsng.hidemyapplist.app.makeToast
 import java.io.File
 import java.text.SimpleDateFormat

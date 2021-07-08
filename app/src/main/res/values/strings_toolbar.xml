@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="toolbar_search">Search</string>
-    <string name="toolbar_select_all_apps">Select all apps</string>
     <string name="toolbar_show_system_apps">Show system apps</string>
     <string name="toolbar_refresh">Refresh</string>
     <string name="toolbar_export">Export</string>

@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.tsng.hidemyapplist.R
-import com.tsng.hidemyapplist.app.ServiceHelper
+import com.tsng.hidemyapplist.app.helpers.ServiceHelper
 import com.tsng.hidemyapplist.databinding.FragmentLogRawBinding
 import java.io.File
 import java.text.SimpleDateFormat
@@ -23,7 +23,7 @@ class LogActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.toolbar_logs, menu)
+        menuInflater.inflate(R.menu.log, menu)
         return true
     }
 

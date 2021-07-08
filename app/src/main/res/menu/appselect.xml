@@ -7,12 +7,6 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always" />
     <item
-        android:id="@+id/toolbar_select_all_apps"
-        android:icon="?actionModeSelectAllDrawable"
-        android:title="@string/toolbar_select_all_apps"
-        app:showAsAction="ifRoom"
-        android:visible="false" />
-    <item
         android:id="@+id/toolbar_show_system_apps"
         android:checkable="true"
         android:title="@string/toolbar_show_system_apps" />

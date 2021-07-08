@@ -11,7 +11,7 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
-import com.tsng.hidemyapplist.app.ServiceHelper
+import com.tsng.hidemyapplist.app.helpers.ServiceHelper
 import com.tsng.hidemyapplist.app.SubmitConfigService
 import com.tsng.hidemyapplist.app.makeToast
 import com.tsng.hidemyapplist.databinding.ActivityMainBinding

@@ -1,4 +1,4 @@
-package com.tsng.hidemyapplist.app
+package com.tsng.hidemyapplist.app.helpers
 
 import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
 
