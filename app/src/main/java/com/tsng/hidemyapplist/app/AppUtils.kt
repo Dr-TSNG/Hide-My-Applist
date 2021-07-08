@@ -1,9 +1,12 @@
 package com.tsng.hidemyapplist.app
 
+import android.content.pm.ApplicationInfo
 import android.widget.Toast
 import androidx.annotation.StringRes
 import com.google.gson.Gson
 import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
+
+typealias AppSelectList = MutableList<Pair<ApplicationInfo, Boolean>>
 
 fun makeToast(@StringRes resId: Int) {
     Toast.makeText(appContext, resId, Toast.LENGTH_SHORT).show()

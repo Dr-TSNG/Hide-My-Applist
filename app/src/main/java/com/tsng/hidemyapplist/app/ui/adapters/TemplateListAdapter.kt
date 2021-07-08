@@ -17,10 +17,11 @@ class TemplateListAdapter(
     private val mContext: Context
 ) : RecyclerView.Adapter<TemplateListAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.template_icon)
-        val textView: TextView = view.findViewById(R.id.template_name)
         var isWhitelist = false
         lateinit var templateName: String
+
+        val imageView: ImageView = view.findViewById(R.id.template_icon)
+        val textView: TextView = view.findViewById(R.id.template_name)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -46,13 +47,14 @@ class TemplateListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pair = templateList[position]
+        holder.templateName = pair.first
+        holder.isWhitelist = pair.second
+
         holder.imageView.setImageResource(
             if (pair.second) R.drawable.ic_file_white
             else R.drawable.ic_file_black
         )
         holder.textView.text = pair.first
-        holder.templateName = pair.first
-        holder.isWhitelist = pair.second
     }
 
     override fun getItemCount() = templateList.size
