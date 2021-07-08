@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="template_usage_hint">建立模板供「調皮」的 APP 使用，控制其可獲取到的應用列表。\n\n黑名單（推薦）：模板中選中的應用對套用模板的應用不可見。\n白名單：不在模板中的應用對套用模板的應用不可見。</string>
+    <string name="template_new_blacklist">建立黑名單模板</string>
+    <string name="template_new_whitelist">建立白名單模板</string>
+
+    <string name="template_name">模板名稱</string>
+    <string name="template_name_cannot_be_empty">模板名稱不能為空</string>
+    <string name="template_name_already_exist">模板名稱已存在</string>
+    <string name="template_used_count">對 # 個應用生效</string>
+    <string name="template_applist_count">模板包含 # 個應用</string>
+    <string name="template_maps_rules_count">啟用 # 條 maps 規則</string>
+
+    <string name="template_add_maps_rules">新增自定義 maps 攔截規則</string>
+    <string name="template_add_new_maps_rule_hint">填入要過濾的條目</string>
+    <string name="template_delete_maps_rule">刪除規則？</string>
+</resources>

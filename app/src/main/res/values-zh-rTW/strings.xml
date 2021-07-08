@@ -6,8 +6,12 @@
     <string name="no">否</string>
     <string name="error">錯誤</string>
     <string name="add">新增</string>
+    <string name="delete">刪除</string>
+    <string name="save">儲存</string>
 
-    <string name="show_crash_log">檢查崩潰日誌</string>
+    <string name="edit_list">編輯列表</string>
+    <string name="show_crash_log">檢視崩潰日誌</string>
+    <string name="config_damaged">設定檔損壞，請清除應用資料</string>
 
     <string name="do_not_dual">不要雙開模塊 APP，這會導致設定遭到覆蓋！</string>
 
