@@ -41,15 +41,13 @@ class AboutActivity : AbsAboutActivity() {
         items.add(Card("Coolapk\nhttps://www.coolapk.com/u/1911298"))
 
         items.add(Category(getString(R.string.about_open_source)))
-        items.add(License("EzXHelper", "KyuubiRan", License.GPL_V3, "https://github.com/KyuubiRan/EzXHelper"))
-        items.add(License("Gson", "Google", License.APACHE_2, "https://github.com/google/gson"))
-        items.add(License("okhttp", "square", License.APACHE_2, "https://github.com/square/okhttp"))
         items.add(License("MultiType", "drakeet", License.APACHE_2, "https://github.com/drakeet/MultiType"))
         items.add(License("about-page", "drakeet", License.APACHE_2, "https://github.com/drakeet/about-page"))
         items.add(License("SmartRefreshLayout", "scwang90", License.APACHE_2, "https://github.com/scwang90/SmartRefreshLayout"))
-        items.add(License("Dobby", "jmpews", License.APACHE_2, "https://github.com/jmpews/Dobby"))
+        items.add(License("EzXHelper", "KyuubiRan", License.GPL_V3, "https://github.com/KyuubiRan/EzXHelper"))
         items.add(License("libsu", "topjohnwu", License.APACHE_2, "https://github.com/topjohnwu/libsu"))
-        items.add(License("genuine", "brevent", "CC BY-NC-SA 4.0", "https://github.com/brevent/genuine"))
+        items.add(License("Gson", "Google", License.APACHE_2, "https://github.com/google/gson"))
+        items.add(License("okhttp", "square", License.APACHE_2, "https://github.com/square/okhttp"))
         items.add(License("linux-syscall-support", "Google", "Google", "https://chromium.googlesource.com/linux-syscall-support"))
     }
 }
