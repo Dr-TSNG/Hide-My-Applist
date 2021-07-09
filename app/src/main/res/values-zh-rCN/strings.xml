@@ -12,6 +12,7 @@
     <string name="edit_list">编辑列表</string>
     <string name="show_crash_log">查看崩溃日志</string>
     <string name="config_damaged">配置文件损坏，请清除应用数据</string>
+    <string name="system_app">系统应用</string>
 
     <string name="do_not_dual">不要双开模块 APP，这会导致配置覆盖！</string>
 

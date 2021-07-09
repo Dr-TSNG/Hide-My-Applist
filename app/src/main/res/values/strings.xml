@@ -12,6 +12,7 @@
     <string name="edit_list">Edit list</string>
     <string name="show_crash_log">Show crash log</string>
     <string name="config_damaged">Config file damaged. Please clean the app data</string>
+    <string name="system_app">System app</string>
 
     <string name="do_not_dual">Do not dual the module app, cause it will lead to config override!</string>
 

@@ -54,9 +54,6 @@ jobs:
       - name: Gradle prebuild
         run: ./gradlew prebuild
 
-      - name: Replace android-hidden-api android.jar
-        run: bash ./replace_android_hidden_api_jar.sh
-
       - name: Build Release
         id: buildRelease
         run: |

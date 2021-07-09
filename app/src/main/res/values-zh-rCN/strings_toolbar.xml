@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="toolbar_search">搜索</string>
-    <string name="toolbar_select_all_apps">选择所有应用</string>
     <string name="toolbar_show_system_apps">显示系统应用</string>
     <string name="toolbar_refresh">刷新</string>
     <string name="toolbar_export">导出</string>

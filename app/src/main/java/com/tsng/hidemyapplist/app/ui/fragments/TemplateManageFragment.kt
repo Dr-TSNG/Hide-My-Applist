@@ -15,7 +15,7 @@ import java.text.Collator
 import java.util.*
 
 class TemplateManageFragment : Fragment() {
-    lateinit var binding: FragmentTemplateManageBinding
+    private lateinit var binding: FragmentTemplateManageBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,7 +24,7 @@ class TemplateManageFragment : Fragment() {
     ): View {
         binding = FragmentTemplateManageBinding.inflate(inflater, container, false)
         binding.createBlacklist.setOnClickListener {
-            requireActivity().supportFragmentManager
+            parentFragmentManager
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.fragment_container, TemplateSettingsFragment.newInstance(false, null))
@@ -32,21 +32,21 @@ class TemplateManageFragment : Fragment() {
                 .commit()
         }
         binding.createWhitelist.setOnClickListener {
-            requireActivity().supportFragmentManager
+            parentFragmentManager
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.fragment_container, TemplateSettingsFragment.newInstance(true, null))
                 .addToBackStack(null)
                 .commit()
         }
-        buildList()
+        buildTemplateList()
         return binding.root
     }
 
-    private fun buildList() {
+    private fun buildTemplateList() {
         val adapterList = mutableListOf<Pair<String, Boolean>>()
         for ((name, template) in globalConfig.templates)
-            adapterList.add(Pair(name, template.isWhiteList))
+            adapterList.add(name to template.isWhiteList)
         adapterList.sortWith { o1, o2 ->
             if (o1.second != o2.second) if (o1.second) 1 else -1
             else Collator.getInstance(Locale.getDefault()).compare(o1.first, o2.first)
