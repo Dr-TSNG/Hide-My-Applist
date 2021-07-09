@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
+import com.tsng.hidemyapplist.app.startFragment
 import com.tsng.hidemyapplist.app.ui.adapters.TemplateListAdapter
 import com.tsng.hidemyapplist.databinding.FragmentTemplateManageBinding
 import java.text.Collator
@@ -24,20 +23,10 @@ class TemplateManageFragment : Fragment() {
     ): View {
         binding = FragmentTemplateManageBinding.inflate(inflater, container, false)
         binding.createBlacklist.setOnClickListener {
-            parentFragmentManager
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.fragment_container, TemplateSettingsFragment.newInstance(false, null))
-                .addToBackStack(null)
-                .commit()
+            startFragment(TemplateSettingsFragment.newInstance(false, null))
         }
         binding.createWhitelist.setOnClickListener {
-            parentFragmentManager
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.fragment_container, TemplateSettingsFragment.newInstance(true, null))
-                .addToBackStack(null)
-                .commit()
+            startFragment(TemplateSettingsFragment.newInstance(true, null))
         }
         buildTemplateList()
         return binding.root

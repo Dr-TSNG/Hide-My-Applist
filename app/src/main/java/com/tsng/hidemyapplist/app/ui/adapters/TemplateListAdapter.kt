@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.tsng.hidemyapplist.R
+import com.tsng.hidemyapplist.app.startFragment
 import com.tsng.hidemyapplist.app.ui.fragments.TemplateSettingsFragment
 
 class TemplateListAdapter(
@@ -29,18 +29,12 @@ class TemplateListAdapter(
             .inflate(R.layout.recycler_templates, parent, false)
         val viewHolder = ViewHolder(view)
         viewHolder.itemView.setOnClickListener {
-            (mContext as AppCompatActivity).supportFragmentManager
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(
-                    R.id.fragment_container,
-                    TemplateSettingsFragment.newInstance(
-                        viewHolder.isWhitelist,
-                        viewHolder.templateName
-                    )
+            (mContext as AppCompatActivity).startFragment(
+                TemplateSettingsFragment.newInstance(
+                    viewHolder.isWhitelist,
+                    viewHolder.templateName
                 )
-                .addToBackStack(null)
-                .commit()
+            )
         }
         return viewHolder
     }

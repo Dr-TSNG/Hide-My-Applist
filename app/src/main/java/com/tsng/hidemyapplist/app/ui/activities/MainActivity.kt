@@ -11,8 +11,8 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
+import com.tsng.hidemyapplist.app.MyApplication
 import com.tsng.hidemyapplist.app.helpers.ServiceHelper
-import com.tsng.hidemyapplist.app.SubmitConfigService
 import com.tsng.hidemyapplist.app.makeToast
 import com.tsng.hidemyapplist.databinding.ActivityMainBinding
 import okhttp3.OkHttpClient
@@ -20,17 +20,8 @@ import okhttp3.Request
 import org.json.JSONObject
 import java.util.*
 import kotlin.concurrent.thread
-import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-    companion object {
-        val isModuleActivated = false
-    }
-
-    init {
-        System.loadLibrary("natives")
-    }
-
     private lateinit var binding: ActivityMainBinding
 
     private fun isHookSelf(): Boolean {
@@ -43,12 +34,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.toolbar))
-        if(!filesDir.absolutePath.startsWith("/data/user/0/")) {
-            makeToast(R.string.do_not_dual)
-            finish()
-            exitProcess(0)
-        }
-        startService(Intent(this, SubmitConfigService::class.java))
         makeUpdateAlert()
     }
 
@@ -56,7 +41,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
         val serviceVersion = ServiceHelper.getServiceVersion()
-        if (isModuleActivated) {
+        if (MyApplication.isModuleActivated) {
             if (serviceVersion != 0) {
                 binding.moduleStatusCard.setCardBackgroundColor(getColor(R.color.colorPrimary))
                 binding.moduleStatusIcon.setImageDrawable(getDrawable(R.drawable.ic_activited))
@@ -104,10 +89,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.menu_detection_test -> startActivity(Intent(this, DetectionActivity::class.java))
             R.id.menu_template_manage ->
                 if (isHookSelf()) makeToast(R.string.xposed_disable_hook_self_first)
-                else startActivity(Intent(this, TemplateManageActivity::class.java))
+                else startActivity(Intent(this, ModuleActivity::class.java)
+                    .putExtra("Fragment", ModuleActivity.Fragment.TEMPLATE_MANAGE))
             R.id.menu_scope_manage ->
                 if (isHookSelf()) makeToast(R.string.xposed_disable_hook_self_first)
-                else startActivity(Intent(this, ScopeManageActivity::class.java))
+                else startActivity(Intent(this, ModuleActivity::class.java)
+                    .putExtra("Fragment", ModuleActivity.Fragment.SCOPE_MANAGE))
             R.id.menu_logs ->
                 if (ServiceHelper.getServiceVersion() == 0) makeToast(R.string.xposed_service_off)
                 else startActivity(Intent(this, LogActivity::class.java))

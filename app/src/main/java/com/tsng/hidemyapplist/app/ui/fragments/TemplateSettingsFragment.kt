@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.setFragmentResultListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsng.hidemyapplist.JsonConfig
@@ -14,6 +13,7 @@ import com.tsng.hidemyapplist.app.JsonConfigManager
 import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
 import com.tsng.hidemyapplist.app.deepCopy
 import com.tsng.hidemyapplist.app.makeToast
+import com.tsng.hidemyapplist.app.startFragment
 import com.tsng.hidemyapplist.databinding.FragmentTemplateSettingsBinding
 
 class TemplateSettingsFragment : Fragment() {
@@ -132,15 +132,7 @@ class TemplateSettingsFragment : Fragment() {
         with(binding.appList) {
             setListCount(template.appList.size)
             setOnButtonClickListener {
-                parentFragmentManager
-                    .beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .replace(
-                        R.id.fragment_container,
-                        AppSelectFragment.newInstance(template.appList.toTypedArray())
-                    )
-                    .addToBackStack(null)
-                    .commit()
+                startFragment(AppSelectFragment.newInstance(template.appList.toTypedArray()))
             }
         }
     }

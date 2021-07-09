@@ -98,7 +98,7 @@ class AppSelectFragment : Fragment() {
             }
             runOnMainThread {
                 binding.appSelect.layoutManager = LinearLayoutManager(activity)
-                adapter = AppSelectAdapter(selectedApps, appInfoList, isShowSystemApp)
+                adapter = AppSelectAdapter(isShowSystemApp, true, appInfoList, selectedApps)
                 binding.appSelect.adapter = adapter
             }
         } catch (e: InterruptedException) {

@@ -10,9 +10,11 @@ import com.tsng.hidemyapplist.app.helpers.AppInfoHelper.MyAppInfo
 import java.util.*
 
 class AppSelectAdapter(
-    private val selectedApps: MutableSet<String>,
+    var isShowSystemApp: Boolean,
+    private val hasCheckBox: Boolean,
     private val appList: List<MyAppInfo>,
-    var isShowSystemApp: Boolean
+    private val selectedApps: MutableSet<String>?,
+    private val onClickListener: View.OnClickListener? = null
 ) : Filterable,
     RecyclerView.Adapter<AppSelectAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -51,7 +53,10 @@ class AppSelectAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.recycler_app_select, parent, false)
-        return ViewHolder(view)
+        val viewHolder = ViewHolder(view)
+        viewHolder.itemView.setOnClickListener(onClickListener)
+        if (!hasCheckBox) viewHolder.checkBox.visibility = View.GONE
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -64,11 +69,14 @@ class AppSelectAdapter(
             holder.summaryTextView.setText(R.string.system_app)
         } else holder.summaryTextView.visibility = View.INVISIBLE
 
-        holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) selectedApps.add(appInfo.packageName)
-            else selectedApps.remove(appInfo.packageName)
+        if (hasCheckBox) {
+            if (selectedApps == null) throw IllegalArgumentException("selectedApps must not be null when has a checkbox")
+            holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) selectedApps.add(appInfo.packageName)
+                else selectedApps.remove(appInfo.packageName)
+            }
+            holder.checkBox.isChecked = selectedApps.contains(appInfo.packageName)
         }
-        holder.checkBox.isChecked = selectedApps.contains(appInfo.packageName)
     }
 
     override fun getItemCount() = mFilteredList.size

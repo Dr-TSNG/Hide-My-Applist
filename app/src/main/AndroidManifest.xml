@@ -39,6 +39,8 @@
             android:name=".app.SubmitConfigService"
             android:enabled="true" />
 
+        <activity android:name=".app.ui.activities.ModuleActivity" />
+
         <activity
             android:name="com.tsng.hidemyapplist.app.ui.activities.LogActivity"
             android:label="@string/title_logs" />
@@ -51,12 +53,6 @@
         <activity
             android:name="com.tsng.hidemyapplist.app.ui.activities.DetectionActivity"
             android:label="@string/title_detection_test" />
-        <activity
-            android:name="com.tsng.hidemyapplist.app.ui.activities.ScopeManageActivity"
-            android:label="@string/title_scope_manage" />
-        <activity
-            android:name="com.tsng.hidemyapplist.app.ui.activities.TemplateManageActivity"
-            android:label="@string/title_template_manage" />
         <activity
             android:name=".app.ui.activities.MainActivity"
             android:label="@string/app_name">
