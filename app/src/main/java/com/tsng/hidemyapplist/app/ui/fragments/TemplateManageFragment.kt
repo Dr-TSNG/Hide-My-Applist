@@ -41,6 +41,6 @@ class TemplateManageFragment : Fragment() {
             else Collator.getInstance(Locale.getDefault()).compare(o1.first, o2.first)
         }
         binding.templateList.layoutManager = LinearLayoutManager(activity)
-        binding.templateList.adapter = TemplateListAdapter(adapterList, requireContext())
+        binding.templateList.adapter = TemplateListAdapter(adapterList, this)
     }
 }

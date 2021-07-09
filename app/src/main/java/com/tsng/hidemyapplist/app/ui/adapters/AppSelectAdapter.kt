@@ -13,7 +13,7 @@ class AppSelectAdapter(
     var isShowSystemApp: Boolean,
     private val hasCheckBox: Boolean,
     private val appList: List<MyAppInfo>,
-    private val selectedApps: MutableSet<String>?,
+    private val selectedApps: MutableSet<String>,
     private val onClickListener: View.OnClickListener? = null
 ) : Filterable,
     RecyclerView.Adapter<AppSelectAdapter.ViewHolder>() {
@@ -70,7 +70,6 @@ class AppSelectAdapter(
         } else holder.summaryTextView.visibility = View.INVISIBLE
 
         if (hasCheckBox) {
-            if (selectedApps == null) throw IllegalArgumentException("selectedApps must not be null when has a checkbox")
             holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) selectedApps.add(appInfo.packageName)
                 else selectedApps.remove(appInfo.packageName)

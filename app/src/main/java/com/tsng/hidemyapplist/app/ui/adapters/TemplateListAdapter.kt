@@ -1,12 +1,11 @@
 package com.tsng.hidemyapplist.app.ui.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.startFragment
@@ -14,7 +13,7 @@ import com.tsng.hidemyapplist.app.ui.fragments.TemplateSettingsFragment
 
 class TemplateListAdapter(
     private val templateList: List<Pair<String, Boolean>>,
-    private val mContext: Context
+    private val mFragment: Fragment
 ) : RecyclerView.Adapter<TemplateListAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var isWhitelist = false
@@ -29,7 +28,7 @@ class TemplateListAdapter(
             .inflate(R.layout.recycler_templates, parent, false)
         val viewHolder = ViewHolder(view)
         viewHolder.itemView.setOnClickListener {
-            (mContext as AppCompatActivity).startFragment(
+            mFragment.startFragment(
                 TemplateSettingsFragment.newInstance(
                     viewHolder.isWhitelist,
                     viewHolder.templateName

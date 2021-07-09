@@ -31,7 +31,8 @@ fun AppCompatActivity.startFragment(fragment: Fragment, addToBackStack: Boolean 
 fun Fragment.startFragment(fragment: Fragment, addToBackStack: Boolean = true) {
     val transaction = parentFragmentManager
         .beginTransaction()
-        .replace(R.id.fragment_container, fragment)
+        .hide(this)
+        .add(R.id.fragment_container, fragment)
         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
     if (addToBackStack) transaction.addToBackStack(null)
     transaction.commit()
