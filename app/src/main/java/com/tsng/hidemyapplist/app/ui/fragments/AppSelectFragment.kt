@@ -9,7 +9,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.kyuubiran.ezxhelper.utils.runOnMainThread
 import com.tsng.hidemyapplist.R
-import com.tsng.hidemyapplist.app.helpers.AppInfoHelper.getAppInfoList
+import com.tsng.hidemyapplist.app.helpers.AppInfoHelper
 import com.tsng.hidemyapplist.app.ui.adapters.AppSelectAdapter
 import com.tsng.hidemyapplist.databinding.FragmentAppSelectBinding
 import java.text.Collator
@@ -88,20 +88,17 @@ class AppSelectFragment : Fragment() {
     }
 
     private fun initAppListView() {
-        try {
-            val appInfoList = getAppInfoList()
-            appInfoList.sortWith { o1, o2 ->
-                val c1 = selectedApps.contains(o1.packageName)
-                val c2 = selectedApps.contains(o2.packageName)
-                if (c1 != c2) return@sortWith if (c1) -1 else 1
-                Collator.getInstance(Locale.getDefault()).compare(o1.appName, o2.appName)
-            }
-            runOnMainThread {
-                binding.appSelect.layoutManager = LinearLayoutManager(activity)
-                adapter = AppSelectAdapter(isShowSystemApp, true, appInfoList, selectedApps)
-                binding.appSelect.adapter = adapter
-            }
-        } catch (e: InterruptedException) {
+        val appInfoList = AppInfoHelper.getAppInfoList()
+        appInfoList.sortWith { o1, o2 ->
+            val c1 = selectedApps.contains(o1.packageName)
+            val c2 = selectedApps.contains(o2.packageName)
+            if (c1 != c2) return@sortWith if (c1) -1 else 1
+            Collator.getInstance(Locale.getDefault()).compare(o1.appName, o2.appName)
+        }
+        runOnMainThread {
+            binding.appSelect.layoutManager = LinearLayoutManager(activity)
+            adapter = AppSelectAdapter(isShowSystemApp, true, appInfoList, selectedApps)
+            binding.appSelect.adapter = adapter
         }
     }
 }
