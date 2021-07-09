@@ -45,9 +45,6 @@
             android:name="com.tsng.hidemyapplist.app.ui.activities.LogActivity"
             android:label="@string/title_logs" />
         <activity
-            android:name="com.tsng.hidemyapplist.app.ui.activities.SettingsActivity"
-            android:label="@string/title_settings" />
-        <activity
             android:name="com.tsng.hidemyapplist.app.ui.activities.AboutActivity"
             android:theme="@style/AppTheme.About" />
         <activity

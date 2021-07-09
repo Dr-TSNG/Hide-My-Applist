@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.startFragment
 import com.tsng.hidemyapplist.app.ui.fragments.ScopeManageFragment
+import com.tsng.hidemyapplist.app.ui.fragments.SettingsFragment
 import com.tsng.hidemyapplist.app.ui.fragments.TemplateManageFragment
 
 class ModuleActivity : AppCompatActivity() {
     enum class Fragment {
         TEMPLATE_MANAGE,
-        SCOPE_MANAGE
+        SCOPE_MANAGE,
+        SETTINGS
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +28,10 @@ class ModuleActivity : AppCompatActivity() {
             Fragment.SCOPE_MANAGE -> {
                 setTitle(R.string.title_scope_manage)
                 startFragment(ScopeManageFragment(), false)
+            }
+            Fragment.SETTINGS -> {
+                setTitle(R.string.title_settings)
+                startFragment(SettingsFragment(), false)
             }
         }
     }

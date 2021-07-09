@@ -21,12 +21,11 @@
 
     <string name="riru_installed">Riru extension installed</string>
     <string name="riru_not_installed">Riru extension not installed</string>
-    <string name="riru_version_too_old">❌[Riru] extension version too old</string>
-    <string name="riru_apk_version_too_old">❌[Riru] system service version too old</string>
+    <string name="riru_version_too_old">❌ Riru extension version too old</string>
+    <string name="riru_apk_version_too_old">❌ Riru system service version too old</string>
 
     <string name="title_detection_test">Detection Test</string>
     <string name="title_template_manage">Manage Templates</string>
-    <string name="title_edit_template">Edit Template</string>
     <string name="title_scope_manage">Select Effective Apps</string>
     <string name="title_logs">Logs</string>
     <string name="title_settings">Settings</string>

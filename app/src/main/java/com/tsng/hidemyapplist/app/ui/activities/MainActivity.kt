@@ -98,7 +98,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.menu_logs ->
                 if (ServiceHelper.getServiceVersion() == 0) makeToast(R.string.xposed_service_off)
                 else startActivity(Intent(this, LogActivity::class.java))
-            R.id.menu_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+            R.id.menu_settings -> startActivity(Intent(this, ModuleActivity::class.java)
+                .putExtra("Fragment", ModuleActivity.Fragment.SETTINGS))
             R.id.menu_about -> startActivity(Intent(this, AboutActivity::class.java))
         }
     }
