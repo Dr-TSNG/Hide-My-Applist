@@ -12,7 +12,7 @@ import com.tsng.hidemyapplist.R
 class SelectListView(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
     private val textView: TextView
     private val button: Button
-    private val rawText: CharSequence
+    private var rawText: CharSequence
 
     init {
         inflate(context, R.layout.view_select_list, this)
@@ -26,6 +26,11 @@ class SelectListView(context: Context, attrs: AttributeSet?) : ConstraintLayout(
         if (!attributes.getBoolean(R.styleable.SelectListView_showButton, true))
             button.visibility = View.INVISIBLE
         attributes.recycle()
+    }
+
+    fun setRawText(text: CharSequence) {
+        rawText = text
+        textView.text = rawText
     }
 
     fun setListCount(cnt: Int) {

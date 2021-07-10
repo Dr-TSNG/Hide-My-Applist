@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="template_usage_hint">建立模板供“不安分”的 APP 使用，控制其可获取到的应用列表。\n\n黑名单（推荐）：模板中选中的应用对套用模板的应用不可见。\n白名单：不在模板中的应用对套用模板的应用不可见。</string>
+    <string name="template_work_mode">工作模式</string>
+    <string name="template_blacklist">黑名单模式</string>
+    <string name="template_whitelist">白名单模式</string>
     <string name="template_new_blacklist">创建黑名单模板</string>
     <string name="template_new_whitelist">创建白名单模板</string>
     <string name="template_delete">确认删除模板？</string>
@@ -9,8 +12,21 @@
     <string name="template_name_cannot_be_empty">模板名称不能为空</string>
     <string name="template_name_already_exist">模板名称已存在</string>
     <string name="template_used_count">对 # 个应用生效</string>
-    <string name="template_applist_count">模板包含 # 个应用</string>
+    <string name="template_apps_visible_count">可见 # 个应用</string>
+    <string name="template_apps_invisible_count">隐藏 # 个应用</string>
     <string name="template_maps_rules_count">启用 # 条 maps 规则</string>
+
+    <string name="template_enable_hide">启用隐藏</string>
+    <string name="template_enable_all_hooks">启用所有隐藏方式</string>
+    <string name="template_apply_hooks">选择隐藏方式</string>
+    <string name="template_config">模板配置</string>
+    <string name="template_choose">选择模板</string>
+    <string name="template_exclude_system_apps">排除系统应用</string>
+    <string name="template_exclude_system_apps_summary">如果未启用此选项，请确保在白名单中选中 Webview 以避免内置浏览器崩溃</string>
+    <string name="template_applied_count">启用 # 个模板</string>
+    <string name="template_extra_apps_visible_count">额外可见 # 个应用</string>
+    <string name="template_extra_apps_invisible_count">额外隐藏 # 个应用</string>
+    <string name="template_extra_maps_rules_count">额外启用 # 条 maps 规则</string>
 
     <string name="template_add_maps_rules">添加自定义 maps 拦截规则</string>
     <string name="template_add_new_maps_rule_hint">填入要过滤的条目</string>

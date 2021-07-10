@@ -58,7 +58,7 @@ class ScopeManageFragment : Fragment() {
                 adapter?.isShowSystemApp = isShowSystemApp
                 adapter?.filter?.filter("")
             }
-            else -> return super.onOptionsItemSelected(item)
+            else -> return false
         }
         return true
     }
@@ -76,7 +76,7 @@ class ScopeManageFragment : Fragment() {
         appInfoList.sortWith { o1, o2 ->
             val b1 = selectedApps.contains(o1.packageName)
             val b2 = selectedApps.contains(o2.packageName)
-            if (b1 != b2) return@sortWith if (b1) 1 else -1
+            if (b1 != b2) return@sortWith if (b1) -1 else 1
             Collator.getInstance(Locale.getDefault()).compare(o1.appName, o2.appName)
         }
         runOnMainThread {

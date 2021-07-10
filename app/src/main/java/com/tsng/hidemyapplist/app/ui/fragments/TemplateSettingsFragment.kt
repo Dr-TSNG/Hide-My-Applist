@@ -3,7 +3,6 @@ package com.tsng.hidemyapplist.app.ui.fragments
 import android.app.Activity
 import android.os.Bundle
 import android.view.*
-import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -14,6 +13,7 @@ import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
 import com.tsng.hidemyapplist.app.deepCopy
 import com.tsng.hidemyapplist.app.makeToast
 import com.tsng.hidemyapplist.app.startFragment
+import com.tsng.hidemyapplist.app.ui.views.MapsRulesView
 import com.tsng.hidemyapplist.databinding.FragmentTemplateSettingsBinding
 
 class TemplateSettingsFragment : Fragment() {
@@ -35,8 +35,8 @@ class TemplateSettingsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity = requireActivity()
         setHasOptionsMenu(true)
+        activity = requireActivity()
         val isWhitelist = requireArguments().getBoolean("isWhitelist")
         oldTemplateName = requireArguments().getString("templateName")
         template = if (oldTemplateName == null) JsonConfig.Template(isWhitelist)
@@ -58,6 +58,10 @@ class TemplateSettingsFragment : Fragment() {
     ): View {
         binding = FragmentTemplateSettingsBinding.inflate(inflater, container, false)
         if (oldTemplateName != null) binding.templateName.setText(oldTemplateName)
+        binding.appList.setRawText(
+            if (template.isWhitelist) getString(R.string.template_apps_visible_count)
+            else getString(R.string.template_apps_invisible_count)
+        )
         initAppListView()
         initMapsRulesView()
         return binding.root
@@ -124,7 +128,7 @@ class TemplateSettingsFragment : Fragment() {
                 }
                 return true
             }
-            else -> return super.onOptionsItemSelected(item)
+            else -> return false
         }
     }
 
@@ -141,43 +145,9 @@ class TemplateSettingsFragment : Fragment() {
         with(binding.mapsRules) {
             setListCount(template.mapsRules.size)
             setOnButtonClickListener {
-                val rules = template.mapsRules.toMutableList()
-                val adapter = ArrayAdapter(activity, android.R.layout.simple_list_item_1, rules)
-                MaterialAlertDialogBuilder(activity)
-                    .setTitle(R.string.template_add_maps_rules)
-                    .setView(
-                        View.inflate(activity, R.layout.alert_customize_maps_rules, null).apply {
-                            findViewById<ListView>(R.id.rule_list).apply {
-                                this.adapter = adapter
-                                setOnItemLongClickListener { _, _, position, _ ->
-                                    MaterialAlertDialogBuilder(activity)
-                                        .setTitle(R.string.template_delete_maps_rule)
-                                        .setMessage(rules[position])
-                                        .setNegativeButton(android.R.string.cancel, null)
-                                        .setPositiveButton(android.R.string.ok) { _, _ ->
-                                            template.mapsRules.remove(rules[position])
-                                            activity.runOnUiThread {
-                                                adapter.remove(rules[position])
-                                                setListCount(template.mapsRules.size)
-                                            }
-                                        }.show()
-                                    true
-                                }
-                            }
-                            findViewById<Button>(R.id.add_new_rule).setOnClickListener {
-                                val editText = findViewById<EditText>(R.id.et_new_rule)
-                                val newRule = editText.text.toString()
-                                editText.text.clear()
-                                if (newRule.isEmpty() || template.mapsRules.contains(newRule)) return@setOnClickListener
-                                template.mapsRules.add(newRule)
-                                activity.runOnUiThread {
-                                    adapter.add(newRule)
-                                    setListCount(template.mapsRules.size)
-                                }
-                            }
-                        })
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show()
+                MapsRulesView.show(activity, template.mapsRules) {
+                    setListCount(template.mapsRules.size)
+                }
             }
         }
     }

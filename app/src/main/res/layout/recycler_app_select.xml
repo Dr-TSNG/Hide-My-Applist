@@ -18,7 +18,7 @@
         style="@style/DefaultText"
         android:layout_marginVertical="3dp"
         android:layout_marginStart="14dp"
-        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textColor="@android:color/black"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/app_icon"
         app:layout_constraintTop_toTopOf="parent" />

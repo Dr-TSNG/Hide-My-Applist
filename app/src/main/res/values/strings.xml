@@ -9,6 +9,8 @@
     <string name="delete">Delete</string>
     <string name="save">Save</string>
 
+    <string name="application">Application</string>
+    <string name="preference">Preference</string>
     <string name="edit_list">Edit list</string>
     <string name="show_crash_log">Show crash log</string>
     <string name="config_damaged">Config file damaged. Please clean the app data</string>

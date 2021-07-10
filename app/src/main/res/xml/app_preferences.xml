@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/application">
+        <Preference android:key="appInfo" />
+        <SwitchPreferenceCompat
+            android:key="isEnabled"
+            android:title="@string/template_enable_hide" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:dependency="isEnabled"
+        android:title="@string/preference">
+        <SwitchPreferenceCompat
+            android:icon="@drawable/ic_settings"
+            android:key="useWhitelist"
+            android:summaryOff="@string/template_blacklist"
+            android:summaryOn="@string/template_whitelist"
+            android:title="@string/template_work_mode" />
+        <SwitchPreferenceCompat
+            android:disableDependentsState="true"
+            android:key="enableAllHooks"
+            android:title="@string/template_enable_all_hooks" />
+        <MultiSelectListPreference
+            android:dependency="enableAllHooks"
+            android:entries="@array/detect_methods"
+            android:entryValues="@array/detect_methods"
+            android:key="applyHooks"
+            android:title="@string/template_apply_hooks" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:dependency="isEnabled"
+        android:title="@string/template_config">
+        <Preference
+            android:icon="@drawable/ic_template"
+            android:key="applyTemplates"
+            android:title="Stub" />
+        <Preference
+            android:icon="@drawable/ic_apps"
+            android:key="extraAppList"
+            android:title="Stub" />
+        <SwitchPreferenceCompat
+            android:dependency="useWhitelist"
+            android:disableDependentsState="true"
+            android:key="excludeSystemApps"
+            android:summary="@string/template_exclude_system_apps_summary"
+            android:title="@string/template_exclude_system_apps" />
+        <Preference
+            android:icon="@drawable/ic_file_white"
+            android:key="extraMapsRules"
+            android:title="Stub" />
+    </PreferenceCategory>
+</PreferenceScreen>

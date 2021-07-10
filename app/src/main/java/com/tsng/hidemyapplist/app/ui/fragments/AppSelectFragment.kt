@@ -75,7 +75,7 @@ class AppSelectFragment : Fragment() {
                 adapter?.isShowSystemApp = isShowSystemApp
                 adapter?.filter?.filter("")
             }
-            else -> return super.onOptionsItemSelected(item)
+            else -> return false
         }
         return true
     }

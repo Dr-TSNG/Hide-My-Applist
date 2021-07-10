@@ -4,7 +4,7 @@ import com.google.gson.Gson
 
 class JsonConfig {
     data class Template(
-        val isWhiteList: Boolean,
+        val isWhitelist: Boolean,
         val appList: MutableSet<String> = mutableSetOf(),
         val mapsRules: MutableSet<String> = mutableSetOf()
     )

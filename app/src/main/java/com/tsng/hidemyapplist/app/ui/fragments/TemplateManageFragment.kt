@@ -32,10 +32,14 @@ class TemplateManageFragment : Fragment() {
         return binding.root
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        if (!hidden) buildTemplateList()
+    }
+
     private fun buildTemplateList() {
         val adapterList = mutableListOf<Pair<String, Boolean>>()
         for ((name, template) in globalConfig.templates)
-            adapterList.add(name to template.isWhiteList)
+            adapterList.add(name to template.isWhitelist)
         adapterList.sortWith { o1, o2 ->
             if (o1.second != o2.second) if (o1.second) 1 else -1
             else Collator.getInstance(Locale.getDefault()).compare(o1.first, o2.first)
