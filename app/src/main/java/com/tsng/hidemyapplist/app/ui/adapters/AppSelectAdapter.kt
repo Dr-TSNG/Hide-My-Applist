@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.tsng.hidemyapplist.R
+import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
 import com.tsng.hidemyapplist.app.helpers.AppInfoHelper.MyAppInfo
 import java.util.*
 
@@ -14,7 +15,7 @@ class AppSelectAdapter(
     private val hasCheckBox: Boolean,
     private val appList: List<MyAppInfo>,
     private val selectedApps: MutableSet<String>,
-    private val onClickListener: View.OnClickListener? = null
+    private val onClick: (ViewHolder.() -> Unit)? = null
 ) : Filterable,
     RecyclerView.Adapter<AppSelectAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -54,7 +55,7 @@ class AppSelectAdapter(
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.recycler_app_select, parent, false)
         val viewHolder = ViewHolder(view)
-        viewHolder.itemView.setOnClickListener(onClickListener)
+        onClick?.let { viewHolder.it() }
         if (!hasCheckBox) viewHolder.checkBox.visibility = View.GONE
         return viewHolder
     }
@@ -64,6 +65,10 @@ class AppSelectAdapter(
         holder.imageView.setImageDrawable(appInfo.icon)
         holder.appNameTextView.text = appInfo.appName
         holder.packageNameTextView.text = appInfo.packageName
+        if (!hasCheckBox && selectedApps.contains(appInfo.packageName))
+            holder.appNameTextView.setTextColor(appContext.resources.getColor(android.R.color.holo_green_light))
+        else
+            holder.appNameTextView.setTextColor(appContext.resources.getColor(android.R.color.black))
         if (appInfo.isSystemApp) {
             holder.summaryTextView.visibility = View.VISIBLE
             holder.summaryTextView.setText(R.string.system_app)

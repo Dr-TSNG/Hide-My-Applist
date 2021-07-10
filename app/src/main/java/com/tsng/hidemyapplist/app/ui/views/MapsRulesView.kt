@@ -32,7 +32,7 @@ object MapsRulesView {
                                     ruleSet.remove(rules[position])
                                     activity.runOnUiThread {
                                         adapter.remove(rules[position])
-                                        if (updateUi != null) updateUi()
+                                        updateUi?.let { it() }
                                     }
                                 }.show()
                             true
@@ -47,7 +47,7 @@ object MapsRulesView {
                         ruleSet.add(newRule)
                         activity.runOnUiThread {
                             adapter.add(newRule)
-                            if (updateUi != null) updateUi()
+                            updateUi?.let { it() }
                         }
                     }
                 })

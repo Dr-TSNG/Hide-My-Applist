@@ -2,7 +2,6 @@ package com.tsng.hidemyapplist.app.ui.fragments
 
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +20,7 @@ class ScopeManageFragment : Fragment() {
     private lateinit var binding: FragmentAppSelectBinding
     private var adapter: AppSelectAdapter? = null
     private var isShowSystemApp = false
+    private var touchedItemPosition = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +35,11 @@ class ScopeManageFragment : Fragment() {
         binding = FragmentAppSelectBinding.inflate(inflater, container, false)
         binding.refreshLayout.setOnRefreshListener { refresh() }.autoRefresh()
         return binding.root
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        if (!hidden && touchedItemPosition != -1)
+            adapter?.notifyItemChanged(touchedItemPosition)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -82,8 +87,11 @@ class ScopeManageFragment : Fragment() {
         runOnMainThread {
             binding.appSelect.layoutManager = LinearLayoutManager(activity)
             adapter = AppSelectAdapter(isShowSystemApp, false, appInfoList, selectedApps) {
-                val packageName = it.findViewById<TextView>(R.id.app_package_name).text.toString()
-                startFragment(AppSettingsFragment.newInstance(packageName))
+                itemView.setOnClickListener {
+                    touchedItemPosition = layoutPosition
+                    val packageName = packageNameTextView.text.toString()
+                    startFragment(AppSettingsFragment.newInstance(packageName))
+                }
             }
             binding.appSelect.adapter = adapter
         }
