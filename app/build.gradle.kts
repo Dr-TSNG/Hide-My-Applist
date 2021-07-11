@@ -3,7 +3,8 @@ import com.android.build.api.variant.impl.ApplicationVariantImpl
 import com.android.build.gradle.BaseExtension
 import com.android.ide.common.signing.KeystoreHelper
 import org.jetbrains.kotlin.konan.properties.Properties
-import java.io.*
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
 
 val kotlinVersion: String by rootProject.extra
 
@@ -126,6 +127,14 @@ androidComponents.onVariants { v ->
             }
         }
         variant.variantData.registerJavaGeneratingTask(signInfoTask, arrayListOf(outSrcDir))
+
+        val kotlinCompileTask =
+            tasks.findByName("compile${variant.name.capitalize()}Kotlin") as? SourceTask
+        if (kotlinCompileTask != null) {
+            kotlinCompileTask.dependsOn(signInfoTask)
+            val srcSet = objects.sourceDirectorySet("signInfo", "signInfo").srcDir(outSrcDir)
+            kotlinCompileTask.source(srcSet)
+        }
     }
 }
 
