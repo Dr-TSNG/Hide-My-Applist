@@ -34,7 +34,7 @@
 
     <PreferenceCategory android:title="@string/settings_backup">
         <Preference
-            android:icon="@drawable/ic_import"
+            android:icon="@drawable/ic_restore"
             android:key="importConfig"
             android:title="@string/settings_import_config" />
         <Preference
