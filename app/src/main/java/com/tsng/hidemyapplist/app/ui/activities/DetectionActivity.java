@@ -332,11 +332,11 @@ public class DetectionActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void SaveTargets() {
-        default_pref.edit().putStringSet("DetectionSet", targets).apply();
+        default_pref.edit().putStringSet("detectionSet", targets).apply();
     }
 
     private void ReadTargets() {
-        targets = default_pref.getStringSet("DetectionSet", null);
+        targets = default_pref.getStringSet("detectionSet", null);
         if (targets == null)
             targets = new TreeSet<>(Arrays.asList(getResources().getStringArray(R.array.packages)));
         else targets = new TreeSet<>(targets);

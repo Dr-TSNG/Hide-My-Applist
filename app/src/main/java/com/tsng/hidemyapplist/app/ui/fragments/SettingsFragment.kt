@@ -85,7 +85,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        preferenceManager.sharedPreferencesName = "Settings"
+        preferenceManager.sharedPreferencesName = "settings"
         setPreferencesFromResource(R.xml.settings_preferences, rootKey)
         module()
         service()
