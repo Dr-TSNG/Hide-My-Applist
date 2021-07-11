@@ -8,7 +8,7 @@ import java.io.File
 
 
 object JsonConfigManager {
-    private val configFile = File("${appContext.filesDir.absolutePath}/config.json")
+    val configFile = File("${appContext.filesDir.absolutePath}/config.json")
     val globalConfig: JsonConfig
 
     init {

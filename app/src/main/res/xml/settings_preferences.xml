@@ -1,20 +1,20 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/settings_module">
         <SwitchPreferenceCompat
-            android:key="HookSelf"
+            android:key="hookSelf"
             android:summary="@string/settings_hook_self_summary"
             android:title="@string/settings_hook_self" />
         <SwitchPreferenceCompat
-            android:key="DetailLog"
+            android:key="detailLog"
             android:title="@string/settings_detail_log" />
         <ListPreference
             android:defaultValue="512"
             android:entries="@array/max_log_size_entries"
             android:entryValues="@array/max_log_size_values"
-            android:key="MaxLogSize"
+            android:key="maxLogSize"
             android:title="@string/settings_max_log_size" />
         <SwitchPreferenceCompat
-            android:key="HideIcon"
+            android:key="hideIcon"
             android:summary="@string/settings_hide_icon_summary"
             android:title="@string/settings_hide_icon" />
     </PreferenceCategory>
@@ -22,12 +22,12 @@
     <PreferenceCategory android:title="@string/settings_service">
         <Preference
             android:icon="@drawable/ic_stop"
-            android:key="StopSystemService"
+            android:key="stopSystemService"
             android:summary="@string/settings_stop_system_service_summary"
             android:title="@string/settings_stop_system_service" />
         <Preference
             android:icon="@drawable/ic_clean"
-            android:key="ForceCleanEnv"
+            android:key="forceCleanEnv"
             android:summary="@string/settings_force_clean_env_summary"
             android:title="@string/settings_force_clean_env" />
     </PreferenceCategory>
@@ -35,22 +35,22 @@
     <PreferenceCategory android:title="@string/settings_backup">
         <Preference
             android:icon="@drawable/ic_import"
-            android:key="ImportConfig"
+            android:key="importConfig"
             android:title="@string/settings_import_config" />
         <Preference
             android:icon="@drawable/ic_export"
-            android:key="ExportConfig"
+            android:key="exportConfig"
             android:title="@string/settings_export_config" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_update">
         <SwitchPreferenceCompat
             android:disableDependentsState="true"
-            android:key="DisableUpdate"
+            android:key="disableUpdate"
             android:title="@string/settings_disable_update" />
         <SwitchPreferenceCompat
-            android:dependency="DisableUpdate"
-            android:key="ReceiveBetaUpdate"
+            android:dependency="disableUpdate"
+            android:key="receiveBetaUpdate"
             android:summary="@string/settings_receive_beta_update_summary"
             android:title="@string/settings_receive_beta_update" />
     </PreferenceCategory>
