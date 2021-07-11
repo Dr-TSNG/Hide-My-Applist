@@ -5,7 +5,7 @@ import android.content.pm.Signature
 import com.github.kyuubiran.ezxhelper.utils.*
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.JsonConfig
-import com.tsng.hidemyapplist.SignInfo.CERTIFICATE
+import com.tsng.hidemyapplist.Magic.magicNumbers
 import com.tsng.hidemyapplist.xposed.ServiceUtils.getBinderCaller
 import com.tsng.hidemyapplist.xposed.ServiceUtils.getRecursiveField
 import de.robv.android.xposed.XC_MethodHook
@@ -332,7 +332,7 @@ object PackageManagerService {
                 val signingDetails = hmaPackage.invokeMethod("getSigningDetails")!!
                 val cert =
                     signingDetails.getObjectAs<Array<Signature>>("signatures")[0].toByteArray()
-                if (!cert.contentEquals(CERTIFICATE))
+                if (!cert.contentEquals(magicNumbers))
                     throw IllegalStateException("Signature abnormal !!!")
             } catch (e: Exception) {
                 /* Bootloop waiting for MT suckers */

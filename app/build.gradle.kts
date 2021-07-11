@@ -87,6 +87,7 @@ android {
     }
 }
 
+// This code is from LSPosed. Make a class containing a byte array of signature
 androidComponents.onVariants { v ->
     val variant: ApplicationVariantImpl =
         if (v is ApplicationVariantImpl) v
@@ -101,7 +102,7 @@ androidComponents.onVariants { v ->
     afterEvaluate {
         val app = rootProject.project(":app").extensions.getByName<BaseExtension>("android")
         val outSrcDir = file("$buildDir/generated/source/signInfo/${variantLowered}")
-        val outSrc = file("$outSrcDir/com/tsng/hidemyapplist/SignInfo.java")
+        val outSrc = file("$outSrcDir/com/tsng/hidemyapplist/Magic.java")
         val signInfoTask = tasks.register("generate${variantCapped}SignInfo") {
             dependsOn(":app:validateSigning${variantCapped}")
             outputs.file(outSrc)
@@ -117,8 +118,8 @@ androidComponents.onVariants { v ->
                 )
                 PrintStream(outSrc).apply {
                     println("package com.tsng.hidemyapplist;")
-                    println("public final class SignInfo {")
-                    print("public static final byte[] CERTIFICATE = {")
+                    println("public final class Magic {")
+                    print("public static final byte[] magicNumbers = {")
                     val bytes = certificateInfo.certificate.encoded
                     print(bytes.joinToString(",") { it.toString() })
                     println("};")
@@ -132,7 +133,7 @@ androidComponents.onVariants { v ->
             tasks.findByName("compile${variant.name.capitalize()}Kotlin") as? SourceTask
         if (kotlinCompileTask != null) {
             kotlinCompileTask.dependsOn(signInfoTask)
-            val srcSet = objects.sourceDirectorySet("signInfo", "signInfo").srcDir(outSrcDir)
+            val srcSet = objects.sourceDirectorySet("magic", "magic").srcDir(outSrcDir)
             kotlinCompileTask.source(srcSet)
         }
     }
