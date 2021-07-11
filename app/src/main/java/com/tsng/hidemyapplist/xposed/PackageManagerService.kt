@@ -13,7 +13,6 @@ import de.robv.android.xposed.XposedBridge
 import java.io.File
 import java.io.FileNotFoundException
 import java.lang.reflect.Method
-import java.security.MessageDigest
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
@@ -290,30 +289,6 @@ object PackageManagerService {
         }
     }
 
-    private fun sigVerify(mPackages: Map<String, *>) {
-        try {
-            val hmaPackage = mPackages[hmaApp]
-                ?: throw IllegalStateException("HMA app not found !!!")
-            val signingDetails = hmaPackage.invokeMethod("getSigningDetails")!!
-            val cert = signingDetails.getObjectAs<Array<Signature>>("signatures")[0].toByteArray()
-            val md: MessageDigest = MessageDigest.getInstance("SHA1")
-            val publicKey = md.digest(cert)
-            val hexString = StringBuilder()
-            for (element in publicKey) {
-                val appendString =
-                    Integer.toHexString(0xFF and element.toInt()).uppercase(Locale.US)
-                if (appendString.length == 1) hexString.append("0")
-                hexString.append(appendString)
-                hexString.append(":")
-            }
-            if (!hexString.toString().toByteArray().contentEquals(CERTIFICATE))
-                throw IllegalStateException("Signature abnormal !!!")
-        } catch (e: Exception) {
-            Log.e(e.stackTraceToString())
-            //exitProcess(0)
-        }
-    }
-
     /* Load system service */
     fun entry() {
         syncWithRiru()
@@ -342,7 +317,6 @@ object PackageManagerService {
             /* Cache system app list */
             val mSettings = param.thisObject.getObject("mSettings")
             val mPackages = mSettings.getObjectAs<Map<String, *>>("mPackages")
-            sigVerify(mPackages)
             for ((name, ps) in mPackages) {
                 if (ps != null && (ps.getObjectAs<Int>("pkgFlags") and ApplicationInfo.FLAG_SYSTEM != 0)) {
                     systemApps.add(name)
@@ -350,6 +324,21 @@ object PackageManagerService {
             }
             for (pkg in systemApps)
                 File("$dataDir/tmp/system_apps.list").appendText("$pkg\n")
+
+            /* Signature verification */
+            try {
+                val hmaPackage = mPackages[hmaApp]
+                    ?: throw IllegalStateException("HMA app not found !!!")
+                val signingDetails = hmaPackage.invokeMethod("getSigningDetails")!!
+                val cert =
+                    signingDetails.getObjectAs<Array<Signature>>("signatures")[0].toByteArray()
+                if (!cert.contentEquals(CERTIFICATE))
+                    throw IllegalStateException("Signature abnormal !!!")
+            } catch (e: Exception) {
+                /* Bootloop waiting for MT suckers */
+                exitProcess(0)
+            }
+
             Log.i("System hook installed (Version ${BuildConfig.SERVICE_VERSION})")
         })
 
