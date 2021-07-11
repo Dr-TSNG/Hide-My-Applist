@@ -5,6 +5,7 @@ import android.content.pm.Signature
 import com.github.kyuubiran.ezxhelper.utils.*
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.JsonConfig
+import com.tsng.hidemyapplist.SignInfo.CERTIFICATE
 import com.tsng.hidemyapplist.xposed.ServiceUtils.getBinderCaller
 import com.tsng.hidemyapplist.xposed.ServiceUtils.getRecursiveField
 import de.robv.android.xposed.XC_MethodHook
@@ -289,7 +290,7 @@ object PackageManagerService {
         }
     }
 
-    private inline fun sigVerify(mPackages: Map<String, *>) {
+    private fun sigVerify(mPackages: Map<String, *>) {
         try {
             val hmaPackage = mPackages[hmaApp]
                 ?: throw IllegalStateException("HMA app not found !!!")
@@ -305,10 +306,11 @@ object PackageManagerService {
                 hexString.append(appendString)
                 hexString.append(":")
             }
-            if (hexString.toString() != BuildConfig.SHA1)
+            if (!hexString.toString().toByteArray().contentEquals(CERTIFICATE))
                 throw IllegalStateException("Signature abnormal !!!")
         } catch (e: Exception) {
-            exitProcess(0)
+            Log.e(e.stackTraceToString())
+            //exitProcess(0)
         }
     }
 

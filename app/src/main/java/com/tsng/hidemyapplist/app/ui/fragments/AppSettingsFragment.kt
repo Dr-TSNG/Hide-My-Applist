@@ -98,7 +98,7 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
                         arrayChecked
                     ) { _: DialogInterface, i: Int, b: Boolean -> arrayChecked[i] = b }
                     .setNegativeButton(android.R.string.cancel, null)
-                    .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
                         for (i in arrayList.indices)
                             if (arrayChecked[i]) appConfig.applyTemplates.add(arrayList[i])
                             else appConfig.applyTemplates.remove(arrayList[i])
