@@ -44,14 +44,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 if (backupVersion < BuildConfig.MIN_BACKUP_VERSION)
                     throw RuntimeException(getString(R.string.settings_import_backup_version_too_old))
                 JsonConfigManager.edit {
-                    templates = Gson().fromJson(
-                        backupJson["templates"],
-                        MutableMap::class.java
-                    ) as MutableMap<String, JsonConfig.Template>
-                    scope = Gson().fromJson(
-                        backupJson["scope"],
-                        MutableMap::class.java
-                    ) as MutableMap<String, JsonConfig.AppConfig>
+                    templates.clear()
+                    for ((name, template) in backupJson["templates"].asJsonObject.entrySet())
+                        templates[name] = Gson().fromJson(template.toString(), JsonConfig.Template::class.java)
+                    scope.clear()
+                    for ((name, appConfig) in backupJson["scope"].asJsonObject.entrySet())
+                        scope[name] = Gson().fromJson(appConfig.toString(), JsonConfig.AppConfig::class.java)
                 }
                 makeToast(R.string.settings_import_successful)
             } catch (e: Exception) {

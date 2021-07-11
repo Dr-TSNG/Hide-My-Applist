@@ -1,6 +1,7 @@
 package com.tsng.hidemyapplist.xposed
 
 import android.content.pm.ApplicationInfo
+import android.content.pm.Signature
 import com.github.kyuubiran.ezxhelper.utils.*
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.JsonConfig
@@ -11,9 +12,11 @@ import de.robv.android.xposed.XposedBridge
 import java.io.File
 import java.io.FileNotFoundException
 import java.lang.reflect.Method
+import java.security.MessageDigest
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
+import kotlin.system.exitProcess
 
 object PackageManagerService {
     private const val hmaApp = "com.tsng.hidemyapplist"
@@ -260,15 +263,7 @@ object PackageManagerService {
         }
     }
 
-    private fun syncWithRiru(): Boolean {
-        with(File("$dataDir/tmp/refuse_to_run")) {
-            if (exists()) {
-                delete()
-                Log.e("Service status abnormal, refuse to install")
-                return false
-            }
-        }
-
+    private fun syncWithRiru() {
         /* If riru extension not installed, make tmp by the service */
         with(File("$dataDir/tmp/riru_v")) {
             if (exists()) {
@@ -292,12 +287,34 @@ object PackageManagerService {
             }
             delete()
         }
-        return true
+    }
+
+    private inline fun sigVerify(mPackages: Map<String, *>) {
+        try {
+            val hmaPackage = mPackages[hmaApp]
+                ?: throw IllegalStateException("HMA app not found !!!")
+            val signingDetails = hmaPackage.invokeMethod("getSigningDetails")!!
+            val cert = signingDetails.getObjectAs<Array<Signature>>("signatures")[0].toByteArray()
+            val md: MessageDigest = MessageDigest.getInstance("SHA1")
+            val publicKey = md.digest(cert)
+            val hexString = StringBuilder()
+            for (element in publicKey) {
+                val appendString =
+                    Integer.toHexString(0xFF and element.toInt()).uppercase(Locale.US)
+                if (appendString.length == 1) hexString.append("0")
+                hexString.append(appendString)
+                hexString.append(":")
+            }
+            if (hexString.toString() != BuildConfig.SHA1)
+                throw IllegalStateException("Signature abnormal !!!")
+        } catch (e: Exception) {
+            exitProcess(0)
+        }
     }
 
     /* Load system service */
     fun entry() {
-        if (!syncWithRiru()) return
+        syncWithRiru()
         generateToken()
         try {
             initConfig()
@@ -320,10 +337,10 @@ object PackageManagerService {
 
         val pms = loadClass("com.android.server.pm.PackageManagerService")
         allHooks.addAll(pms.hookAllConstructorAfter { param ->
-            Log.i("System hook installed (Version ${BuildConfig.SERVICE_VERSION})")
             /* Cache system app list */
             val mSettings = param.thisObject.getObject("mSettings")
             val mPackages = mSettings.getObjectAs<Map<String, *>>("mPackages")
+            sigVerify(mPackages)
             for ((name, ps) in mPackages) {
                 if (ps != null && (ps.getObjectAs<Int>("pkgFlags") and ApplicationInfo.FLAG_SYSTEM != 0)) {
                     systemApps.add(name)
@@ -331,6 +348,7 @@ object PackageManagerService {
             }
             for (pkg in systemApps)
                 File("$dataDir/tmp/system_apps.list").appendText("$pkg\n")
+            Log.i("System hook installed (Version ${BuildConfig.SERVICE_VERSION})")
         })
 
         /* ---Deal with 💩 ROMs--- */

@@ -1,14 +1,8 @@
 #指定压缩级别
 -optimizationpasses 5
 
-#不跳过非公共的库的类成员
--dontskipnonpubliclibraryclassmembers
-
 #混淆时采用的算法
 -optimizations !code/simplification/arithmetic, !field,!class/merging, !code/allocation/variable
-
-#把混淆类中的方法名也混淆了
--useuniqueclassmembernames
 
 #优化时允许访问并修改有修饰符的类和类的成员
 -allowaccessmodification
@@ -47,6 +41,6 @@
 
 #Xposed
 -keep class com.tsng.hidemyapplist.xposed.XposedEntry
--keepclassmembers class com.tsng.hidemyapplist.app.ui.activities.MainActivity {
+-keepclassmembers class com.tsng.hidemyapplist.app.MyApplication {
     static final boolean isModuleActivated;
 }

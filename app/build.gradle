@@ -25,6 +25,8 @@ android {
         buildConfigField "int", "SERVICE_VERSION", "49"
         buildConfigField "int", "MIN_RIRU_VERSION", "23"
         buildConfigField "int", "MIN_BACKUP_VERSION", "49"
+        // Here is the signature SHA1
+        buildConfigField "String", "SHA1", '"03:45:22:C2:73:09:1F:B5:93:B5:B5:25:41:09:1B:74:4D:0D:C5:C0"'
     }
 
     signingConfigs {

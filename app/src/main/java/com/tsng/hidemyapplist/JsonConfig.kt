@@ -23,8 +23,8 @@ class JsonConfig {
     var hookSelf = false
     var detailLog = false
     var maxLogSize = 512
-    var templates = mutableMapOf<String, Template>()
-    var scope = mutableMapOf<String, AppConfig>()
+    val templates = mutableMapOf<String, Template>()
+    val scope = mutableMapOf<String, AppConfig>()
 
     override fun toString(): String {
         return Gson().toJson(this)
