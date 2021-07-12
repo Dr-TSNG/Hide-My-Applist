@@ -8,32 +8,38 @@
     <include layout="@layout/toolbar" />
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/xposed_status"
+        android:id="@+id/module_status_card"
         style="@style/DefaultCard"
         android:layout_marginTop="18dp">
 
         <LinearLayout
             style="@style/Default"
-            android:layout_gravity="center"
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/xposed_status_icon"
-                style="@style/DefaultCardImage" />
+                android:id="@+id/module_status_icon"
+                style="@style/DefaultImage" />
 
             <LinearLayout
                 style="@style/Default"
                 android:orientation="vertical"
-                android:paddingTop="25dp"
-                android:paddingBottom="25dp">
+                android:paddingVertical="25dp">
 
                 <TextView
-                    android:id="@+id/xposed_status_text"
+                    android:id="@+id/module_status_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/service_status_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/riru_status_text"
@@ -45,15 +51,7 @@
                     android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/xposed_status_sub_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    android:textColor="@android:color/white" />
-
-                <TextView
-                    android:id="@+id/xposed_status_serve_times"
+                    android:id="@+id/serve_times"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -80,17 +78,15 @@
 
                 <LinearLayout
                     style="@style/Default"
-                    android:layout_gravity="center"
                     android:orientation="horizontal">
 
                     <ImageView
-                        style="@style/DefaultCardImage"
+                        style="@style/DefaultImage"
                         android:src="@drawable/ic_detection" />
 
                     <TextView
-                        style="@style/DefaultCardText"
-                        android:text="@string/title_detection_test"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                        style="@style/DefaultText.Option.Card"
+                        android:text="@string/title_detection_test" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -101,17 +97,15 @@
 
                 <LinearLayout
                     style="@style/Default"
-                    android:layout_gravity="center"
                     android:orientation="horizontal">
 
                     <ImageView
-                        style="@style/DefaultCardImage"
+                        style="@style/DefaultImage"
                         android:src="@drawable/ic_template" />
 
                     <TextView
-                        style="@style/DefaultCardText"
-                        android:text="@string/title_template_manage"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                        style="@style/DefaultText.Option.Card"
+                        android:text="@string/title_template_manage" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -122,17 +116,15 @@
 
                 <LinearLayout
                     style="@style/Default"
-                    android:layout_gravity="center"
                     android:orientation="horizontal">
 
                     <ImageView
-                        style="@style/DefaultCardImage"
+                        style="@style/DefaultImage"
                         android:src="@drawable/ic_apps" />
 
                     <TextView
-                        style="@style/DefaultCardText"
-                        android:text="@string/title_scope_manage"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                        style="@style/DefaultText.Option.Card"
+                        android:text="@string/title_scope_manage" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -143,17 +135,15 @@
 
                 <LinearLayout
                     style="@style/Default"
-                    android:layout_gravity="center"
                     android:orientation="horizontal">
 
                     <ImageView
-                        style="@style/DefaultCardImage"
+                        style="@style/DefaultImage"
                         android:src="@drawable/ic_logs" />
 
                     <TextView
-                        style="@style/DefaultCardText"
-                        android:text="@string/title_logs"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                        style="@style/DefaultText.Option.Card"
+                        android:text="@string/title_logs" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -164,17 +154,15 @@
 
                 <LinearLayout
                     style="@style/Default"
-                    android:layout_gravity="center"
                     android:orientation="horizontal">
 
                     <ImageView
-                        style="@style/DefaultCardImage"
+                        style="@style/DefaultImage"
                         android:src="@drawable/ic_settings" />
 
                     <TextView
-                        style="@style/DefaultCardText"
-                        android:text="@string/title_settings"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                        style="@style/DefaultText.Option.Card"
+                        android:text="@string/title_settings" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -185,17 +173,15 @@
 
                 <LinearLayout
                     style="@style/Default"
-                    android:layout_gravity="center"
                     android:orientation="horizontal">
 
                     <ImageView
-                        style="@style/DefaultCardImage"
+                        style="@style/DefaultImage"
                         android:src="@drawable/ic_about" />
 
                     <TextView
-                        style="@style/DefaultCardText"
-                        android:text="@string/title_about"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                        style="@style/DefaultText.Option.Card"
+                        android:text="@string/title_about" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

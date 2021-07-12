@@ -3,20 +3,28 @@ package com.tsng.hidemyapplist
 import com.google.gson.Gson
 
 class JsonConfig {
-    class Template {
-        val WhiteList = false
-        val EnableAllHooks = false
-        val ExcludeSystemApps = false
-        val ApplyHooks = setOf<String>()
-        val HideApps = setOf<String>()
-        val MapsRules = setOf<String>()
-    }
+    data class Template(
+        val isWhitelist: Boolean,
+        val appList: MutableSet<String> = mutableSetOf(),
+        val mapsRules: MutableSet<String> = mutableSetOf()
+    )
 
-    var HookSelf = false
-    var DetailLog = false
-    var MaxLogSize = 512
-    var Scope = mapOf<String, String>()
-    var Templates = mutableMapOf<String, Template>()
+    data class AppConfig(
+        var useWhitelist: Boolean = false,
+        var enableAllHooks: Boolean = false,
+        var excludeSystemApps: Boolean = false,
+        val applyHooks: MutableSet<String> = mutableSetOf(),
+        val applyTemplates: MutableSet<String> = mutableSetOf(),
+        val extraAppList: MutableSet<String> = mutableSetOf(),
+        val extraMapsRules: MutableSet<String> = mutableSetOf(),
+    )
+
+    val configVersion = BuildConfig.VERSION_CODE
+    var hookSelf = false
+    var detailLog = false
+    var maxLogSize = 512
+    val templates = mutableMapOf<String, Template>()
+    val scope = mutableMapOf<String, AppConfig>()
 
     override fun toString(): String {
         return Gson().toJson(this)

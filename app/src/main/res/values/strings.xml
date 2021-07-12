@@ -6,8 +6,15 @@
     <string name="no">No</string>
     <string name="error">Error</string>
     <string name="add">Add</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
 
+    <string name="application">Application</string>
+    <string name="preference">Preference</string>
+    <string name="edit_list">Edit list</string>
     <string name="show_crash_log">Show crash log</string>
+    <string name="config_damaged">Config file damaged. Please clean the app data</string>
+    <string name="system_app">System app</string>
 
     <string name="do_not_dual">Do not dual the module app, cause it will lead to config override!</string>
 
@@ -16,12 +23,11 @@
 
     <string name="riru_installed">Riru extension installed</string>
     <string name="riru_not_installed">Riru extension not installed</string>
-    <string name="riru_version_too_old">❌[Riru] extension version too old</string>
-    <string name="riru_apk_version_too_old">❌[Riru] system service version too old</string>
+    <string name="riru_version_too_old">❌ Riru extension version too old</string>
+    <string name="riru_apk_version_too_old">❌ Riru system service version too old</string>
 
     <string name="title_detection_test">Detection Test</string>
     <string name="title_template_manage">Manage Templates</string>
-    <string name="title_edit_template">Edit Template</string>
     <string name="title_scope_manage">Select Effective Apps</string>
     <string name="title_logs">Logs</string>
     <string name="title_settings">Settings</string>

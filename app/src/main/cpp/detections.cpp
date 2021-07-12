@@ -5,22 +5,20 @@
 #include <ctime>
 #include <cstdio>
 
-#include "sigverify.h"
-
-int syscall_result;
-jint syscall_detect(int func) {
+static int syscall_result;
+static jint syscall_detect(int func) {
     jint result = (syscall_result == 0) ? func == 0 : -1;
     syscall_result = 0;
     return result;
 }
 
-void signal_handler(int sig) {
+static void signal_handler(int sig) {
     syscall_result = -1;
     __android_log_print(ANDROID_LOG_INFO, "[HMA Detections]", "[INFO] Syscall was denied");
 }
 
 extern "C" JNIEXPORT jintArray JNICALL
-Java_com_tsng_hidemyapplist_ui_DetectionActivity_00024DetectionTask_nativeFile(JNIEnv *env, jobject, jstring path) {
+Java_com_tsng_hidemyapplist_app_ui_activities_DetectionActivity_00024DetectionTask_nativeFile(JNIEnv *env, jobject, jstring path) {
     const char *cpath = env->GetStringUTFChars( path, nullptr);
     const jsize sz = 6;
     jint results[sz];

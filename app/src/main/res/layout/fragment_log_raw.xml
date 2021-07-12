@@ -7,7 +7,7 @@
     <ScrollView style="@style/Default">
 
         <TextView
-            android:id="@+id/log_tv_raw"
+            android:id="@+id/raw_log_text"
             style="@style/Default" />
     </ScrollView>
 

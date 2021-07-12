@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="OptionView">
+        <attr name="optionDrawable" format="reference" />
+        <attr name="optionText" format="string" />
+    </declare-styleable>
+    <declare-styleable name="SelectListView">
+        <attr name="showButton" format="boolean" />
+        <attr name="listDrawable" format="reference" />
+        <attr name="listText" format="string" />
+    </declare-styleable>
+</resources>

@@ -27,6 +27,7 @@
     <string name="settings_import_backup_version_too_old">Backup version too old</string>
     <string name="settings_import_file_damaged">Backup file was damaged</string>
     <string name="settings_export_config">Export config</string>
+    <string name="settings_export_failed">Export failed</string>
     <string name="settings_exported">Backed up config</string>
 
     <string name="settings_update">Update</string>

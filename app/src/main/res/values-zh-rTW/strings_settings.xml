@@ -27,6 +27,7 @@
     <string name="settings_import_backup_version_too_old">備份版本太舊</string>
     <string name="settings_import_file_damaged">備份檔損毀</string>
     <string name="settings_export_config">匯出設定</string>
+    <string name="settings_export_failed">匯出失敗</string>
     <string name="settings_exported">備份完成</string>
 
     <string name="settings_update">更新</string>

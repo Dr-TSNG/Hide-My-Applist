@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Default.Option">
+
+    <ImageView
+        android:id="@+id/option_image"
+        style="@style/DefaultImage" />
+
+    <TextView
+        android:id="@+id/option_text"
+        style="@style/DefaultText.Option" />
+</LinearLayout>

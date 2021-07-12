@@ -16,12 +16,11 @@
 
     <string name="riru_installed">Riru 擴充套件已安裝</string>
     <string name="riru_not_installed">Riru 擴充套件未安裝</string>
-    <string name="riru_version_too_old">❌[Riru] 擴充套件版本過舊</string>
-    <string name="riru_apk_version_too_old">❌[Riru] 系統服務版本過舊</string>
+    <string name="riru_version_too_old">❌ Riru 擴充套件版本過舊</string>
+    <string name="riru_apk_version_too_old">❌ Riru 系統服務版本過舊</string>
 
     <string name="title_detection_test">檢測測試</string>
     <string name="title_template_manage">模板管理</string>
-    <string name="title_edit_template">編輯模板</string>
     <string name="title_scope_manage">選擇啟用應用程式</string>
     <string name="title_logs">日誌</string>
     <string name="title_settings">設定</string>

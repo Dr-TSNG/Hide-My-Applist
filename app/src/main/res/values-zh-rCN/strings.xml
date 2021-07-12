@@ -6,8 +6,15 @@
     <string name="no">否</string>
     <string name="error">错误</string>
     <string name="add">添加</string>
+    <string name="delete">删除</string>
+    <string name="save">保存</string>
 
+    <string name="application">应用</string>
+    <string name="preference">偏好</string>
+    <string name="edit_list">编辑列表</string>
     <string name="show_crash_log">查看崩溃日志</string>
+    <string name="config_damaged">配置文件损坏，请清除应用数据</string>
+    <string name="system_app">系统应用</string>
 
     <string name="do_not_dual">不要双开模块 APP，这会导致配置覆盖！</string>
 
@@ -16,12 +23,11 @@
 
     <string name="riru_installed">Riru 插件已安装</string>
     <string name="riru_not_installed">Riru 插件未安装</string>
-    <string name="riru_version_too_old">❌[Riru] 插件版本过旧</string>
-    <string name="riru_apk_version_too_old">❌[Riru] 系统服务版本过旧</string>
+    <string name="riru_version_too_old">❌ Riru 插件版本过旧</string>
+    <string name="riru_apk_version_too_old">❌ Riru 系统服务版本过旧</string>
 
     <string name="title_detection_test">检测测试</string>
     <string name="title_template_manage">模板管理</string>
-    <string name="title_edit_template">编辑模板</string>
     <string name="title_scope_manage">选择生效应用</string>
     <string name="title_settings">设置</string>
     <string name="title_logs">日志</string>
