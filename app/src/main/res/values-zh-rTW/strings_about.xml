@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="about_title">關於該模組</string>
+    <string name="about_title">關於此模組</string>
     <string name="about_description">
         雖然「檢測安裝的應用程式是不正確的做法」，而且很蠢，但是並不是所有的外掛程式類應用程式都提供了隨機包名支援。這就意味著檢測到安裝了 root 類應用程式（如 Fake Location、儲存重定向）與檢測到了 root 本身區別不大。（會使用檢測手段的應用程式可不會認為你是在「我就蹭蹭不進去」）\n\n與此同時，部分「不安分」的應用程式會使用各種漏洞繞過系統權限來獲取你的應用程式列表，從而對你建立使用者畫像（如陳叔叔將安裝了 V2Ray 的使用者分為一類），或是類似於某某校園樂跑的軟體會要求你移除作弊軟體。\n\n該模組提供了一些檢測方式用於測試您是否成功地隱藏了某些特定的包名，如 Magisk/Edxposed Manager；同時可作為 Xposed 模組用於隱藏應用程式列表或特定應用程式，保護隱私。
     </string>
