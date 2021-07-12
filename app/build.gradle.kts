@@ -90,7 +90,7 @@ android {
     }
 }
 
-// This code comes from LSPosed, modified by nullptr
+// This code is forked from LSPosed
 // Make a class containing a byte array of signature
 androidComponents.onVariants { v ->
     val variant: ApplicationVariantImpl =
@@ -143,8 +143,8 @@ androidComponents.onVariants { v ->
     }
 }
 
-// This code comes from QNotified, modified by nullptr
-// Add some tricks to dex tail to prevent modify
+// This code is forked from QNotified
+// Add some tricks to dex tail to prevent modification
 fun execDexTail(dexPath: String): Boolean {
     val cl = URLClassLoader(
         arrayOf(
