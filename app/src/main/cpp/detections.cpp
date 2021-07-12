@@ -5,14 +5,14 @@
 #include <ctime>
 #include <cstdio>
 
-int syscall_result;
-jint syscall_detect(int func) {
+static int syscall_result;
+static jint syscall_detect(int func) {
     jint result = (syscall_result == 0) ? func == 0 : -1;
     syscall_result = 0;
     return result;
 }
 
-void signal_handler(int sig) {
+static void signal_handler(int sig) {
     syscall_result = -1;
     __android_log_print(ANDROID_LOG_INFO, "[HMA Detections]", "[INFO] Syscall was denied");
 }

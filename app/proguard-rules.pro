@@ -31,6 +31,9 @@
 -keep class android.support.** { *; }
 #--------------------------------------------------------------------------
 
+# Magic
+-keep class com.tsng.hidemyapplist.Magic { *; }
+
 # Views
 -keep class com.tsng.hidemyapplist.app.ui.activities.ModuleActivity$Fragment { *; }
 -keep class com.tsng.hidemyapplist.app.ui.views.MapsRulesView{ *; }
