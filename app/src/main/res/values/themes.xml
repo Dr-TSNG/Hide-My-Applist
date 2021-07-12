@@ -56,7 +56,7 @@
         <item name="android:paddingTop">21dp</item>
         <item name="android:paddingBottom">21dp</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
     </style>
 
     <style name="DefaultText.Option.Card">
