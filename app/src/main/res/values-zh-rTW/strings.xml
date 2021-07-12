@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">隱藏應用程式列表</string>
+    <string name="app_name">隱藏應用列表</string>
 
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="error">錯誤</string>
     <string name="add">新增</string>
+    <string name="delete">刪除</string>
+    <string name="save">儲存</string>
 
-    <string name="show_crash_log">檢查崩潰日誌</string>
+    <string name="application">應用</string>
+    <string name="preference">偏好</string>
+    <string name="edit_list">編輯列表</string>
+    <string name="show_crash_log">檢視崩潰日誌</string>
+    <string name="config_damaged">配置檔案損壞，請清除應用資料</string>
+    <string name="system_app">系統應用</string>
 
-    <string name="do_not_dual">不要雙開模塊 APP，這會導致設定遭到覆蓋！</string>
+    <string name="do_not_dual">不要雙開模組 APP，這會導致配置覆蓋！</string>
 
-    <string name="new_update">可用新版本： </string>
+    <string name="new_update">新版本可用：</string>
     <string name="update_logs">更新日誌</string>
 
-    <string name="riru_installed">Riru 擴充套件已安裝</string>
-    <string name="riru_not_installed">Riru 擴充套件未安裝</string>
-    <string name="riru_version_too_old">❌ Riru 擴充套件版本過舊</string>
+    <string name="riru_installed">Riru 模組已安裝</string>
+    <string name="riru_not_installed">Riru 模組未安裝</string>
+    <string name="riru_version_too_old">❌ Riru 模組版本過舊</string>
     <string name="riru_apk_version_too_old">❌ Riru 系統服務版本過舊</string>
 
     <string name="title_detection_test">檢測測試</string>
     <string name="title_template_manage">模板管理</string>
-    <string name="title_scope_manage">選擇啟用應用程式</string>
-    <string name="title_logs">日誌</string>
+    <string name="title_scope_manage">選擇生效應用</string>
     <string name="title_settings">設定</string>
+    <string name="title_logs">日誌</string>
     <string name="title_about">關於</string>
 </resources>
