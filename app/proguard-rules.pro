@@ -33,6 +33,8 @@
 
 # Magic
 -keep class com.tsng.hidemyapplist.Magic { *; }
+-keep class com.tsng.hidemyapplist.app.MyApplication
+-keep class com.tsng.hidemyapplist.app.MyApplication$Companion { *; }
 
 # Views
 -keep class com.tsng.hidemyapplist.app.ui.activities.ModuleActivity$Fragment { *; }
