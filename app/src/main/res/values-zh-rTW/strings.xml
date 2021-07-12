@@ -13,10 +13,10 @@
     <string name="preference">偏好</string>
     <string name="edit_list">編輯列表</string>
     <string name="show_crash_log">檢視崩潰日誌</string>
-    <string name="config_damaged">配置檔案損壞，請清除應用資料</string>
+    <string name="config_damaged">設定檔案損壞，請清除應用資料</string>
     <string name="system_app">系統應用</string>
 
-    <string name="do_not_dual">不要雙開模組 APP，這會導致配置覆蓋！</string>
+    <string name="do_not_dual">不要雙開模組 APP，這會導致設定覆蓋！</string>
 
     <string name="new_update">新版本可用：</string>
     <string name="update_logs">更新日誌</string>

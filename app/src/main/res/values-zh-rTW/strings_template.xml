@@ -19,7 +19,7 @@
     <string name="template_enable_hide">啟用隱藏</string>
     <string name="template_enable_all_hooks">啟用所有隱藏方式</string>
     <string name="template_apply_hooks">選擇隱藏方式</string>
-    <string name="template_config">模板配置</string>
+    <string name="template_config">模板設定</string>
     <string name="template_choose">選擇模板</string>
     <string name="template_exclude_system_apps">排除系統應用</string>
     <string name="template_exclude_system_apps_summary">如果未啟用此選項，請確保在白名單中選中 Webview 以避免內建瀏覽器崩潰</string>
