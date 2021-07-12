@@ -33,7 +33,9 @@
 
 # Magic
 -keep class com.tsng.hidemyapplist.Magic { *; }
--keep class com.tsng.hidemyapplist.app.MyApplication
+-keep class com.tsng.hidemyapplist.app.MyApplication {
+    static final com.tsng.hidemyapplist.app.MyApplication$Companion Companion;
+}
 -keep class com.tsng.hidemyapplist.app.MyApplication$Companion { *; }
 
 # Views
