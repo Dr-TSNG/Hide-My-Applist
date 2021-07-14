@@ -31,6 +31,8 @@
 -keep class android.support.** { *; }
 #--------------------------------------------------------------------------
 
+-keep class com.tsng.hidemyapplist.app.ui.**
+
 # Magic
 -keep class com.tsng.hidemyapplist.Magic { *; }
 -keep class com.tsng.hidemyapplist.app.MyApplication {
