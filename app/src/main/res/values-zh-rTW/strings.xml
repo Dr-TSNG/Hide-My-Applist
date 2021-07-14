@@ -13,13 +13,18 @@
     <string name="preference">偏好</string>
     <string name="edit_list">編輯列表</string>
     <string name="show_crash_log">檢視崩潰日誌</string>
-    <string name="config_damaged">設定檔案損壞，請清除應用資料</string>
+    <string name="config_damaged">模板設定檔損壞，請清除應用資料</string>
     <string name="system_app">系統應用</string>
+    <string name="copied">已複製</string>
 
-    <string name="do_not_dual">不要雙開模組 APP，這會導致設定覆蓋！</string>
+    <string name="do_not_dual">不要雙開模組 APP，這會導致模板設定覆蓋！</string>
 
     <string name="new_update">新版本可用：</string>
     <string name="update_logs">更新日誌</string>
+    <string name="migrate_config_title">從舊版本遷移模板設定？</string>
+    <string name="migrate_config_message">這會覆蓋現有的模板設定！（如果你是正常升級版本，請選擇是）</string>
+    <string name="migrate_config_successful">模板設定已升級</string>
+    <string name="migrate_config_failed">模板設定升級失敗</string>
 
     <string name="riru_installed">Riru 模組已安裝</string>
     <string name="riru_not_installed">Riru 模組未安裝</string>

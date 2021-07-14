@@ -27,6 +27,7 @@
     <string name="template_extra_apps_visible_count">額外可見 # 個應用</string>
     <string name="template_extra_apps_invisible_count">額外隱藏 # 個應用</string>
     <string name="template_extra_maps_rules_count">額外啟用 # 條 maps 規則</string>
+    <string name="template_copy_app_config">將此設定複製給其他應用</string>
 
     <string name="template_add_maps_rules">新增自定義 maps 攔截規則</string>
     <string name="template_add_new_maps_rule_hint">填入要過濾的條目</string>
