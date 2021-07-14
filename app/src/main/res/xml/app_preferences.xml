@@ -5,6 +5,11 @@
         <SwitchPreferenceCompat
             android:key="isEnabled"
             android:title="@string/template_enable_hide" />
+        <Preference
+            android:dependency="isEnabled"
+            android:icon="@drawable/ic_copy"
+            android:key="copyConfig"
+            android:title="@string/template_copy_app_config" />
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -19,14 +19,18 @@ import kotlin.concurrent.thread
 class AppSelectFragment : Fragment() {
     companion object {
         @JvmStatic
-        fun newInstance(selectedApps: Array<String>) =
+        fun newInstance(selectedApps: Array<String>, requestKey: String? = null) =
             AppSelectFragment().apply {
-                arguments = bundleOf("selectedApps" to selectedApps)
+                arguments = bundleOf(
+                    "selectedApps" to selectedApps,
+                    "requestKey" to requestKey
+                )
             }
     }
 
     private lateinit var binding: FragmentAppSelectBinding
     private lateinit var selectedApps: MutableSet<String>
+    private lateinit var requestKey: String
     private var adapter: AppSelectAdapter? = null
     private var isShowSystemApp = false
 
@@ -34,6 +38,7 @@ class AppSelectFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         selectedApps = arguments?.getStringArray("selectedApps")?.toHashSet() ?: mutableSetOf()
+        requestKey = arguments?.getString("requestKey", null) ?: "appSelectResult"
     }
 
     override fun onCreateView(
@@ -48,7 +53,7 @@ class AppSelectFragment : Fragment() {
 
     override fun onDestroyView() {
         setFragmentResult(
-            "appSelectResult",
+            requestKey,
             bundleOf("selectedApps" to selectedApps.toTypedArray())
         )
         super.onDestroyView()

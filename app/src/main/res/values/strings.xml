@@ -8,6 +8,7 @@
     <string name="add">Add</string>
     <string name="delete">Delete</string>
     <string name="save">Save</string>
+    <string name="copied">Copied</string>
 
     <string name="application">Application</string>
     <string name="preference">Preference</string>

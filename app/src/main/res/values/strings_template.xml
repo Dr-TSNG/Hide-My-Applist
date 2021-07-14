@@ -11,7 +11,7 @@
     <string name="template_name">Template name</string>
     <string name="template_name_cannot_be_empty">Template name cannot be empty</string>
     <string name="template_name_already_exist">Template name already exist</string>
-    <string name="template_used_count">Effective for # apps</string>
+    <string name="template_used_count">Applied to # apps</string>
     <string name="template_apps_visible_count"># apps visible</string>
     <string name="template_apps_invisible_count"># apps invisible</string>
     <string name="template_maps_rules_count"># maps rules</string>
@@ -27,6 +27,7 @@
     <string name="template_extra_apps_visible_count"># additional apps visible</string>
     <string name="template_extra_apps_invisible_count"># additional apps invisible</string>
     <string name="template_extra_maps_rules_count"># additional maps rules</string>
+    <string name="template_copy_app_config">Copy this config to other apps</string>
 
     <string name="template_add_maps_rules">Add custom maps interception rules</string>
     <string name="template_add_new_maps_rule_hint">Fill in an item to be filtered</string>

@@ -11,7 +11,7 @@
     <string name="template_name">模板名稱</string>
     <string name="template_name_cannot_be_empty">模板名稱不能為空</string>
     <string name="template_name_already_exist">模板名稱已存在</string>
-    <string name="template_used_count">對 # 個應用生效</string>
+    <string name="template_used_count">被 # 個應用使用</string>
     <string name="template_apps_visible_count">可見 # 個應用</string>
     <string name="template_apps_invisible_count">隱藏 # 個應用</string>
     <string name="template_maps_rules_count">啟用 # 條 maps 規則</string>

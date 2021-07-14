@@ -133,6 +133,11 @@ class TemplateSettingsFragment : Fragment() {
     }
 
     private fun initAppListView() {
+        var cnt = 0
+        globalConfig.scope.forEach { (_, appConfig) ->
+            if (appConfig.applyTemplates.contains(oldTemplateName)) cnt++
+        }
+        binding.effectiveApps.setListCount(cnt)
         with(binding.appList) {
             setListCount(template.appList.size)
             setOnButtonClickListener {

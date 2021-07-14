@@ -21,15 +21,13 @@
             android:inputType="text" />
     </LinearLayout>
 
-    <!--
-    <com.tsng.hidemyapplist.app.views.SelectListView
+    <com.tsng.hidemyapplist.app.ui.views.SelectListView
         android:id="@+id/effective_apps"
         style="@style/Default"
         android:layout_marginVertical="10dp"
-        app:listDrawable="@drawable/ic_apps"
+        app:listDrawable="@drawable/ic_android"
         app:listText="@string/template_used_count"
         app:showButton="false" />
-    -->
 
     <com.tsng.hidemyapplist.app.ui.views.SelectListView
         android:id="@+id/app_list"

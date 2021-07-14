@@ -11,7 +11,7 @@
     <string name="template_name">模板名称</string>
     <string name="template_name_cannot_be_empty">模板名称不能为空</string>
     <string name="template_name_already_exist">模板名称已存在</string>
-    <string name="template_used_count">对 # 个应用生效</string>
+    <string name="template_used_count">被 # 个应用使用</string>
     <string name="template_apps_visible_count">可见 # 个应用</string>
     <string name="template_apps_invisible_count">隐藏 # 个应用</string>
     <string name="template_maps_rules_count">启用 # 条 maps 规则</string>
@@ -27,6 +27,7 @@
     <string name="template_extra_apps_visible_count">额外可见 # 个应用</string>
     <string name="template_extra_apps_invisible_count">额外隐藏 # 个应用</string>
     <string name="template_extra_maps_rules_count">额外启用 # 条 maps 规则</string>
+    <string name="template_copy_app_config">将此配置复制给其他应用</string>
 
     <string name="template_add_maps_rules">添加自定义 maps 拦截规则</string>
     <string name="template_add_new_maps_rule_hint">填入要过滤的条目</string>

@@ -18,6 +18,7 @@ import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
 import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
 import com.tsng.hidemyapplist.app.deepCopy
 import com.tsng.hidemyapplist.app.helpers.AppConfigDataStorage
+import com.tsng.hidemyapplist.app.makeToast
 import com.tsng.hidemyapplist.app.startFragment
 import com.tsng.hidemyapplist.app.ui.views.MapsRulesView
 
@@ -41,12 +42,8 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.toolbar_save -> {
-                JsonConfigManager.edit {
-                    if ((preferenceManager.preferenceDataStore as AppConfigDataStorage).isEnabled)
-                        scope[packageName] = appConfig
-                    else scope.remove(packageName)
-                    activity?.onBackPressed()
-                }
+                save()
+                activity?.onBackPressed()
             }
             else -> return false
         }
@@ -70,6 +67,22 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
             it.icon = appInfo.loadIcon(appContext.packageManager)
             it.title = appInfo.loadLabel(appContext.packageManager)
             it.summary = packageName
+        }
+
+        preferenceScreen.findPreference<Preference>("copyConfig")
+            ?.setOnPreferenceClickListener {
+                startFragment(AppSelectFragment.newInstance(arrayOf(packageName), "copyConfig"))
+                true
+            }
+
+        setFragmentResultListener("copyConfig") { _, bundle ->
+            bundle.getStringArray("selectedApps")?.let { arr ->
+                save()
+                JsonConfigManager.edit {
+                    arr.forEach { scope[it] = appConfig }
+                }
+                makeToast(R.string.copied)
+            }
         }
 
         preferenceScreen.findPreference<SwitchPreferenceCompat>("useWhitelist")
@@ -110,9 +123,22 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
 
         preferenceScreen.findPreference<Preference>("extraAppList")
             ?.setOnPreferenceClickListener {
-                startFragment(AppSelectFragment.newInstance(appConfig.extraAppList.toTypedArray()))
+                startFragment(
+                    AppSelectFragment.newInstance(
+                        appConfig.extraAppList.toTypedArray(),
+                        "extraAppList"
+                    )
+                )
                 true
             }
+
+        setFragmentResultListener("extraAppList") { _, bundle ->
+            bundle.getStringArray("selectedApps")?.let {
+                appConfig.extraAppList.clear()
+                appConfig.extraAppList.addAll(it)
+                updateView()
+            }
+        }
 
         preferenceScreen.findPreference<Preference>("extraMapsRules")
             ?.setOnPreferenceClickListener {
@@ -122,14 +148,6 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
                 }
                 true
             }
-
-        setFragmentResultListener("appSelectResult") { _, bundle ->
-            bundle.getStringArray("selectedApps")?.let {
-                appConfig.extraAppList.clear()
-                appConfig.extraAppList.addAll(it)
-                updateView()
-            }
-        }
 
         updateView()
     }
@@ -152,5 +170,13 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
                 Regex("#"),
                 appConfig.extraMapsRules.size.toString()
             )
+    }
+
+    private fun save() {
+        JsonConfigManager.edit {
+            if ((preferenceManager.preferenceDataStore as AppConfigDataStorage).isEnabled)
+                scope[packageName] = appConfig
+            else scope.remove(packageName)
+        }
     }
 }
