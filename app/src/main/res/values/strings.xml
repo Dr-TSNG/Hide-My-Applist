@@ -20,6 +20,10 @@
 
     <string name="new_update">New update:</string>
     <string name="update_logs">New features</string>
+    <string name="migrate_config_title">Migrate config from old version?</string>
+    <string name="migrate_config_message">This will overwrite the current config! (If you updated app normally, select Yes)</string>
+    <string name="migrate_config_successful">Successfully update config</string>
+    <string name="migrate_config_failed">Failed to update config</string>
 
     <string name="riru_installed">Riru extension installed</string>
     <string name="riru_not_installed">Riru extension not installed</string>

@@ -30,6 +30,11 @@ class JsonConfig {
         return Gson().toJson(this)
     }
 
+    fun clear() {
+        templates.clear()
+        scope.clear()
+    }
+
     companion object {
         @JvmStatic
         fun fromJson(str: String): JsonConfig {

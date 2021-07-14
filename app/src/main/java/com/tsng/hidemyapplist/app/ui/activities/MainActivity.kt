@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsng.hidemyapplist.BuildConfig
+import com.tsng.hidemyapplist.MigrateOldConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
 import com.tsng.hidemyapplist.app.MyApplication
@@ -54,11 +55,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.moduleStatusText.text = getString(R.string.xposed_not_activated)
         }
         if (serviceVersion != 0) {
-            if (serviceVersion != BuildConfig.SERVICE_VERSION) binding.serviceStatusText.text = getString(
-                R.string.xposed_service_old
-            )
-            else binding.serviceStatusText.text = getString(R.string.xposed_service_on) + " [$serviceVersion]"
+            binding.serviceStatusText.text =
+                if (serviceVersion != BuildConfig.SERVICE_VERSION)
+                    getString(R.string.xposed_service_old)
+                else
+                    getString(R.string.xposed_service_on) + " [$serviceVersion]"
             val text = getString(R.string.xposed_serve_times).split("#")
+
             binding.serveTimes.visibility = View.VISIBLE
             binding.serveTimes.text = text[0] + ServiceHelper.getServeTimes() + text[2]
             binding.riruStatusText.visibility = View.VISIBLE
@@ -83,7 +86,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.menu_detection_test -> startActivity(Intent(this, DetectionActivity::class.java))
+            R.id.menu_detection_test ->
+                startActivity(Intent(this, DetectionActivity::class.java))
             R.id.menu_template_manage ->
                 if (globalConfig.hookSelf) makeToast(R.string.xposed_disable_hook_self_first)
                 else startActivity(Intent(this, ModuleActivity::class.java)
@@ -102,7 +106,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun makeUpdateAlert() {
-        if (getSharedPreferences("settings", MODE_PRIVATE).getBoolean("disableUpdate", false)) return;
+        if (getSharedPreferences("settings", MODE_PRIVATE).getBoolean("disableUpdate", false)) return
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        val oldVersion = pref.getInt("lastVersion", 0)
+        if (oldVersion < BuildConfig.VERSION_CODE)
+            MigrateOldConfig.doMigration(this, oldVersion)
         thread {
             try {
                 val client = OkHttpClient()
@@ -124,24 +132,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             .url(updateLogURL)
                             .build()).execute().body?.string()
                     val githubDownloadUri = Uri.parse(data["DownloadURL"] as String)
-                    val pref = PreferenceManager.getDefaultSharedPreferences(this)
                     if (data.getInt("VersionCode") > BuildConfig.VERSION_CODE) runOnUiThread {
                         MaterialAlertDialogBuilder(this)
-                                .setTitle(getString(R.string.new_update) + data["VersionName"])
-                                .setMessage(Html.fromHtml(updateLog, Html.FROM_HTML_MODE_COMPACT))
-                                .setPositiveButton("GitHub") { _, _ ->
-                                    startActivity(Intent(Intent.ACTION_VIEW, githubDownloadUri))
-                                }
-                                .setNegativeButton("TG Channel") { _, _ ->
-                                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/HideMyApplist")))
-                                }
-                                .setNeutralButton(android.R.string.cancel, null)
-                                .setCancelable(false).show()
-                    } else if (pref.getInt("lastVersion", 0) < BuildConfig.VERSION_CODE) runOnUiThread {
-                        MaterialAlertDialogBuilder(this).setTitle(R.string.update_logs)
-                                .setMessage(Html.fromHtml(updateLog, Html.FROM_HTML_MODE_COMPACT))
-                                .setPositiveButton(android.R.string.ok, null)
-                                .setCancelable(false).show()
+                            .setTitle(getString(R.string.new_update) + data["VersionName"])
+                            .setMessage(Html.fromHtml(updateLog, Html.FROM_HTML_MODE_COMPACT))
+                            .setPositiveButton("GitHub") { _, _ ->
+                                startActivity(Intent(Intent.ACTION_VIEW, githubDownloadUri))
+                            }
+                            .setNegativeButton("TG Channel") { _, _ ->
+                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/HideMyApplist")))
+                            }
+                            .setNeutralButton(android.R.string.cancel, null)
+                            .setCancelable(false).show()
+                    } else if (oldVersion < BuildConfig.VERSION_CODE) runOnUiThread {
+                        MaterialAlertDialogBuilder(this)
+                            .setTitle(R.string.update_logs)
+                            .setMessage(Html.fromHtml(updateLog, Html.FROM_HTML_MODE_COMPACT))
+                            .setPositiveButton(android.R.string.ok, null)
+                            .setCancelable(false)
+                            .show()
                     }
                     pref.edit().putInt("lastVersion", BuildConfig.VERSION_CODE).apply()
                 }

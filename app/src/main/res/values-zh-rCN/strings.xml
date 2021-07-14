@@ -20,6 +20,10 @@
 
     <string name="new_update">新版本可用：</string>
     <string name="update_logs">更新日志</string>
+    <string name="migrate_config_title">从旧版本迁移配置？</string>
+    <string name="migrate_config_message">这会覆盖现有的配置！（如果你是正常升级版本，请选择是）</string>
+    <string name="migrate_config_successful">配置已升级</string>
+    <string name="migrate_config_failed">配置升级失败</string>
 
     <string name="riru_installed">Riru 插件已安装</string>
     <string name="riru_not_installed">Riru 插件未安装</string>
