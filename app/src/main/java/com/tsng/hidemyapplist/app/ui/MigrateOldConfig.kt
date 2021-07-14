@@ -1,8 +1,10 @@
-package com.tsng.hidemyapplist
+package com.tsng.hidemyapplist.app.ui
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.tsng.hidemyapplist.JsonConfig
+import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.JsonConfigManager
 import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
 import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext

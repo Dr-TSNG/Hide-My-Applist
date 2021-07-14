@@ -31,8 +31,6 @@
 -keep class android.support.** { *; }
 #--------------------------------------------------------------------------
 
--keep class com.tsng.hidemyapplist.app.ui.**
-
 # Magic
 -keep class com.tsng.hidemyapplist.Magic { *; }
 -keep class com.tsng.hidemyapplist.app.MyApplication {
@@ -43,6 +41,7 @@
 # Views
 -keep class com.tsng.hidemyapplist.app.ui.activities.ModuleActivity$Fragment { *; }
 -keep class com.tsng.hidemyapplist.app.ui.views.MapsRulesView{ *; }
+-keep class com.tsng.hidemyapplist.app.ui.MigrateOldConfig { *; }
 
 # Config
 -keep class com.tsng.hidemyapplist.JsonConfig { *; }
