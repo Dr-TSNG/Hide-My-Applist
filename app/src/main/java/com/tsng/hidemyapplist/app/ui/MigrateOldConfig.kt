@@ -28,8 +28,8 @@ object MigrateOldConfig {
                             ?.all as Map<String, *>? ?: continue
                     val template = JsonConfig.Template(
                         isWhitelist = oldTemplate["WhiteList"] as Boolean,
-                        appList = oldTemplate["HideApps"] as MutableSet<String>,
-                        mapsRules = oldTemplate["MapsRules"] as MutableSet<String>
+                        appList = oldTemplate["HideApps"] as MutableSet<String>? ?: mutableSetOf(),
+                        mapsRules = oldTemplate["MapsRules"] as MutableSet<String>? ?: mutableSetOf()
                     )
                     templates[templateName] = template
 
@@ -37,9 +37,9 @@ object MigrateOldConfig {
                         if (applyTemplate == templateName) {
                             scope[packageName] = JsonConfig.AppConfig(
                                 useWhitelist = template.isWhitelist,
-                                enableAllHooks = oldTemplate["EnableAllHooks"] as Boolean,
-                                excludeSystemApps = oldTemplate["ExcludeSystemApps"] as Boolean,
-                                applyHooks = oldTemplate["ApplyHooks"] as MutableSet<String>,
+                                enableAllHooks = oldTemplate["EnableAllHooks"] as Boolean? ?: false,
+                                excludeSystemApps = oldTemplate["ExcludeSystemApps"] as Boolean? ?: false,
+                                applyHooks = oldTemplate["ApplyHooks"] as MutableSet<String>? ?: mutableSetOf(),
                                 applyTemplates = mutableSetOf(templateName)
                             )
                         }
