@@ -56,6 +56,7 @@ object MigrateOldConfig {
 
     @JvmStatic
     fun doMigration(context: Context, version: Int) {
+        if (version > 49) return
         MaterialAlertDialogBuilder(context)
             .setCancelable(false)
             .setTitle(R.string.migrate_config_title)
@@ -75,6 +76,14 @@ object MigrateOldConfig {
                         .setTitle(R.string.migrate_config_failed)
                         .setMessage(e.message)
                         .setPositiveButton(android.R.string.ok, null)
+                        .setNegativeButton(R.string.show_crash_log) { _, _ ->
+                            MaterialAlertDialogBuilder(context)
+                                .setCancelable(false)
+                                .setTitle(R.string.migrate_config_failed)
+                                .setMessage(e.stackTraceToString())
+                                .setPositiveButton(android.R.string.ok, null)
+                                .show()
+                        }
                         .show()
                 }
             }

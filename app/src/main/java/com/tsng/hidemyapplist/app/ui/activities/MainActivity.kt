@@ -109,8 +109,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (getSharedPreferences("settings", MODE_PRIVATE).getBoolean("disableUpdate", false)) return
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         val oldVersion = pref.getInt("lastVersion", 0)
-        if (oldVersion < BuildConfig.VERSION_CODE)
-            MigrateOldConfig.doMigration(this, oldVersion)
+        if (oldVersion != 0) MigrateOldConfig.doMigration(this, oldVersion)
         thread {
             try {
                 val client = OkHttpClient()

@@ -66,7 +66,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
                             .setMessage(e.stackTraceToString())
                             .setPositiveButton(android.R.string.ok, null)
                             .show()
-                    }.show()
+                    }
+                    .show()
             }
         }
 
