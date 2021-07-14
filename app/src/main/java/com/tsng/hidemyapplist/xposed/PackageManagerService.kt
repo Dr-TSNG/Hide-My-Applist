@@ -287,9 +287,15 @@ object PackageManagerService {
         /* If riru extension not installed, make tmp by the service */
         with(File("$dataDir/tmp/riru_v")) {
             if (exists()) {
-                val lines = readLines()
-                riruModuleVersion = lines[0].toInt()
-                val minApkVersion = lines[1].toInt()
+                var minApkVersion: Int
+                try {
+                    val lines = readLines()
+                    riruModuleVersion = lines[0].toInt()
+                    minApkVersion = lines[1].toInt()
+                } catch (e: Exception) {
+                    riruModuleVersion = 0
+                    minApkVersion = 0
+                }
                 if (riruModuleVersion < BuildConfig.MIN_RIRU_VERSION) {
                     riruModuleVersion = -1
                     File("$dataDir/tmp/SIGERR").createNewFile()

@@ -27,7 +27,7 @@ object MigrateOldConfig {
                         appContext.getSharedPreferences("tpl_$templateName", MODE_PRIVATE)
                             ?.all as Map<String, *>? ?: continue
                     val template = JsonConfig.Template(
-                        isWhitelist = oldTemplate["WhiteList"] as Boolean,
+                        isWhitelist = oldTemplate["WhiteList"] as Boolean? ?: false,
                         appList = oldTemplate["HideApps"] as MutableSet<String>? ?: mutableSetOf(),
                         mapsRules = oldTemplate["MapsRules"] as MutableSet<String>? ?: mutableSetOf()
                     )
