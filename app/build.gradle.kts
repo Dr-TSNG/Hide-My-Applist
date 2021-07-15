@@ -47,8 +47,8 @@ android {
             cppFlags += "-std=c++20"
         }
 
-        versionCode = 52
-        versionName = "2.0.3"
+        versionCode = 53
+        versionName = "2.0.4"
         buildConfigField("int", "SERVICE_VERSION", "52")
         buildConfigField("int", "MIN_RIRU_VERSION", "23")
         buildConfigField("int", "MIN_BACKUP_VERSION", "49")

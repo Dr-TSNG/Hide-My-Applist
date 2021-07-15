@@ -82,7 +82,7 @@ class TemplateSettingsFragment : Fragment() {
                     .setPositiveButton(android.R.string.ok) { _, _ ->
                         JsonConfigManager.edit {
                             for ((_, appConfig) in scope)
-                                appConfig.applyHooks.remove(oldTemplateName)
+                                appConfig.applyTemplates.remove(oldTemplateName)
                             templates.remove(oldTemplateName)
                         }
                         activity.onBackPressed()
