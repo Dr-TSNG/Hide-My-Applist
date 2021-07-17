@@ -250,6 +250,11 @@ object PackageManagerService {
                     param.result = "OK"
                 }
 
+                arg.startsWith("addLog") -> {
+                    addLog(arg.substring(7))
+                    param.result = "OK"
+                }
+
                 arg.startsWith("submitConfig") -> {
                     updateConfig(arg.split("#")[1])
                     param.result = "OK"
@@ -298,12 +303,12 @@ object PackageManagerService {
                 }
                 if (riruModuleVersion < BuildConfig.MIN_RIRU_VERSION) {
                     riruModuleVersion = -1
-                    File("$dataDir/tmp/SIGERR").createNewFile()
+                    File("$dataDir/tmp/stop_riru").createNewFile()
                     Log.e("Riru extension version too old to work with the new system service")
                 }
                 if (BuildConfig.VERSION_CODE < minApkVersion) {
                     riruModuleVersion = -2
-                    File("$dataDir/tmp/SIGERR").createNewFile()
+                    File("$dataDir/tmp/stop_riru").createNewFile()
                     Log.e("System service version too old to work with the new riru extension")
                 }
             } else {

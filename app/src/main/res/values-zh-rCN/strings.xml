@@ -28,8 +28,8 @@
 
     <string name="riru_installed">Riru 插件已安装</string>
     <string name="riru_not_installed">Riru 插件未安装</string>
-    <string name="riru_version_too_old">❌ Riru 插件版本过旧</string>
-    <string name="riru_apk_version_too_old">❌ Riru 系统服务版本过旧</string>
+    <string name="riru_version_too_old">❌ [Riru] 插件版本过旧</string>
+    <string name="riru_apk_version_too_old">❌ [Riru] 系统服务版本过旧</string>
 
     <string name="title_detection_test">检测测试</string>
     <string name="title_template_manage">模板管理</string>
