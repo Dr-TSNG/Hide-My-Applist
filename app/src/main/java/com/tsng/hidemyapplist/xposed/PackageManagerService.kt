@@ -89,8 +89,7 @@ object PackageManagerService {
         val random = Random()
         val buffer = StringBuilder(targetStringLength)
         for (i in 0 until targetStringLength) {
-            val randomLimitedInt =
-                leftLimit + (random.nextFloat() * (rightLimit - leftLimit + 1)).toInt()
+            val randomLimitedInt = leftLimit + (random.nextFloat() * (rightLimit - leftLimit + 1)).toInt()
             buffer.append(randomLimitedInt.toChar())
         }
         token = buffer.toString()
@@ -361,8 +360,7 @@ object PackageManagerService {
                 val hmaPackage = mPackages[hmaApp]
                     ?: throw IllegalStateException("HMA app not found !!!")
                 val signingDetails = hmaPackage.invokeMethod("getSigningDetails")!!
-                val cert =
-                    signingDetails.getObjectAs<Array<Signature>>("signatures")[0].toByteArray()
+                val cert = signingDetails.getObjectAs<Array<Signature>>("signatures")[0].toByteArray()
                 if (!cert.contentEquals(magicNumbers))
                     throw IllegalStateException("Signature abnormal !!!")
             } catch (e: Exception) {

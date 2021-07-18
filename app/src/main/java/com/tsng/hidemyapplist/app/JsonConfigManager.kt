@@ -27,6 +27,7 @@ object JsonConfigManager {
         configFile.writeText(globalConfig.toString())
     }
 
+    @Synchronized
     fun edit(block: JsonConfig.() -> Unit) {
         globalConfig.block()
         save()
