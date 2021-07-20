@@ -43,6 +43,7 @@ object PackageManagerService {
     private const val dataDir = "/data/misc/hide_my_applist"
     private val logFile = File("$dataDir/tmp/runtime.log")
     private val customPms = arrayOf(
+        "com.android.server.pm.OplusPackageManagerService",
         "com.android.server.pm.OppoPackageManagerService"
     )
 
