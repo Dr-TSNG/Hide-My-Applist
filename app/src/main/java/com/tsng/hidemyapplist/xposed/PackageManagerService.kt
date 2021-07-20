@@ -42,6 +42,9 @@ object PackageManagerService {
     private const val hmaApp = "com.tsng.hidemyapplist"
     private const val dataDir = "/data/misc/hide_my_applist"
     private val logFile = File("$dataDir/tmp/runtime.log")
+    private val customPms = arrayOf(
+        "com.android.server.pm.OppoPackageManagerService"
+    )
 
     private val allHooks = mutableSetOf<XC_MethodHook.Unhook>()
     private val systemApps = mutableSetOf<String>()
@@ -372,14 +375,13 @@ object PackageManagerService {
         })
 
         /* ---Deal with 💩 ROMs--- */
-        val extPms = try {
-            when (android.os.Build.BRAND) {
-                "Oppo",
-                "realme" -> loadClass("com.android.server.pm.OppoPackageManagerService")
-                else -> null
+        var extPms: Class<*>? = null
+        for (clazz in customPms) {
+            try {
+                extPms = loadClass(clazz)
+                break
+            } catch (e: ClassNotFoundException) {
             }
-        } catch (e: IllegalArgumentException) {
-            null
         }
         val pmMethods = mutableSetOf<Method>()
         val methodNames = mutableSetOf<String>()
