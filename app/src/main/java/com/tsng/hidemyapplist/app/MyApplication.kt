@@ -23,7 +23,6 @@ class MyApplication : Application() {
     private external fun nativeInit()
 
     private fun removeUninstalledApps() {
-        JsonConfigManager.test()
         thread {
             val list = mutableSetOf<String>()
             AppInfoHelper.getAppInfoList().forEach { list.add(it.packageName) }
