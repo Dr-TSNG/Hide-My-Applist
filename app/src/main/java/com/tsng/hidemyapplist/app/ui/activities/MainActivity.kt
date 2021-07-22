@@ -14,6 +14,7 @@ import com.tsng.hidemyapplist.app.ui.MigrateOldConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
 import com.tsng.hidemyapplist.app.MyApplication
+import com.tsng.hidemyapplist.app.SubmitConfigService
 import com.tsng.hidemyapplist.app.helpers.ServiceHelper
 import com.tsng.hidemyapplist.app.makeToast
 import com.tsng.hidemyapplist.databinding.ActivityMainBinding
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("SdCardPath")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        startService(Intent(this, SubmitConfigService::class.java))
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.toolbar))
