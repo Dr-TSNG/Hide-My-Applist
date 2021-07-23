@@ -359,19 +359,6 @@ object PackageManagerService {
             for (pkg in systemApps)
                 File("$dataDir/tmp/system_apps.list").appendText("$pkg\n")
 
-            /* Signature verification */
-            try {
-                val hmaPackage = mPackages[hmaApp]
-                    ?: throw IllegalStateException("HMA app not found !!!")
-                val signingDetails = hmaPackage.invokeMethod("getSigningDetails")!!
-                val cert = signingDetails.getObjectAs<Array<Signature>>("signatures")[0].toByteArray()
-                if (!cert.contentEquals(magicNumbers))
-                    throw IllegalStateException("Signature abnormal !!!")
-            } catch (e: Exception) {
-                /* Bootloop waiting for MT suckers */
-                exitProcess(0)
-            }
-
             Log.i("System hook installed (Version ${BuildConfig.SERVICE_VERSION})")
         })
 
