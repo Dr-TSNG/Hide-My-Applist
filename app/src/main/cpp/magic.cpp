@@ -34,6 +34,8 @@ jclass Companion;
 jobject application;
 jobject companion;
 
+static bool verified;
+
 inline uint32_t readLe32(const uint8_t *buf, int index) {
     return *((uint32_t *) (buf + index));
 }
@@ -241,8 +243,24 @@ Java_com_tsng_hidemyapplist_app_MyApplication_nativeInit(JNIEnv *env, jobject th
     if (getBuildTimestamp(env, Application) < 0) return;
     if (!verifySignature(env)) return;
 
+    verified = true;
     jobject appContext = env->CallObjectMethod(thiz, env->GetMethodID(
             Application, "getApplicationContext", "()Landroid/content/Context;"));
     env->CallVoidMethod(companion, env->GetMethodID(
             Companion, "setAppContext", "(Landroid/content/Context;)V"), appContext);
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_tsng_hidemyapplist_app_ui_activities_MainActivity_doLast(JNIEnv *env, jobject thiz) {
+    if (!verified) return;
+
+    jclass MainActivity = env->FindClass("com/tsng/hidemyapplist/app/ui/activities/MainActivity");
+    jclass SubmitConfigService = env->FindClass("com/tsng/hidemyapplist/app/SubmitConfigService");
+    jclass Intent = env->FindClass("android/content/Intent");
+
+    jmethodID initIntent = env->GetMethodID(Intent, "<init>", "(Landroid/content/Context;Ljava/lang/Class;)V");
+    jmethodID startService = env->GetMethodID(MainActivity, "startService", "(Landroid/content/Intent;)Landroid/content/ComponentName;");
+
+    jobject intent = env->NewObject(Intent, initIntent, thiz, SubmitConfigService);
+    env->CallObjectMethod(thiz, startService, intent);
 }
