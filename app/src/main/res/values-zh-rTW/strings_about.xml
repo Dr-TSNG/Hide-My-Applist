@@ -6,17 +6,17 @@
     </string>
     <string name="about_how_to_use_title">如何使用該模組</string>
     <string name="about_how_to_use_description_1">
-        #我是否需要安裝 riru 插件#\n&#12288;&#12288;直接運行一次檢測測試，如果 File detections 一欄全為 N，則您的 ROM 已對此類檢測做了攔截，無需再安裝 riru 插件。否則，您需要 riru 插件才能攔截文件檢測。\n\n註意：riru 插件不穩定，可能且不限於造成卡開機、閃退等問題，請自行判斷是否需要。
+        #我是否需要安裝 magisk 挿件#\n如果你需要文件攔截、maps 攔截能力，你需要安裝 magisk 挿件。\n\n注意：magisk 挿件是一個 Riru 模塊，你需要安裝 Riru v25/26 才能工作。
     </string>
     <string name="about_how_to_use_description_2">
-        #如何啟用隱藏#\n&#12288;&#12288;首先在模板管理裏創建一個模板，然後在選擇生效應用程式裏對目標應用程式啟用模板。Xposed 模組作用域需要且只需要勾選「系統框架」。
+        #如何啟用隱藏#\n在模板管理裏可以創建攔截模板。在選擇生效應用程式裏對目標應用程式啟用模板（或單獨配寘）。Xposed 模組作用域需要且只需要勾選「系統框架」。
     </string>
     <string name="about_how_to_use_description_3">
-        #模板修改是實時生效的嗎#\n&#12288;&#12288;除了文件檢測攔截外，是的。更新文件攔截策略需要強製停止再重啟目標應用程式。
+        #模板修改是實時生效的嗎#\n除了文件檢測攔截和 maps 攔截外，是的。更新文件攔截策略需要強製停止再重啟目標應用程式。
     </string>
     <string name="about_hook_differences_title">幾種 Hook 方式區別</string>
     <string name="about_hook_differences_description">
-        &#12288;&#12288;正常應用程式讀取應用程式列表會使用 API requests 中的部分方法，「不安分」的應用程式會使用其他幾種方式（相當於漏洞）進行檢測。\n\n一些例子\nAPI requests - 農行\nIntent queries - B站\nFile detections - 步道樂跑
+        正常應用程式讀取應用程式列表會使用 API requests 中的部分方法，「不安分」的應用程式會使用其他幾種方式（相當於漏洞）進行檢測。\n\nmaps 掃描是針對啟用的 Xposed 模塊。如果你某個模塊作用域勾選了某個應用程式，那麼該程式就能通過掃描 /proc/self/maps 發現它。黑名單模式下會自動攔截在名單內的maps 資訊，白名單模式需要手動配寘。\n\n一些例子\nAPI requests - 農行\nIntent queries - B站\nFile detections - 步道樂跑\nMaps scan - 支付寶檢測螞蟻森林模塊
     </string>
     <string name="about_developer">開發者</string>
     <string name="about_support">支援和回饋</string>

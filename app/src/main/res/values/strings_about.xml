@@ -6,17 +6,17 @@
     </string>
     <string name="about_how_to_use_title">How to use this module</string>
     <string name="about_how_to_use_description_1">
-        #Do I need riru extension#\nRun a detection test directly. If the file detections column is all N, then your ROM has already intercepted this kind of detections, and there is no need to install the riru extension. Otherwise, you need the riru extension to intercept file detections.\n\nNote: the riru extension is unstable, which may or may not be limited to causing problems such as card startup and flashbacks. Please judge whether it is necessary.
+        #Do I need magisk extension#\nIf you need file detection / maps scan interceptions, you need install the magisk extension.\n\nAttention, the magisk extension is a Riru module, which requires Riru v25/26.
     </string>
     <string name="about_how_to_use_description_2">
-        #How to enable hide#\nFirst create a template in \"Manage Templates\", then apply the template in \"Select Effective Apps\". You should and ONLY should check \"System Framework\" in Xposed module scope/whitelist.
+        #How to enable hide#\nYou can create templates in \"Manage Templates\". Then apply the templates in \"Select Effective Apps\". (You can also select extra apps for targets.) You should and ONLY should check \"System Framework\" in Xposed module scope / whitelist.
     </string>
     <string name="about_how_to_use_description_3">
-        #Is template modification effective in real time#\nExcept for file interceptions, yes. To update file interception policy, you need to force stop and restart target apps.
+        #Is template modification effective in real time#\nExcept for file interception and maps scan, yes. To update file interception policy, you need to force stop and restart target apps.
     </string>
     <string name="about_hook_differences_title">Differences among hook methods</string>
     <string name="about_hook_differences_description">
-        Normal apps use some of API requests to acquire applist, but bad apps will use other methods (loopholes) to detect it.
+        Normal apps use some of API requests to acquire applist, but bad apps will use other methods (loopholes) to detect it.\n\nFor maps scan, if you enable an Xposed module for an app, then the app can search /proc/self/maps to find the module. In the blacklist mode, the maps information of the apps in the list will be automatically hidden, but in the whitelist mode you need configure manually.
     </string>
     <string name="about_developer">Developer</string>
     <string name="about_support">Support and feedback</string>

@@ -26,10 +26,10 @@
     <string name="migrate_config_successful">模板設定已升級</string>
     <string name="migrate_config_failed">模板設定升級失敗</string>
 
-    <string name="riru_installed">Riru 模組已安裝</string>
-    <string name="riru_not_installed">Riru 模組未安裝</string>
-    <string name="riru_version_too_old">❌ [Riru] 模組版本過舊</string>
-    <string name="riru_apk_version_too_old">❌ [Riru] 系統服務版本過舊</string>
+    <string name="riru_installed">Magisk 模組已安裝</string>
+    <string name="riru_not_installed">Magisk 模組未安裝</string>
+    <string name="riru_version_too_old">❌ [Magisk] 模組版本過舊</string>
+    <string name="riru_apk_version_too_old">❌ [Magisk] 系統服務版本過舊</string>
 
     <string name="title_detection_test">檢測測試</string>
     <string name="title_template_manage">模板管理</string>

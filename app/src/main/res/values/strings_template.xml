@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="template_usage_hint">Establish templates for \"restless\" apps, controlling applist they can obtain.\n\nBlacklist (recommended): the apps selected in the template will be invisible to the apps applying the template\nWhitelist: the apps not selected in the template will be invisible to the apps applying the template.</string>
+    <string name="template_usage_hint">Establish templates for \"restless\" apps, controlling applist they can obtain.\n\nBlacklist (recommended): the apps selected in the template will be invisible to the apps applying the template\nWhitelist: the apps not selected in the template will be invisible to the apps applying the template.\n\nIn the blacklist mode, the maps information of the apps in the list will be automatically hidden, but in the whitelist mode you need configure manually.</string>
     <string name="template_work_mode">Work mode</string>
     <string name="template_blacklist">Blacklist</string>
     <string name="template_whitelist">Whitelist</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="template_usage_hint">建立模板供“不安分”的 APP 使用，控制其可获取到的应用列表。\n\n黑名单（推荐）：模板中选中的应用对套用模板的应用不可见。\n白名单：不在模板中的应用对套用模板的应用不可见。</string>
+    <string name="template_usage_hint">建立模板供“不安分”的 APP 使用，控制其可获取到的应用列表。\n\n黑名单（推荐）：模板中选中的应用对套用模板的应用不可见。\n白名单：不在模板中的应用对套用模板的应用不可见。\n\n黑名单模式下会自动拦截在名单内的 maps 信息，白名单模式需要手动配置。</string>
     <string name="template_work_mode">工作模式</string>
     <string name="template_blacklist">黑名单模式</string>
     <string name="template_whitelist">白名单模式</string>
