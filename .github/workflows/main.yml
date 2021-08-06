@@ -34,8 +34,7 @@ jobs:
           echo keyAlias='${{ secrets.ALIAS }}' >> local.properties
           echo keyPassword='${{ secrets.ALIAS_KEY_PASSWORD }}' >> local.properties
           echo fileDir='../key.jks' >> local.properties
-          echo ${{ secrets.KEY_STORE }} | base64 --decode > key.jks
-
+          echo "${{ secrets.KEY_STORE }}" | base64 --decode > key.jks
 
       - name: Cache Gradle
         uses: actions/cache@v2
@@ -48,6 +47,11 @@ jobs:
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
+
+      - name: Install NDK
+        run: |
+            ${ANDROID_HOME}/tools/bin/sdkmanager --list --channel=1
+            echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;23.0.7530507" --sdk_root=${ANDROID_SDK_ROOT} --channel=1
 
       - name: Gradle prebuild
         run: ./gradlew prebuild
