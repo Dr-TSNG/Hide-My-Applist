@@ -36,6 +36,11 @@ jobs:
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
+        
+      - name: Install NDK
+        run: |
+            ${ANDROID_HOME}/tools/bin/sdkmanager --list --channel=1
+            echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;23.0.7530507" --sdk_root=${ANDROID_SDK_ROOT} --channel=1
 
       - name: Gradle prebuild
         run: ./gradlew prebuild
