@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.18.1)
 project("hidemyapplist")
 
 include_directories(external/linux_syscall_support)

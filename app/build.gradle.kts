@@ -29,9 +29,9 @@ val gitCommitCount = "git rev-list HEAD --count".execute()
 val gitCommitHash = "git rev-parse --verify --short HEAD".execute()
 
 android {
-    compileSdk = 30
+    compileSdk = 31
     ndkVersion = "22.0.7026061"
-    buildToolsVersion = "30.0.3"
+    buildToolsVersion = "31.0.0"
 
     buildFeatures {
         viewBinding = true
@@ -81,7 +81,7 @@ android {
 
     externalNativeBuild.cmake {
         path("src/main/cpp/CMakeLists.txt")
-        version = "3.10.2"
+        version = "3.18.1"
     }
 
     compileOptions {
