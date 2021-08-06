@@ -30,7 +30,7 @@ val gitCommitHash = "git rev-parse --verify --short HEAD".execute()
 
 android {
     compileSdk = 31
-    ndkVersion = "22.0.7026061"
+    ndkVersion = "23.0.7530507 rc6"
     buildToolsVersion = "31.0.0"
 
     buildFeatures {
