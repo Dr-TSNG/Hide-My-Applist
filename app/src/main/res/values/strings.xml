@@ -31,6 +31,9 @@
     <string name="riru_version_too_old">❌ [Magisk] Extension version too old</string>
     <string name="riru_apk_version_too_old">❌ [Magisk] System service version too old</string>
 
+    <string name="download_test_app_title">Download test app</string>
+    <string name="download_test_app_message">We have developed an individual detection test app and migrated detection test to it. Do you want to download it now?</string>
+
     <string name="title_detection_test">Detection Test</string>
     <string name="title_template_manage">Manage Templates</string>
     <string name="title_scope_manage">Select Effective Apps</string>

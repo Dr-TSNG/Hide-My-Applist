@@ -62,14 +62,4 @@
     <style name="DefaultText.Option.Card">
         <item name="android:textSize">18sp</item>
     </style>
-
-    <style name="ListCard" parent="Widget.MaterialComponents.CardView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">400dp</item>
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:layout_marginStart">60dp</item>
-        <item name="android:layout_marginEnd">60dp</item>
-        <item name="cardCornerRadius">10dp</item>
-    </style>
 </resources>

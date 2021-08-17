@@ -10,13 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsng.hidemyapplist.BuildConfig
-import com.tsng.hidemyapplist.app.ui.MigrateOldConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
 import com.tsng.hidemyapplist.app.MyApplication
-import com.tsng.hidemyapplist.app.SubmitConfigService
 import com.tsng.hidemyapplist.app.helpers.ServiceHelper
 import com.tsng.hidemyapplist.app.makeToast
+import com.tsng.hidemyapplist.app.ui.MigrateOldConfig
 import com.tsng.hidemyapplist.databinding.ActivityMainBinding
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -90,8 +89,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.menu_detection_test ->
-                startActivity(Intent(this, DetectionActivity::class.java))
+            R.id.menu_detection_test -> {
+                val intent = packageManager.getLaunchIntentForPackage("com.tsng.applistdetector")
+                if (intent == null) {
+                    MaterialAlertDialogBuilder(this)
+                        .setTitle(R.string.download_test_app_title)
+                        .setMessage(R.string.download_test_app_message)
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
+                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Dr-TSNG/ApplistDetector/releases")))
+                        }
+                        .show()
+                } else startActivity(intent)
+            }
             R.id.menu_template_manage ->
                 if (globalConfig.hookSelf) makeToast(R.string.xposed_disable_hook_self_first)
                 else startActivity(Intent(this, ModuleActivity::class.java)
