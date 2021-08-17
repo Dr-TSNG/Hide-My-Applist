@@ -20,7 +20,6 @@ class JsonConfig {
     )
 
     val configVersion = BuildConfig.VERSION_CODE
-    var hookSelf = false
     var detailLog = false
     var maxLogSize = 512
     val templates = mutableMapOf<String, Template>()

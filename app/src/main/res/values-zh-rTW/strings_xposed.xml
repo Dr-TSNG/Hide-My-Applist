@@ -6,5 +6,4 @@
     <string name="xposed_service_off">系統服務未執行</string>
     <string name="xposed_service_old">模組已更新，請重啟</string>
     <string name="xposed_serve_times">隱藏應用程式列表已為您攔截合計 ## 次請求</string>
-    <string name="xposed_disable_hook_self_first">請先禁用 Hook 模組本體</string>
 </resources>

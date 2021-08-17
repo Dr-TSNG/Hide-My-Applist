@@ -92,13 +92,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun module() {
-        preferenceScreen.findPreference<SwitchPreferenceCompat>("hookSelf")
-            ?.setOnPreferenceChangeListener { _, newValue ->
-                JsonConfigManager.edit { hookSelf = newValue as Boolean }
-                makeToast(R.string.settings_hook_self_toast)
-                true
-            }
-
         preferenceScreen.findPreference<SwitchPreferenceCompat>("detailLog")
             ?.setOnPreferenceChangeListener { _, newValue ->
                 JsonConfigManager.edit { detailLog = newValue as Boolean }

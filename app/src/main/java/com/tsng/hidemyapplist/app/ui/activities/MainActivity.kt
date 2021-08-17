@@ -11,7 +11,6 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
-import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
 import com.tsng.hidemyapplist.app.MyApplication
 import com.tsng.hidemyapplist.app.helpers.ServiceHelper
 import com.tsng.hidemyapplist.app.makeToast
@@ -103,12 +102,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 } else startActivity(intent)
             }
             R.id.menu_template_manage ->
-                if (globalConfig.hookSelf) makeToast(R.string.xposed_disable_hook_self_first)
-                else startActivity(Intent(this, ModuleActivity::class.java)
+                startActivity(Intent(this, ModuleActivity::class.java)
                     .putExtra("Fragment", ModuleActivity.Fragment.TEMPLATE_MANAGE))
             R.id.menu_scope_manage ->
-                if (globalConfig.hookSelf) makeToast(R.string.xposed_disable_hook_self_first)
-                else startActivity(Intent(this, ModuleActivity::class.java)
+                startActivity(Intent(this, ModuleActivity::class.java)
                     .putExtra("Fragment", ModuleActivity.Fragment.SCOPE_MANAGE))
             R.id.menu_logs ->
                 if (ServiceHelper.getServiceVersion() == 0) makeToast(R.string.xposed_service_off)

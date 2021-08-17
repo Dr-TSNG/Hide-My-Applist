@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="settings_module">Module</string>
-    <string name="settings_hook_self">Hook self</string>
-    <string name="settings_hook_self_summary">Remember to apply a template to the module itself</string>
-    <string name="settings_hook_self_toast">Force stop module app and restart to take effort</string>
     <string name="settings_detail_log">Detail log for debugging</string>
     <string name="settings_max_log_size">Logger buffer sizes</string>
     <string name="settings_hide_icon">Hide module icon in launcher</string>

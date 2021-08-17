@@ -41,16 +41,16 @@ android {
         applicationId = "com.tsng.hidemyapplist"
         versionNameSuffix = ".r${gitCommitCount}.${gitCommitHash}"
         minSdk = 24
-        targetSdk = 30
+        targetSdk = 31
         multiDexEnabled = false
         externalNativeBuild.cmake {
             cppFlags += "-std=c++20"
         }
 
-        versionCode = 61
-        versionName = "2.1.1"
-        buildConfigField("int", "SERVICE_VERSION", "59")
-        buildConfigField("int", "MIN_RIRU_VERSION", "23")
+        versionCode = 62
+        versionName = "2.1.2"
+        buildConfigField("int", "SERVICE_VERSION", "62")
+        buildConfigField("int", "MIN_RIRU_VERSION", "26")
         buildConfigField("int", "MIN_BACKUP_VERSION", "49")
     }
 

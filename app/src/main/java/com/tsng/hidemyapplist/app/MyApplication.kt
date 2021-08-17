@@ -46,6 +46,6 @@ class MyApplication : Application() {
             makeToast(R.string.do_not_dual)
             exitProcess(0)
         }
-        if (!globalConfig.hookSelf) removeUninstalledApps()
+        removeUninstalledApps()
     }
 }

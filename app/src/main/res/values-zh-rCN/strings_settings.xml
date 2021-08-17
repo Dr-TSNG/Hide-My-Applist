@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="settings_module">模块</string>
-    <string name="settings_hook_self">Hook 模块自身</string>
-    <string name="settings_hook_self_summary">记得先对模块自己启用一个模板</string>
-    <string name="settings_hook_self_toast">强制停止模块 APP 并重新打开以生效</string>
     <string name="settings_detail_log">记录详细日志（调试用）</string>
     <string name="settings_max_log_size">日志缓冲区大小</string>
     <string name="settings_hide_icon">隐藏桌面图标</string>

@@ -6,5 +6,4 @@
     <string name="xposed_service_off">System service not running</string>
     <string name="xposed_service_old">Module updated, need reboot</string>
     <string name="xposed_serve_times">Hide My Applist has intercepted total ## requests</string>
-    <string name="xposed_disable_hook_self_first">Please disable hook self first</string>
 </resources>

@@ -6,5 +6,4 @@
     <string name="xposed_service_off">系统服务未运行</string>
     <string name="xposed_service_old">模块已更新，请重启</string>
     <string name="xposed_serve_times">隐藏应用列表已为您拦截合计 ## 次请求</string>
-    <string name="xposed_disable_hook_self_first">请先禁用 Hook 模块自身</string>
 </resources>

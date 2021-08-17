@@ -147,7 +147,6 @@ object PackageManagerService {
     }
 
     private fun isUseHook(caller: String?, hookMethod: String): Boolean {
-        if (caller == hmaApp && !config.hookSelf) return false
         val appConfig = config.scope[caller] ?: return false
         return appConfig.enableAllHooks || appConfig.applyHooks.contains(hookMethod)
     }
