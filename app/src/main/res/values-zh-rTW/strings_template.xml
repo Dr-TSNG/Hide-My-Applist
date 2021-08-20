@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="template_usage_hint">建立模板供「調皮」的 APP 使用，控制其可獲取到的應用列表。\n\n黑名單（推薦）：模板中選中的應用對套用模板的應用不可見。\n白名單：不在模板中的應用對套用模板的應用不可見。\n\n黑名單模式下會自動攔截在名單內的 maps 資訊，白名單模式需要手動配寘。</string>
+    <string name="template_usage_hint">建立模板供「調皮」的 APP 使用，控制其可獲取到的應用列表。\n\n黑名單(推薦)：套用黑名單模板後無法顯示此模板內的應用。\n白名單：套用白名單模板後，可顯示模板內的應用。\n\n黑名單模式下會自動攔截在名單內的 maps 資訊，白名單模式需要手動設定。</string>
     <string name="template_work_mode">工作模式</string>
     <string name="template_blacklist">黑名單模式</string>
     <string name="template_whitelist">白名單模式</string>
