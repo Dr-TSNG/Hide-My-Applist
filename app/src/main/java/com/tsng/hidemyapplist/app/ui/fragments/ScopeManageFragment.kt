@@ -86,7 +86,7 @@ class ScopeManageFragment : Fragment() {
         }
         runOnMainThread {
             binding.appSelect.layoutManager = LinearLayoutManager(activity)
-            adapter = AppSelectAdapter(isShowSystemApp, false, appInfoList, selectedApps) {
+            adapter = AppSelectAdapter(isShowSystemApp, false, appInfoList, selectedApps,false) {
                 itemView.setOnClickListener {
                     touchedItemPosition = layoutPosition
                     val packageName = packageNameTextView.text.toString()

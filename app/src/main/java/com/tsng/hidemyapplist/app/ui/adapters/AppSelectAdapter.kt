@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
 import com.tsng.hidemyapplist.app.helpers.AppInfoHelper.MyAppInfo
@@ -15,7 +16,8 @@ class AppSelectAdapter(
     private val hasCheckBox: Boolean,
     private val appList: List<MyAppInfo>,
     private val selectedApps: MutableSet<String>,
-    private val onClick: (ViewHolder.() -> Unit)? = null
+    private val showSelf: Boolean = true,
+    private val onClick: (ViewHolder.() -> Unit)? = null,
 ) : Filterable,
     RecyclerView.Adapter<AppSelectAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -36,7 +38,7 @@ class AppSelectAdapter(
         override fun performFiltering(constraint: CharSequence): FilterResults {
             val filteredList = mutableListOf<MyAppInfo>()
             for (appInfo in appList) {
-                if (!appInfo.isSystemApp || isShowSystemApp)
+                if ((!appInfo.isSystemApp || isShowSystemApp) && (appInfo.packageName != BuildConfig.APPLICATION_ID || showSelf))
                     if (constraint.isEmpty() ||
                         appInfo.appName.lowercase(Locale.getDefault()).contains(constraint) ||
                         appInfo.packageName.lowercase(Locale.getDefault()).contains(constraint)
