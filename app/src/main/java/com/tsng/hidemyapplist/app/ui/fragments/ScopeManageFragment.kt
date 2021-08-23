@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.kyuubiran.ezxhelper.utils.runOnMainThread
+import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
 import com.tsng.hidemyapplist.app.helpers.AppInfoHelper
@@ -77,6 +78,7 @@ class ScopeManageFragment : Fragment() {
 
     private fun initAppListView() {
         val appInfoList = AppInfoHelper.getAppInfoList()
+        appInfoList.removeIf { it.packageName == BuildConfig.APPLICATION_ID }
         val selectedApps = globalConfig.scope.keys
         appInfoList.sortWith { o1, o2 ->
             val b1 = selectedApps.contains(o1.packageName)
