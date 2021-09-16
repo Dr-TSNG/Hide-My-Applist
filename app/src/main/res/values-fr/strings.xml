@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hide My Applist</string>
+
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="error">Erreure</string>
+    <string name="add">Ajouter</string>
+    <string name="delete">Supprimer</string>
+    <string name="save">Sauvegarder</string>
+    <string name="copied">Copié</string>
+
+    <string name="application">Application</string>
+    <string name="preference">Réglages</string>
+    <string name="edit_list">Éditer la liste</string>
+    <string name="show_crash_log">Afficher journal de plantage</string>
+    <string name="config_damaged">Fichier de configuration endommagé. Merci de supprimer les données de l\’appli. Please clean the app data</string>
+    <string name="system_app">Appli système</string>
+
+    <string name="do_not_dual">Ne pas dupliquer l\’appli, celà causera une réécriture de sa configuration!</string>
+
+    <string name="new_update">Nouvelle mise à jour:</string>
+    <string name="update_logs">Nouvelles fonctionnalités</string>
+    <string name="migrate_config_title">Migrer la configuration depuis l\’ancienne version?</string>
+    <string name="migrate_config_message">Celà réécrira la configuration actuelle! (Si vous mettez à jour l\’appli normalement, sélectionner Oui)</string>
+    <string name="migrate_config_successful">Réussite de la mise à jour de la configuration</string>
+    <string name="migrate_config_failed">Échec de la mise à jour de la configuration</string>
+
+    <string name="riru_installed">Extension Magisk installée</string>
+    <string name="riru_not_installed">L\’extension Magisk n\’est pas installée</string>
+    <string name="riru_version_too_old">❌ Version de l\’Extension [Magisk] trop ancienne</string>
+    <string name="riru_apk_version_too_old">❌ Version du service [Magisk] trop ancienne</string>
+
+    <string name="download_test_app_title">Télécharger l\’appli de test</string>
+    <string name="download_test_app_message">Nous avons développé une appli individuelle de test et avons migré le test de détection dans celle-ci. Voulez-vous la télécharger maintenant?</string>
+
+    <string name="title_detection_test">Test De Détection</string>
+    <string name="title_template_manage">Gestion Modèles</string>
+    <string name="title_scope_manage">Sélection Applis Éficaces</string>
+    <string name="title_logs">Journaux</string>
+    <string name="title_settings">Réglages</string>
+    <string name="title_about">À propos</string>
+</resources>
