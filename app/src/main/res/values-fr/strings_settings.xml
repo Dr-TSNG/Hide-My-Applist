@@ -2,7 +2,7 @@
 <resources>
     <string name="settings_module">Module</string>
     <string name="settings_detail_log">Journal détaillé pour débugguage</string>
-    <string name="settings_max_log_size">Taille d tampon de l\’enregistreur</string>
+    <string name="settings_max_log_size">Taille du tampon de l\’enregistreur</string>
     <string name="settings_hide_icon">Masquer l\’icône du module dans le lanceur</string>
     <string name="settings_hide_icon_summary">Vous pouvez quand même ouvrir l\’application dans la gestionnaire XPosed</string>
 
@@ -29,6 +29,6 @@
 
     <string name="settings_update">Mise à jour</string>
     <string name="settings_disable_update">Désactiver la notification de mise à jour</string>
-    <string name="settings_receive_beta_update">Recevoir les mises à jour beta</string>
-    <string name="settings_receive_beta_update_summary">Les versions beta pourraient êtres instables</string>
+    <string name="settings_receive_beta_update">Recevoir les mises à jour béta</string>
+    <string name="settings_receive_beta_update_summary">Les versions béta pourraient êtres instables</string>
 </resources>
