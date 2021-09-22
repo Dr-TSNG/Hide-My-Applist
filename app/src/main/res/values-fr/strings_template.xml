@@ -13,8 +13,8 @@
     <string name="template_name_already_exist">Le nom du modèle existe déjà</string>
     <string name="template_used_count">Appliqué à # applications</string>
     <string name="template_apps_visible_count"># applications visibles</string>
-    <string name="template_apps_invisible_count"># appslications invisibles</string>
-    <string name="template_maps_rules_count"># règle de cartes</string>
+    <string name="template_apps_invisible_count"># applications invisibles</string>
+    <string name="template_maps_rules_count"># règles de cartes</string>
 
     <string name="template_enable_hide">Activer masquage</string>
     <string name="template_enable_all_hooks">Activer toutes les méthodes de masquage</string>
