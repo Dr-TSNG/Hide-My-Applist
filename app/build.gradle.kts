@@ -21,6 +21,9 @@ val minBackupVer: Int by rootProject.extra
 val gitCommitCount: String by rootProject.extra
 val gitCommitHash: String by rootProject.extra
 
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -39,10 +42,12 @@ android {
         applicationId = "com.tsng.hidemyapplist"
         versionCode = appVerCode
         versionName = appVerName
-        versionNameSuffix = ".r${gitCommitCount}.${gitCommitHash}"
         minSdk = minSdkVer
         targetSdk = targetSdkVer
+
         multiDexEnabled = false
+        if (properties.getProperty("buildWithGitSuffix").toBoolean())
+            versionNameSuffix = ".r${gitCommitCount}.${gitCommitHash}"
 
         buildConfigField("int", "SERVICE_VERSION", serviceVer.toString())
         buildConfigField("int", "MIN_RIRU_VERSION", minRiruVer.toString())
@@ -54,11 +59,7 @@ android {
     }
 
     signingConfigs.create("config") {
-        val properties = Properties()
-        properties.load(project.rootProject.file("local.properties").inputStream())
-
-        val filePath = File(properties.getProperty("fileDir"))
-        storeFile = file(filePath)
+        storeFile = file(properties.getProperty("fileDir"))
         storePassword = properties.getProperty("storePassword")
         keyAlias = properties.getProperty("keyAlias")
         keyPassword = properties.getProperty("keyPassword")

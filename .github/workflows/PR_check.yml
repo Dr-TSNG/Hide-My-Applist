@@ -29,6 +29,7 @@ jobs:
         run: |
           PASSWD=$(echo $RANDOM | md5sum | head -c 15)
           keytool -genkey -noprompt -v -keystore android.keystore -alias PRCHECKSIGN -keyalg RSA -keysize 2048 -validity 10000 -keypass ${PASSWD} -storepass ${PASSWD} -dname "CN=xx, OU=xx, O=xx, L=xx, S=xx, C=xx" 
+          echo buildWithGitSuffix=true >> local.properties
           echo storePassword="${PASSWD}" >> local.properties
           echo keyAlias="PRCHECKSIGN" >> local.properties
           echo keyPassword="${PASSWD}" >> local.properties
@@ -45,10 +46,8 @@ jobs:
       - name: Gradle prebuild
         run: ./gradlew prebuild
 
-      - name: Build Release
-        id: buildRelease
+      - name: Build debug
+        id: buildDebug
         run: |
-          ./gradlew :app:assembleRelease
-          echo "::set-output name=releaseName::`ls app/build/outputs/apk/release/V*-release.apk | awk -F '(/|.apk)' '{print $6}'`"
-
-
+          ./gradlew :app:assembleDebug
+          echo "::set-output name=debugName::`ls app/build/outputs/apk/debug/V*-debug.apk | awk -F '(/|.apk)' '{print $6}'`"
