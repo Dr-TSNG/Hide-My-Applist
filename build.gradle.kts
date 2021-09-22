@@ -1,23 +1,26 @@
-buildscript {
-    val kotlinVersion by extra("1.5.30")
-
-    repositories {
-        google()
-        mavenCentral()
+fun String.execute(currentWorkingDir: File = file("./")): String {
+    val byteOut = java.io.ByteArrayOutputStream()
+    project.exec {
+        workingDir = currentWorkingDir
+        commandLine = split("\\s".toRegex())
+        standardOutput = byteOut
     }
-    dependencies {
-        classpath("com.android.tools.build:gradle:7.1.0-alpha12")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-    }
+    return String(byteOut.toByteArray()).trim()
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        jcenter()
-    }
-}
+val minSdkVer by extra(24)
+val targetSdkVer by extra(31)
+val buildToolsVer by extra("31.0.0")
+val ndkVer by extra("23.0.7599858")
+
+val appVerName by extra("2.1.4")
+val appVerCode by extra(64)
+val serviceVer by extra(62)
+val minRiruVer by extra(26)
+val minBackupVer by extra(49)
+
+val gitCommitCount by extra("git rev-list HEAD --count".execute())
+val gitCommitHash by extra("git rev-parse --verify --short HEAD".execute())
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)

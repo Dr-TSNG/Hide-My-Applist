@@ -3,35 +3,33 @@ import com.android.build.api.variant.impl.ApplicationVariantImpl
 import com.android.build.gradle.BaseExtension
 import com.android.ide.common.signing.KeystoreHelper
 import org.jetbrains.kotlin.konan.properties.Properties
-import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import java.net.URLClassLoader
 import java.nio.file.Paths
 
-val kotlinVersion: String by rootProject.extra
+val minSdkVer: Int by rootProject.extra
+val targetSdkVer: Int by rootProject.extra
+val buildToolsVer: String by rootProject.extra
+val ndkVer: String by rootProject.extra
+
+val appVerName: String by rootProject.extra
+val appVerCode: Int by rootProject.extra
+val serviceVer: Int by rootProject.extra
+val minRiruVer: Int by rootProject.extra
+val minBackupVer: Int by rootProject.extra
+
+val gitCommitCount: String by rootProject.extra
+val gitCommitHash: String by rootProject.extra
 
 plugins {
     id("com.android.application")
     kotlin("android")
 }
 
-fun String.execute(currentWorkingDir: File = file("./")): String {
-    val byteOut = ByteArrayOutputStream()
-    project.exec {
-        workingDir = currentWorkingDir
-        commandLine = split("\\s".toRegex())
-        standardOutput = byteOut
-    }
-    return String(byteOut.toByteArray()).trim()
-}
-
-val gitCommitCount = "git rev-list HEAD --count".execute()
-val gitCommitHash = "git rev-parse --verify --short HEAD".execute()
-
 android {
-    compileSdk = 31
-    ndkVersion = "23.0.7599858"
-    buildToolsVersion = "31.0.0"
+    compileSdk = targetSdkVer
+    ndkVersion = ndkVer
+    buildToolsVersion = buildToolsVer
 
     buildFeatures {
         viewBinding = true
@@ -39,19 +37,20 @@ android {
 
     defaultConfig {
         applicationId = "com.tsng.hidemyapplist"
+        versionCode = appVerCode
+        versionName = appVerName
         versionNameSuffix = ".r${gitCommitCount}.${gitCommitHash}"
-        minSdk = 24
-        targetSdk = 31
+        minSdk = minSdkVer
+        targetSdk = targetSdkVer
         multiDexEnabled = false
+
+        buildConfigField("int", "SERVICE_VERSION", serviceVer.toString())
+        buildConfigField("int", "MIN_RIRU_VERSION", minRiruVer.toString())
+        buildConfigField("int", "MIN_BACKUP_VERSION", minBackupVer.toString())
+
         externalNativeBuild.cmake {
             cppFlags += "-std=c++20"
         }
-
-        versionCode = 63
-        versionName = "2.1.3"
-        buildConfigField("int", "SERVICE_VERSION", "62")
-        buildConfigField("int", "MIN_RIRU_VERSION", "26")
-        buildConfigField("int", "MIN_BACKUP_VERSION", "49")
     }
 
     signingConfigs.create("config") {
@@ -241,11 +240,6 @@ tasks.configureEach {
     }
 }
 
-repositories {
-    maven("https://jitpack.io")
-    maven("https://api.xposed.info/")
-}
-
 dependencies {
     implementation("com.drakeet.about:about:2.4.1")
     implementation("com.drakeet.multitype:multitype:4.3.0")
@@ -260,7 +254,6 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.preference:preference-ktx:1.1.1")
     implementation("androidx.fragment:fragment-ktx:1.4.0-alpha09")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
 
     compileOnly("de.robv.android.xposed:api:82")
     compileOnly("de.robv.android.xposed:api:82:sources")
