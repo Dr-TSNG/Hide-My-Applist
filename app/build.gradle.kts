@@ -167,8 +167,6 @@ tasks.register("dexTailDebug") {
         println("dexTailDebug.doLast invoked")
         val dexSet = mutableSetOf<File>()
         val tmpPaths = arrayOf(
-            "intermediates/dex/debug/out/classes.dex", //3.6.x, plain
-            "intermediates/dex/debug/shrunkDex/classes.dex", //3.6.x, minify
             "intermediates/dex/debug/mergeDexDebug/classes.dex", //4.0.x single
             "intermediates/dex/debug/minifyDebugWithR8/classes.dex" //4.0.x minify
         )
@@ -194,8 +192,6 @@ tasks.register("dexTailRelease") {
         println("dexTailDebug.doLast invoked")
         val dexSet = mutableSetOf<File>()
         val tmpPaths = arrayOf(
-            "intermediates/dex/release/out/classes.dex", //3.6.x, plain
-            "intermediates/dex/release/shrunkDex/classes.dex", //3.6.x, minify
             "intermediates/dex/release/mergeDexRelease/classes.dex", //4.0.x single
             "intermediates/dex/release/minifyReleaseWithR8/classes.dex" //4.0.x minify
         )
@@ -221,6 +217,7 @@ tasks.configureEach {
     val dexTailRelease = tasks["dexTailRelease"]
 
     if (name == "assembleDebug") dependsOn(dexTailDebug)
+    if (name == "packageDebug") mustRunAfter(dexTailDebug)
     if (name == "mergeDexDebug") dexTailDebug.dependsOn(this)
     if (name.startsWith("minifyDebug")) dexTailDebug.mustRunAfter(this)
     when (name) {
@@ -232,6 +229,7 @@ tasks.configureEach {
     }
 
     if (name == "assembleRelease") dependsOn(dexTailRelease)
+    if (name == "packageRelease") mustRunAfter(dexTailRelease)
     if (name == "mergeDexRelease") dexTailRelease.dependsOn(this)
     if (name.startsWith("minifyRelease")) dexTailRelease.mustRunAfter(this)
     when (name) {
