@@ -2,7 +2,7 @@
 <resources>
     <string name="about_title">À propos de ce module</string>
     <string name="about_description">
-        Bien qu\’il soit incorrect de détecter l\’installation d'une application spécifique, toutes les applications utilisant la racine ne fournissent pas un support de nom de paquet aléatoire. Dans ce cas, les applications détectées qui utilisent la racine (telles que Fake Location et Storage Isolation) sont égales à la racine détectée elle-même. Dans le même temps, certaines applications intelligentes utilisent diverses failles pour acquérir votre liste d\’applications, de sorte qu\’elles puissent vous dessiner une personnalité. De plus, il peut fonctionner comme un module XPosed pour cacher certaines applications ou rejeter les demandes d\’applist afin de protéger votre vie privée.
+        Bien qu\’il soit incorrect de détecter l\’installation d\’une application spécifique, toutes les applications utilisant la racine ne fournissent pas un support de nom de paquet aléatoire. Dans ce cas, les applications détectées qui utilisent la racine (telles que Fake Location et Storage Isolation) sont égales à la racine détectée elle-même. Dans le même temps, certaines applications intelligentes utilisent diverses failles pour acquérir votre liste d\’applications, de sorte qu\’elles puissent vous dessiner une personnalité. De plus, il peut fonctionner comme un module XPosed pour cacher certaines applications ou rejeter les demandes d\’applist afin de protéger votre vie privée.
     </string>
     <string name="about_how_to_use_title">Comment utiliser ce module</string>
     <string name="about_how_to_use_description_1">
