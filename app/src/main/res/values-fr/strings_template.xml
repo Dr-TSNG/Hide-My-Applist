@@ -29,7 +29,7 @@
     <string name="template_extra_maps_rules_count"># règles de cartes additionelles additionelles</string>
     <string name="template_copy_app_config">Copier cette configuration aux autres applications</string>
 
-    <string name="template_add_maps_rules">Ajouter des règles d'interceptions de cartes personnalisées</string>
+    <string name="template_add_maps_rules">Ajouter des règles d\’interceptions de cartes personnalisées</string>
     <string name="template_add_new_maps_rule_hint">Remplir un élément à filtrer</string>
     <string name="template_delete_maps_rule">Supprimer le modèle?</string>
 </resources>
