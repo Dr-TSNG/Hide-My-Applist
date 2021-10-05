@@ -21,10 +21,6 @@
 
     <string name="new_update">Nouvelle mise à jour:</string>
     <string name="update_logs">Nouvelles fonctionnalités</string>
-    <string name="migrate_config_title">Migrer la configuration depuis l\’ancienne version?</string>
-    <string name="migrate_config_message">Celà réécrira la configuration actuelle! (Si vous mettez à jour l\’appli normalement, sélectionner Oui)</string>
-    <string name="migrate_config_successful">Réussite de la mise à jour de la configuration</string>
-    <string name="migrate_config_failed">Échec de la mise à jour de la configuration</string>
 
     <string name="riru_installed">Extension Magisk installée</string>
     <string name="riru_not_installed">L\’extension Magisk n\’est pas installée</string>

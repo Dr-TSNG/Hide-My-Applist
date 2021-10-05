@@ -40,8 +40,7 @@
 
 # Views
 -keep class com.tsng.hidemyapplist.app.ui.activities.ModuleActivity$Fragment { *; }
--keep class com.tsng.hidemyapplist.app.ui.views.MapsRulesView{ *; }
--keep class com.tsng.hidemyapplist.app.ui.MigrateOldConfig { *; }
+-keep class com.tsng.hidemyapplist.app.ui.views.FilterRulesView{ *; }
 
 # Config
 -keep class com.tsng.hidemyapplist.JsonConfig { *; }

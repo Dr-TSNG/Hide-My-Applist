@@ -20,7 +20,7 @@ import com.tsng.hidemyapplist.app.deepCopy
 import com.tsng.hidemyapplist.app.helpers.AppConfigDataStorage
 import com.tsng.hidemyapplist.app.makeToast
 import com.tsng.hidemyapplist.app.startFragment
-import com.tsng.hidemyapplist.app.ui.views.MapsRulesView
+import com.tsng.hidemyapplist.app.ui.views.FilterRulesView
 
 class AppSettingsFragment : PreferenceFragmentCompat() {
     companion object {
@@ -142,9 +142,18 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
 
         preferenceScreen.findPreference<Preference>("extraMapsRules")
             ?.setOnPreferenceClickListener {
-                MapsRulesView.show(requireActivity(), appConfig.extraMapsRules) {
+                FilterRulesView.show(requireActivity(), appConfig.extraMapsRules) {
                     it.title = getString(R.string.template_extra_maps_rules_count)
                         .replace(Regex("#"), appConfig.extraMapsRules.size.toString())
+                }
+                true
+            }
+
+        preferenceScreen.findPreference<Preference>("extraQueryParamRules")
+            ?.setOnPreferenceClickListener {
+                FilterRulesView.show(requireActivity(), appConfig.extraQueryParamRules) {
+                    it.title = getString(R.string.template_extra_query_param_rules_count)
+                        .replace(Regex("#"), appConfig.extraQueryParamRules.size.toString())
                 }
                 true
             }
@@ -169,6 +178,12 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
             getString(R.string.template_extra_maps_rules_count).replace(
                 Regex("#"),
                 appConfig.extraMapsRules.size.toString()
+            )
+
+        preferenceScreen.findPreference<Preference>("extraQueryParamRules")?.title =
+            getString(R.string.template_extra_query_param_rules_count).replace(
+                Regex("#"),
+                appConfig.extraQueryParamRules.size.toString()
             )
     }
 

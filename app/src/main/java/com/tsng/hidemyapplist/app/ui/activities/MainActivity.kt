@@ -15,7 +15,6 @@ import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.MyApplication
 import com.tsng.hidemyapplist.app.helpers.ServiceHelper
 import com.tsng.hidemyapplist.app.makeToast
-import com.tsng.hidemyapplist.app.ui.MigrateOldConfig
 import com.tsng.hidemyapplist.databinding.ActivityMainBinding
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -119,10 +118,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun makeUpdateAlert() {
         if (getSharedPreferences("settings", MODE_PRIVATE).getBoolean("disableUpdate", false)) return
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        var oldVersion = pref.getInt("LastVersion", 0)
-        if (oldVersion == 0) oldVersion = pref.getInt("lastVersion", 0)
-        if (oldVersion != 0) MigrateOldConfig.doMigration(this, oldVersion)
-        pref.edit().remove("LastVersion").apply()
+        val oldVersion = pref.getInt("lastVersion", 0)
         thread {
             try {
                 val client = OkHttpClient()
