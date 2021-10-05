@@ -122,6 +122,11 @@ object PackageManagerService {
     private fun initConfig() {
         configStr = File("$dataDir/config.json").readText()
         config = JsonConfig.fromJson(configStr)
+        if (config.configVersion < BuildConfig.SERVICE_VERSION) {
+            config = JsonConfig()
+            Log.i("Config cache version too old, need refresh")
+            return
+        }
         Log.d("Cached config: $config")
         configCached = true
         try {
@@ -154,10 +159,11 @@ object PackageManagerService {
         val appConfig = config.scope[caller] ?: return false
         if (appConfig.useWhitelist && appConfig.excludeSystemApps && query in systemApps) return false
 
-        if (query in appConfig.extraAppList)
+        if (query in appConfig.extraAppList || query in appConfig.extraQueryParamRules)
             return !appConfig.useWhitelist
         for (tplName in appConfig.applyTemplates) {
-            if (query in config.templates[tplName]!!.appList)
+            val tpl = config.templates[tplName]!!
+            if (query in tpl.appList || query in tpl.queryParamRules)
                 return !appConfig.useWhitelist
         }
 
