@@ -21,11 +21,9 @@
 package com.tsng.hidemyapplist.xposed
 
 import android.content.pm.ApplicationInfo
-import android.content.pm.Signature
 import com.github.kyuubiran.ezxhelper.utils.*
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.JsonConfig
-import com.tsng.hidemyapplist.Magic.magicNumbers
 import com.tsng.hidemyapplist.xposed.ServiceUtils.getBinderCaller
 import com.tsng.hidemyapplist.xposed.ServiceUtils.getRecursiveField
 import de.robv.android.xposed.XC_MethodHook
@@ -36,7 +34,6 @@ import java.lang.reflect.Method
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
-import kotlin.system.exitProcess
 
 object PackageManagerService {
     private const val hmaApp = "com.tsng.hidemyapplist"
@@ -50,7 +47,7 @@ object PackageManagerService {
     private val allHooks = mutableSetOf<XC_MethodHook.Unhook>()
     private val systemApps = mutableSetOf<String>()
     private var stopped = false
-    private var initialized = false
+    private var configCached = false
     private var riruModuleVersion = 0
     private var mLock = Any()
 
@@ -125,8 +122,13 @@ object PackageManagerService {
     private fun initConfig() {
         configStr = File("$dataDir/config.json").readText()
         config = JsonConfig.fromJson(configStr)
+        if (config.configVersion < BuildConfig.SERVICE_VERSION) {
+            config = JsonConfig()
+            Log.i("Config cache version too old, need refresh")
+            return
+        }
         Log.d("Cached config: $config")
-        initialized = true
+        configCached = true
         try {
             interceptionCount = File("$dataDir/interception_cnt").readText().toInt()
         } catch (e: Exception) {
@@ -142,7 +144,7 @@ object PackageManagerService {
             if (stopped) return
             File("$dataDir/config.json").writeText(json)
         }
-        if (!initialized) initConfig()
+        if (!configCached) initConfig()
         else Log.d("Update config: $config")
     }
 
@@ -157,10 +159,11 @@ object PackageManagerService {
         val appConfig = config.scope[caller] ?: return false
         if (appConfig.useWhitelist && appConfig.excludeSystemApps && query in systemApps) return false
 
-        if (query in appConfig.extraAppList)
+        if (query in appConfig.extraAppList || query in appConfig.extraQueryParamRules)
             return !appConfig.useWhitelist
         for (tplName in appConfig.applyTemplates) {
-            if (query in config.templates[tplName]!!.appList)
+            val tpl = config.templates[tplName]!!
+            if (query in tpl.appList || query in tpl.queryParamRules)
                 return !appConfig.useWhitelist
         }
 
@@ -337,7 +340,7 @@ object PackageManagerService {
         }
         thread {
             while (!stopped) {
-                if (initialized) synchronized(mLock) {
+                if (configCached) synchronized(mLock) {
                     if (stopped) return@thread
                     File("$dataDir/interception_cnt").writeText(interceptionCount.toString())
                 }

@@ -3,35 +3,36 @@ import com.android.build.api.variant.impl.ApplicationVariantImpl
 import com.android.build.gradle.BaseExtension
 import com.android.ide.common.signing.KeystoreHelper
 import org.jetbrains.kotlin.konan.properties.Properties
-import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import java.net.URLClassLoader
 import java.nio.file.Paths
 
-val kotlinVersion: String by rootProject.extra
+val minSdkVer: Int by rootProject.extra
+val targetSdkVer: Int by rootProject.extra
+val buildToolsVer: String by rootProject.extra
+val ndkVer: String by rootProject.extra
+
+val appVerName: String by rootProject.extra
+val appVerCode: Int by rootProject.extra
+val serviceVer: Int by rootProject.extra
+val minRiruVer: Int by rootProject.extra
+val minBackupVer: Int by rootProject.extra
+
+val gitCommitCount: String by rootProject.extra
+val gitCommitHash: String by rootProject.extra
+
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
 
 plugins {
     id("com.android.application")
     kotlin("android")
 }
 
-fun String.execute(currentWorkingDir: File = file("./")): String {
-    val byteOut = ByteArrayOutputStream()
-    project.exec {
-        workingDir = currentWorkingDir
-        commandLine = split("\\s".toRegex())
-        standardOutput = byteOut
-    }
-    return String(byteOut.toByteArray()).trim()
-}
-
-val gitCommitCount = "git rev-list HEAD --count".execute()
-val gitCommitHash = "git rev-parse --verify --short HEAD".execute()
-
 android {
-    compileSdk = 31
-    ndkVersion = "23.0.7530507 rc6"
-    buildToolsVersion = "31.0.0"
+    compileSdk = targetSdkVer
+    ndkVersion = ndkVer
+    buildToolsVersion = buildToolsVer
 
     buildFeatures {
         viewBinding = true
@@ -39,27 +40,26 @@ android {
 
     defaultConfig {
         applicationId = "com.tsng.hidemyapplist"
-        versionNameSuffix = ".r${gitCommitCount}.${gitCommitHash}"
-        minSdk = 24
-        targetSdk = 31
+        versionCode = appVerCode
+        versionName = appVerName
+        minSdk = minSdkVer
+        targetSdk = targetSdkVer
+
         multiDexEnabled = false
+        if (properties.getProperty("buildWithGitSuffix").toBoolean())
+            versionNameSuffix = ".r${gitCommitCount}.${gitCommitHash}"
+
+        buildConfigField("int", "SERVICE_VERSION", serviceVer.toString())
+        buildConfigField("int", "MIN_RIRU_VERSION", minRiruVer.toString())
+        buildConfigField("int", "MIN_BACKUP_VERSION", minBackupVer.toString())
+
         externalNativeBuild.cmake {
             cppFlags += "-std=c++20"
         }
-
-        versionCode = 62
-        versionName = "2.1.2"
-        buildConfigField("int", "SERVICE_VERSION", "62")
-        buildConfigField("int", "MIN_RIRU_VERSION", "26")
-        buildConfigField("int", "MIN_BACKUP_VERSION", "49")
     }
 
     signingConfigs.create("config") {
-        val properties = Properties()
-        properties.load(project.rootProject.file("local.properties").inputStream())
-
-        val filePath = File(properties.getProperty("fileDir"))
-        storeFile = file(filePath)
+        storeFile = file(properties.getProperty("fileDir"))
         storePassword = properties.getProperty("storePassword")
         keyAlias = properties.getProperty("keyAlias")
         keyPassword = properties.getProperty("keyPassword")
@@ -167,8 +167,6 @@ tasks.register("dexTailDebug") {
         println("dexTailDebug.doLast invoked")
         val dexSet = mutableSetOf<File>()
         val tmpPaths = arrayOf(
-            "intermediates/dex/debug/out/classes.dex", //3.6.x, plain
-            "intermediates/dex/debug/shrunkDex/classes.dex", //3.6.x, minify
             "intermediates/dex/debug/mergeDexDebug/classes.dex", //4.0.x single
             "intermediates/dex/debug/minifyDebugWithR8/classes.dex" //4.0.x minify
         )
@@ -194,8 +192,6 @@ tasks.register("dexTailRelease") {
         println("dexTailDebug.doLast invoked")
         val dexSet = mutableSetOf<File>()
         val tmpPaths = arrayOf(
-            "intermediates/dex/release/out/classes.dex", //3.6.x, plain
-            "intermediates/dex/release/shrunkDex/classes.dex", //3.6.x, minify
             "intermediates/dex/release/mergeDexRelease/classes.dex", //4.0.x single
             "intermediates/dex/release/minifyReleaseWithR8/classes.dex" //4.0.x minify
         )
@@ -221,6 +217,7 @@ tasks.configureEach {
     val dexTailRelease = tasks["dexTailRelease"]
 
     if (name == "assembleDebug") dependsOn(dexTailDebug)
+    if (name == "packageDebug") mustRunAfter(dexTailDebug)
     if (name == "mergeDexDebug") dexTailDebug.dependsOn(this)
     if (name.startsWith("minifyDebug")) dexTailDebug.mustRunAfter(this)
     when (name) {
@@ -232,6 +229,7 @@ tasks.configureEach {
     }
 
     if (name == "assembleRelease") dependsOn(dexTailRelease)
+    if (name == "packageRelease") mustRunAfter(dexTailRelease)
     if (name == "mergeDexRelease") dexTailRelease.dependsOn(this)
     if (name.startsWith("minifyRelease")) dexTailRelease.mustRunAfter(this)
     when (name) {
@@ -243,26 +241,20 @@ tasks.configureEach {
     }
 }
 
-repositories {
-    maven("https://jitpack.io")
-    maven("https://api.xposed.info/")
-}
-
 dependencies {
     implementation("com.drakeet.about:about:2.4.1")
     implementation("com.drakeet.multitype:multitype:4.3.0")
     implementation("com.scwang.smart:refresh-layout-kernel:2.0.3")
     implementation("com.scwang.smart:refresh-header-material:2.0.3")
-    implementation("com.github.kyuubiran:EzXHelper:0.3.3")
+    implementation("com.github.kyuubiran:EzXHelper:0.3.8")
     implementation("com.github.topjohnwu.libsu:core:3.1.2")
 
-    implementation("com.google.code.gson:gson:2.8.7")
+    implementation("com.google.code.gson:gson:2.8.8")
     implementation("com.google.android.material:material:1.4.0")
-    implementation("com.squareup.okhttp3:okhttp:4.9.1")
-    implementation("androidx.appcompat:appcompat:1.3.0")
+    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")
+    implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.preference:preference-ktx:1.1.1")
-    implementation("androidx.fragment:fragment-ktx:1.4.0-alpha04")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+    implementation("androidx.fragment:fragment-ktx:1.4.0-alpha09")
 
     compileOnly("de.robv.android.xposed:api:82")
     compileOnly("de.robv.android.xposed:api:82:sources")

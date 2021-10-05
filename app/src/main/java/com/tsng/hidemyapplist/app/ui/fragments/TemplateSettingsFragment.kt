@@ -13,7 +13,7 @@ import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
 import com.tsng.hidemyapplist.app.deepCopy
 import com.tsng.hidemyapplist.app.makeToast
 import com.tsng.hidemyapplist.app.startFragment
-import com.tsng.hidemyapplist.app.ui.views.MapsRulesView
+import com.tsng.hidemyapplist.app.ui.views.FilterRulesView
 import com.tsng.hidemyapplist.databinding.FragmentTemplateSettingsBinding
 
 class TemplateSettingsFragment : Fragment() {
@@ -64,6 +64,7 @@ class TemplateSettingsFragment : Fragment() {
         )
         initAppListView()
         initMapsRulesView()
+        initQueryParamRulesView()
         return binding.root
     }
 
@@ -150,8 +151,19 @@ class TemplateSettingsFragment : Fragment() {
         with(binding.mapsRules) {
             setListCount(template.mapsRules.size)
             setOnButtonClickListener {
-                MapsRulesView.show(activity, template.mapsRules) {
+                FilterRulesView.show(activity, template.mapsRules) {
                     setListCount(template.mapsRules.size)
+                }
+            }
+        }
+    }
+
+    private fun initQueryParamRulesView() {
+        with(binding.queryParamRules) {
+            setListCount(template.queryParamRules.size)
+            setOnButtonClickListener {
+                FilterRulesView.show(activity, template.queryParamRules) {
+                    setListCount(template.queryParamRules.size)
                 }
             }
         }

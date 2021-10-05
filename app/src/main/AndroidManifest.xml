@@ -65,7 +65,8 @@
         <activity-alias
             android:name=".MainActivityLauncher"
             android:label="@string/app_name"
-            android:targetActivity=".app.ui.activities.MainActivity">
+            android:targetActivity=".app.ui.activities.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

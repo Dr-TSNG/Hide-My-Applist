@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Html
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsng.hidemyapplist.BuildConfig
@@ -14,7 +15,6 @@ import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.MyApplication
 import com.tsng.hidemyapplist.app.helpers.ServiceHelper
 import com.tsng.hidemyapplist.app.makeToast
-import com.tsng.hidemyapplist.app.ui.MigrateOldConfig
 import com.tsng.hidemyapplist.databinding.ActivityMainBinding
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private external fun doLast()
 
-    @SuppressLint("SdCardPath")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         doLast()
@@ -44,16 +43,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (MyApplication.isModuleActivated) {
             if (serviceVersion != 0) {
                 binding.moduleStatusCard.setCardBackgroundColor(getColor(R.color.colorPrimary))
-                binding.moduleStatusIcon.setImageDrawable(getDrawable(R.drawable.ic_activited))
+                binding.moduleStatusIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_activited))
                 binding.moduleStatusText.text = getString(R.string.xposed_activated)
             } else {
                 binding.moduleStatusCard.setCardBackgroundColor(getColor(R.color.service_off))
-                binding.moduleStatusIcon.setImageDrawable(getDrawable(R.drawable.ic_service_not_running))
+                binding.moduleStatusIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_service_not_running))
                 binding.moduleStatusText.text = getString(R.string.xposed_activated)
             }
         } else {
             binding.moduleStatusCard.setCardBackgroundColor(getColor(R.color.gray))
-            binding.moduleStatusIcon.setImageDrawable(getDrawable(R.drawable.ic_not_activated))
+            binding.moduleStatusIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_not_activated))
             binding.moduleStatusText.text = getString(R.string.xposed_not_activated)
         }
         if (serviceVersion != 0) {
@@ -119,10 +118,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun makeUpdateAlert() {
         if (getSharedPreferences("settings", MODE_PRIVATE).getBoolean("disableUpdate", false)) return
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        var oldVersion = pref.getInt("LastVersion", 0)
-        if (oldVersion == 0) oldVersion = pref.getInt("lastVersion", 0)
-        if (oldVersion != 0) MigrateOldConfig.doMigration(this, oldVersion)
-        pref.edit().remove("LastVersion").apply()
+        val oldVersion = pref.getInt("lastVersion", 0)
         thread {
             try {
                 val client = OkHttpClient()

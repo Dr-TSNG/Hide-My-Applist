@@ -6,7 +6,8 @@ class JsonConfig {
     data class Template(
         val isWhitelist: Boolean,
         val appList: MutableSet<String> = mutableSetOf(),
-        val mapsRules: MutableSet<String> = mutableSetOf()
+        val mapsRules: MutableSet<String> = mutableSetOf(),
+        val queryParamRules: MutableSet<String> = mutableSetOf()
     )
 
     data class AppConfig(
@@ -17,9 +18,10 @@ class JsonConfig {
         val applyTemplates: MutableSet<String> = mutableSetOf(),
         val extraAppList: MutableSet<String> = mutableSetOf(),
         val extraMapsRules: MutableSet<String> = mutableSetOf(),
+        val extraQueryParamRules: MutableSet<String> = mutableSetOf()
     )
 
-    val configVersion = BuildConfig.VERSION_CODE
+    var configVersion = BuildConfig.VERSION_CODE
     var detailLog = false
     var maxLogSize = 512
     val templates = mutableMapOf<String, Template>()

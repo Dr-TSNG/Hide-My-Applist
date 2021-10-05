@@ -13,7 +13,7 @@ jobs:
     if: ${{ !startsWith(github.event.head_commit.message, 'docs:') }}
 
     steps:
-      - name: Check out
+      - name: Checkout
         uses: actions/checkout@v2
         with:
           submodules: 'recursive'
@@ -30,13 +30,14 @@ jobs:
       - name: Write key
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
         run: |
+          echo buildWithGitSuffix=true >> local.properties
           echo storePassword='${{ secrets.KEY_STORE_PASSWORD }}' >> local.properties
           echo keyAlias='${{ secrets.ALIAS }}' >> local.properties
           echo keyPassword='${{ secrets.ALIAS_KEY_PASSWORD }}' >> local.properties
           echo fileDir='../key.jks' >> local.properties
           echo "${{ secrets.KEY_STORE }}" | base64 --decode > key.jks
 
-      - name: Cache Gradle
+      - name: Cache gradle
         uses: actions/cache@v2
         with:
           path: |
@@ -51,38 +52,53 @@ jobs:
       - name: Install NDK
         run: |
             ${ANDROID_HOME}/tools/bin/sdkmanager --list --channel=1
-            echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;23.0.7530507" --sdk_root=${ANDROID_SDK_ROOT} --channel=1
+            echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;23.0.7599858" --sdk_root=${ANDROID_SDK_ROOT} --channel=1
 
       - name: Gradle prebuild
         run: ./gradlew prebuild
 
-      - name: Build Release
+      - name: Build release
         id: buildRelease
         run: |
           ./gradlew :app:assembleRelease
           echo "::set-output name=releaseName::`ls app/build/outputs/apk/release/V*-release.apk | awk -F '(/|.apk)' '{print $6}'`"
 
+      - name: Build debug
+        id: buildDebug
+        run: |
+          ./gradlew :app:assembleDebug
+          echo "::set-output name=debugName::`ls app/build/outputs/apk/debug/V*-debug.apk | awk -F '(/|.apk)' '{print $6}'`"
 
-      - name: Upload apk
+      - name: Upload release
         if: success()
         uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.buildRelease.outputs.releaseName }}
           path: "app/build/outputs/apk/release/*.apk"
 
+      - name: Upload debug
+        if: success()
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.buildDebug.outputs.debugName }}
+          path: "app/build/outputs/apk/debug/*.apk"
+
       - name: Upload mappings
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ steps.buildRelease.outputs.releaseName }}-mappings
-          path: "app/build/outputs"
+          name: mappings
+          path: "app/build/outputs/mapping/release"
 
       - name: Post to channel
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+        if: ${{ github.event_name != 'pull_request' && success() && github.ref == 'refs/heads/master' }}
         env:
           CHANNEL_ID: ${{ secrets.TELEGRAM_TO }}
           BOT_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          FILE: "app/build/outputs/apk/release/${{ steps.buildRelease.outputs.releaseName }}.apk"
+          COMMIT_URL: ${{ github.event.head_commit.url }}
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
-          ESCAPED=`python3 -c 'import json,os,urllib.parse; print(urllib.parse.quote(json.dumps(os.environ["COMMIT_MESSAGE"])))'`
-          curl -v "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup?chat_id=${CHANNEL_ID}&media=%5B%7B%22type%22:%22document%22,%20%22media%22:%22attach://release%22,%22caption%22:${ESCAPED}%7D%5D"  -F release="@$FILE"
+          OUTPUT="app/build/outputs/apk/"
+          export release=$(find $OUTPUT -name "V*-release.apk")
+          export debug=$(find $OUTPUT -name "V*-debug.apk")
+          ESCAPED=`python3 -c 'import json,os,urllib.parse; msg = json.dumps(os.environ["COMMIT_MESSAGE"]); print(urllib.parse.quote(msg if len(msg) <= 1024 else json.dumps(os.environ["COMMIT_URL"])))'`
+          curl -v "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup?chat_id=${CHANNEL_ID}&media=%5B%7B%22type%22:%22document%22,%20%22media%22:%22attach://release%22%7D,%7B%22type%22:%22document%22,%20%22media%22:%22attach://debug%22,%22caption%22:${ESCAPED}%7D%5D"  -F release="@$release" -F debug="@$debug"

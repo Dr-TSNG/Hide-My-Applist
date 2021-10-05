@@ -26,10 +26,11 @@
     <string name="template_applied_count"># templates applied</string>
     <string name="template_extra_apps_visible_count"># additional apps visible</string>
     <string name="template_extra_apps_invisible_count"># additional apps invisible</string>
+    <string name="template_extra_query_param_rules_count"># additional query param rules</string>
     <string name="template_extra_maps_rules_count"># additional maps rules</string>
     <string name="template_copy_app_config">Copy this config to other apps</string>
 
-    <string name="template_add_maps_rules">Add custom maps interception rules</string>
-    <string name="template_add_new_maps_rule_hint">Fill in an item to be filtered</string>
-    <string name="template_delete_maps_rule">Delete the rule?</string>
+    <string name="template_add_filter_rules">Add custom interception rules</string>
+    <string name="template_add_new_filter_rule_hint">Fill in an item to be filtered</string>
+    <string name="template_delete_filter_rule">Delete the rule?</string>
 </resources>
