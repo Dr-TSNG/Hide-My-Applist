@@ -15,6 +15,7 @@
     <string name="template_apps_visible_count">可見 # 個應用</string>
     <string name="template_apps_invisible_count">隱藏 # 個應用</string>
     <string name="template_maps_rules_count">啟用 # 條 maps 規則</string>
+    <string name="template_query_param_rules_count">啟用 # 條查詢參數規則</string>
 
     <string name="template_enable_hide">啟用隱藏</string>
     <string name="template_enable_all_hooks">啟用所有隱藏方式</string>
@@ -26,8 +27,8 @@
     <string name="template_applied_count">啟用 # 個模板</string>
     <string name="template_extra_apps_visible_count">額外可見 # 個應用</string>
     <string name="template_extra_apps_invisible_count">額外隱藏 # 個應用</string>
-    <string name="template_extra_query_param_rules_count">額外啟用 # 條查詢參數規則</string>
     <string name="template_extra_maps_rules_count">額外啟用 # 條 maps 規則</string>
+    <string name="template_extra_query_param_rules_count">額外啟用 # 條查詢參數規則</string>
     <string name="template_copy_app_config">將此設定複製給其他應用</string>
 
     <string name="template_add_filter_rules">新增自定義攔截規則</string>
