@@ -1,6 +1,7 @@
 package com.tsng.hidemyapplist.app.ui.fragments
 
 import android.content.DialogInterface
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -63,7 +64,10 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.app_preferences, rootKey)
 
         preferenceScreen.findPreference<Preference>("appInfo")?.let {
-            val appInfo = appContext.packageManager.getApplicationInfo(packageName, 0)
+            val appInfo = appContext.packageManager.getApplicationInfo(
+                packageName,
+                PackageManager.MATCH_UNINSTALLED_PACKAGES or PackageManager.MATCH_DISABLED_COMPONENTS
+            )
             it.icon = appInfo.loadIcon(appContext.packageManager)
             it.title = appInfo.loadLabel(appContext.packageManager)
             it.summary = packageName
