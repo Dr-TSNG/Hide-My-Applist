@@ -9,10 +9,13 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.preference.PreferenceManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.MyApplication
+import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
 import com.tsng.hidemyapplist.app.helpers.ServiceHelper
 import com.tsng.hidemyapplist.app.makeToast
 import com.tsng.hidemyapplist.databinding.ActivityMainBinding
@@ -33,6 +36,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.toolbar))
+        MobileAds.initialize(appContext)
+        binding.adBanner.loadAd(AdRequest.Builder().build())
         makeUpdateAlert()
     }
 

@@ -22,6 +22,16 @@ dependencyResolutionManagement {
     }
 }
 
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.google.gms:google-services:4.3.10")
+    }
+}
+
 rootProject.name = "Hide My Applist"
 
 include(":app")
