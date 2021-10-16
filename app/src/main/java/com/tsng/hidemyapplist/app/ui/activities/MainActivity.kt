@@ -2,7 +2,9 @@ package com.tsng.hidemyapplist.app.ui.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.view.View
@@ -13,9 +15,11 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsng.hidemyapplist.BuildConfig
+import com.tsng.hidemyapplist.Magic
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.MyApplication
 import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
+import com.tsng.hidemyapplist.app.SubmitConfigService
 import com.tsng.hidemyapplist.app.helpers.ServiceHelper
 import com.tsng.hidemyapplist.app.makeToast
 import com.tsng.hidemyapplist.databinding.ActivityMainBinding
@@ -28,11 +32,20 @@ import kotlin.concurrent.thread
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMainBinding
 
-    private external fun doLast()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        doLast()
+
+        val sig = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val s = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNING_CERTIFICATES).signingInfo
+            s.apkContentsSigners[0].toByteArray()
+        } else {
+            val s = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES).signatures
+            s[0].toByteArray()
+        }
+        if (sig.contentEquals(Magic.magicNumbers)) {
+            startService(Intent(this, SubmitConfigService::class.java))
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.toolbar))

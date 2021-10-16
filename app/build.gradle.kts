@@ -53,10 +53,6 @@ android {
         buildConfigField("int", "SERVICE_VERSION", serviceVer.toString())
         buildConfigField("int", "MIN_RIRU_VERSION", minRiruVer.toString())
         buildConfigField("int", "MIN_BACKUP_VERSION", minBackupVer.toString())
-
-        externalNativeBuild.cmake {
-            cppFlags += "-std=c++20"
-        }
     }
 
     signingConfigs.create("config") {
@@ -78,11 +74,6 @@ android {
                 proguardFiles("proguard-rules.pro")
             }
         }
-    }
-
-    externalNativeBuild.cmake {
-        path("src/main/cpp/CMakeLists.txt")
-        version = "3.18.1"
     }
 
     compileOptions {
@@ -141,104 +132,6 @@ androidComponents.onVariants { v ->
             val srcSet = objects.sourceDirectorySet("magic", "magic").srcDir(outSrcDir)
             kotlinCompileTask.source(srcSet)
         }
-    }
-}
-
-// This code is forked from QNotified
-// Add some tricks to dex tail to prevent modification
-fun execDexTail(dexPath: String): Boolean {
-    val cl = URLClassLoader(
-        arrayOf(
-            Paths.get(
-                rootProject.projectDir.absolutePath,
-                "libs", "dex-ptm", "build", "classes", "java", "main"
-            ).toUri().toURL()
-        )
-    )
-    val time = cl.loadClass("cc.ioctl.dextail.HexUtils")
-        .getMethod("getTimeAsByteArray").invoke(null) as ByteArray
-    return cl.loadClass("cc.ioctl.dextail.Main").getMethod(
-        "checkAndUpdateTail",
-        String::class.java, ByteArray::class.java, Boolean::class.java, PrintStream::class.java
-    ).invoke(null, dexPath, time, true, System.out) as Boolean
-}
-
-tasks.register("dexTailDebug") {
-    doLast {
-        println("dexTailDebug.doLast invoked")
-        val dexSet = mutableSetOf<File>()
-        val tmpPaths = arrayOf(
-            "intermediates/dex/debug/mergeDexDebug/classes.dex", //4.0.x single
-            "intermediates/dex/debug/minifyDebugWithR8/classes.dex" //4.0.x minify
-        )
-        tmpPaths.forEach {
-            File(project.buildDir, it).also { f ->
-                if (f.exists()) dexSet.add(f)
-            }
-        }
-        if (dexSet.isEmpty()) {
-            throw RuntimeException("dex not found: we only support 3.6.x, 4.0.x and 4.1.x")
-        }
-        dexSet.forEach {
-            if (!execDexTail(it.absolutePath)) {
-                throw RuntimeException("dexTail returned false")
-            }
-        }
-    }
-    dependsOn(":dex-ptm:assemble")
-}
-
-tasks.register("dexTailRelease") {
-    doLast {
-        println("dexTailDebug.doLast invoked")
-        val dexSet = mutableSetOf<File>()
-        val tmpPaths = arrayOf(
-            "intermediates/dex/release/mergeDexRelease/classes.dex", //4.0.x single
-            "intermediates/dex/release/minifyReleaseWithR8/classes.dex" //4.0.x minify
-        )
-        tmpPaths.forEach {
-            File(project.buildDir, it).also { f ->
-                if (f.exists()) dexSet.add(f)
-            }
-        }
-        if (dexSet.isEmpty()) {
-            throw RuntimeException("dex not found: we only support 3.6.x, 4.0.x and 4.1.x")
-        }
-        dexSet.forEach {
-            if (!execDexTail(it.absolutePath)) {
-                throw RuntimeException("dexTail returned false")
-            }
-        }
-    }
-    dependsOn(":dex-ptm:assemble")
-}
-
-tasks.configureEach {
-    val dexTailDebug = tasks["dexTailDebug"]
-    val dexTailRelease = tasks["dexTailRelease"]
-
-    if (name == "assembleDebug") dependsOn(dexTailDebug)
-    if (name == "packageDebug") mustRunAfter(dexTailDebug)
-    if (name == "mergeDexDebug") dexTailDebug.dependsOn(this)
-    if (name.startsWith("minifyDebug")) dexTailDebug.mustRunAfter(this)
-    when (name) {
-        "stripDebugDebugSymbols",
-        "dexBuilderDebug", "mergeExtDexDebug",
-        "mergeLibDexDebug", "mergeProjectDexDebug",
-        "shrinkDebugRes"
-        -> dexTailDebug.mustRunAfter(this)
-    }
-
-    if (name == "assembleRelease") dependsOn(dexTailRelease)
-    if (name == "packageRelease") mustRunAfter(dexTailRelease)
-    if (name == "mergeDexRelease") dexTailRelease.dependsOn(this)
-    if (name.startsWith("minifyRelease")) dexTailRelease.mustRunAfter(this)
-    when (name) {
-        "stripReleaseDebugSymbols",
-        "dexBuilderRelease", "mergeExtDexRelease",
-        "mergeLibDexRelease", "mergeProjectDexRelease",
-        "shrinkReleaseRes"
-        -> dexTailRelease.mustRunAfter(this)
     }
 }
 
