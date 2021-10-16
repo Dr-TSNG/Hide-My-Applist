@@ -6,6 +6,8 @@
 [![Channel](https://img.shields.io/badge/Telegram-Channel-blue.svg?logo=telegram)](https://t.me/HideMyApplist)
 [![License](https://img.shields.io/github/license/Dr-TSNG/Hide-My-Applist?label=License)](https://choosealicense.com/licenses/gpl-3.0/)
 
+![banner](banner.png)
+
 ## About this module
 
 Although it's bad practice to detect the installation of specific apps, not every app using root provides random package name support. In this case, if apps that use root (such as Fake Location and Storage Isolation) are detected, it is tantamount to detecting that the device is rooted.
