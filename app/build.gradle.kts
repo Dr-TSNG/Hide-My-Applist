@@ -140,7 +140,7 @@ dependencies {
     implementation("com.drakeet.multitype:multitype:4.3.0")
     implementation("com.scwang.smart:refresh-layout-kernel:2.0.3")
     implementation("com.scwang.smart:refresh-header-material:2.0.3")
-    implementation("com.github.kyuubiran:EzXHelper:0.3.8")
+    implementation("com.github.kyuubiran:EzXHelper:0.4.1")
     implementation("com.github.topjohnwu.libsu:core:3.1.2")
 
     implementation("com.google.code.gson:gson:2.8.8")
@@ -149,7 +149,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.preference:preference-ktx:1.1.1")
     implementation("androidx.fragment:fragment-ktx:1.4.0-alpha10")
-    implementation("androidx.work:work-runtime-ktx:2.7.0-rc01")
+    implementation("androidx.work:work-runtime-ktx:2.7.0")
     implementation("com.google.android.gms:play-services-ads:20.4.0")
     implementation("com.google.firebase:firebase-analytics-ktx:19.0.2")
 
