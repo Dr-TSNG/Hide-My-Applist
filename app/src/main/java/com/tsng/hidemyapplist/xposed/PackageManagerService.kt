@@ -332,7 +332,8 @@ object PackageManagerService {
         File("/data/misc/hide_my_applist").deleteRecursively()
         File("/data/system").list()?.forEach {
             if (it.startsWith("hide_my_applist")) {
-                dataDir = "/data/system/$it"
+                if (this::dataDir.isInitialized) File("/data/system/$it").deleteRecursively()
+                else dataDir = "/data/system/$it"
             }
         }
         if (!this::dataDir.isInitialized) {
