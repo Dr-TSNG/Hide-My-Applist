@@ -6,7 +6,7 @@
     </string>
     <string name="about_how_to_use_title">如何使用該模組</string>
     <string name="about_how_to_use_description_1">
-        #我是否需要安裝 Magisk 模塊#\n如果你需要檔案攔截、maps 攔截能力，你需要安裝 Magisk 模塊。\n\n注意：Magisk 模塊是一個基於 Riru 的模組，你需要安裝 Riru v25 以上才能工作。
+        #我是否需要安裝 Magisk 模塊#\n如果你需要檔案攔截、maps 攔截能力，你需要安裝 Magisk 模塊。\n\n注意：Magisk 模塊是一個基於 Riru 的模塊，你需要安裝 Riru v25/26 以上才能工作。
     </string>
     <string name="about_how_to_use_description_2">
         #如何啟用隱藏#\n在模板管理裡可以建立攔截模板。在選擇生效應用程式裡對目標應用程式啟用模板（或單獨設定）。Xposed 模組作用域需要且只需要勾選「系統框架」。
