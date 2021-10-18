@@ -3,12 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tsng.hidemyapplist">
 
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.MAIN" />
-        </intent>
-    </queries>
-
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
@@ -54,7 +48,6 @@
         <activity
             android:name=".app.ui.activities.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,15 +57,18 @@
 
         <activity-alias
             android:name=".MainActivityLauncher"
+            android:exported="true"
             android:label="@string/app_name"
-            android:targetActivity=".app.ui.activities.MainActivity"
-            android:exported="true">
+            android:targetActivity=".app.ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7935522387526005~2750782344" />
         <meta-data
             android:name="xposedmodule"
             android:value="true" />

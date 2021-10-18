@@ -16,16 +16,10 @@ class MyApplication : Application() {
         val isModuleActivated = false
     }
 
-    init {
-        System.loadLibrary("natives")
-    }
-
-    private external fun nativeInit()
-
     @SuppressLint("SdCardPath")
     override fun onCreate() {
         super.onCreate()
-        nativeInit()
+        appContext = applicationContext
         if (!appContext.filesDir.absolutePath.startsWith("/data/user/0/")) {
             makeToast(R.string.do_not_dual)
             exitProcess(0)

@@ -15,6 +15,7 @@
     <string name="template_apps_visible_count">可见 # 个应用</string>
     <string name="template_apps_invisible_count">隐藏 # 个应用</string>
     <string name="template_maps_rules_count">启用 # 条 maps 规则</string>
+    <string name="template_query_param_rules_count">启用 # 条查询参数规则</string>
 
     <string name="template_enable_hide">启用隐藏</string>
     <string name="template_enable_all_hooks">启用所有隐藏方式</string>
@@ -26,8 +27,8 @@
     <string name="template_applied_count">启用 # 个模板</string>
     <string name="template_extra_apps_visible_count">额外可见 # 个应用</string>
     <string name="template_extra_apps_invisible_count">额外隐藏 # 个应用</string>
-    <string name="template_extra_query_param_rules_count">额外启用 # 条查询参数规则</string>
     <string name="template_extra_maps_rules_count">额外启用 # 条 maps 规则</string>
+    <string name="template_extra_query_param_rules_count">额外启用 # 条查询参数规则</string>
     <string name="template_copy_app_config">将此配置复制给其他应用</string>
 
     <string name="template_add_filter_rules">添加自定义拦截规则</string>

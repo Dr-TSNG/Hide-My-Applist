@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.kyuubiran.ezxhelper.utils.runOnMainThread
+import com.google.android.gms.ads.AdRequest
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
@@ -34,6 +35,7 @@ class ScopeManageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAppSelectBinding.inflate(inflater, container, false)
+        binding.adBanner.loadAd(AdRequest.Builder().build())
         binding.refreshLayout.setOnRefreshListener { refresh() }.autoRefresh()
         return binding.root
     }

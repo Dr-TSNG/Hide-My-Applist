@@ -19,8 +19,7 @@ class XposedEntry : IXposedHookZygoteInit, IXposedHookLoadPackage {
         EzXHelperInit.setToastTag("HMA")
 
         if (hostPackageName == BuildConfig.APPLICATION_ID) {
-            getFieldBySig("Lcom/tsng/hidemyapplist/app/MyApplication;->isModuleActivated:Z")
-                .setBoolean(null, true)
+            getFieldBySig("Lcom/tsng/hidemyapplist/app/MyApplication;->isModuleActivated:Z").setBoolean(null, true)
         }
         if (hostPackageName == "android")
             PackageManagerService.entry()

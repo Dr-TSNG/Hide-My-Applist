@@ -37,8 +37,7 @@ import kotlin.concurrent.thread
 
 object PackageManagerService {
     private const val hmaApp = "com.tsng.hidemyapplist"
-    private const val dataDir = "/data/misc/hide_my_applist"
-    private val logFile = File("$dataDir/tmp/runtime.log")
+
     private val customPms = arrayOf(
         "com.android.server.pm.OplusPackageManagerService",
         "com.android.server.pm.OppoPackageManagerService"
@@ -51,6 +50,8 @@ object PackageManagerService {
     private var riruModuleVersion = 0
     private var mLock = Any()
 
+    private lateinit var dataDir: String
+    private lateinit var logFile: File
     private lateinit var token: String
 
     @Volatile
@@ -83,17 +84,20 @@ object PackageManagerService {
         }
     }
 
-    private fun generateToken() {
+    private fun generateRandomString(length: Int): String {
         val leftLimit = 97   // letter 'a'
         val rightLimit = 122 // letter 'z'
-        val targetStringLength = 10
         val random = Random()
-        val buffer = StringBuilder(targetStringLength)
-        for (i in 0 until targetStringLength) {
+        val buffer = StringBuilder(length)
+        for (i in 0 until length) {
             val randomLimitedInt = leftLimit + (random.nextFloat() * (rightLimit - leftLimit + 1)).toInt()
             buffer.append(randomLimitedInt.toChar())
         }
-        token = buffer.toString()
+        return buffer.toString()
+    }
+
+    private fun generateToken() {
+        token = generateRandomString(10)
         File("$dataDir/tmp/token").writeText(token)
     }
 
@@ -251,7 +255,7 @@ object PackageManagerService {
                     param.result = provideLogs()
 
                 arg == "cleanLogs" -> {
-                    synchronized(mLock) { with(logFile) { delete(); createNewFile() } }
+                    synchronized(mLock) { logFile.apply { delete(); createNewFile() } }
                     param.result = "OK"
                 }
 
@@ -295,7 +299,7 @@ object PackageManagerService {
 
     private fun syncWithRiru() {
         /* If riru extension not installed, make tmp by the service */
-        with(File("$dataDir/tmp/riru_v")) {
+        File("$dataDir/tmp/riru_v").apply {
             if (exists()) {
                 var minApkVersion: Int
                 try {
@@ -316,17 +320,31 @@ object PackageManagerService {
                     File("$dataDir/tmp/stop_riru").createNewFile()
                     Log.e("System service version too old to work with the new riru extension")
                 }
-            } else {
-                File(dataDir).mkdir()
-                File("$dataDir/tmp").deleteRecursively()
-                File("$dataDir/tmp").mkdir()
+                delete()
+            } else File("$dataDir/tmp").apply {
+                deleteRecursively()
+                mkdirs()
             }
-            delete()
         }
+    }
+
+    private fun searchDataDir() {
+        File("/data/misc/hide_my_applist").deleteRecursively()
+        File("/data/system").list()?.forEach {
+            if (it.startsWith("hide_my_applist")) {
+                if (this::dataDir.isInitialized) File("/data/system/$it").deleteRecursively()
+                else dataDir = "/data/system/$it"
+            }
+        }
+        if (!this::dataDir.isInitialized) {
+            dataDir = "/data/system/hide_my_applist_" + generateRandomString(16)
+        }
+        logFile = File("$dataDir/tmp/runtime.log")
     }
 
     /* Load system service */
     fun entry() {
+        searchDataDir()
         syncWithRiru()
         generateToken()
         try {
@@ -362,6 +380,7 @@ object PackageManagerService {
                 File("$dataDir/tmp/system_apps.list").appendText("$pkg\n")
 
             Log.i("System hook installed (Version ${BuildConfig.SERVICE_VERSION})")
+            Log.i("Data directory is at $dataDir")
         })
 
         /* ---Deal with 💩 ROMs--- */
@@ -404,7 +423,10 @@ object PackageManagerService {
 
             "getPackageInfo",
             "getPackageGids",
-            "getApplicationInfo"
+            "getApplicationInfo",
+            "getInstallSourceInfo",
+            "getLaunchIntentForPackage",
+            "getLeanbackLaunchIntentForPackage"
             -> setResult(method, "API requests", null)
 
             "queryIntentActivities",

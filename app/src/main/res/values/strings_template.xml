@@ -15,6 +15,7 @@
     <string name="template_apps_visible_count"># apps visible</string>
     <string name="template_apps_invisible_count"># apps invisible</string>
     <string name="template_maps_rules_count"># maps rules</string>
+    <string name="template_query_param_rules_count"># query param rules</string>
 
     <string name="template_enable_hide">Enable hide</string>
     <string name="template_enable_all_hooks">Enable all hide methods</string>
@@ -26,8 +27,8 @@
     <string name="template_applied_count"># templates applied</string>
     <string name="template_extra_apps_visible_count"># additional apps visible</string>
     <string name="template_extra_apps_invisible_count"># additional apps invisible</string>
-    <string name="template_extra_query_param_rules_count"># additional query param rules</string>
     <string name="template_extra_maps_rules_count"># additional maps rules</string>
+    <string name="template_extra_query_param_rules_count"># additional query param rules</string>
     <string name="template_copy_app_config">Copy this config to other apps</string>
 
     <string name="template_add_filter_rules">Add custom interception rules</string>

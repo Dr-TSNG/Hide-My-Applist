@@ -1,6 +1,7 @@
 package com.tsng.hidemyapplist.app.helpers
 
 import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import com.tsng.hidemyapplist.app.MyApplication
 
@@ -18,7 +19,7 @@ object AppInfoHelper {
         if (AppInfoHelper::mAppInfoList.isInitialized) return mAppInfoList.toMutableList()
         mAppInfoList = mutableListOf()
         val pm = MyApplication.appContext.packageManager
-        for (appInfo in pm.getInstalledApplications(0)) {
+        for (appInfo in pm.getInstalledApplications(PackageManager.MATCH_UNINSTALLED_PACKAGES)) {
             MyAppInfo(
                 appInfo.loadLabel(pm).toString(),
                 appInfo.packageName,

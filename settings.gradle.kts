@@ -5,9 +5,9 @@ pluginManagement {
         mavenCentral()
     }
     plugins {
-        id("com.android.application").version("7.1.0-alpha12")
-        id("com.android.library").version("7.1.0-alpha12")
-        id("org.jetbrains.kotlin.android").version("1.5.30")
+        id("com.android.application").version("7.1.0-alpha13")
+        id("com.android.library").version("7.1.0-alpha13")
+        id("org.jetbrains.kotlin.android").version("1.5.31")
     }
 }
 
@@ -19,6 +19,16 @@ dependencyResolutionManagement {
         maven("https://jcenter.bintray.com")
         maven("https://jitpack.io")
         maven("https://api.xposed.info/")
+    }
+}
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.google.gms:google-services:4.3.10")
     }
 }
 

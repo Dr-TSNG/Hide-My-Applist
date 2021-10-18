@@ -9,6 +9,7 @@
     <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="copied">Copied</string>
+    <string name="reboot">Reboot</string>
 
     <string name="application">Application</string>
     <string name="preference">Preference</string>
@@ -26,6 +27,11 @@
     <string name="riru_not_installed">Magisk extension not installed</string>
     <string name="riru_version_too_old">❌ [Magisk] Extension version too old</string>
     <string name="riru_apk_version_too_old">❌ [Magisk] System service version too old</string>
+
+    <string name="install_magisk_extension_title">Install Magisk extension?</string>
+    <string name="install_magisk_extension_message">Install Magisk extension by root. For more information, please refer to the about page.</string>
+    <string name="install_magisk_extension_successful">Installation succeeded</string>
+    <string name="install_magisk_extension_failed">Installation failed</string>
 
     <string name="download_test_app_title">Download test app</string>
     <string name="download_test_app_message">We have developed an individual detection test app and migrated detection test to it. Do you want to download it now?</string>

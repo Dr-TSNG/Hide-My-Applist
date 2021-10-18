@@ -10,7 +10,7 @@
     <string name="settings_stop_system_service">Stopper le service du système</string>
     <string name="settings_stop_system_service_summary">Redémarrage nécessaire pour redémarrer le service</string>
     <string name="settings_is_clean_env">Nettoyer l\’environnement de fonctionnement en même temps?</string>
-    <string name="settings_is_clean_env_summary">Supprimer le cache du service du système dans /data/misc/hide_my_applist. Cela signifie que vous devez lancer l\’application du module une fois manuellement après le prochain redémarrage afin d\’activer les interceptions, et les compteurs d\’interceptions seront également nettoyés.</string>
+    <string name="settings_is_clean_env_summary">Supprimer le cache du service du système dans /data/system/hide_my_applist_*. Cela signifie que vous devez lancer l\’application du module une fois manuellement après le prochain redémarrage afin d\’activer les interceptions, et les compteurs d\’interceptions seront également nettoyés.</string>
     <string name="settings_force_clean_env">Forcer le nettoyage de l\’environnement d\’exécution (root)</string>
     <string name="settings_force_clean_env_summary">Uniquement si le service du système ne parvient pas à démarrer, ou sinon vous devriez cliquer sur l\’option ci-dessous.</string>
     <string name="settings_force_clean_env_toast_successful">Environnement de fonctionnement nettoyé</string>

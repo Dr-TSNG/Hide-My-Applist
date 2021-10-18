@@ -20,7 +20,6 @@ import com.tsng.hidemyapplist.app.JsonConfigManager
 import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
 import com.tsng.hidemyapplist.app.helpers.ServiceHelper
 import com.tsng.hidemyapplist.app.makeToast
-import java.util.*
 
 class SettingsFragment : PreferenceFragmentCompat() {
     private val backupImportSAFLauncher =
