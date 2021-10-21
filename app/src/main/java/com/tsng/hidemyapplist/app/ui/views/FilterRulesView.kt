@@ -7,25 +7,26 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.tsng.hidemyapplist.R
 
-object MapsRulesView {
+object FilterRulesView {
     @JvmStatic
     fun show(activity: Activity, ruleSet: MutableSet<String>, updateUi: (() -> Unit)? = null) {
         val rules = ruleSet.toMutableList()
         val adapter = ArrayAdapter(activity, android.R.layout.simple_list_item_1, rules)
         MaterialAlertDialogBuilder(activity)
-            .setTitle(com.tsng.hidemyapplist.R.string.template_add_maps_rules)
+            .setTitle(R.string.template_add_filter_rules)
             .setView(
                 View.inflate(
                     activity,
-                    com.tsng.hidemyapplist.R.layout.alert_customize_maps_rules,
+                    R.layout.alert_customize_filter_rules,
                     null
                 ).apply {
-                    findViewById<ListView>(com.tsng.hidemyapplist.R.id.rule_list).apply {
+                    findViewById<ListView>(R.id.rule_list).apply {
                         this.adapter = adapter
                         setOnItemLongClickListener { _, _, position, _ ->
                             MaterialAlertDialogBuilder(activity)
-                                .setTitle(com.tsng.hidemyapplist.R.string.template_delete_maps_rule)
+                                .setTitle(R.string.template_delete_filter_rule)
                                 .setMessage(rules[position])
                                 .setNegativeButton(android.R.string.cancel, null)
                                 .setPositiveButton(android.R.string.ok) { _, _ ->
@@ -38,9 +39,9 @@ object MapsRulesView {
                             true
                         }
                     }
-                    findViewById<Button>(com.tsng.hidemyapplist.R.id.add_new_rule).setOnClickListener {
+                    findViewById<Button>(R.id.add_new_rule).setOnClickListener {
                         val editText =
-                            findViewById<EditText>(com.tsng.hidemyapplist.R.id.et_new_rule)
+                            findViewById<EditText>(R.id.et_new_rule)
                         val newRule = editText.text.toString()
                         editText.text.clear()
                         if (newRule.isEmpty() || ruleSet.contains(newRule)) return@setOnClickListener

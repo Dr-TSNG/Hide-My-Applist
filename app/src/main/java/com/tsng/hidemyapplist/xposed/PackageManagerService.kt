@@ -21,11 +21,9 @@
 package com.tsng.hidemyapplist.xposed
 
 import android.content.pm.ApplicationInfo
-import android.content.pm.Signature
 import com.github.kyuubiran.ezxhelper.utils.*
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.JsonConfig
-import com.tsng.hidemyapplist.Magic.magicNumbers
 import com.tsng.hidemyapplist.xposed.ServiceUtils.getBinderCaller
 import com.tsng.hidemyapplist.xposed.ServiceUtils.getRecursiveField
 import de.robv.android.xposed.XC_MethodHook
@@ -36,12 +34,10 @@ import java.lang.reflect.Method
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
-import kotlin.system.exitProcess
 
 object PackageManagerService {
     private const val hmaApp = "com.tsng.hidemyapplist"
-    private const val dataDir = "/data/misc/hide_my_applist"
-    private val logFile = File("$dataDir/tmp/runtime.log")
+
     private val customPms = arrayOf(
         "com.android.server.pm.OplusPackageManagerService",
         "com.android.server.pm.OppoPackageManagerService"
@@ -50,10 +46,12 @@ object PackageManagerService {
     private val allHooks = mutableSetOf<XC_MethodHook.Unhook>()
     private val systemApps = mutableSetOf<String>()
     private var stopped = false
-    private var initialized = false
+    private var configCached = false
     private var riruModuleVersion = 0
     private var mLock = Any()
 
+    private lateinit var dataDir: String
+    private lateinit var logFile: File
     private lateinit var token: String
 
     @Volatile
@@ -86,17 +84,20 @@ object PackageManagerService {
         }
     }
 
-    private fun generateToken() {
+    private fun generateRandomString(length: Int): String {
         val leftLimit = 97   // letter 'a'
         val rightLimit = 122 // letter 'z'
-        val targetStringLength = 10
         val random = Random()
-        val buffer = StringBuilder(targetStringLength)
-        for (i in 0 until targetStringLength) {
+        val buffer = StringBuilder(length)
+        for (i in 0 until length) {
             val randomLimitedInt = leftLimit + (random.nextFloat() * (rightLimit - leftLimit + 1)).toInt()
             buffer.append(randomLimitedInt.toChar())
         }
-        token = buffer.toString()
+        return buffer.toString()
+    }
+
+    private fun generateToken() {
+        token = generateRandomString(10)
         File("$dataDir/tmp/token").writeText(token)
     }
 
@@ -125,8 +126,13 @@ object PackageManagerService {
     private fun initConfig() {
         configStr = File("$dataDir/config.json").readText()
         config = JsonConfig.fromJson(configStr)
+        if (config.configVersion < BuildConfig.SERVICE_VERSION) {
+            config = JsonConfig()
+            Log.i("Config cache version too old, need refresh")
+            return
+        }
         Log.d("Cached config: $config")
-        initialized = true
+        configCached = true
         try {
             interceptionCount = File("$dataDir/interception_cnt").readText().toInt()
         } catch (e: Exception) {
@@ -142,7 +148,7 @@ object PackageManagerService {
             if (stopped) return
             File("$dataDir/config.json").writeText(json)
         }
-        if (!initialized) initConfig()
+        if (!configCached) initConfig()
         else Log.d("Update config: $config")
     }
 
@@ -157,10 +163,11 @@ object PackageManagerService {
         val appConfig = config.scope[caller] ?: return false
         if (appConfig.useWhitelist && appConfig.excludeSystemApps && query in systemApps) return false
 
-        if (query in appConfig.extraAppList)
+        if (query in appConfig.extraAppList || query in appConfig.extraQueryParamRules)
             return !appConfig.useWhitelist
         for (tplName in appConfig.applyTemplates) {
-            if (query in config.templates[tplName]!!.appList)
+            val tpl = config.templates[tplName]!!
+            if (query in tpl.appList || query in tpl.queryParamRules)
                 return !appConfig.useWhitelist
         }
 
@@ -248,7 +255,7 @@ object PackageManagerService {
                     param.result = provideLogs()
 
                 arg == "cleanLogs" -> {
-                    synchronized(mLock) { with(logFile) { delete(); createNewFile() } }
+                    synchronized(mLock) { logFile.apply { delete(); createNewFile() } }
                     param.result = "OK"
                 }
 
@@ -292,7 +299,7 @@ object PackageManagerService {
 
     private fun syncWithRiru() {
         /* If riru extension not installed, make tmp by the service */
-        with(File("$dataDir/tmp/riru_v")) {
+        File("$dataDir/tmp/riru_v").apply {
             if (exists()) {
                 var minApkVersion: Int
                 try {
@@ -313,17 +320,31 @@ object PackageManagerService {
                     File("$dataDir/tmp/stop_riru").createNewFile()
                     Log.e("System service version too old to work with the new riru extension")
                 }
-            } else {
-                File(dataDir).mkdir()
-                File("$dataDir/tmp").deleteRecursively()
-                File("$dataDir/tmp").mkdir()
+                delete()
+            } else File("$dataDir/tmp").apply {
+                deleteRecursively()
+                mkdirs()
             }
-            delete()
         }
+    }
+
+    private fun searchDataDir() {
+        File("/data/misc/hide_my_applist").deleteRecursively()
+        File("/data/system").list()?.forEach {
+            if (it.startsWith("hide_my_applist")) {
+                if (this::dataDir.isInitialized) File("/data/system/$it").deleteRecursively()
+                else dataDir = "/data/system/$it"
+            }
+        }
+        if (!this::dataDir.isInitialized) {
+            dataDir = "/data/system/hide_my_applist_" + generateRandomString(16)
+        }
+        logFile = File("$dataDir/tmp/runtime.log")
     }
 
     /* Load system service */
     fun entry() {
+        searchDataDir()
         syncWithRiru()
         generateToken()
         try {
@@ -337,7 +358,7 @@ object PackageManagerService {
         }
         thread {
             while (!stopped) {
-                if (initialized) synchronized(mLock) {
+                if (configCached) synchronized(mLock) {
                     if (stopped) return@thread
                     File("$dataDir/interception_cnt").writeText(interceptionCount.toString())
                 }
@@ -359,6 +380,7 @@ object PackageManagerService {
                 File("$dataDir/tmp/system_apps.list").appendText("$pkg\n")
 
             Log.i("System hook installed (Version ${BuildConfig.SERVICE_VERSION})")
+            Log.i("Data directory is at $dataDir")
         })
 
         /* ---Deal with 💩 ROMs--- */
@@ -401,7 +423,10 @@ object PackageManagerService {
 
             "getPackageInfo",
             "getPackageGids",
-            "getApplicationInfo"
+            "getApplicationInfo",
+            "getInstallSourceInfo",
+            "getLaunchIntentForPackage",
+            "getLeanbackLaunchIntentForPackage"
             -> setResult(method, "API requests", null)
 
             "queryIntentActivities",

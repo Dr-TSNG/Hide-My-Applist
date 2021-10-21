@@ -34,6 +34,7 @@ jobs:
           echo keyAlias="PRCHECKSIGN" >> local.properties
           echo keyPassword="${PASSWD}" >> local.properties
           echo fileDir='../android.keystore' >> local.properties
+          echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew

@@ -8,6 +8,7 @@
     <string name="add">新增</string>
     <string name="delete">刪除</string>
     <string name="save">儲存</string>
+    <string name="reboot">重新啟動</string>
 
     <string name="application">應用</string>
     <string name="preference">偏好</string>
@@ -21,15 +22,19 @@
 
     <string name="new_update">新版本可用：</string>
     <string name="update_logs">更新日誌</string>
-    <string name="migrate_config_title">從舊版本遷移模板設定？</string>
-    <string name="migrate_config_message">這會覆蓋現有的模板設定！（如果你是正常升級版本，請選擇是）</string>
-    <string name="migrate_config_successful">模板設定已升級</string>
-    <string name="migrate_config_failed">模板設定升級失敗</string>
+
+    <string name="install_magisk_extension_title">安裝 Magisk 模塊？</string>
+    <string name="install_magisk_extension_message">透過 root 安裝模塊，更多資訊請檢視關於頁面。</string>
+    <string name="install_magisk_extension_successful">安裝成功</string>
+    <string name="install_magisk_extension_failed">安裝失敗</string>
 
     <string name="riru_installed">Magisk 模組已安裝</string>
     <string name="riru_not_installed">Magisk 模組未安裝</string>
     <string name="riru_version_too_old">❌ [Magisk] 模組版本過舊</string>
     <string name="riru_apk_version_too_old">❌ [Magisk] 系統服務版本過舊</string>
+
+    <string name="download_test_app_title">下載測試 App</string>
+    <string name="download_test_app_message">我們開發了一個獨立測試 App，並將檢測測試遷移了過去，是否現在下載？</string>
 
     <string name="title_detection_test">檢測測試</string>
     <string name="title_template_manage">模板管理</string>

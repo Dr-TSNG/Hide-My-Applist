@@ -1,15 +1,21 @@
 # Hide My Applist
+
 [![Stars](https://img.shields.io/github/stars/Dr-TSNG/Hide-My-Applist?label=Stars)](https://github.com/Dr-TSNG)
 [![Release](https://img.shields.io/github/v/release/Dr-TSNG/Hide-My-Applist?label=Release)](https://github.com/Dr-TSNG/Hide-My-Applist/releases/latest)
 [![Download](https://img.shields.io/github/downloads/Dr-TSNG/Hide-My-Applist/total)](https://github.com/Dr-TSNG/Hide-My-Applist/releases/latest)
 [![Channel](https://img.shields.io/badge/Telegram-Channel-blue.svg?logo=telegram)](https://t.me/HideMyApplist)
 [![License](https://img.shields.io/github/license/Dr-TSNG/Hide-My-Applist?label=License)](https://choosealicense.com/licenses/gpl-3.0/)
-## About this module  
-Although It is incorrect to detect specific app installation, yet not every app using root provides random packagename support.  
-In this case, detected apps that use root (such as Fake Location and Storage Isolation) is equal to detected root itself.  
-At the same time, some "smart" apps use various loopholes to acquire your applist, so that it can draw a persona for you.  
-This module provides some methods to test whether you have already hidden your applist nicely.  
-Also, it can work as an Xposed module to hide some apps or reject applist requests to protect your privacy.  
+
+![banner](banner.png)
+
+## About this module
+
+Although it's bad practice to detect the installation of specific apps, not every app using root provides random package name support. In this case, if apps that use root (such as Fake Location and Storage Isolation) are detected, it is tantamount to detecting that the device is rooted.
+
+Additionally, some apps use various loopholes to acquire your app list, in order to use it as fingerprinting data or for other nefarious purposes.
+
+This module can work as an Xposed module to hide apps or reject app list requests, and provides some methods to test whether you have hidden your app list properly.
+
 ## Update Log / 更新日志
 [Reference to the release page / 参考发布页面](https://github.com/Dr-TSNG/Hide-My-Applist/releases)  
 

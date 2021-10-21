@@ -15,7 +15,7 @@
             style="@style/Default"
             android:layout_weight="1"
             android:gravity="center"
-            android:hint="@string/template_add_new_maps_rule_hint"
+            android:hint="@string/template_add_new_filter_rule_hint"
             android:maxLines="1"
             android:textSize="20sp" />
 
