@@ -1,0 +1,22 @@
+<resources>
+    <string-array name="xposed_scope">
+        <item>android</item>
+    </string-array>
+    <string-array name="detect_methods">
+        <item>Reqêtes API</item>
+        <item>Requêtes intentionnelles</item>
+        <item>Détections ID</item>
+        <item>Détections de fichiers</item>
+        <item>Scanne de cartes</item>
+    </string-array>
+    <string-array name="max_log_size_entries">
+        <item>256K</item>
+        <item>512K</item>
+        <item>1M</item>
+    </string-array>
+    <string-array name="max_log_size_values">
+        <item>256</item>
+        <item>512</item>
+        <item>1024</item>
+    </string-array>
+</resources>
