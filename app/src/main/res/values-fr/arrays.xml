@@ -5,7 +5,7 @@
     <string-array name="detect_methods">
         <item>Reqêtes API</item>
         <item>Requêtes intentionnelles</item>
-        <item>Détections ID</item>
+        <item>Détections d\’ID</item>
         <item>Détections de fichiers</item>
         <item>Scanne de cartes</item>
     </string-array>
