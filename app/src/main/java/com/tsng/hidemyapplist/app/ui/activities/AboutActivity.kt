@@ -41,7 +41,7 @@ class AboutActivity : AbsAboutActivity() {
         items.add(Line())
         items.add(Card("Telegram\nhttps://t.me/HideMyApplist"))
         items.add(Line())
-        items.add(Card("Coolapk\nhttps://www.coolapk.com/u/1911298"))
+        items.add(Card("Play store\nhttps://play.google.com/store/apps/details?id=com.tsng.hidemyapplist"))
 
         items.add(Category(getString(R.string.about_open_source)))
         items.add(License("MultiType", "drakeet", License.APACHE_2, "https://github.com/drakeet/MultiType"))
