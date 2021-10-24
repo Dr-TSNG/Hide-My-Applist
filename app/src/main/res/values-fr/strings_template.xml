@@ -15,6 +15,7 @@
     <string name="template_apps_visible_count"># applications visibles</string>
     <string name="template_apps_invisible_count"># applications invisibles</string>
     <string name="template_maps_rules_count"># règles de cartes</string>
+    <string name="template_query_param_rules_count"># règles de paramètrage d\’interception</string>
 
     <string name="template_enable_hide">Activer masquage</string>
     <string name="template_enable_all_hooks">Activer toutes les méthodes de masquage</string>
@@ -27,6 +28,7 @@
     <string name="template_extra_apps_visible_count"># applications additionelles visibles</string>
     <string name="template_extra_apps_invisible_count"># applications additionelles invisibles</string>
     <string name="template_extra_maps_rules_count"># règles de cartes additionelles additionelles</string>
+    <string name="template_extra_query_param_rules_count"># règles de paramètrage d\’interception additionelles</string>
     <string name="template_copy_app_config">Copier cette configuration aux autres applications</string>
 
     <string name="template_add_filter_rules">Ajouter une règle d\’interception personnalisées</string>
