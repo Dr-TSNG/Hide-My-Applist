@@ -9,6 +9,7 @@
     <string name="delete">Supprimer</string>
     <string name="save">Sauvegarder</string>
     <string name="copied">Copié</string>
+    <string name="reboot">Redémarrer</string>
 
     <string name="application">Application</string>
     <string name="preference">Réglages</string>
@@ -26,6 +27,11 @@
     <string name="riru_not_installed">L\’extension Magisk n\’est pas installée</string>
     <string name="riru_version_too_old">❌ Version de l\’Extension [Magisk] trop ancienne</string>
     <string name="riru_apk_version_too_old">❌ Version du service [Magisk] trop ancienne</string>
+    
+    <string name="install_magisk_extension_title">Installer l\’extension Magisk?</string>
+    <string name="install_magisk_extension_message">Installer l\’extension Magisk par l\’enracinement. Pour plus d'information, merci de vous référer à la page À propos.</string>
+    <string name="install_magisk_extension_successful">Installation réussis</string>
+    <string name="install_magisk_extension_failed">Échec de l\’installation</string>
 
     <string name="download_test_app_title">Télécharger l\’application de test</string>
     <string name="download_test_app_message">Nous avons développé une application individuelle de test et avons migré le test de détection dans celle-ci. Voulez-vous la télécharger maintenant?</string>
