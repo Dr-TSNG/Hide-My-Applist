@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <include layout="@layout/toolbar" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/module_status_card"
         style="@style/DefaultCard"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        android:layout_below="@id/toolbar">
 
         <LinearLayout
             style="@style/Default"
@@ -68,11 +65,9 @@
     <ScrollView
         android:id="@+id/menu_scroll_bar"
         style="@style/Default"
+        android:layout_below="@id/module_status_card"
         android:fillViewport="true"
-        android:scrollbars="none"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/module_status_card">
+        android:scrollbars="none">
 
         <LinearLayout
             style="@style/Default"
@@ -218,8 +213,8 @@
         android:id="@+id/ad_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/menu_scroll_bar"
+        android:layout_marginTop="20dp"
         app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-7935522387526005/6498455665"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/menu_scroll_bar" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:adUnitId="ca-app-pub-7935522387526005/6498455665" />
+</RelativeLayout>
