@@ -25,8 +25,6 @@
 
     <string name="install_magisk_extension_title">安装 Magisk 插件？</string>
     <string name="install_magisk_extension_message">通过 root 安装插件，更多信息请查看关于页面。</string>
-    <string name="install_magisk_extension_successful">安装成功</string>
-    <string name="install_magisk_extension_failed">安装失败</string>
 
     <string name="riru_installed">Magisk 插件已安装</string>
     <string name="riru_not_installed">Magisk 插件未安装</string>
@@ -37,6 +35,7 @@
     <string name="download_test_app_message">我们开发了一个独立测试 app，并将检测测试迁移了过去。是否现在下载？</string>
 
     <string name="title_detection_test">检测测试</string>
+    <string name="title_install_extension">安装 Magisk 模块</string>
     <string name="title_template_manage">模板管理</string>
     <string name="title_scope_manage">选择生效应用</string>
     <string name="title_settings">设置</string>

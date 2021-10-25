@@ -14,7 +14,6 @@ import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.topjohnwu.superuser.Shell
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.Magic
 import com.tsng.hidemyapplist.R
@@ -23,6 +22,7 @@ import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
 import com.tsng.hidemyapplist.app.SubmitConfigService
 import com.tsng.hidemyapplist.app.helpers.ServiceHelper
 import com.tsng.hidemyapplist.app.makeToast
+import com.tsng.hidemyapplist.app.ui.views.ShellDialog
 import com.tsng.hidemyapplist.databinding.ActivityMainBinding
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -34,6 +34,7 @@ import kotlin.concurrent.thread
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMainBinding
 
+    @SuppressLint("PackageManagerGetSignatures")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -97,8 +98,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.serveTimes.visibility = View.GONE
             binding.serviceStatusText.text = getString(R.string.xposed_service_off)
         }
-        binding.moduleStatusCard.setOnClickListener(this)
         binding.menuDetectionTest.setOnClickListener(this)
+        binding.menuInstallExtension.setOnClickListener(this)
         binding.menuTemplateManage.setOnClickListener(this)
         binding.menuScopeManage.setOnClickListener(this)
         binding.menuLogs.setOnClickListener(this)
@@ -108,8 +109,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.module_status_card -> {
-                if (ServiceHelper.getServiceVersion() == 0 || ServiceHelper.getRiruExtensionVersion() > 0) return
+            R.id.menu_install_extension -> {
                 MaterialAlertDialogBuilder(this)
                     .setTitle(R.string.install_magisk_extension_title)
                     .setMessage(R.string.install_magisk_extension_message)
@@ -122,25 +122,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             }
                         }
 
-                        val result = Shell.su("su --mount-master -c magisk --install-module ${zipFile.absolutePath}").exec()
                         dialog.dismiss()
-                        val sb = StringBuilder()
-                        result.out.forEach { sb.appendLine(it) }
-                        result.err.forEach { sb.appendLine(it) }
-                        sb.appendLine("----------")
-                        sb.appendLine("Result code: ${result.code}")
-                        val nd = MaterialAlertDialogBuilder(this).setMessage(sb)
-                        if (result.isSuccess) {
-                            nd.setTitle(R.string.install_magisk_extension_successful)
-                            nd.setNegativeButton(android.R.string.cancel, null)
-                            nd.setPositiveButton(R.string.reboot) { _, _ ->
-                                Shell.su("reboot").exec()
-                            }
-                        } else {
-                            nd.setTitle(R.string.install_magisk_extension_failed)
-                            nd.setPositiveButton(android.R.string.ok, null)
-                        }
-                        nd.show()
+                        ShellDialog(this)
+                            .setCommands("su --mount-master -c magisk --install-module ${zipFile.absolutePath}")
+                            .create()
                     }
                     .show()
             }

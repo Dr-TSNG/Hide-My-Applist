@@ -25,8 +25,6 @@
 
     <string name="install_magisk_extension_title">安裝 Magisk 模塊？</string>
     <string name="install_magisk_extension_message">透過 root 安裝模塊，更多資訊請檢視關於頁面。</string>
-    <string name="install_magisk_extension_successful">安裝成功</string>
-    <string name="install_magisk_extension_failed">安裝失敗</string>
 
     <string name="riru_installed">Magisk 模組已安裝</string>
     <string name="riru_not_installed">Magisk 模組未安裝</string>

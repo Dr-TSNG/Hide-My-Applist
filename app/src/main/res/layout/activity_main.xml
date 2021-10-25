@@ -67,7 +67,9 @@
 
     <ScrollView
         style="@style/Default"
+        android:fillViewport="true"
         android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@id/ad_banner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/module_status_card">
@@ -92,6 +94,25 @@
                     <TextView
                         style="@style/DefaultText.Option.Card"
                         android:text="@string/title_detection_test" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menu_install_extension"
+                style="@style/DefaultCard"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    style="@style/Default"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        style="@style/DefaultImage"
+                        android:src="@drawable/ic_install" />
+
+                    <TextView
+                        style="@style/DefaultText.Option.Card"
+                        android:text="@string/title_install_extension" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

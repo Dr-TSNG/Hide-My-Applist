@@ -18,6 +18,11 @@
     <string name="config_damaged">Config file damaged. Please clean the app data</string>
     <string name="system_app">System app</string>
 
+    <string name="shell" translatable="false">Shell</string>
+    <string name="no_root_permission" translatable="false">failed to acquire root permission</string>
+    <string name="execute_successfully" translatable="false">execute successfully</string>
+    <string name="execute_failed" translatable="false">execute failed</string>
+
     <string name="do_not_dual">Do not dual the module app, cause it will lead to config override!</string>
 
     <string name="new_update">New update:</string>
@@ -30,13 +35,12 @@
 
     <string name="install_magisk_extension_title">Install Magisk extension?</string>
     <string name="install_magisk_extension_message">Install Magisk extension by root. For more information, please refer to the about page.</string>
-    <string name="install_magisk_extension_successful">Installation succeeded</string>
-    <string name="install_magisk_extension_failed">Installation failed</string>
 
     <string name="download_test_app_title">Download test app</string>
     <string name="download_test_app_message">We have developed an individual detection test app and migrated detection test to it. Do you want to download it now?</string>
 
     <string name="title_detection_test">Detection Test</string>
+    <string name="title_install_extension">Install Magisk Extension</string>
     <string name="title_template_manage">Manage Templates</string>
     <string name="title_scope_manage">Select Effective Apps</string>
     <string name="title_logs">Logs</string>
