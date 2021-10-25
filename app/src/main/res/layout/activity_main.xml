@@ -66,10 +66,10 @@
     </com.google.android.material.card.MaterialCardView>
 
     <ScrollView
+        android:id="@+id/menu_scroll_bar"
         style="@style/Default"
         android:fillViewport="true"
         android:scrollbars="none"
-        app:layout_constraintBottom_toTopOf="@id/ad_banner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/module_status_card">
@@ -221,6 +221,5 @@
         app:adSize="BANNER"
         app:adUnitId="ca-app-pub-7935522387526005/6498455665"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/menu_scroll_bar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

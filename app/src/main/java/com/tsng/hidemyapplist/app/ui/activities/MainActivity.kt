@@ -50,6 +50,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        binding.menuDetectionTest.setOnClickListener(this)
+        binding.menuInstallExtension.setOnClickListener(this)
+        binding.menuTemplateManage.setOnClickListener(this)
+        binding.menuScopeManage.setOnClickListener(this)
+        binding.menuLogs.setOnClickListener(this)
+        binding.menuSettings.setOnClickListener(this)
+        binding.menuAbout.setOnClickListener(this)
+
+        if (MyApplication.isModuleActivated)
+            binding.menuInstallExtension.visibility = View.VISIBLE
+
         setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.toolbar))
         MobileAds.initialize(appContext)
@@ -98,18 +110,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else {
             binding.serveTimes.visibility = View.GONE
             binding.serviceStatusText.text = getString(R.string.xposed_service_off)
-        }
-
-        binding.menuDetectionTest.setOnClickListener(this)
-        binding.menuTemplateManage.setOnClickListener(this)
-        binding.menuScopeManage.setOnClickListener(this)
-        binding.menuLogs.setOnClickListener(this)
-        binding.menuSettings.setOnClickListener(this)
-        binding.menuAbout.setOnClickListener(this)
-
-        if (MyApplication.isModuleActivated) {
-            binding.menuInstallExtension.visibility = View.VISIBLE
-            binding.menuInstallExtension.setOnClickListener(this)
         }
     }
 
