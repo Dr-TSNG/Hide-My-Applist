@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.moduleStatusIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_not_activated))
             binding.moduleStatusText.text = getString(R.string.xposed_not_activated)
         }
+
         if (serviceVersion != 0) {
             binding.serviceStatusText.text =
                 if (serviceVersion != BuildConfig.SERVICE_VERSION)
@@ -98,13 +99,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.serveTimes.visibility = View.GONE
             binding.serviceStatusText.text = getString(R.string.xposed_service_off)
         }
+
         binding.menuDetectionTest.setOnClickListener(this)
-        binding.menuInstallExtension.setOnClickListener(this)
         binding.menuTemplateManage.setOnClickListener(this)
         binding.menuScopeManage.setOnClickListener(this)
         binding.menuLogs.setOnClickListener(this)
         binding.menuSettings.setOnClickListener(this)
         binding.menuAbout.setOnClickListener(this)
+
+        if (MyApplication.isModuleActivated) {
+            binding.menuInstallExtension.visibility = View.VISIBLE
+            binding.menuInstallExtension.setOnClickListener(this)
+        }
     }
 
     override fun onClick(v: View) {

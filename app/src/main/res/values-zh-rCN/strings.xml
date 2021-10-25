@@ -35,7 +35,7 @@
     <string name="download_test_app_message">我们开发了一个独立测试 app，并将检测测试迁移了过去。是否现在下载？</string>
 
     <string name="title_detection_test">检测测试</string>
-    <string name="title_install_extension">安装 Magisk 模块</string>
+    <string name="title_install_extension">安装 Magisk 插件</string>
     <string name="title_template_manage">模板管理</string>
     <string name="title_scope_manage">选择生效应用</string>
     <string name="title_settings">设置</string>
