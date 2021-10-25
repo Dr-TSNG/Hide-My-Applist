@@ -4,8 +4,6 @@ import com.android.build.gradle.BaseExtension
 import com.android.ide.common.signing.KeystoreHelper
 import org.jetbrains.kotlin.konan.properties.Properties
 import java.io.PrintStream
-import java.net.URLClassLoader
-import java.nio.file.Paths
 
 val minSdkVer: Int by rootProject.extra
 val targetSdkVer: Int by rootProject.extra
