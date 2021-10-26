@@ -14,14 +14,18 @@ class XposedEntry : IXposedHookZygoteInit, IXposedHookLoadPackage {
     }
 
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
-        EzXHelperInit.initHandleLoadPackage(lpparam)
-        EzXHelperInit.setLogTag("HMA Xposed")
-        EzXHelperInit.setToastTag("HMA")
 
         if (hostPackageName == BuildConfig.APPLICATION_ID) {
+            EzXHelperInit.initHandleLoadPackage(lpparam)
+            EzXHelperInit.setLogTag("HMA Xposed")
+            EzXHelperInit.setToastTag("HMA")
             getFieldBySig("Lcom/tsng/hidemyapplist/app/MyApplication;->isModuleActivated:Z").setBoolean(null, true)
         }
-        if (hostPackageName == "android")
+        if (hostPackageName == "android") {
+            EzXHelperInit.initHandleLoadPackage(lpparam)
+            EzXHelperInit.setLogTag("HMA Xposed")
+            EzXHelperInit.setToastTag("HMA")
             PackageManagerService.entry()
+        }
     }
 }
