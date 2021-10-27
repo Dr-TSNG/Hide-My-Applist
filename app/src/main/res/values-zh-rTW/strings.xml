@@ -18,7 +18,6 @@
     <string name="config_damaged">模板設定檔損壞，請清除應用資料</string>
     <string name="system_app">系統應用</string>
 
-    <string name="shell" translatable="false">Shell</string>
     <string name="no_root_permission" translatable="false">獲取 ROOT 權限失敗</string>
     <string name="execute_successfully" translatable="false">執行成功</string>
     <string name="execute_failed" translatable="false">執行失敗</string>
