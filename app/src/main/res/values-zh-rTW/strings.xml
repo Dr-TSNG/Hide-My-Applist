@@ -18,10 +18,6 @@
     <string name="config_damaged">模板設定檔損壞，請清除應用資料</string>
     <string name="system_app">系統應用</string>
 
-    <string name="no_root_permission" translatable="false">獲取 ROOT 權限失敗</string>
-    <string name="execute_successfully" translatable="false">執行成功</string>
-    <string name="execute_failed" translatable="false">執行失敗</string>
-
     <string name="do_not_dual">不要雙開模組 APP，這會導致模板設定覆蓋！</string>
 
     <string name="new_update">新版本可用：</string>
