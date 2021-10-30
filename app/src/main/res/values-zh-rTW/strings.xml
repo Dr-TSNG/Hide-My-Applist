@@ -8,6 +8,7 @@
     <string name="add">新增</string>
     <string name="delete">刪除</string>
     <string name="save">儲存</string>
+    <string name="copied">已複製</string>
     <string name="reboot">重新啟動</string>
 
     <string name="application">應用</string>
@@ -16,7 +17,6 @@
     <string name="show_crash_log">檢視崩潰日誌</string>
     <string name="config_damaged">模板設定檔損壞，請清除應用資料</string>
     <string name="system_app">系統應用</string>
-    <string name="copied">已複製</string>
 
     <string name="do_not_dual">不要雙開模組 APP，這會導致模板設定覆蓋！</string>
 
@@ -24,7 +24,7 @@
     <string name="update_logs">更新日誌</string>
 
     <string name="install_magisk_extension_title">安裝 Magisk 模塊？</string>
-    <string name="install_magisk_extension_message">透過 root 安裝模塊，更多資訊請檢視關於頁面。</string>
+    <string name="install_magisk_extension_message">透過 ROOT 安裝模塊，更多資訊請檢視關於頁面。</string>
 
     <string name="riru_installed">Magisk 模組已安裝</string>
     <string name="riru_not_installed">Magisk 模組未安裝</string>
@@ -35,6 +35,7 @@
     <string name="download_test_app_message">我們開發了一個獨立測試 App，並將檢測測試遷移了過去，是否現在下載？</string>
 
     <string name="title_detection_test">檢測測試</string>
+    <string name="title_install_extension">安裝 Magisk 模塊</string>
     <string name="title_template_manage">模板管理</string>
     <string name="title_scope_manage">選擇生效應用</string>
     <string name="title_settings">設定</string>
