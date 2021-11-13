@@ -8,7 +8,6 @@ import java.io.PrintStream
 val minSdkVer: Int by rootProject.extra
 val targetSdkVer: Int by rootProject.extra
 val buildToolsVer: String by rootProject.extra
-val ndkVer: String by rootProject.extra
 
 val appVerName: String by rootProject.extra
 val appVerCode: Int by rootProject.extra
@@ -30,7 +29,6 @@ plugins {
 
 android {
     compileSdk = targetSdkVer
-    ndkVersion = ndkVer
     buildToolsVersion = buildToolsVer
 
     buildFeatures {
