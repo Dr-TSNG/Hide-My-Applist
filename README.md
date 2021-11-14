@@ -29,10 +29,12 @@ This module can work as an Xposed module to hide apps or reject app list request
 Maps refers to /proc/self/maps (See [Linux manpage](https://man7.org/linux/man-pages/man5/proc.5.html) for more information).  
 When something such as an Xposed module or a Zygisk module injects into target app, it will show its path on /proc/\<pid\>/maps. Though LSPosed and Riru did some work to make module maps info anonymous, if a module dlopen a native library by itself, the loaded so path will still be written on maps (Such module like QNotified).  
 
+How to use it: paths that contains configured strings will be filtered on /proc/self/maps  
 Notice that under **MOST** circumstances you do not need to switch on this interception nor need to add any rule.
 ### Custom query params
 This refers to the string params of methods of [PackageManagerService](https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/pm/PackageManagerService.java)  
 
+How to use it: pms methods whose string params contain configured strings will be intercepted  
 Notice that under **MOST** circumstances you do not need to switch on this interception nor need to add any rule.  
 ### How did HMA Magisk module work?
 HMA install inline hooks for syscall wrappers in libc and modify the results to make the app think there "isn't" suspicious files or directories.  
