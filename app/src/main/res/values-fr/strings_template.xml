@@ -18,8 +18,8 @@
     <string name="template_query_param_rules_count"># règles de paramètrage d\’interception</string>
 
     <string name="template_enable_hide">Activer masquage</string>
-    <string name="template_enable_all_hooks">Activer toutes les méthodes de masquage</string>
-    <string name="template_apply_hooks">Sélectionner les méthodes de masquage</string>
+    <string name="template_enable_all_hooks">Activer toutes les méthodes de masquages</string>
+    <string name="template_apply_hooks">Sélectionner les méthodes de masquages</string>
     <string name="template_config">Configuration de modèle</string>
     <string name="template_choose">Choisir le modèle</string>
     <string name="template_exclude_system_apps">Exclure les applications système</string>
@@ -27,7 +27,7 @@
     <string name="template_applied_count"># modèles appliqués</string>
     <string name="template_extra_apps_visible_count"># applications additionelles visibles</string>
     <string name="template_extra_apps_invisible_count"># applications additionelles invisibles</string>
-    <string name="template_extra_maps_rules_count"># règles de cartes additionelles additionelles</string>
+    <string name="template_extra_maps_rules_count"># règles de cartographies additionelles</string>
     <string name="template_extra_query_param_rules_count"># règles de paramètrage d\’interception additionelles</string>
     <string name="template_copy_app_config">Copier cette configuration aux autres applications</string>
 
