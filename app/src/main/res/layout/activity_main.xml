@@ -216,5 +216,5 @@
         android:layout_below="@id/menu_scroll_bar"
         android:layout_marginTop="20dp"
         app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-7935522387526005/6498455665" />
+        app:adUnitId="ca-app-pub-7935522387526005/9113700045" />
 </RelativeLayout>

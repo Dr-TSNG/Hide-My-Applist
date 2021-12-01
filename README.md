@@ -37,8 +37,6 @@ This refers to the string params of methods of [PackageManagerService](https://c
 How to use it: pms methods whose string params contain configured strings will be intercepted  
 Notice that under **MOST** circumstances you do not need to switch on this interception nor need to add any rule.  
 ### How did HMA Magisk module work?
-HMA install inline hooks for syscall wrappers in libc and modify the results to make the app think there "isn't" suspicious files or directories.  
+HMA install inline hooks for syscalls and replace the path to dummy to make the app think there "isn't" suspicious files or directories.
 
-However, this can be bypassed by directly calling syscall with assembly code. Due to upstream hook framework's problem on ARM64, I cannot write direct syscall hooks right now.  
-
-What's more, inline hook is very **unstable**, and can be detected by some methods. So do not switch on *file detection / maps scan* interceptions if not needed.  
+However, syscall hook is very **unstable**, and can be detected by some methods. So do not switch on *file detection / maps scan* interceptions if not needed.

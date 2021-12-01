@@ -12,10 +12,10 @@ val minSdkVer by extra(24)
 val targetSdkVer by extra(31)
 val buildToolsVer by extra("31.0.0")
 
-val appVerName by extra("2.2.4")
-val appVerCode by extra(70)
+val appVerName by extra("2.3.Beta")
+val appVerCode by extra(71)
 val serviceVer by extra(69)
-val minRiruVer by extra(29)
+val minRiruVer by extra(32)
 val minBackupVer by extra(65)
 
 val gitCommitCount by extra("git rev-list HEAD --count".execute())

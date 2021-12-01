@@ -32,9 +32,11 @@ class AboutActivity : AbsAboutActivity() {
         items.add(Card(getString(R.string.about_hook_differences_description)))
 
         items.add(Category(getString(R.string.about_developer)))
-        items.add(Contributor(R.drawable.author, "\uD835\uDD93\uD835\uDD9A\uD835\uDD91\uD835\uDD91\uD835\uDD95\uD835\uDD99\uD835\uDD97", "Developer", "https://github.com/Dr-TSNG"))
+        items.add(Contributor(R.drawable.cont_author, "\uD835\uDD93\uD835\uDD9A\uD835\uDD91\uD835\uDD91\uD835\uDD95\uD835\uDD99\uD835\uDD97", "Developer", "https://github.com/Dr-TSNG"))
         items.add(Line())
-        items.add(Contributor(R.drawable.about_icon_designer, "辉少菌", "Icon designer", "http://www.coolapk.com/u/1560270"))
+        items.add(Contributor(R.drawable.cont_icon_designer, "辉少菌", "Icon designer", "http://www.coolapk.com/u/1560270"))
+        items.add(Line())
+        items.add(Contributor(R.drawable.cont_cpp_master, "LoveSy", "Idea provider", "https://github.com/yujincheng08"))
 
         items.add(Category(getString(R.string.about_support)))
         items.add(Card("Github\nhttps://github.com/Dr-TSNG/Hide-My-Applist"))
