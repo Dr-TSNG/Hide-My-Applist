@@ -18,11 +18,6 @@
     <string name="config_damaged">Config file damaged. Please clean the app data</string>
     <string name="system_app">System app</string>
 
-    <string name="shell" translatable="false">Shell</string>
-    <string name="no_root_permission" translatable="false">failed to acquire root permission</string>
-    <string name="execute_successfully" translatable="false">execute successfully</string>
-    <string name="execute_failed" translatable="false">execute failed</string>
-
     <string name="do_not_dual">Do not dual the module app, cause it will lead to config override!</string>
 
     <string name="new_update">New update:</string>

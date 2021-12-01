@@ -17,11 +17,6 @@
     <string name="show_crash_log">Afficher journal de plantage</string>
     <string name="config_damaged">Fichier de configuration endommagé. Merci de supprimer les données de l\’application. Please clean the app data</string>
     <string name="system_app">Application système</string>
-    
-    <string name="shell" translatable="false">Shell</string>
-    <string name="no_root_permission" translatable="false">échec de l\’acquisition des permissions racine</string>
-    <string name="execute_successfully" translatable="false">réussite de l\’éxécution</string>
-    <string name="execute_failed" translatable="false">échec de l\’éxécution</string>
 
     <string name="do_not_dual">Ne pas dupliquer l\’application, celà causera une réécriture de sa configuration!</string>
 
