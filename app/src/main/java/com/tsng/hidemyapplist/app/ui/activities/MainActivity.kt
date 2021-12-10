@@ -99,13 +99,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             binding.serveTimes.visibility = View.VISIBLE
             binding.serveTimes.text = text[0] + ServiceHelper.getServeTimes() + text[2]
-            binding.riruStatusText.visibility = View.VISIBLE
-            binding.riruStatusText.text = when (val riruExtensionVersion =
-                ServiceHelper.getRiruExtensionVersion()) {
-                0 -> getString(R.string.riru_not_installed)
-                -1 -> getString(R.string.riru_version_too_old)
-                -2 -> getString(R.string.riru_apk_version_too_old)
-                else -> getString(R.string.riru_installed) + " [$riruExtensionVersion]"
+            binding.extensionStatusText.visibility = View.VISIBLE
+            binding.extensionStatusText.text = when (val extensionVersion = ServiceHelper.getExtensionVersion()) {
+                0 -> getString(R.string.extension_not_installed)
+                -1 -> getString(R.string.extension_version_too_old)
+                -2 -> getString(R.string.extension_apk_version_too_old)
+                else -> getString(R.string.extension_installed) + " [$extensionVersion]"
             }
         } else {
             binding.serveTimes.visibility = View.GONE

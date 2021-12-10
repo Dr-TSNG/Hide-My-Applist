@@ -12,7 +12,7 @@ val buildToolsVer: String by rootProject.extra
 val appVerName: String by rootProject.extra
 val appVerCode: Int by rootProject.extra
 val serviceVer: Int by rootProject.extra
-val minRiruVer: Int by rootProject.extra
+val minExtensionVer: Int by rootProject.extra
 val minBackupVer: Int by rootProject.extra
 
 val gitCommitCount: String by rootProject.extra
@@ -47,7 +47,7 @@ android {
             versionNameSuffix = ".r${gitCommitCount}.${gitCommitHash}"
 
         buildConfigField("int", "SERVICE_VERSION", serviceVer.toString())
-        buildConfigField("int", "MIN_RIRU_VERSION", minRiruVer.toString())
+        buildConfigField("int", "MIN_EXTENSION_VERSION", minExtensionVer.toString())
         buildConfigField("int", "MIN_BACKUP_VERSION", minBackupVer.toString())
     }
 
