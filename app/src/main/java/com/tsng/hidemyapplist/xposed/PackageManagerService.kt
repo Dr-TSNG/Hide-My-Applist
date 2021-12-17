@@ -47,7 +47,7 @@ object PackageManagerService {
     private val systemApps = mutableSetOf<String>()
     private var stopped = false
     private var configCached = false
-    private var riruModuleVersion = 0
+    private var extensionVersion = 0
     private var mLock = Any()
 
     private lateinit var dataDir: String
@@ -245,8 +245,8 @@ object PackageManagerService {
                 arg == "getServiceVersion" ->
                     param.result = BuildConfig.SERVICE_VERSION.toString()
 
-                arg == "getRiruExtensionVersion" ->
-                    param.result = riruModuleVersion.toString()
+                arg == "getExtensionVersion" ->
+                    param.result = extensionVersion.toString()
 
                 arg == "getServeTimes" ->
                     param.result = interceptionCount.toString()
@@ -281,7 +281,7 @@ object PackageManagerService {
     /* Remove all hooks */
     private fun stopService(cleanEnv: Boolean) {
         stopped = true
-        File("$dataDir/tmp/stop").createNewFile()
+        File("$dataDir/tmp/ext_run").delete()
         Log.i("Receive stop system service signal")
         Log.i("Start to remove all hooks")
         for (hook in allHooks) {
@@ -297,28 +297,28 @@ object PackageManagerService {
         }
     }
 
-    private fun syncWithRiru() {
-        /* If riru extension not installed, make tmp by the service */
-        File("$dataDir/tmp/riru_v").apply {
+    private fun syncWithExtension() {
+        /* If extension not installed, make tmp by the service */
+        File("$dataDir/tmp/ext_ver").apply {
             if (exists()) {
                 var minApkVersion: Int
                 try {
                     val lines = readLines()
-                    riruModuleVersion = lines[0].toInt()
+                    extensionVersion = lines[0].toInt()
                     minApkVersion = lines[1].toInt()
                 } catch (e: Exception) {
-                    riruModuleVersion = 0
+                    extensionVersion = 0
                     minApkVersion = 0
                 }
-                if (riruModuleVersion < BuildConfig.MIN_RIRU_VERSION) {
-                    riruModuleVersion = -1
-                    File("$dataDir/tmp/stop_riru").createNewFile()
-                    Log.e("Riru extension version too old to work with the new system service")
+                if (extensionVersion < BuildConfig.MIN_EXTENSION_VERSION) {
+                    extensionVersion = -1
+                    File("$dataDir/tmp/ext_run").delete()
+                    Log.e("Magisk extension version too old to work with the new system service")
                 }
                 if (BuildConfig.VERSION_CODE < minApkVersion) {
-                    riruModuleVersion = -2
-                    File("$dataDir/tmp/stop_riru").createNewFile()
-                    Log.e("System service version too old to work with the new riru extension")
+                    extensionVersion = -2
+                    File("$dataDir/tmp/ext_run").delete()
+                    Log.e("System service version too old to work with the new Magisk extension")
                 }
                 delete()
             } else File("$dataDir/tmp").apply {
@@ -345,7 +345,7 @@ object PackageManagerService {
     /* Load system service */
     fun entry() {
         searchDataDir()
-        syncWithRiru()
+        syncWithExtension()
         generateToken()
         try {
             initConfig()

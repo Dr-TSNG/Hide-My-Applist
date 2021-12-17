@@ -13,9 +13,9 @@ object ServiceHelper {
     }
 
     @JvmStatic
-    fun getRiruExtensionVersion(): Int {
+    fun getExtensionVersion(): Int {
         return try {
-            appContext.packageManager.getInstallerPackageName("getRiruExtensionVersion")!!.toInt()
+            appContext.packageManager.getInstallerPackageName("getExtensionVersion")!!.toInt()
         } catch (e: IllegalArgumentException) {
             0
         }

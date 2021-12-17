@@ -9,6 +9,7 @@
     <string name="delete">Supprimer</string>
     <string name="save">Sauvegarder</string>
     <string name="copied">Copié</string>
+    <string name="reboot">Redémarrer</string>
 
     <string name="application">Application</string>
     <string name="preference">Réglages</string>
@@ -22,15 +23,19 @@
     <string name="new_update">Nouvelle mise à jour:</string>
     <string name="update_logs">Nouvelles fonctionnalités</string>
 
-    <string name="riru_installed">Extension Magisk installée</string>
-    <string name="riru_not_installed">L\’extension Magisk n\’est pas installée</string>
-    <string name="riru_version_too_old">❌ Version de l\’Extension [Magisk] trop ancienne</string>
-    <string name="riru_apk_version_too_old">❌ Version du service [Magisk] trop ancienne</string>
+    <string name="extension_installed">Extension Magisk installée</string>
+    <string name="extension_not_installed">L\’extension Magisk n\’est pas installée</string>
+    <string name="extension_version_too_old">❌ Version de l\’Extension [Magisk] trop ancienne</string>
+    <string name="extension_apk_version_too_old">❌ Version du service [Magisk] trop ancienne</string>
+    
+    <string name="install_magisk_extension_title">Installer l\’extension Magisk?</string>
+    <string name="install_magisk_extension_message">Install l\’extension Magisk par la racine. Pour plus d\’information, merci de vous référer à la page à propos.</string>
 
     <string name="download_test_app_title">Télécharger l\’application de test</string>
     <string name="download_test_app_message">Nous avons développé une application individuelle de test et avons migré le test de détection dans celle-ci. Voulez-vous la télécharger maintenant?</string>
 
     <string name="title_detection_test">Test De Détection</string>
+    <string name="title_install_extension">Install l\’extension Magisk</string>
     <string name="title_template_manage">Gestion Modèles</string>
     <string name="title_scope_manage">Sélection Applications Éfficaces</string>
     <string name="title_logs">Journaux</string>

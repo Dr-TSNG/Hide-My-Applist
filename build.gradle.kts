@@ -9,13 +9,13 @@ fun String.execute(currentWorkingDir: File = file("./")): String {
 }
 
 val minSdkVer by extra(24)
-val targetSdkVer by extra(31)
-val buildToolsVer by extra("31.0.0")
+val targetSdkVer by extra(32)
+val buildToolsVer by extra("32.0.0")
 
-val appVerName by extra("2.2.4")
-val appVerCode by extra(70)
-val serviceVer by extra(69)
-val minRiruVer by extra(29)
+val appVerName by extra("2.3.1")
+val appVerCode by extra(72)
+val serviceVer by extra(72)
+val minExtensionVer by extra(35)
 val minBackupVer by extra(65)
 
 val gitCommitCount by extra("git rev-list HEAD --count".execute())

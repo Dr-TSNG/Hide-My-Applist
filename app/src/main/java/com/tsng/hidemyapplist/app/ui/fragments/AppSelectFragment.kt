@@ -8,17 +8,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.kyuubiran.ezxhelper.utils.runOnMainThread
-import com.google.android.gms.ads.AdRequest
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.helpers.AppInfoHelper
 import com.tsng.hidemyapplist.app.ui.adapters.AppSelectAdapter
+import com.tsng.hidemyapplist.app.ui.views.Ads
 import com.tsng.hidemyapplist.databinding.FragmentAppSelectBinding
 import java.text.Collator
 import java.util.*
 import kotlin.concurrent.thread
 
 class AppSelectFragment : Fragment() {
+
     companion object {
+
         @JvmStatic
         fun newInstance(selectedApps: Array<String>, requestKey: String? = null) =
             AppSelectFragment().apply {
@@ -48,7 +50,7 @@ class AppSelectFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAppSelectBinding.inflate(inflater, container, false)
-        binding.adBanner.loadAd(AdRequest.Builder().build())
+        binding.adBanner.loadAd(Ads.appSelectAd)
         binding.refreshLayout.setOnRefreshListener { refresh() }.autoRefresh()
         return binding.root
     }
