@@ -1,3 +1,14 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:7.0.4")
+        classpath("com.google.gms:google-services:4.3.10")
+    }
+}
+
 fun String.execute(currentWorkingDir: File = file("./")): String {
     val byteOut = java.io.ByteArrayOutputStream()
     project.exec {
@@ -10,11 +21,10 @@ fun String.execute(currentWorkingDir: File = file("./")): String {
 
 val minSdkVer by extra(24)
 val targetSdkVer by extra(32)
-val buildToolsVer by extra("32.0.0")
 
-val appVerName by extra("2.3.1")
-val appVerCode by extra(72)
-val serviceVer by extra(72)
+val appVerName by extra("2.3.2")
+val appVerCode by extra(73)
+val serviceVer by extra(73)
 val minExtensionVer by extra(35)
 val minBackupVer by extra(65)
 

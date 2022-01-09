@@ -1,6 +1,7 @@
 package com.tsng.hidemyapplist.app.ui.activities
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -115,23 +116,26 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.menu_install_extension -> {
+                val listener: (DialogInterface, Int) -> Unit = { dialog, which ->
+                    val flavor = if (which == DialogInterface.BUTTON_POSITIVE) "Zygisk" else "Riru"
+                    val zipFile = File("$cacheDir/$flavor-HideMyApplist.zip")
+                    assets.open("extension.zip").use { fis ->
+                        zipFile.outputStream().use {
+                            fis.copyTo(it)
+                        }
+                    }
+
+                    dialog.dismiss()
+                    ShellDialog(this)
+                        .setCommands("su --mount-master -c magisk --install-module ${zipFile.absolutePath}")
+                        .create()
+                }
                 MaterialAlertDialogBuilder(this)
                     .setTitle(R.string.install_magisk_extension_title)
                     .setMessage(R.string.install_magisk_extension_message)
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .setPositiveButton(android.R.string.ok) { dialog, _ ->
-                        val zipFile = File("$cacheDir/extension.zip")
-                        assets.open("extension.zip").use { fis ->
-                            zipFile.outputStream().use {
-                                fis.copyTo(it)
-                            }
-                        }
-
-                        dialog.dismiss()
-                        ShellDialog(this)
-                            .setCommands("su --mount-master -c magisk --install-module ${zipFile.absolutePath}")
-                            .create()
-                    }
+                    .setNeutralButton(android.R.string.cancel, null)
+                    .setNegativeButton("Riru", listener)
+                    .setPositiveButton("Zygisk", listener)
                     .show()
             }
             R.id.menu_detection_test -> {
