@@ -22,9 +22,9 @@ fun String.execute(currentWorkingDir: File = file("./")): String {
 val minSdkVer by extra(24)
 val targetSdkVer by extra(32)
 
-val appVerName by extra("2.3.2")
-val appVerCode by extra(73)
-val serviceVer by extra(73)
+val appVerName by extra("2.3.3")
+val appVerCode by extra(74)
+val serviceVer by extra(74)
 val minExtensionVer by extra(35)
 val minBackupVer by extra(65)
 
