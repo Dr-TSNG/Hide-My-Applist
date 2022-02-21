@@ -19,18 +19,6 @@
 # 保留 native 方法的类名和方法名
 -keepclasseswithmembernames class * { native <methods>; }
 
-#---------------------------------默认保留区---------------------------------
--keep public class * extends android.app.Activity
--keep public class * extends android.app.Application
--keep public class * extends android.app.Service
--keep public class * extends android.content.BroadcastReceiver
--keep public class * extends android.content.ContentProvider
--keep public class * extends android.app.backup.BackupAgentHelper
--keep public class * extends android.preference.Preference
--keep public class * extends android.view.View
--keep class android.support.** { *; }
-#--------------------------------------------------------------------------
-
 # Magic
 -keep class com.tsng.hidemyapplist.Magic { *; }
 -keep class com.tsng.hidemyapplist.app.MyApplication {
@@ -51,6 +39,12 @@
 -keep class com.tsng.hidemyapplist.xposed.PackageManagerService
 -keepclassmembers class com.tsng.hidemyapplist.app.MyApplication {
     static final boolean isModuleActivated;
+}
+
+# Enum class
+-keepclassmembers,allowoptimization enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
 }
 
 # Dontwarn
