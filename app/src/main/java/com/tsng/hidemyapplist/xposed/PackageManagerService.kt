@@ -230,10 +230,10 @@ object PackageManagerService {
             if (!isUseHook(caller, hookMethod)) return@hookAfter
 
             when (val it = param.args[0]) {
-                is Intent -> listOf(it.action, it.component?.packageName)
-                is ComponentName -> listOf(it.packageName, it.className)
-                else -> emptyList()
-            }.forEach {
+                is Intent -> it.component?.packageName
+                is ComponentName -> it.packageName
+                else -> null
+            }?.let {
                 if (isToHide(caller, it)) {
                     interceptionCount++
                     param.result = result
