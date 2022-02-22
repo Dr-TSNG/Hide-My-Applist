@@ -37,13 +37,6 @@
         app:listText="Stub" />
 
     <com.tsng.hidemyapplist.app.ui.views.SelectListView
-        android:id="@+id/maps_rules"
-        style="@style/Default"
-        android:layout_marginVertical="10dp"
-        app:listDrawable="@drawable/ic_file_white"
-        app:listText="@string/template_maps_rules_count" />
-
-    <com.tsng.hidemyapplist.app.ui.views.SelectListView
         android:id="@+id/query_param_rules"
         style="@style/Default"
         android:layout_marginVertical="10dp"

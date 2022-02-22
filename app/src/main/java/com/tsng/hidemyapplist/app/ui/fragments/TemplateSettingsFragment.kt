@@ -63,7 +63,6 @@ class TemplateSettingsFragment : Fragment() {
             else getString(R.string.template_apps_invisible_count)
         )
         initAppListView()
-        initMapsRulesView()
         initQueryParamRulesView()
         return binding.root
     }
@@ -143,17 +142,6 @@ class TemplateSettingsFragment : Fragment() {
             setListCount(template.appList.size)
             setOnButtonClickListener {
                 startFragment(AppSelectFragment.newInstance(template.appList.toTypedArray()))
-            }
-        }
-    }
-
-    private fun initMapsRulesView() {
-        with(binding.mapsRules) {
-            setListCount(template.mapsRules.size)
-            setOnButtonClickListener {
-                FilterRulesView.show(activity, template.mapsRules) {
-                    setListCount(template.mapsRules.size)
-                }
             }
         }
     }
