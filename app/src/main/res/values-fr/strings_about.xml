@@ -16,7 +16,7 @@
     </string>
     <string name="about_hook_differences_title">Différences entre les méthodes d\’accrochage</string>
     <string name="about_hook_differences_description">
-        Les applications classiques utilisent certaines requêtes d\’API pour acquérrir la liste d\’applications, mais les mauvaises applications utiliseront d\’autres méthodes (échappatoires) pour détecter celà.\n\n Pour les scannes de cartes, si vous activez un module XPosed pour une applications, alors l\’application cherche /proc/self/maps pour trouver le module. Dans le mode liste noire, les informations des cartes des applications présentes dans la liste seront automatiquement masquées, mais dans le mode liste blanche vous devez configurer celà manuellement.
+        Les applications classiques utilisent certaines requêtes d\’API pour acquérrir la liste d\’applications, mais les mauvaises applications utiliseront d\’autres méthodes (échappatoires) pour détecter celà.
     </string>
     <string name="about_developer">Développeur</string>
     <string name="about_support">Support et commentaires</string>

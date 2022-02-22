@@ -6,17 +6,17 @@
     </string>
     <string name="about_how_to_use_title">如何使用該模組</string>
     <string name="about_how_to_use_description_1">
-        #我是否需要安裝 Magisk 模塊#\n如果你需要檔案攔截、maps 攔截能力，你需要安裝 Magisk 模塊。\n\n注意：Magisk 模塊是一個基於 Riru 的模塊，你需要安裝 Riru v25/26 以上才能工作。
+        #我是否需要安裝 Magisk 模塊#\n如果你需要檔案攔截能力，你需要安裝 Magisk 模塊。\n\n注意：Magisk 模塊是一個基於 Riru/Zygisk 的模塊，你需要安裝 Riru v25/26 或則 Zygisk 以上才能工作。
     </string>
     <string name="about_how_to_use_description_2">
         #如何啟用隱藏#\n在模板管理裡可以建立攔截模板。在選擇生效應用程式裡對目標應用程式啟用模板（或單獨設定）。Xposed 模組作用域需要且只需要勾選「系統框架」。
     </string>
     <string name="about_how_to_use_description_3">
-        #模板修改是實時生效的嗎#\n除了文件檢測攔截和 maps 攔截外，是的。更新文件攔截策略需要強製停止再重啟目標應用程式。
+        #模板修改是實時生效的嗎#\n除了文件檢測攔截外，是的。更新文件攔截策略需要強製停止再重啟目標應用程式。
     </string>
     <string name="about_hook_differences_title">幾種 Hook 方式區別</string>
     <string name="about_hook_differences_description">
-        正常應用程式讀取應用程式列表會使用 API requests 中的部分方法，「不安分」的應用程式會使用其他幾種方式（相當於漏洞）進行檢測。\n\nmaps 掃描是針對啟用的 Xposed 模塊。如果你某個模塊作用域勾選了某個應用程式，那麼該程式就能通過掃描 /proc/self/maps 發現它。黑名單模式下會自動攔截在名單內的maps 資訊，白名單模式需要手動配寘。\n\n一些例子\nAPI requests - 農行\nIntent queries - B站\nFile detections - 步道樂跑\nMaps scan - 支付寶檢測螞蟻森林模塊
+        正常應用程式讀取應用程式列表會使用 API requests 中的部分方法，「不安分」的應用程式會使用其他幾種方式（相當於漏洞）進行檢測。\n\n一些例子\nAPI requests - 農行\nIntent queries - B站\nFile detections - 步道樂跑\n
     </string>
     <string name="about_developer">開發者</string>
     <string name="about_support">支援和回饋</string>

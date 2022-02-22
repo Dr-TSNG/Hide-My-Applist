@@ -6,17 +6,17 @@
     </string>
     <string name="about_how_to_use_title">如何使用该模块</string>
     <string name="about_how_to_use_description_1">
-        #我是否需要安装 magisk 插件#\n如果你需要文件拦截、maps 拦截能力，你需要安装 magisk 插件。\n\n注意：magisk 插件是一个 Riru 模块，你需要安装 Riru v25/26 才能工作。
+        #我是否需要安装 magisk 插件#\n如果你需要文件拦截能力，你需要安装 magisk 插件。\n\n注意：magisk 插件是一个 Riru/Zygisk 模块，你需要安装 Riru v25/26或者Zygisk 才能工作。
     </string>
     <string name="about_how_to_use_description_2">
         #如何启用隐藏#\n在模板管理中可以创建拦截模板。在选择生效应用里对目标应用启用模板（或单独配置）。Xposed 模块作用域需要且*只需要*勾选“系统框架”。
     </string>
     <string name="about_how_to_use_description_3">
-        #模板修改是实时生效的吗#\n除了文件检测拦截和 maps 拦截外，是的。更新文件拦截策略需要强制停止再重启目标 APP。
+        #模板修改是实时生效的吗#\n除了文件检测拦截外，是的。更新文件拦截策略需要强制停止再重启目标 APP。
     </string>
     <string name="about_hook_differences_title">几种 hook 方式区别</string>
     <string name="about_hook_differences_description">
-        正常 app 读取应用列表会使用 API requests 中的部分方法，“不安分”的 app 会使用其他几种方式（相当于漏洞）进行检测。\n\nmaps 扫描是针对启用的 Xposed 模块。如果你某个模块作用域勾选了某个 app，那么该 app 就能通过扫描 /proc/self/maps 发现它。黑名单模式下会自动拦截在名单内的 maps 信息，白名单模式需要手动配置。\n\n一些例子\nAPI requests - 农行\nIntent queries - B站\nFile detections - 步道乐跑\nMaps scan - 支付宝检测蚂蚁森林模块
+        正常 app 读取应用列表会使用 API requests 中的部分方法，“不安分”的 app 会使用其他几种方式（相当于漏洞）进行检测。\n\n一些例子\nAPI requests - 农行\nIntent queries - B站\nFile detections - 步道乐跑
     </string>
     <string name="about_developer">开发者</string>
     <string name="about_support">支持和反馈</string>

@@ -2,7 +2,7 @@ package com.tsng.hidemyapplist.xposed
 
 import com.github.kyuubiran.ezxhelper.init.EzXHelperInit
 import com.github.kyuubiran.ezxhelper.init.InitFields.hostPackageName
-import com.github.kyuubiran.ezxhelper.utils.getFieldBySig
+import com.github.kyuubiran.ezxhelper.utils.getFieldByDesc
 import com.tsng.hidemyapplist.BuildConfig
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.IXposedHookZygoteInit
@@ -19,7 +19,7 @@ class XposedEntry : IXposedHookZygoteInit, IXposedHookLoadPackage {
             EzXHelperInit.setLogTag("HMA Xposed")
             EzXHelperInit.setToastTag("HMA")
             if (hostPackageName == BuildConfig.APPLICATION_ID)
-                getFieldBySig("Lcom/tsng/hidemyapplist/app/MyApplication;->isModuleActivated:Z").setBoolean(null, true)
+                getFieldByDesc("Lcom/tsng/hidemyapplist/app/MyApplication;->isModuleActivated:Z").setBoolean(null, true)
             else
                 PackageManagerService.entry()
         }

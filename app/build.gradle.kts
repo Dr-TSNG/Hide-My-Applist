@@ -7,7 +7,6 @@ import java.io.PrintStream
 
 val minSdkVer: Int by rootProject.extra
 val targetSdkVer: Int by rootProject.extra
-val buildToolsVer: String by rootProject.extra
 
 val appVerName: String by rootProject.extra
 val appVerCode: Int by rootProject.extra
@@ -29,7 +28,6 @@ plugins {
 
 android {
     compileSdk = targetSdkVer
-    buildToolsVersion = buildToolsVer
 
     buildFeatures {
         viewBinding = true
@@ -132,22 +130,22 @@ androidComponents.onVariants { v ->
 }
 
 dependencies {
-    implementation("com.drakeet.about:about:2.4.1")
+    implementation("com.drakeet.about:about:2.5.0")
     implementation("com.drakeet.multitype:multitype:4.3.0")
     implementation("com.scwang.smart:refresh-layout-kernel:2.0.3")
     implementation("com.scwang.smart:refresh-header-material:2.0.3")
-    implementation("com.github.kyuubiran:EzXHelper:0.4.1")
+    implementation("com.github.kyuubiran:EzXHelper:0.6.1")
     implementation("com.github.topjohnwu.libsu:core:3.1.2")
 
-    implementation("com.google.code.gson:gson:2.8.8")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("androidx.preference:preference-ktx:1.1.1")
-    implementation("androidx.fragment:fragment-ktx:1.4.0-alpha10")
-    implementation("androidx.work:work-runtime-ktx:2.7.0")
-    implementation("com.google.android.gms:play-services-ads:20.4.0")
-    implementation("com.google.firebase:firebase-analytics-ktx:19.0.2")
+    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("com.google.android.material:material:1.5.0")
+    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.3")
+    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("androidx.preference:preference-ktx:1.2.0")
+    implementation("androidx.fragment:fragment-ktx:1.4.1")
+    implementation("androidx.work:work-runtime-ktx:2.7.1")
+    implementation("com.google.android.gms:play-services-ads:20.5.0")
+    implementation("com.google.firebase:firebase-analytics-ktx:20.1.0")
 
     compileOnly("de.robv.android.xposed:api:82")
     compileOnly("de.robv.android.xposed:api:82:sources")

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="template_usage_hint">Establish templates for \"restless\" apps, controlling applist they can obtain.\n\nBlacklist (recommended): the apps selected in the template will be invisible to the apps applying the template\nWhitelist: the apps not selected in the template will be invisible to the apps applying the template.\n\nIn the blacklist mode, the maps information of the apps in the list will be automatically hidden, but in the whitelist mode you need configure manually.</string>
+    <string name="template_usage_hint">Establish templates for \"restless\" apps, controlling applist they can obtain.\n\nBlacklist (recommended): the apps selected in the template will be invisible to the apps applying the template\nWhitelist: the apps not selected in the template will be invisible to the apps applying the template.\n</string>
     <string name="template_work_mode">Work mode</string>
     <string name="template_blacklist">Blacklist</string>
     <string name="template_whitelist">Whitelist</string>
@@ -11,11 +11,10 @@
     <string name="template_name">Template name</string>
     <string name="template_name_cannot_be_empty">Template name cannot be empty</string>
     <string name="template_name_already_exist">Template name already exist</string>
-    <string name="template_used_count">Applied to # apps</string>
-    <string name="template_apps_visible_count"># apps visible</string>
-    <string name="template_apps_invisible_count"># apps invisible</string>
-    <string name="template_maps_rules_count"># maps rules</string>
-    <string name="template_query_param_rules_count"># query param rules</string>
+    <string name="template_used_count">Applied to %d apps</string>
+    <string name="template_apps_visible_count">%d apps visible</string>
+    <string name="template_apps_invisible_count">%d apps invisible</string>
+    <string name="template_query_param_rules_count">%d query param rules</string>
 
     <string name="template_enable_hide">Enable hide</string>
     <string name="template_enable_all_hooks">Enable all hide methods</string>
@@ -24,11 +23,10 @@
     <string name="template_choose">Choose template</string>
     <string name="template_exclude_system_apps">Exclude system apps</string>
     <string name="template_exclude_system_apps_summary">If this is not enabled, remember to check webview in whitelist to avoid crashes of built-in browser</string>
-    <string name="template_applied_count"># templates applied</string>
-    <string name="template_extra_apps_visible_count"># additional apps visible</string>
-    <string name="template_extra_apps_invisible_count"># additional apps invisible</string>
-    <string name="template_extra_maps_rules_count"># additional maps rules</string>
-    <string name="template_extra_query_param_rules_count"># additional query param rules</string>
+    <string name="template_applied_count">%d templates applied</string>
+    <string name="template_extra_apps_visible_count">%d additional apps visible</string>
+    <string name="template_extra_apps_invisible_count">%d additional apps invisible</string>
+    <string name="template_extra_query_param_rules_count">%d additional query param rules</string>
     <string name="template_copy_app_config">Copy this config to other apps</string>
 
     <string name="template_add_filter_rules">Add custom interception rules</string>

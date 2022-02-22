@@ -93,7 +93,7 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
             ?.setOnPreferenceClickListener {
                 appConfig.applyTemplates.clear()
                 appConfig.extraAppList.clear()
-                updateView();
+                updateView()
                 true
             }
 
@@ -144,20 +144,13 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
-        preferenceScreen.findPreference<Preference>("extraMapsRules")
-            ?.setOnPreferenceClickListener {
-                FilterRulesView.show(requireActivity(), appConfig.extraMapsRules) {
-                    it.title = getString(R.string.template_extra_maps_rules_count)
-                        .replace(Regex("#"), appConfig.extraMapsRules.size.toString())
-                }
-                true
-            }
-
         preferenceScreen.findPreference<Preference>("extraQueryParamRules")
             ?.setOnPreferenceClickListener {
                 FilterRulesView.show(requireActivity(), appConfig.extraQueryParamRules) {
-                    it.title = getString(R.string.template_extra_query_param_rules_count)
-                        .replace(Regex("#"), appConfig.extraQueryParamRules.size.toString())
+                    it.title = getString(
+                        R.string.template_extra_query_param_rules_count,
+                        appConfig.extraQueryParamRules.size
+                    )
                 }
                 true
             }
@@ -167,28 +160,17 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
 
     private fun updateView() {
         preferenceScreen.findPreference<Preference>("applyTemplates")?.title =
-            getString(R.string.template_applied_count).replace(
-                Regex("#"),
-                appConfig.applyTemplates.size.toString()
-            )
+            getString(R.string.template_applied_count, appConfig.applyTemplates.size)
 
         preferenceScreen.findPreference<Preference>("extraAppList")?.title =
             getString(
                 if (appConfig.useWhitelist) R.string.template_extra_apps_visible_count
-                else R.string.template_extra_apps_invisible_count
-            ).replace(Regex("#"), appConfig.extraAppList.size.toString())
-
-        preferenceScreen.findPreference<Preference>("extraMapsRules")?.title =
-            getString(R.string.template_extra_maps_rules_count).replace(
-                Regex("#"),
-                appConfig.extraMapsRules.size.toString()
+                else R.string.template_extra_apps_invisible_count,
+                appConfig.extraAppList.size
             )
 
         preferenceScreen.findPreference<Preference>("extraQueryParamRules")?.title =
-            getString(R.string.template_extra_query_param_rules_count).replace(
-                Regex("#"),
-                appConfig.extraQueryParamRules.size.toString()
-            )
+            getString(R.string.template_extra_query_param_rules_count).format(appConfig.extraQueryParamRules.size)
     }
 
     private fun save() {

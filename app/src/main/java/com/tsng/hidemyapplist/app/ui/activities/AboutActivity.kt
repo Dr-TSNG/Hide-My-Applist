@@ -7,7 +7,6 @@ import com.drakeet.about.*
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
 
-
 class AboutActivity : AbsAboutActivity() {
 
     @SuppressLint("SetTextI18n")
@@ -33,6 +32,8 @@ class AboutActivity : AbsAboutActivity() {
 
         items.add(Category(getString(R.string.about_developer)))
         items.add(Contributor(R.drawable.cont_author, "\uD835\uDD93\uD835\uDD9A\uD835\uDD91\uD835\uDD91\uD835\uDD95\uD835\uDD99\uD835\uDD97", "Developer", "https://github.com/Dr-TSNG"))
+        items.add(Line())
+        items.add(Contributor(R.drawable.cont_k, "Ketal", "Collaborator", "https://github.com/keta1"))
         items.add(Line())
         items.add(Contributor(R.drawable.cont_icon_designer, "辉少菌", "Icon designer", "http://www.coolapk.com/u/1560270"))
         items.add(Line())

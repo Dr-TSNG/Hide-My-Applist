@@ -1,16 +1,3 @@
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-    plugins {
-        id("com.android.application").version("7.0.4")
-        id("com.android.library").version("7.0.4")
-        id("org.jetbrains.kotlin.android").version("1.5.31")
-    }
-}
-
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -22,13 +9,16 @@ dependencyResolutionManagement {
     }
 }
 
-buildscript {
+pluginManagement {
     repositories {
+        gradlePluginPortal()
         google()
         mavenCentral()
     }
-    dependencies {
-        classpath("com.google.gms:google-services:4.3.10")
+    plugins {
+        id("com.android.application").version("7.1.1")
+        id("com.android.library").version("7.1.1")
+        id("org.jetbrains.kotlin.android").version("1.6.10")
     }
 }
 

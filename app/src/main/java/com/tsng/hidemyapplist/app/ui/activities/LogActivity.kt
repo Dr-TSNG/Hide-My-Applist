@@ -1,6 +1,7 @@
 package com.tsng.hidemyapplist.app.ui.activities
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -8,12 +9,14 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.helpers.ServiceHelper
+import com.tsng.hidemyapplist.databinding.ActivityLogBinding
 import com.tsng.hidemyapplist.databinding.FragmentLogRawBinding
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
 class LogActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLogBinding
     var rawLogs: String? = null
     var showRawLogs: Boolean = true
 
@@ -75,7 +78,8 @@ class LogActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_log)
+        binding = ActivityLogBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         rawLogs = ServiceHelper.getLogs()

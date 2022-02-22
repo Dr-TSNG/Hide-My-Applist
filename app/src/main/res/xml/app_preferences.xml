@@ -52,10 +52,6 @@
             android:title="@string/template_exclude_system_apps" />
         <Preference
             android:icon="@drawable/ic_file_white"
-            android:key="extraMapsRules"
-            android:title="Stub" />
-        <Preference
-            android:icon="@drawable/ic_file_white"
             android:key="extraQueryParamRules"
             android:title="Stub" />
     </PreferenceCategory>

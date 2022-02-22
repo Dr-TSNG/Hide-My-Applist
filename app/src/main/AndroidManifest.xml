@@ -33,22 +33,17 @@
             android:name=".app.SubmitConfigService"
             android:enabled="true" />
 
-        <activity
-            android:name=".app.ui.activities.ModuleActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name=".app.ui.activities.ModuleActivity" />
 
         <activity
             android:name="com.tsng.hidemyapplist.app.ui.activities.LogActivity"
-            android:label="@string/title_logs"
-            android:screenOrientation="portrait" />
+            android:label="@string/title_logs" />
         <activity
             android:name="com.tsng.hidemyapplist.app.ui.activities.AboutActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.About" />
         <activity
             android:name=".app.ui.activities.MainActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS" />

@@ -20,6 +20,8 @@
 
 package com.tsng.hidemyapplist.xposed
 
+import android.content.ComponentName
+import android.content.Intent
 import android.content.pm.ApplicationInfo
 import com.github.kyuubiran.ezxhelper.utils.*
 import com.tsng.hidemyapplist.BuildConfig
@@ -218,6 +220,26 @@ object PackageManagerService {
                 interceptionCount++
                 param.result = result
                 Log.i("@Hide PMS caller: $caller method: ${param.method.name} param: ${param.args[0]}")
+            }
+        })
+    }
+
+    private fun resolveIntent(method: Method, hookMethod: String, result: Any?) {
+        allHooks.add(method.hookAfter { param ->
+            val caller = param.thisObject.getBinderCaller()
+            if (!isUseHook(caller, hookMethod)) return@hookAfter
+
+            when (val it = param.args[0]) {
+                is Intent -> it.component?.packageName
+                is ComponentName -> it.packageName
+                else -> null
+            }?.let {
+                if (isToHide(caller, it)) {
+                    interceptionCount++
+                    param.result = result
+                    Log.i("@Hide PMS caller: $caller method: ${param.method.name} param: ${param.args[0]}")
+                    return@hookAfter
+                }
             }
         })
     }
@@ -435,6 +457,11 @@ object PackageManagerService {
             "queryIntentServices",
             "queryIntentContentProviders"
             -> removeList(method, true, "Intent queries", listOf("activityInfo", "packageName"))
+
+            "getActivityInfo",
+            "resolveActivity",
+            "resolveActivityAsUser"
+            -> resolveIntent(method, "Intent queries", null)
 
             "getPackageUid"
             -> setResult(method, "ID detections", -1)
