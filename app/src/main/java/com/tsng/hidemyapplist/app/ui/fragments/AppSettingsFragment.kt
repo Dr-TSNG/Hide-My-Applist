@@ -170,7 +170,10 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
             )
 
         preferenceScreen.findPreference<Preference>("extraQueryParamRules")?.title =
-            getString(R.string.template_extra_query_param_rules_count).format(appConfig.extraQueryParamRules.size)
+            getString(
+                R.string.template_extra_query_param_rules_count,
+                appConfig.extraQueryParamRules.size
+            )
     }
 
     private fun save() {

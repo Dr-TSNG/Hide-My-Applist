@@ -34,7 +34,7 @@ class SelectListView(context: Context, attrs: AttributeSet?) : ConstraintLayout(
     }
 
     fun setListCount(cnt: Int) {
-        textView.text = String.format(rawText.toString(), cnt)
+        textView.text = rawText.toString().format(cnt)
     }
 
     fun setOnButtonClickListener(l: OnClickListener?) {
