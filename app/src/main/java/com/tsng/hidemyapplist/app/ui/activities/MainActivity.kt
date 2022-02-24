@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     .show()
             }
             R.id.menu_detection_test -> {
-                val intent = packageManager.getLaunchIntentForPackage("com.tsng.applistdetector")
+                val intent = packageManager.getLaunchIntentForPackage("icu.nullptr.applistdetector")
                 if (intent == null) {
                     MaterialAlertDialogBuilder(this)
                         .setTitle(R.string.download_test_app_title)
