@@ -23,14 +23,6 @@
     <string name="new_update">New update:</string>
     <string name="update_logs">New features</string>
 
-    <string name="extension_installed">Magisk extension installed</string>
-    <string name="extension_not_installed">Magisk extension not installed</string>
-    <string name="extension_version_too_old">❌ [Magisk] Extension version too old</string>
-    <string name="extension_apk_version_too_old">❌ [Magisk] System service version too old</string>
-
-    <string name="install_magisk_extension_title">Install Magisk extension?</string>
-    <string name="install_magisk_extension_message">Install Magisk extension by root. For more information, please refer to the about page.</string>
-
     <string name="download_test_app_title">Download test app</string>
     <string name="download_test_app_message">We have developed an individual detection test app and migrated detection test to it. Do you want to download it now?</string>
 

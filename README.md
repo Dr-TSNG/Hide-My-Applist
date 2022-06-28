@@ -1,7 +1,5 @@
 # Hide My Applist
 
-## This project is suspended 此项目已停更
-
 [![Stars](https://img.shields.io/github/stars/Dr-TSNG/Hide-My-Applist?label=Stars)](https://github.com/Dr-TSNG)
 [![Release](https://img.shields.io/github/v/release/Dr-TSNG/Hide-My-Applist?label=Release)](https://github.com/Dr-TSNG/Hide-My-Applist/releases/latest)
 [![Download](https://img.shields.io/github/downloads/Dr-TSNG/Hide-My-Applist/total)](https://github.com/Dr-TSNG/Hide-My-Applist/releases/latest)
@@ -27,18 +25,8 @@ This module can work as an Xposed module to hide apps or reject app list request
 该模块提供了一些检测方式用于测试您是否成功地隐藏了某些特定的包名，如 Magisk/Edxposed Manager；同时可作为 Xposed 模块用于隐藏应用列表或特定应用，保护隐私。  
 
 ## Document
-### Maps scan rules
-Maps refers to /proc/self/maps (See [Linux manpage](https://man7.org/linux/man-pages/man5/proc.5.html) for more information).  
-When something such as an Xposed module or a Zygisk module injects into target app, it will show its path on /proc/\<pid\>/maps. Though LSPosed and Riru did some work to make module maps info anonymous, if a module dlopen a native library by itself, the loaded so path will still be written on maps (Such module like QNotified).  
-
-How to use it: paths that contains configured strings will be filtered on /proc/self/maps  
-Notice that under **MOST** circumstances you do not need to switch on this interception nor need to add any rule.
 ### Custom query params
 This refers to the string params of methods of [PackageManagerService](https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/pm/PackageManagerService.java)  
 
 How to use it: pms methods whose string params contain configured strings will be intercepted  
 Notice that under **MOST** circumstances you do not need to switch on this interception nor need to add any rule.  
-### How did HMA Magisk module work?
-HMA install inline hooks for syscalls and replace the path to dummy to make the app think there "isn't" suspicious files or directories.
-
-However, syscall hook is very **unstable**, and can be detected by some methods. So do not switch on *file detection / maps scan* interceptions if not needed.

@@ -6,7 +6,6 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.tsng.hidemyapplist.JsonConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.JsonConfigManager
 import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
@@ -15,6 +14,7 @@ import com.tsng.hidemyapplist.app.makeToast
 import com.tsng.hidemyapplist.app.startFragment
 import com.tsng.hidemyapplist.app.ui.views.FilterRulesView
 import com.tsng.hidemyapplist.databinding.FragmentTemplateSettingsBinding
+import icu.nullptr.hidemyapplist.common.JsonConfig
 
 class TemplateSettingsFragment : Fragment() {
     companion object {

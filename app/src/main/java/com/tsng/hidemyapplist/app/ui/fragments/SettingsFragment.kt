@@ -9,19 +9,19 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.topjohnwu.superuser.Shell
-import com.tsng.hidemyapplist.BuildConfig
-import com.tsng.hidemyapplist.JsonConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.JsonConfigManager
 import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
 import com.tsng.hidemyapplist.app.helpers.ServiceHelper
 import com.tsng.hidemyapplist.app.makeToast
+import icu.nullptr.hidemyapplist.common.BuildConfig
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
 
 class SettingsFragment : PreferenceFragmentCompat() {
+
     private val backupImportSAFLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri == null) return@registerForActivityResult
@@ -32,23 +32,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 val backupJson: JsonObject
                 val backupVersion: Int
                 try {
-                    backupJson = JsonParser.parseString(backup).asJsonObject
-                    backupVersion = backupJson["configVersion"].asInt
+
+                    backupJson = Json.parseToJsonElement(backup) as JsonObject
+                    backupVersion = backupJson["configVersion"].toString().toInt()
                 } catch (e: Exception) {
                     throw RuntimeException(getString(R.string.settings_import_file_damaged))
                         .apply { addSuppressed(e) }
                 }
-                if (backupVersion > BuildConfig.VERSION_CODE)
+                if (backupVersion > BuildConfig.SERVICE_VERSION)
                     throw RuntimeException(getString(R.string.settings_import_app_version_too_old))
                 if (backupVersion < BuildConfig.MIN_BACKUP_VERSION)
                     throw RuntimeException(getString(R.string.settings_import_backup_version_too_old))
                 JsonConfigManager.edit {
                     templates.clear()
-                    for ((name, template) in backupJson["templates"].asJsonObject.entrySet())
-                        templates[name] = Gson().fromJson(template.toString(), JsonConfig.Template::class.java)
+                    for ((name, template) in backupJson["templates"] as JsonObject)
+                        templates[name] = Json.decodeFromString(template.toString())
                     scope.clear()
-                    for ((name, appConfig) in backupJson["scope"].asJsonObject.entrySet())
-                        scope[name] = Gson().fromJson(appConfig.toString(), JsonConfig.AppConfig::class.java)
+                    for ((name, appConfig) in backupJson["scope"] as JsonObject)
+                        scope[name] = Json.decodeFromString(appConfig.toString())
                 }
                 makeToast(R.string.settings_import_successful)
             } catch (e: Exception) {

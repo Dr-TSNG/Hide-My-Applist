@@ -23,14 +23,6 @@
     <string name="new_update">Nouvelle mise à jour:</string>
     <string name="update_logs">Nouvelles fonctionnalités</string>
 
-    <string name="extension_installed">Extension Magisk installée</string>
-    <string name="extension_not_installed">L\’extension Magisk n\’est pas installée</string>
-    <string name="extension_version_too_old">❌ Version de l\’Extension [Magisk] trop ancienne</string>
-    <string name="extension_apk_version_too_old">❌ Version du service [Magisk] trop ancienne</string>
-    
-    <string name="install_magisk_extension_title">Installer l\’extension Magisk?</string>
-    <string name="install_magisk_extension_message">Install l\’extension Magisk par la racine. Pour plus d\’information, merci de vous référer à la page à propos.</string>
-
     <string name="download_test_app_title">Télécharger l\’application de test</string>
     <string name="download_test_app_message">Nous avons développé une application individuelle de test et avons migré le test de détection dans celle-ci. Voulez-vous la télécharger maintenant?</string>
 

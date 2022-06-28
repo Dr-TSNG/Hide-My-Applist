@@ -1,15 +1,24 @@
-package com.tsng.hidemyapplist
+package icu.nullptr.hidemyapplist.common
 
-import com.google.gson.Gson
+import kotlinx.serialization.Serializable
 
-class JsonConfig {
+@Serializable
+data class JsonConfig(
+    var configVersion: Int = BuildConfig.SERVICE_VERSION,
+    var detailLog: Boolean = false,
+    var maxLogSize: Int = 512,
+    val templates: MutableMap<String, Template> = mutableMapOf(),
+    val scope: MutableMap<String, AppConfig> = mutableMapOf()
+) {
+    @Serializable
     data class Template(
-        val isWhitelist: Boolean,
+        val isWhitelist: Boolean = false,
         val appList: MutableSet<String> = mutableSetOf(),
         val mapsRules: MutableSet<String> = mutableSetOf(),
         val queryParamRules: MutableSet<String> = mutableSetOf()
     )
 
+    @Serializable
     data class AppConfig(
         var useWhitelist: Boolean = false,
         var enableAllHooks: Boolean = false,
@@ -20,26 +29,4 @@ class JsonConfig {
         val extraMapsRules: MutableSet<String> = mutableSetOf(),
         val extraQueryParamRules: MutableSet<String> = mutableSetOf()
     )
-
-    var configVersion = BuildConfig.VERSION_CODE
-    var detailLog = false
-    var maxLogSize = 512
-    val templates = mutableMapOf<String, Template>()
-    val scope = mutableMapOf<String, AppConfig>()
-
-    override fun toString(): String {
-        return Gson().toJson(this)
-    }
-
-    fun clear() {
-        templates.clear()
-        scope.clear()
-    }
-
-    companion object {
-        @JvmStatic
-        fun fromJson(str: String): JsonConfig {
-            return Gson().fromJson(str, JsonConfig::class.java)
-        }
-    }
 }

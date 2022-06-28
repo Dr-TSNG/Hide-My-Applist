@@ -23,14 +23,6 @@
     <string name="new_update">新版本可用：</string>
     <string name="update_logs">更新日志</string>
 
-    <string name="install_magisk_extension_title">安装 Magisk 插件？</string>
-    <string name="install_magisk_extension_message">通过 root 安装插件，更多信息请查看关于页面。</string>
-
-    <string name="extension_installed">Magisk 插件已安装</string>
-    <string name="extension_not_installed">Magisk 插件未安装</string>
-    <string name="extension_version_too_old">❌ [Magisk] 插件版本过旧</string>
-    <string name="extension_apk_version_too_old">❌ [Magisk] 系统服务版本过旧</string>
-
     <string name="download_test_app_title">下载测试 app</string>
     <string name="download_test_app_message">我们开发了一个独立测试 app，并将检测测试迁移了过去。是否现在下载？</string>
 

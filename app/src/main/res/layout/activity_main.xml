@@ -41,15 +41,6 @@
                     android:textColor="@android:color/white" />
 
                 <TextView
-                    android:id="@+id/extension_status_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    android:textColor="@android:color/white"
-                    android:visibility="gone" />
-
-                <TextView
                     android:id="@+id/serve_times"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -88,26 +79,6 @@
                     <TextView
                         style="@style/DefaultText.Option.Card"
                         android:text="@string/title_detection_test" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/menu_install_extension"
-                style="@style/DefaultCard"
-                android:visibility="gone"
-                app:cardElevation="0dp">
-
-                <LinearLayout
-                    style="@style/Default"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        style="@style/DefaultImage"
-                        android:src="@drawable/ic_install" />
-
-                    <TextView
-                        style="@style/DefaultText.Option.Card"
-                        android:text="@string/title_install_extension" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

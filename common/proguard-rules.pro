@@ -1,0 +1,2 @@
+-keep class icu.nullptr.hidemyapplist.common.JsonConfig { *; }
+-keep class icu.nullptr.hidemyapplist.common.JsonConfig$* { *; }

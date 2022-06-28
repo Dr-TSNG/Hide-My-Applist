@@ -23,14 +23,6 @@
     <string name="new_update">新版本可用：</string>
     <string name="update_logs">更新日誌</string>
 
-    <string name="install_magisk_extension_title">安裝 Magisk 模塊？</string>
-    <string name="install_magisk_extension_message">透過 ROOT 安裝模塊，更多資訊請檢視關於頁面。</string>
-
-    <string name="extension_installed">Magisk 模組已安裝</string>
-    <string name="extension_not_installed">Magisk 模組未安裝</string>
-    <string name="extension_version_too_old">❌ [Magisk] 模組版本過舊</string>
-    <string name="extension_apk_version_too_old">❌ [Magisk] 系統服務版本過舊</string>
-
     <string name="download_test_app_title">下載測試 App</string>
     <string name="download_test_app_message">我們開發了一個獨立測試 App，並將檢測測試遷移了過去，是否現在下載？</string>
 

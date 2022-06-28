@@ -6,7 +6,6 @@
         <item>API requests</item>
         <item>Intent queries</item>
         <item>ID detections</item>
-        <item>File detections</item>
     </string-array>
     <string-array name="max_log_size_entries">
         <item>256K</item>

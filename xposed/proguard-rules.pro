@@ -1,0 +1,1 @@
+-keep class icu.nullptr.hidemyapplist.xposed.XposedEntry

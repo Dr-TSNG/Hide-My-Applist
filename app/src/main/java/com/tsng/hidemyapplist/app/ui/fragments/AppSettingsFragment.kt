@@ -12,7 +12,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.tsng.hidemyapplist.JsonConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.JsonConfigManager
 import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
@@ -22,6 +21,7 @@ import com.tsng.hidemyapplist.app.helpers.AppConfigDataStorage
 import com.tsng.hidemyapplist.app.makeToast
 import com.tsng.hidemyapplist.app.startFragment
 import com.tsng.hidemyapplist.app.ui.views.FilterRulesView
+import icu.nullptr.hidemyapplist.common.JsonConfig
 
 class AppSettingsFragment : PreferenceFragmentCompat() {
     companion object {

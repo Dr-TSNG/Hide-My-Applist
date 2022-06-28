@@ -1,65 +1,50 @@
 package com.tsng.hidemyapplist.app.helpers
 
-import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
+import android.os.Parcel
+import android.os.RemoteException
+import android.os.ServiceManager
+import android.util.Log
+import icu.nullptr.hidemyapplist.common.Constants
+import icu.nullptr.hidemyapplist.common.IHMAService
 
 object ServiceHelper {
-    @JvmStatic
-    fun getServiceVersion(): Int {
-        return try {
-            appContext.packageManager.getInstallerPackageName("getServiceVersion")!!.toInt()
-        } catch (e: IllegalArgumentException) {
-            0
-        }
-    }
 
-    @JvmStatic
-    fun getExtensionVersion(): Int {
-        return try {
-            appContext.packageManager.getInstallerPackageName("getExtensionVersion")!!.toInt()
-        } catch (e: IllegalArgumentException) {
-            0
-        }
-    }
+    private const val TAG = "ServiceHelper"
 
-    @JvmStatic
-    fun getServeTimes(): Int {
+    private fun getService(): IHMAService? {
+        val pm = ServiceManager.getService("package")
+        val data = Parcel.obtain()
+        val reply = Parcel.obtain()
         return try {
-            appContext.packageManager.getInstallerPackageName("getServeTimes")!!.toInt()
-        } catch (e: IllegalArgumentException) {
-            0
-        }
-    }
-
-    @JvmStatic
-    fun getLogs(): String? {
-        return try {
-            appContext.packageManager.getInstallerPackageName("getLogs")
-        } catch (e: IllegalArgumentException) {
+            data.enforceInterface(Constants.DESCRIPTOR)
+            data.writeInt(Constants.ACTION_GET_BINDER)
+            pm.transact(Constants.TRANSACTION, data, reply, 0)
+            val binder = reply.readStrongBinder()
+            IHMAService.Stub.asInterface(binder)
+        } catch (e: RemoteException) {
+            Log.d(TAG, "Failed to get binder")
             null
+        } finally {
+            data.recycle()
+            reply.recycle()
         }
     }
 
-    @JvmStatic
+    fun getServiceVersion() = getService()?.serviceVersion ?: 0
+
+    fun getServeTimes() = getService()?.filterCount ?: 0
+
+    fun getLogs() = getService()?.logs
+
     fun cleanLogs() {
-        try {
-            appContext.packageManager.getInstallerPackageName("cleanLogs")
-        } catch (e: IllegalArgumentException) {
-        }
+        getService()?.clearLogs()
     }
 
-    @JvmStatic
     fun submitConfig(json: String) {
-        try {
-            appContext.packageManager.getInstallerPackageName("submitConfig#$json")
-        } catch (e: IllegalArgumentException) {
-        }
+        getService()?.syncConfig(json)
     }
 
-    @JvmStatic
     fun stopSystemService(cleanEnv: Boolean) {
-        try {
-            appContext.packageManager.getInstallerPackageName("stopSystemService#$cleanEnv")
-        } catch (e: IllegalArgumentException) {
-        }
+        getService()?.stopService(cleanEnv)
     }
 }
