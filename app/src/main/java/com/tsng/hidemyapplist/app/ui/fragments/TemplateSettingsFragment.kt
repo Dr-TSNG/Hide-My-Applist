@@ -9,7 +9,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.JsonConfigManager
 import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
-import com.tsng.hidemyapplist.app.deepCopy
 import com.tsng.hidemyapplist.app.makeToast
 import com.tsng.hidemyapplist.app.startFragment
 import com.tsng.hidemyapplist.app.ui.views.FilterRulesView
@@ -40,7 +39,7 @@ class TemplateSettingsFragment : Fragment() {
         val isWhitelist = requireArguments().getBoolean("isWhitelist")
         oldTemplateName = requireArguments().getString("templateName")
         template = if (oldTemplateName == null) JsonConfig.Template(isWhitelist)
-        else globalConfig.templates[oldTemplateName]!!.deepCopy()
+        else globalConfig.templates[oldTemplateName]!!.copy()
 
         setFragmentResultListener("appSelectResult") { _, bundle ->
             bundle.getStringArray("selectedApps")?.let {

@@ -16,9 +16,7 @@ import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
 import com.tsng.hidemyapplist.app.helpers.ServiceHelper
 import com.tsng.hidemyapplist.app.makeToast
 import icu.nullptr.hidemyapplist.common.BuildConfig
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
+import icu.nullptr.hidemyapplist.common.JsonConfig
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -26,30 +24,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri == null) return@registerForActivityResult
             try {
-                val backup = appContext.contentResolver
+                val backupJson = appContext.contentResolver
                     .openInputStream(uri)?.reader().use { it?.readText() }
                     ?: throw RuntimeException(getString(R.string.settings_import_file_damaged))
-                val backupJson: JsonObject
-                val backupVersion: Int
+                val backup: JsonConfig
                 try {
-
-                    backupJson = Json.parseToJsonElement(backup) as JsonObject
-                    backupVersion = backupJson["configVersion"].toString().toInt()
+                    backup = JsonConfig.parse(backupJson)
                 } catch (e: Exception) {
-                    throw RuntimeException(getString(R.string.settings_import_file_damaged))
-                        .apply { addSuppressed(e) }
+                    throw RuntimeException(getString(R.string.settings_import_file_damaged), e)
                 }
-                if (backupVersion > BuildConfig.SERVICE_VERSION)
+                if (backup.configVersion > BuildConfig.SERVICE_VERSION)
                     throw RuntimeException(getString(R.string.settings_import_app_version_too_old))
-                if (backupVersion < BuildConfig.MIN_BACKUP_VERSION)
+                if (backup.configVersion < BuildConfig.MIN_BACKUP_VERSION)
                     throw RuntimeException(getString(R.string.settings_import_backup_version_too_old))
                 JsonConfigManager.edit {
                     templates.clear()
-                    for ((name, template) in backupJson["templates"] as JsonObject)
-                        templates[name] = Json.decodeFromString(template.toString())
+                    templates.putAll(backup.templates)
                     scope.clear()
-                    for ((name, appConfig) in backupJson["scope"] as JsonObject)
-                        scope[name] = Json.decodeFromString(appConfig.toString())
+                    scope.putAll(backup.scope)
                 }
                 makeToast(R.string.settings_import_successful)
             } catch (e: Exception) {

@@ -5,20 +5,18 @@ import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
 import icu.nullptr.hidemyapplist.common.JsonConfig
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import java.io.File
 
 object JsonConfigManager {
+
     val configFile = File("${appContext.filesDir.absolutePath}/config.json")
     val globalConfig: JsonConfig
 
     init {
         if (!configFile.exists())
-            configFile.writeText(Json.encodeToString(JsonConfig()))
+            configFile.writeText(JsonConfig().toString())
         try {
-            globalConfig = Json.decodeFromString(configFile.readText())
+            globalConfig = JsonConfig.parse(configFile.readText())
             val configVersion = globalConfig.configVersion
             if (configVersion < 49) throw RuntimeException("Config version too old")
             if (configVersion < 65) migrateFromPre65()

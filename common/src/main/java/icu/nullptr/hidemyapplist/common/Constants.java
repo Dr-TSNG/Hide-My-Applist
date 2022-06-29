@@ -11,5 +11,4 @@ public class Constants {
     public static final String DESCRIPTOR = "android.content.pm.IPackageManager";
     public static final int TRANSACTION = 'H' << 24 | 'M' << 16 | 'A' << 8 | 'D';
     public static final int ACTION_GET_BINDER = 1;
-    public static final int ACTION_SEND_LOG = 2;
 }

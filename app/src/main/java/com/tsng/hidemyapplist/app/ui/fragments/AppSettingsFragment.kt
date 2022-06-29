@@ -3,9 +3,6 @@ package com.tsng.hidemyapplist.app.ui.fragments
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
 import androidx.preference.Preference
@@ -16,7 +13,6 @@ import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.JsonConfigManager
 import com.tsng.hidemyapplist.app.JsonConfigManager.globalConfig
 import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
-import com.tsng.hidemyapplist.app.deepCopy
 import com.tsng.hidemyapplist.app.helpers.AppConfigDataStorage
 import com.tsng.hidemyapplist.app.makeToast
 import com.tsng.hidemyapplist.app.startFragment
@@ -35,27 +31,16 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
     private lateinit var packageName: String
     private lateinit var appConfig: JsonConfig.AppConfig
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.delete_and_save, menu)
-        menu.findItem(R.id.toolbar_delete).isVisible = false
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.toolbar_save -> {
-                save()
-                activity?.onBackPressed()
-            }
-            else -> return false
+    override fun onDestroy() {
+        if (!(preferenceManager.preferenceDataStore as AppConfigDataStorage).isEnabled) {
+            globalConfig.scope.remove(packageName)
         }
-        return true
+        super.onDestroy()
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setHasOptionsMenu(true)
         packageName = requireArguments().getString("packageName")!!
-        appConfig = if (!globalConfig.scope.containsKey(packageName)) JsonConfig.AppConfig()
-        else globalConfig.scope[packageName]!!.deepCopy()
+        appConfig = globalConfig.scope.putIfAbsent(packageName, JsonConfig.AppConfig())!!
 
         preferenceManager.preferenceDataStore =
             AppConfigDataStorage(appConfig).apply {
@@ -81,7 +66,6 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
 
         setFragmentResultListener("copyConfig") { _, bundle ->
             bundle.getStringArray("selectedApps")?.let { arr ->
-                save()
                 JsonConfigManager.edit {
                     arr.forEach { scope[it] = appConfig }
                 }
@@ -174,13 +158,5 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
                 R.string.template_extra_query_param_rules_count,
                 appConfig.extraQueryParamRules.size
             )
-    }
-
-    private fun save() {
-        JsonConfigManager.edit {
-            if ((preferenceManager.preferenceDataStore as AppConfigDataStorage).isEnabled)
-                scope[packageName] = appConfig
-            else scope.remove(packageName)
-        }
     }
 }

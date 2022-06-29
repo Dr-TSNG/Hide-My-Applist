@@ -7,26 +7,26 @@ import android.content.pm.IPackageManager
 import android.util.Log
 import com.github.kyuubiran.ezxhelper.utils.*
 import de.robv.android.xposed.XC_MethodHook
-import de.robv.android.xposed.XposedBridge
-import icu.nullptr.hidemyapplist.common.Constants
-import icu.nullptr.hidemyapplist.common.JsonConfig
 import icu.nullptr.hidemyapplist.common.BuildConfig
+import icu.nullptr.hidemyapplist.common.Constants
 import icu.nullptr.hidemyapplist.common.IHMAService
+import icu.nullptr.hidemyapplist.common.JsonConfig
 import icu.nullptr.hidemyapplist.xposed.Utils.getBinderCaller
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import java.io.File
 import java.lang.reflect.Method
-import java.text.SimpleDateFormat
-import java.util.*
-
-private const val TAG = "HMA-Service"
 
 class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
 
-    var hooksInstalled = false
+    companion object {
+        private const val TAG = "HMA-Service"
+        var instance: HMAService? = null
+    }
+
+    @Volatile
+    var logcatAvailable = false
 
     private lateinit var dataDir: String
+    private lateinit var configFile: File
     private lateinit var logFile: File
     private lateinit var oldLogFile: File
 
@@ -34,7 +34,7 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
     private val loggerLock = Any()
     private val systemApps = mutableSetOf<String>()
     private val allHooks = mutableSetOf<XC_MethodHook.Unhook>()
-    private fun XC_MethodHook.Unhook.yes() { allHooks.add(this) }
+    private fun XC_MethodHook.Unhook.yes() = allHooks.add(this)
 
     private var config = JsonConfig()
     private var filterCount = 0
@@ -51,12 +51,9 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         searchDataDir()
         loadConfig()
         installHooks()
+        instance = this
+        logI(TAG, "HMAService initialized")
     }
-
-    fun logD(tag: String, msg: String) = sendLog(Log.DEBUG, tag, msg)
-    fun logI(tag: String, msg: String) = sendLog(Log.INFO, tag, msg)
-    fun logW(tag: String, msg: String) = sendLog(Log.WARN, tag, msg)
-    fun logE(tag: String, msg: String) = sendLog(Log.ERROR, tag, msg)
 
     private fun searchDataDir() {
         File("/data/misc/hide_my_applist").deleteRecursively()
@@ -69,17 +66,30 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         if (!this::dataDir.isInitialized) {
             dataDir = "/data/system/hide_my_applist_" + Utils.generateRandomString(16)
         }
-        logFile = File("$dataDir/tmp/runtime.log")
-        oldLogFile = File("$dataDir/tmp/old.log")
+
+        File("$dataDir/log").mkdirs()
+        configFile = File("$dataDir/config.json")
+        logFile = File("$dataDir/log/runtime.log")
+        oldLogFile = File("$dataDir/log/old.log")
+        logFile.renameTo(oldLogFile)
+
+        logcatAvailable = true
+        logI(TAG, "Data dir: $dataDir")
     }
 
     private fun loadConfig() {
-        filterCount = File("$dataDir/filter_count").readText().toInt()
-        val json = File("$dataDir/config.json").readText()
+        File("$dataDir/filter_count").also {
+            if (it.exists()) filterCount = it.readText().toInt()
+        }
+        if (!configFile.exists()) {
+            logI(TAG, "Config file not found")
+            return
+        }
         val loading = runCatching {
-            Json.decodeFromString<JsonConfig>(json)
+            val json = configFile.readText()
+            JsonConfig.parse(json)
         }.getOrElse {
-            logE(TAG, "Failed to parse config.json")
+            logE(TAG, "Failed to parse config.json", it)
             return
         }
         if (loading.configVersion != BuildConfig.SERVICE_VERSION) {
@@ -144,7 +154,6 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
             -> setResult(method, "ID detections", -1).yes()
         }
 
-        hooksInstalled = true
         logI(TAG, "Hooks installed")
     }
 
@@ -242,24 +251,42 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
     }
 
     override fun stopService(cleanEnv: Boolean) {
+        logI(TAG, "Stop service")
+        synchronized(loggerLock) {
+            logcatAvailable = false
+        }
         synchronized(configLock) {
             allHooks.forEach(XC_MethodHook.Unhook::unhook)
             allHooks.clear()
-            hooksInstalled = false
+            if (cleanEnv) {
+                logI(TAG, "Clean runtime environment")
+                File(dataDir).deleteRecursively()
+                return
+            }
         }
-        logI(TAG, "Hooks cleared")
+        instance = null
+    }
+
+    fun addLog(level: Int, parsedMsg: String) {
+        if (level <= Log.DEBUG && !config.detailLog) return
+        synchronized(loggerLock) {
+            if (!logcatAvailable) return
+            if (logFile.length() / 1024 > config.maxLogSize) clearLogs()
+            logFile.appendText(parsedMsg)
+        }
     }
 
     override fun syncConfig(json: String) {
         synchronized(configLock) {
-            File("$dataDir/config.json").writeText(json)
-            val newConfig = Json.decodeFromString<JsonConfig>(json)
+            configFile.writeText(json)
+            val newConfig = JsonConfig.parse(json)
             if (newConfig.configVersion != BuildConfig.SERVICE_VERSION) {
                 logW(TAG, "Sync config: version mismatch, need reboot")
                 return
             }
+            config = newConfig
         }
-        logI(TAG, "Config synced")
+        logD(TAG, "Config synced")
     }
 
     override fun getServiceVersion() = BuildConfig.SERVICE_VERSION
@@ -267,25 +294,6 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
     override fun getFilterCount() = filterCount
 
     override fun getLogs() = synchronized(loggerLock) { logFile.readText() }
-
-    override fun sendLog(level: Int, tag: String, msg: String) {
-        if (level <= Log.DEBUG && !config.detailLog) return
-        val levelStr = when (level) {
-            Log.DEBUG -> "DEBUG"
-            Log.INFO -> " INFO"
-            Log.WARN -> " WARN"
-            Log.ERROR -> "ERROR"
-            else -> "?????"
-        }
-        val date = SimpleDateFormat("MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
-        var fmt = "[$levelStr] $date ($tag) $msg"
-        if (!msg.endsWith('\n')) fmt += '\n'
-        synchronized(loggerLock) {
-            if (logFile.length() / 1024 > config.maxLogSize) clearLogs()
-            XposedBridge.log(fmt)
-            logFile.appendText(fmt)
-        }
-    }
 
     override fun clearLogs() {
         synchronized(loggerLock) {

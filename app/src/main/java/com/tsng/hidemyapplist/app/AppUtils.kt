@@ -7,9 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.MyApplication.Companion.appContext
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 fun makeToast(@StringRes resId: Int) {
     Toast.makeText(appContext, resId, Toast.LENGTH_SHORT).show()
@@ -18,8 +15,6 @@ fun makeToast(@StringRes resId: Int) {
 fun makeToast(text: CharSequence) {
     Toast.makeText(appContext, text, Toast.LENGTH_SHORT).show()
 }
-
-inline fun <reified T> T.deepCopy(): T = Json.decodeFromString(Json.encodeToString(this))
 
 fun AppCompatActivity.startFragment(fragment: Fragment, addToBackStack: Boolean = true) {
     val transaction = supportFragmentManager

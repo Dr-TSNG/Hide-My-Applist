@@ -16,9 +16,10 @@ object ServiceHelper {
         val data = Parcel.obtain()
         val reply = Parcel.obtain()
         return try {
-            data.enforceInterface(Constants.DESCRIPTOR)
+            data.writeInterfaceToken(Constants.DESCRIPTOR)
             data.writeInt(Constants.ACTION_GET_BINDER)
             pm.transact(Constants.TRANSACTION, data, reply, 0)
+            reply.readException()
             val binder = reply.readStrongBinder()
             IHMAService.Stub.asInterface(binder)
         } catch (e: RemoteException) {

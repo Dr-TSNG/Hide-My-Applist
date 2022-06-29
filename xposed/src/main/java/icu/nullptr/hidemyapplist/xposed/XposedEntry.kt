@@ -4,6 +4,7 @@ import android.content.pm.IPackageManager
 import android.os.ServiceManager
 import android.util.Log
 import com.github.kyuubiran.ezxhelper.init.EzXHelperInit
+import com.github.kyuubiran.ezxhelper.utils.getFieldByDesc
 import com.github.kyuubiran.ezxhelper.utils.hookAllConstructorAfter
 import com.github.kyuubiran.ezxhelper.utils.loadClass
 import de.robv.android.xposed.IXposedHookLoadPackage
@@ -17,10 +18,10 @@ private const val TAG = "HMA-XposedEntry"
 private fun waitSystemService(name: String) {
     while (ServiceManager.getService(name) == null) {
         try {
-            Log.i(TAG, "service $name is not started, wait 1s.")
+            logD(TAG, "service $name is not started, wait 1s")
             Thread.sleep(1000)
         } catch (e: InterruptedException) {
-            Log.i(TAG, Log.getStackTraceString(e))
+            logE(TAG, Log.getStackTraceString(e))
         }
     }
 }
@@ -31,29 +32,39 @@ class XposedEntry : IXposedHookZygoteInit, IXposedHookLoadPackage {
     }
 
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
-        if (lpparam.packageName == "android") {
+        if (lpparam.packageName == Constants.APP_PACKAGE_NAME) {
             EzXHelperInit.initHandleLoadPackage(lpparam)
+            getFieldByDesc("Lcom/tsng/hidemyapplist/app/MyApplication;->isModuleActivated:Z").setBoolean(null, true)
+        } else if (lpparam.packageName == "android") {
+            EzXHelperInit.initHandleLoadPackage(lpparam)
+            logI(TAG, "Hook entry")
 
             var pms: IPackageManager? = null
             val pmsClass = loadClass(Constants.CLASS_PMS)
             pmsClass.hookAllConstructorAfter { param ->
                 pms = param.thisObject as IPackageManager
-                Log.d(TAG, "Got pms: $pms")
+                logI(TAG, "Got pms: $pms")
             }
             Constants.CLASS_EXT_PMS.forEach {
                 runCatching {
                     hookAllConstructorAfter(it) { param ->
                         pms = param.thisObject as IPackageManager
-                        Log.d(TAG, "Got custom pms: $pms")
+                        logI(TAG, "Got custom pms: $pms")
                     }
                 }
             }
+            logD(TAG, "Constructor hooks created")
             thread {
-                waitSystemService("package")
-                if (pms != null) {
-                    BridgeService.start(pms!!)
-                } else {
-                    Log.e(TAG, "Package service started, but instance is not captured")
+                runCatching {
+                    waitSystemService("package")
+                    logI(TAG, "PackageManagerService ready, load bridge service")
+                    if (pms != null) {
+                        BridgeService.start(pms!!)
+                    } else {
+                        logE(TAG, "Package service started, but instance is not captured")
+                    }
+                }.onFailure {
+                    logE(TAG, "System service crashed", it)
                 }
             }
         }

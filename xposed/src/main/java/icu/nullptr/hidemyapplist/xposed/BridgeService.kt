@@ -5,30 +5,37 @@ import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import android.os.Parcel
-import android.util.Log
-import com.github.kyuubiran.ezxhelper.utils.*
+import com.github.kyuubiran.ezxhelper.utils.argTypes
+import com.github.kyuubiran.ezxhelper.utils.hookBefore
+import com.github.kyuubiran.ezxhelper.utils.method
+import com.github.kyuubiran.ezxhelper.utils.staticMethod
 import icu.nullptr.hidemyapplist.common.Constants
 
 object BridgeService {
 
     private const val TAG = "HMA-Bridge"
 
-    @JvmStatic
-    private lateinit var service: HMAService
     private var appUid = 0
 
     fun start(pms: IPackageManager) {
-        service = HMAService(pms)
+        logI(TAG, "Initialize HMAService")
+        val service = HMAService(pms)
         appUid = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             service.pms.getPackageUid(Constants.APP_PACKAGE_NAME, 0L, 0)
         } else {
             service.pms.getPackageUid(Constants.APP_PACKAGE_NAME, 0, 0)
         }
+        logD(TAG, "Client uid: $appUid")
         doHooks()
+        logI(TAG, "Bridge service initialized")
     }
 
     private fun doHooks() {
-        Binder::class.java.method("execTransact").hookBefore { param ->
+        logD(TAG, "Hook binder transact")
+        Binder::class.java.method(
+            "execTransact",
+            argTypes = argTypes(Int::class.java, Long::class.java, Long::class.java, Int::class.java)
+        ).hookBefore { param ->
             val code = param.args[0] as Int
             val dataObj = param.args[1] as Long
             val replyObj = param.args[2] as Long
@@ -39,11 +46,11 @@ object BridgeService {
         }
     }
 
-    private fun execTransact(code: Int, dataObj: Long, replyObj: Long, flags: Int): Boolean {
-        val fromNativePointerMethod by lazy {
-            Parcel::class.java.method("obtain", argTypes = argTypes(Long::class.java))
-        }
+    private val fromNativePointerMethod by lazy {
+        Parcel::class.java.staticMethod("obtain", argTypes = argTypes(Long::class.java))
+    }
 
+    private fun execTransact(code: Int, dataObj: Long, replyObj: Long, flags: Int): Boolean {
         val data = fromNativePointerMethod.invoke(null, dataObj) as Parcel? ?: return false
         val reply = fromNativePointerMethod.invoke(null, replyObj) as Parcel?
 
@@ -51,7 +58,7 @@ object BridgeService {
             onTransact(code, data, reply, flags)
         } catch (e: Exception) {
             if (flags and IBinder.FLAG_ONEWAY != 0) {
-                Log.w(TAG, "Caught an exception from the binder stub implementation.")
+                logW(TAG, "Caught an exception from the binder stub implementation.")
             } else if (reply != null) {
                 reply.setDataPosition(0)
                 reply.writeException(e)
@@ -72,18 +79,14 @@ object BridgeService {
         data.enforceInterface(Constants.DESCRIPTOR)
         return when (data.readInt()) {
             Constants.ACTION_GET_BINDER -> {
-                if (Binder.getCallingUid() == appUid && service.hooksInstalled) {
+                if (Binder.getCallingUid() == appUid && HMAService.instance != null) {
                     reply?.writeNoException()
-                    reply?.writeStrongBinder(service.asBinder())
+                    reply?.writeStrongBinder(HMAService.instance!!.asBinder())
                     true
                 } else {
-                    Log.w(TAG, "Invalid connection")
+                    logW(TAG, "Invalid connection")
                     false
                 }
-            }
-            Constants.ACTION_SEND_LOG -> {
-                service.sendLog(data.readInt(), data.readString()!!, data.readString()!!)
-                false
             }
             else -> false
         }

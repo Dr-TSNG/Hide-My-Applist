@@ -12,7 +12,5 @@ interface IHMAService {
 
     String getLogs() = 4;
 
-    void sendLog(int level, String tag, String msg) = 5;
-
-    void clearLogs() = 6;
+    void clearLogs() = 5;
 }

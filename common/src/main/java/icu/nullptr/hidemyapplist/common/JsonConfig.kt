@@ -1,6 +1,11 @@
 package icu.nullptr.hidemyapplist.common
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+
+private val encoder = Json { encodeDefaults = true }
 
 @Serializable
 data class JsonConfig(
@@ -16,7 +21,9 @@ data class JsonConfig(
         val appList: MutableSet<String> = mutableSetOf(),
         val mapsRules: MutableSet<String> = mutableSetOf(),
         val queryParamRules: MutableSet<String> = mutableSetOf()
-    )
+    ) {
+        override fun toString() = encoder.encodeToString(this)
+    }
 
     @Serializable
     data class AppConfig(
@@ -28,5 +35,13 @@ data class JsonConfig(
         val extraAppList: MutableSet<String> = mutableSetOf(),
         val extraMapsRules: MutableSet<String> = mutableSetOf(),
         val extraQueryParamRules: MutableSet<String> = mutableSetOf()
-    )
+    ) {
+        override fun toString() = encoder.encodeToString(this)
+    }
+
+    companion object {
+        fun parse(json: String) = encoder.decodeFromString<JsonConfig>(json)
+    }
+
+    override fun toString() = encoder.encodeToString(this)
 }
