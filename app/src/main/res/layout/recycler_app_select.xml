@@ -34,7 +34,7 @@
         android:id="@+id/app_summary"
         style="@style/DefaultText"
         android:layout_marginVertical="3dp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/app_package_name"
         app:layout_constraintTop_toBottomOf="@+id/app_package_name" />

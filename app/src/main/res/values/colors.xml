@@ -3,8 +3,28 @@
     <color name="gray">#607D8B</color>
     <color name="debug">#000000</color>
     <color name="info">#154A74</color>
-    <color name="error">#FF0000</color>
-    <color name="service_off">#666600</color>
-    <color name="colorPrimary">#336699</color>
-    <color name="colorPrimaryDark">#154A74</color>
+
+    <color name="primary">#006782</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="primaryContainer">#B5EAFF</color>
+    <color name="onPrimaryContainer">#001F29</color>
+    <color name="secondary">#4C626B</color>
+    <color name="onSecondary">#FFFFFF</color>
+    <color name="secondaryContainer">#CFE6F1</color>
+    <color name="onSecondaryContainer">#071E26</color>
+    <color name="tertiary">#5A5B7D</color>
+    <color name="onTertiary">#FFFFFF</color>
+    <color name="tertiaryContainer">#E1E0FF</color>
+    <color name="onTertiaryContainer">#171837</color>
+    <color name="error">#BA1B1B</color>
+    <color name="onError">#FFFFFF</color>
+    <color name="errorContainer">#FFDAD4</color>
+    <color name="onErrorContainer">#410001</color>
+    <color name="background">#F9FDFF</color>
+    <color name="onBackground">#191C1D</color>
+    <color name="surface">#F9FDFF</color>
+    <color name="onSurface">#191C1D</color>
+    <color name="surfaceVariant">#F9FDFF</color>
+    <color name="onSurfaceVariant">#40484C</color>
+    <color name="outline">#70787C</color>
 </resources>

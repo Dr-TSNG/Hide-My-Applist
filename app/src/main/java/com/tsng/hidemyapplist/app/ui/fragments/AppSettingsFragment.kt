@@ -31,21 +31,10 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
     private lateinit var packageName: String
     private lateinit var appConfig: JsonConfig.AppConfig
 
-    override fun onDestroy() {
-        if (!(preferenceManager.preferenceDataStore as AppConfigDataStorage).isEnabled) {
-            globalConfig.scope.remove(packageName)
-        }
-        super.onDestroy()
-    }
-
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         packageName = requireArguments().getString("packageName")!!
-        appConfig = globalConfig.scope.putIfAbsent(packageName, JsonConfig.AppConfig())!!
-
-        preferenceManager.preferenceDataStore =
-            AppConfigDataStorage(appConfig).apply {
-                isEnabled = globalConfig.scope.containsKey(packageName)
-            }
+        appConfig = globalConfig.scope.getOrDefault(packageName, JsonConfig.AppConfig())
+        preferenceManager.preferenceDataStore = AppConfigDataStorage(packageName, appConfig)
         setPreferencesFromResource(R.xml.app_preferences, rootKey)
 
         preferenceScreen.findPreference<Preference>("appInfo")?.let {

@@ -1,16 +1,14 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppTheme" parent="ThemeOverlay.Material3.DynamicColors.DayNight">
         <item name="android:textAllCaps">false</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
     </style>
 
     <style name="AppTheme.About" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">#154A74</item>
+        <item name="colorPrimaryDark">#154A74</item>
     </style>
 
     <style name="Default">
@@ -28,7 +26,7 @@
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
-    <style name="DefaultCard" parent="Widget.MaterialComponents.CardView">
+    <style name="DefaultCard" parent="Widget.Material3.CardView.Filled">
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:layout_width">match_parent</item>

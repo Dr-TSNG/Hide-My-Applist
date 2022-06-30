@@ -69,11 +69,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val serviceVersion = ServiceHelper.getServiceVersion()
         if (MyApplication.isModuleActivated) {
             if (serviceVersion != 0) {
-                binding.moduleStatusCard.setCardBackgroundColor(getColor(R.color.colorPrimary))
+                binding.moduleStatusCard.setCardBackgroundColor(getColor(run {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) android.R.color.system_accent1_600
+                    else R.color.primary
+                }))
                 binding.moduleStatusIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_activited))
                 binding.moduleStatusText.text = getString(R.string.xposed_activated)
             } else {
-                binding.moduleStatusCard.setCardBackgroundColor(getColor(R.color.service_off))
+                binding.moduleStatusCard.setCardBackgroundColor(getColor(R.color.error))
                 binding.moduleStatusIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_service_not_running))
                 binding.moduleStatusText.text = getString(R.string.xposed_activated)
             }
@@ -115,16 +118,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 } else startActivity(intent)
             }
             R.id.menu_template_manage ->
-                startActivity(Intent(this, ModuleActivity::class.java)
-                    .putExtra("Fragment", ModuleActivity.Fragment.TEMPLATE_MANAGE))
+                startActivity(
+                    Intent(this, ModuleActivity::class.java)
+                        .putExtra("Fragment", ModuleActivity.Fragment.TEMPLATE_MANAGE)
+                )
             R.id.menu_scope_manage ->
-                startActivity(Intent(this, ModuleActivity::class.java)
-                    .putExtra("Fragment", ModuleActivity.Fragment.SCOPE_MANAGE))
+                startActivity(
+                    Intent(this, ModuleActivity::class.java)
+                        .putExtra("Fragment", ModuleActivity.Fragment.SCOPE_MANAGE)
+                )
             R.id.menu_logs ->
                 if (ServiceHelper.getServiceVersion() == 0) makeToast(R.string.xposed_service_off)
                 else startActivity(Intent(this, LogActivity::class.java))
-            R.id.menu_settings -> startActivity(Intent(this, ModuleActivity::class.java)
-                .putExtra("Fragment", ModuleActivity.Fragment.SETTINGS))
+            R.id.menu_settings -> startActivity(
+                Intent(this, ModuleActivity::class.java)
+                    .putExtra("Fragment", ModuleActivity.Fragment.SETTINGS)
+            )
             R.id.menu_about -> startActivity(Intent(this, AboutActivity::class.java))
         }
     }
@@ -136,9 +145,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         thread {
             try {
                 val client = OkHttpClient()
-                val responseData = client.newCall(Request.Builder()
+                val responseData = client.newCall(
+                    Request.Builder()
                         .url("https://cdn.jsdelivr.net/gh/Dr-TSNG/Hide-My-Applist@updates/updates/latest_version.json")
-                        .build()).execute().body?.string()
+                        .build()
+                ).execute().body?.string()
                 if (responseData != null) {
                     val json = JSONObject(responseData)
                     var data = json["Stable"] as JSONObject
@@ -150,9 +161,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     updateLogURL += if (Locale.getDefault().language.contains("zh")) "zh" else "en"
                     updateLogURL += ".html"
-                    val updateLog = client.newCall(Request.Builder()
+                    val updateLog = client.newCall(
+                        Request.Builder()
                             .url(updateLogURL)
-                            .build()).execute().body?.string()
+                            .build()
+                    ).execute().body?.string()
                     val githubDownloadUri = Uri.parse(data["DownloadURL"] as String)
                     if (data.getInt("VersionCode") > BuildConfig.VERSION_CODE) runOnUiThread {
                         MaterialAlertDialogBuilder(this)

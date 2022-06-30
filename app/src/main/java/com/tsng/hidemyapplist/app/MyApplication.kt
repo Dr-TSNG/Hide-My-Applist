@@ -3,6 +3,7 @@ package com.tsng.hidemyapplist.app
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import com.google.android.material.color.DynamicColors
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.app.helpers.AppInfoHelper
@@ -19,6 +20,7 @@ class MyApplication : Application() {
     @SuppressLint("SdCardPath")
     override fun onCreate() {
         super.onCreate()
+        DynamicColors.applyToActivitiesIfAvailable(this);
         appContext = applicationContext
         if (!appContext.filesDir.absolutePath.startsWith("/data/user/0/")) {
             makeToast(R.string.do_not_dual)
