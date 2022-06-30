@@ -34,7 +34,7 @@ jobs:
           echo storePassword='${{ secrets.KEY_STORE_PASSWORD }}' >> local.properties
           echo keyAlias='${{ secrets.ALIAS }}' >> local.properties
           echo keyPassword='${{ secrets.ALIAS_KEY_PASSWORD }}' >> local.properties
-          echo fileDir='../key.jks' >> local.properties
+          echo fileDir='key.jks' >> local.properties
           echo "${{ secrets.KEY_STORE }}" | base64 --decode > key.jks
           echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
 
@@ -56,13 +56,13 @@ jobs:
       - name: Build release
         id: buildRelease
         run: |
-          ./gradlew :app:assembleRelease
+          ./gradlew :app:buildRelease
           echo "::set-output name=releaseName::`ls app/build/apk/release/HMA*-release.apk | awk -F '(/|.apk)' '{print $6}'`"
 
       - name: Build debug
         id: buildDebug
         run: |
-          ./gradlew :app:assembleDebug
+          ./gradlew :app:buildDebug
           echo "::set-output name=debugName::`ls app/build/apk/debug/HMA*-debug.apk | awk -F '(/|.apk)' '{print $6}'`"
 
       - name: Upload release
