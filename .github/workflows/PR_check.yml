@@ -40,7 +40,9 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Gradle prebuild
-        run: ./gradlew prebuild
+        run: |
+          echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
+          ./gradlew prebuild
 
       - name: Build debug
         id: buildDebug
