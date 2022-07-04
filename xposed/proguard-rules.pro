@@ -1,1 +1,1 @@
--keep class icu.nullptr.hidemyapplist.xposed.XposedEntry
+-keep class icu.nullptr.hidemyapplist.xposed.XposedEntry { *; }

@@ -10,7 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-    if: ${{ !startsWith(github.event.head_commit.message, 'docs:') }}
+    if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') }}
 
     steps:
       - name: Checkout

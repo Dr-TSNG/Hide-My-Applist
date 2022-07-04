@@ -62,6 +62,8 @@ fun Project.configureBaseExtension() {
             versionName = appVerName
             if (localProperties.getProperty("buildWithGitSuffix").toBoolean())
                 versionNameSuffix = ".r${gitCommitCount}.${gitCommitHash}"
+
+            consumerProguardFiles("proguard-rules.pro")
         }
 
         val signingCfg = signingConfigs.create("config") {
