@@ -6,7 +6,6 @@ import android.util.Log
 import com.github.kyuubiran.ezxhelper.init.EzXHelperInit
 import com.github.kyuubiran.ezxhelper.utils.getFieldByDesc
 import com.github.kyuubiran.ezxhelper.utils.hookAllConstructorAfter
-import com.github.kyuubiran.ezxhelper.utils.loadClass
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.IXposedHookZygoteInit
 import de.robv.android.xposed.callbacks.XC_LoadPackage
@@ -27,6 +26,7 @@ private fun waitSystemService(name: String) {
 }
 
 class XposedEntry : IXposedHookZygoteInit, IXposedHookLoadPackage {
+
     override fun initZygote(startupParam: IXposedHookZygoteInit.StartupParam) {
         EzXHelperInit.initZygote(startupParam)
     }
@@ -40,20 +40,19 @@ class XposedEntry : IXposedHookZygoteInit, IXposedHookLoadPackage {
             logI(TAG, "Hook entry")
 
             var pms: IPackageManager? = null
-            val pmsClass = loadClass(Constants.CLASS_PMS)
-            pmsClass.hookAllConstructorAfter { param ->
+            hookAllConstructorAfter(Constants.CLASS_PMS) { param ->
                 pms = param.thisObject as IPackageManager
                 logI(TAG, "Got pms: $pms")
             }
-            Constants.CLASS_EXT_PMS.forEach {
+            for (clazz in Constants.CLASS_EXT_PMS) {
                 runCatching {
-                    hookAllConstructorAfter(it) { param ->
+                    hookAllConstructorAfter(clazz) { param ->
                         pms = param.thisObject as IPackageManager
                         logI(TAG, "Got custom pms: $pms")
                     }
                 }
             }
-            logD(TAG, "Constructor hooks created")
+            logD(TAG, "Constructor hooks installed")
             thread {
                 runCatching {
                     waitSystemService("package")
