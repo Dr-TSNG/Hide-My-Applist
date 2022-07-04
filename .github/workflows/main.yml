@@ -59,27 +59,27 @@ jobs:
         id: buildRelease
         run: |
           ./gradlew :app:buildRelease
-          echo "::set-output name=releaseName::`ls app/build/apk/release/HMA*-release.apk | awk -F '(/|.apk)' '{print $6}'`"
+          echo "::set-output name=releaseName::`ls app/build/apk/release/HMA*-release.apk | awk -F '(/|.apk)' '{print $5}'`"
 
       - name: Build debug
         id: buildDebug
         run: |
           ./gradlew :app:buildDebug
-          echo "::set-output name=debugName::`ls app/build/apk/debug/HMA*-debug.apk | awk -F '(/|.apk)' '{print $6}'`"
+          echo "::set-output name=debugName::`ls app/build/apk/debug/HMA*-debug.apk | awk -F '(/|.apk)' '{print $5}'`"
 
       - name: Upload release
         if: success()
         uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.buildRelease.outputs.releaseName }}
-          path: "app/build/apk/release/*.apk"
+          path: "app/build/apk/release/HMA*-release.apk"
 
       - name: Upload debug
         if: success()
         uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.buildDebug.outputs.debugName }}
-          path: "app/build/apk/debug/*.apk"
+          path: "app/build/apk/debug/HMA*-debug.apk"
 
       - name: Upload mappings
         uses: actions/upload-artifact@v2
