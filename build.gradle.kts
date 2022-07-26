@@ -9,8 +9,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0")
         classpath("com.android.tools.build:gradle:7.2.1")
-        classpath("com.google.gms:google-services:4.3.12")
+        classpath("com.google.gms:google-services:4.3.13")
     }
 }
 
@@ -31,7 +32,7 @@ fun String.execute(currentWorkingDir: File = file("./")): String {
 }
 
 val minSdkVer by extra(24)
-val targetSdkVer by extra(33)
+val targetSdkVer by extra(32)
 
 val appVerName by extra("3.0.0")
 val appVerCode by extra(75)

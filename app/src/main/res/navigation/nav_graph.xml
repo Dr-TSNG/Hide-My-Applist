@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_home">
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_logs"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.LogsFragment"
+        android:label="@string/title_logs"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.SettingsFragment"
+        android:label="@string/title_settings" />
+    <fragment
+        android:id="@+id/nav_template_manage"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.TemplateManageFragment"
+        android:label="@string/title_template_manage" />
+    <fragment
+        android:id="@+id/nav_app_manage"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.AppManageFragment"
+        android:label="@string/title_app_manage" />
+</navigation>

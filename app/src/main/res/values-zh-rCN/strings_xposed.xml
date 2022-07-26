@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="xposed_activated">已激活模块</string>
-    <string name="xposed_not_activated">未激活模块</string>
-    <string name="xposed_service_on">系统服务运行中</string>
-    <string name="xposed_service_off">系统服务未运行</string>
-    <string name="xposed_service_old">模块已更新，请重启</string>
-    <string name="xposed_serve_times">隐藏应用列表已为您拦截合计 ## 次请求</string>
-</resources>

@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".app.MyApplication"
+        android:name="icu.nullptr.hidemyapplist.MyApp"
         android:allowBackup="true"
         android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,30 +19,11 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.tsng.hidemyapplist.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_provider_paths" />
-        </provider>
-
-        <service
-            android:name=".app.SubmitConfigService"
-            android:enabled="true" />
-
-        <activity android:name=".app.ui.activities.ModuleActivity" />
-
         <activity
-            android:name="com.tsng.hidemyapplist.app.ui.activities.LogActivity"
-            android:label="@string/title_logs" />
-        <activity
-            android:name="com.tsng.hidemyapplist.app.ui.activities.AboutActivity"
+            android:name="icu.nullptr.hidemyapplist.ui.activity.AboutActivity"
             android:theme="@style/AppTheme.About" />
         <activity
-            android:name=".app.ui.activities.MainActivity"
+            android:name="icu.nullptr.hidemyapplist.ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +35,7 @@
             android:name=".MainActivityLauncher"
             android:exported="true"
             android:label="@string/app_name"
-            android:targetActivity=".app.ui.activities.MainActivity">
+            android:targetActivity="icu.nullptr.hidemyapplist.ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -77,5 +58,4 @@
             android:name="xposedscope"
             android:resource="@array/xposed_scope" />
     </application>
-
 </manifest>

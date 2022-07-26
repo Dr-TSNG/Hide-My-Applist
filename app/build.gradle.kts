@@ -4,10 +4,12 @@ import java.io.PrintStream
 import java.util.*
 
 plugins {
+    kotlin("android")
     id("com.android.application")
     id("com.google.gms.google-services")
+    id("dev.rikka.tools.materialthemebuilder")
     id("dev.rikka.tools.refine")
-    kotlin("android")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -71,18 +73,23 @@ dependencies {
     implementation(projects.common)
     runtimeOnly(projects.xposed)
 
-    implementation("androidx.appcompat:appcompat:1.4.2")
-    implementation("androidx.fragment:fragment-ktx:1.4.1")
-    implementation("androidx.preference:preference-ktx:1.2.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.0")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.0")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-    implementation("androidx.work:work-runtime-ktx:2.7.1")
     implementation("com.drakeet.about:about:2.5.1")
     implementation("com.drakeet.multitype:multitype:4.3.0")
+    implementation("com.github.kirich1409:viewbindingpropertydelegate:1.5.6")
     implementation("com.github.topjohnwu.libsu:core:3.1.2")
     implementation("com.google.android.material:material:1.6.1")
-    implementation("com.google.android.gms:play-services-ads:21.0.0")
-    implementation("com.google.firebase:firebase-analytics-ktx:21.0.0")
-    implementation("com.squareup.okhttp3:okhttp:4.9.1")
+    implementation("com.google.android.gms:play-services-ads:21.1.0")
+    implementation("com.google.firebase:firebase-analytics-ktx:21.1.0")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("dev.rikka.hidden:compat:2.3.1")
+    implementation("dev.rikka.rikkax.material:material:2.5.0")
+    implementation("dev.rikka.rikkax.material:material-preference:2.0.0")
     compileOnly("dev.rikka.hidden:stub:2.3.1")
+}
+
+configurations.all {
+    exclude("androidx.appcompat", "appcompat")
 }

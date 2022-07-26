@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="toolbar_search">Search</string>
-    <string name="toolbar_show_system_apps">Show system apps</string>
-    <string name="toolbar_refresh">Refresh</string>
-    <string name="toolbar_export">Export</string>
-    <string name="toolbar_clean">Clean</string>
-    <string name="toolbar_raw_logs">Show raw logs</string>
-</resources>

@@ -20,11 +20,7 @@ object BridgeService {
     fun start(pms: IPackageManager) {
         logI(TAG, "Initialize HMAService")
         val service = HMAService(pms)
-        appUid = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            service.pms.getPackageUid(Constants.APP_PACKAGE_NAME, 0L, 0)
-        } else {
-            service.pms.getPackageUid(Constants.APP_PACKAGE_NAME, 0, 0)
-        }
+        appUid = service.pms.getPackageUid(Constants.APP_PACKAGE_NAME, 0, 0)
         logD(TAG, "Client uid: $appUid")
         doHooks()
         logI(TAG, "Bridge service initialized")
