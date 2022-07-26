@@ -17,11 +17,11 @@ fun Fragment.setupToolbar(
     toolbar: Toolbar,
     title: String,
     @DrawableRes navigationIcon: Int? = null,
-    navigationOnClickListener: View.OnClickListener? = null,
+    navigationOnClick: View.OnClickListener? = null,
     @MenuRes menuRes: Int? = null,
     onMenuOptionSelected: ((MenuItem) -> Unit)? = null
 ) {
-    navigationOnClickListener?.let { toolbar.setNavigationOnClickListener(it) }
+    navigationOnClick?.let { toolbar.setNavigationOnClickListener(it) }
     navigationIcon?.let { toolbar.setNavigationIcon(navigationIcon) }
     toolbar.title = title
     toolbar.tooltipText = title
