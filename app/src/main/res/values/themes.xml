@@ -24,8 +24,15 @@
     </style>
 
     <style name="AppTheme.SideImage">
-        <item name="android:layout_width">28dp</item>
-        <item name="android:layout_height">28dp</item>
+        <item name="android:layout_width">@dimen/vector_icon_size</item>
+        <item name="android:layout_height">@dimen/vector_icon_size</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+    <style name="AppTheme.AppIcon">
+        <item name="android:layout_width">@dimen/app_icon_size</item>
+        <item name="android:layout_height">@dimen/app_icon_size</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_marginEnd">16dp</item>
     </style>

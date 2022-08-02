@@ -5,7 +5,10 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-private val encoder = Json { encodeDefaults = true }
+private val encoder = Json {
+    encodeDefaults = true
+    ignoreUnknownKeys = true
+}
 
 @Serializable
 data class JsonConfig(
@@ -17,24 +20,18 @@ data class JsonConfig(
 ) {
     @Serializable
     data class Template(
-        val isWhitelist: Boolean = false,
-        val appList: MutableSet<String> = mutableSetOf(),
-        val mapsRules: MutableSet<String> = mutableSetOf(),
-        val queryParamRules: MutableSet<String> = mutableSetOf()
+        val isWhitelist: Boolean,
+        val appList: Set<String>
     ) {
         override fun toString() = encoder.encodeToString(this)
     }
 
     @Serializable
     data class AppConfig(
-        var useWhitelist: Boolean = false,
-        var enableAllHooks: Boolean = false,
-        var excludeSystemApps: Boolean = false,
-        val applyHooks: MutableSet<String> = mutableSetOf(),
-        val applyTemplates: MutableSet<String> = mutableSetOf(),
-        val extraAppList: MutableSet<String> = mutableSetOf(),
-        val extraMapsRules: MutableSet<String> = mutableSetOf(),
-        val extraQueryParamRules: MutableSet<String> = mutableSetOf()
+        val useWhitelist: Boolean,
+        val excludeSystemApps: Boolean,
+        val applyTemplates: MutableSet<String>,
+        val extraAppList: MutableSet<String>
     ) {
         override fun toString() = encoder.encodeToString(this)
     }

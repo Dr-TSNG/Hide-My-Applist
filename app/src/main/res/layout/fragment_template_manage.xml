@@ -24,6 +24,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/hint_card"
             style="@style/AppTheme.OutlinedCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -23,7 +23,33 @@
         android:name="icu.nullptr.hidemyapplist.ui.fragment.TemplateManageFragment"
         android:label="@string/title_template_manage" />
     <fragment
+        android:id="@+id/nav_template_settings"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.TemplateSettingsFragment"
+        android:label="@string/title_template_settings">
+        <argument
+            android:name="name"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="isWhiteList"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
         android:id="@+id/nav_app_manage"
         android:name="icu.nullptr.hidemyapplist.ui.fragment.AppManageFragment"
         android:label="@string/title_app_manage" />
+    <fragment
+        android:id="@+id/nav_app_select"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.AppSelectFragment"
+        android:label="@string/title_app_select">
+        <argument
+            android:name="isMultiSelect"
+            app:argType="boolean" />
+        <argument
+            android:name="filterOnlyEnabled"
+            app:argType="boolean" />
+        <argument
+            android:name="checked"
+            app:argType="string[]" />
+    </fragment>
 </navigation>

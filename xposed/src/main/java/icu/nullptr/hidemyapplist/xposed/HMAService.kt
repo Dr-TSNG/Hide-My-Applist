@@ -121,13 +121,13 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         }
         for (method in pmMethods) when (method.name) {
             "getAllPackages"
-            -> removeList(method, false, "API requests", listOf()).yes()
+            -> removeList(method, false, listOf()).yes()
 
             "getInstalledPackages",
             "getInstalledApplications",
             "getPackagesHoldingPermissions",
             "queryInstrumentation"
-            -> removeList(method, true, "API requests", listOf("packageName")).yes()
+            -> removeList(method, true, listOf("packageName")).yes()
 
             "getPackageInfo",
             "getPackageGids",
@@ -136,30 +136,25 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
             "getInstallerPackageName",
             "getLaunchIntentForPackage",
             "getLeanbackLaunchIntentForPackage"
-            -> setResult(method, "API requests", null).yes()
+            -> setResult(method, null).yes()
 
             "queryIntentActivities",
             "queryIntentActivityOptions",
             "queryIntentReceivers",
             "queryIntentServices",
             "queryIntentContentProviders"
-            -> removeList(method, true, "Intent queries", listOf("activityInfo", "packageName")).yes()
+            -> removeList(method, true, listOf("activityInfo", "packageName")).yes()
 
             "getActivityInfo",
             "resolveActivity",
             "resolveActivityAsUser"
-            -> resolveIntent(method, "Intent queries", null).yes()
+            -> resolveIntent(method, null).yes()
 
             "getPackageUid"
-            -> setResult(method, "ID detections", -1).yes()
+            -> setResult(method, -1).yes()
         }
 
         logI(TAG, "Hooks installed")
-    }
-
-    private fun shouldHook(caller: String?, hookMethod: String): Boolean {
-        val appConfig = config.scope[caller] ?: return false
-        return appConfig.enableAllHooks || appConfig.applyHooks.contains(hookMethod)
     }
 
     private fun shouldHide(caller: String?, query: String?): Boolean {
@@ -168,27 +163,24 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         val appConfig = config.scope[caller] ?: return false
         if (appConfig.useWhitelist && appConfig.excludeSystemApps && query in systemApps) return false
 
-        if (query in appConfig.extraAppList || query in appConfig.extraQueryParamRules) {
-            return !appConfig.useWhitelist
-        }
+        if (query in appConfig.extraAppList) return !appConfig.useWhitelist
         for (tplName in appConfig.applyTemplates) {
             val tpl = config.templates[tplName]!!
-            if (query in tpl.appList || query in tpl.queryParamRules)
-                return !appConfig.useWhitelist
+            if (query in tpl.appList) return !appConfig.useWhitelist
         }
 
         return appConfig.useWhitelist
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun removeList(
         method: Method,
         isParceled: Boolean,
-        hookMethod: String,
         pkgNameObjList: List<String>
     ) = method.hookAfter { param ->
         if (param.hasThrowable()) return@hookAfter
         val caller = param.thisObject.getBinderCaller()
-        if (!shouldHook(caller, hookMethod)) return@hookAfter
+        if (caller !in config.scope) return@hookAfter
 
         var isHidden = false
         val list =
@@ -215,11 +207,10 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
 
     private fun setResult(
         method: Method,
-        hookMethod: String,
         result: Any?
     ) = method.hookAfter { param ->
         val caller = param.thisObject.getBinderCaller()
-        if (!shouldHook(caller, hookMethod)) return@hookAfter
+        if (caller !in config.scope) return@hookAfter
 
         if (shouldHide(caller, param.args[0] as String?)) {
             filterCount++
@@ -230,11 +221,10 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
 
     private fun resolveIntent(
         method: Method,
-        hookMethod: String,
         result: Any?
     ) = method.hookAfter { param ->
         val caller = param.thisObject.getBinderCaller()
-        if (!shouldHook(caller, hookMethod)) return@hookAfter
+        if (caller !in config.scope) return@hookAfter
 
         when (val it = param.args[0]) {
             is Intent -> listOf(it.action, it.component?.packageName)

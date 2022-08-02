@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.google.android.gms.ads.AdRequest
 import com.google.android.material.transition.MaterialElevationScale
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
@@ -27,7 +26,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupToolbar(binding.toolbar, getString(R.string.app_name))
-        binding.adBanner.loadAd(AdRequest.Builder().build())
+        // binding.adBanner.loadAd(AdRequest.Builder().build())
         binding.templateManage.setOnClickListener {
             val extras = FragmentNavigatorExtras(binding.manageCard to "transition_manage")
             navController.navigate(R.id.nav_template_manage, null, null, extras)

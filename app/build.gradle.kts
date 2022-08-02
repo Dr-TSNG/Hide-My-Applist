@@ -75,6 +75,7 @@ dependencies {
 
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.0")
+    implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("com.drakeet.about:about:2.5.1")
     implementation("com.drakeet.multitype:multitype:4.3.0")
@@ -84,10 +85,12 @@ dependencies {
     implementation("com.google.android.gms:play-services-ads:21.1.0")
     implementation("com.google.firebase:firebase-analytics-ktx:21.1.0")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
-    implementation("dev.rikka.hidden:compat:2.3.1")
-    implementation("dev.rikka.rikkax.material:material:2.5.0")
+    implementation("dev.rikka.hidden:compat:3.2.0")
+    implementation("dev.rikka.rikkax.material:material:2.5.1")
     implementation("dev.rikka.rikkax.material:material-preference:2.0.0")
-    compileOnly("dev.rikka.hidden:stub:2.3.1")
+    implementation("io.coil-kt:coil:2.1.0")
+    implementation("me.zhanghai.android.appiconloader:appiconloader-coil:1.4.0")
+    compileOnly("dev.rikka.hidden:stub:3.2.0")
 }
 
 configurations.all {
