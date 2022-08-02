@@ -24,30 +24,30 @@ object PackageHelper {
     private val _packageCache = MutableSharedFlow<Map<String, PackageCache>>(replay = 1)
     val packageCache: SharedFlow<Map<String, PackageCache>> = _packageCache
 
-    private val _isRefreshing = MutableSharedFlow<Boolean>()
+    private val _isRefreshing = MutableSharedFlow<Boolean>(replay = 1)
     val isRefreshing: SharedFlow<Boolean> = _isRefreshing
 
     init {
         // TODO: PackageManagerDelegate
         pm = hmaApp.packageManager
-        hmaApp.globalScope.launch {
-            invalidateCache()
-        }
+        invalidateCache()
     }
 
-    suspend fun invalidateCache() {
-        _isRefreshing.emit(true)
-        val cache = withContext(Dispatchers.IO) {
-            val packages = pm.getInstalledPackages(0)
-            mutableMapOf<String, PackageCache>().also {
-                for (packageInfo in packages) {
-                    val label = pm.getApplicationLabel(packageInfo.applicationInfo).toString()
-                    it[packageInfo.packageName] = PackageCache(packageInfo, label)
+    fun invalidateCache() {
+        hmaApp.globalScope.launch {
+            _isRefreshing.emit(true)
+            val cache = withContext(Dispatchers.IO) {
+                val packages = pm.getInstalledPackages(0)
+                mutableMapOf<String, PackageCache>().also {
+                    for (packageInfo in packages) {
+                        val label = pm.getApplicationLabel(packageInfo.applicationInfo).toString()
+                        it[packageInfo.packageName] = PackageCache(packageInfo, label)
+                    }
                 }
             }
+            _packageCache.emit(cache)
+            _isRefreshing.emit(false)
         }
-        _packageCache.emit(cache)
-        _isRefreshing.emit(false)
     }
 
     fun loadPackageInfo(packageName: String): PackageInfo {

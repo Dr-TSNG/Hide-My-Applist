@@ -1,5 +1,6 @@
 package icu.nullptr.hidemyapplist.ui.util
 
+import android.os.Build
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -24,7 +25,7 @@ fun Fragment.setupToolbar(
     navigationOnClick?.let { toolbar.setNavigationOnClickListener(it) }
     navigationIcon?.let { toolbar.setNavigationIcon(navigationIcon) }
     toolbar.title = title
-    toolbar.tooltipText = title
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) toolbar.tooltipText = title
     if (menuRes != null) {
         val menuProvider = object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {

@@ -26,6 +26,7 @@ class TemplateSettingsFragment : Fragment(R.layout.fragment_template_settings) {
     private val viewModel by viewModels<TemplateSettingsViewModel>()
 
     private fun onBack() {
+        viewModel.name = viewModel.name?.trim()
         if (viewModel.name != viewModel.originalName && ConfigManager.hasTemplate(viewModel.name)) {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.template_name_invalid)

@@ -2,8 +2,10 @@ package icu.nullptr.hidemyapplist.ui.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import icu.nullptr.hidemyapplist.service.PrefManager
 import icu.nullptr.hidemyapplist.ui.view.AppItemView
 import icu.nullptr.hidemyapplist.ui.viewmodel.AppSelectViewModel
+import icu.nullptr.hidemyapplist.util.PackageHelper
 
 class AppAdapter(
     private val viewModel: AppSelectViewModel
@@ -27,11 +29,18 @@ class AppAdapter(
         }
 
         fun bind(packageName: String) {
-            with(itemView as AppItemView) {
-                with(viewModel) {
-                    load(packageName)
-                    if (isMultiSelect) isChecked = packageName.isChecked
-                    else showEnabled = packageName.isChecked
+            with(viewModel) {
+                (itemView as AppItemView).let {
+                    it.load(packageName)
+                    if (isMultiSelect) it.isChecked = packageName.isChecked
+                    else it.showEnabled = packageName.isChecked
+                    if (!PrefManager.filter_showSystem && PackageHelper.isSystem(packageName)) {
+                        it.visibility = ViewGroup.GONE
+                        it.layoutParams.height = 0
+                    } else {
+                        it.visibility = ViewGroup.VISIBLE
+                        it.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                    }
                 }
             }
         }

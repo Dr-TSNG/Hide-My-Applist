@@ -73,8 +73,8 @@ dependencies {
     implementation(projects.common)
     runtimeOnly(projects.xposed)
 
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.1")
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("com.drakeet.about:about:2.5.1")
@@ -88,8 +88,7 @@ dependencies {
     implementation("dev.rikka.hidden:compat:3.2.0")
     implementation("dev.rikka.rikkax.material:material:2.5.1")
     implementation("dev.rikka.rikkax.material:material-preference:2.0.0")
-    implementation("io.coil-kt:coil:2.1.0")
-    implementation("me.zhanghai.android.appiconloader:appiconloader-coil:1.4.0")
+    implementation("me.zhanghai.android.appiconloader:appiconloader:1.4.0")
     compileOnly("dev.rikka.hidden:stub:3.2.0")
 }
 

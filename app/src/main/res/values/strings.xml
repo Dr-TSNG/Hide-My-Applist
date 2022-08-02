@@ -29,6 +29,15 @@
     <string name="home_backup_config">Backup config</string>
     <string name="home_restore_config">Restore config</string>
 
+    <!-- App select -->
+    <string name="list_show_system">Show system</string>
+    <string name="list_sorting">Sorting</string>
+    <string name="list_reverse_order">Reverse order</string>
+    <string name="list_sort_by_label">By app name</string>
+    <string name="list_sort_by_package_name">By package name</string>
+    <string name="list_sort_by_install_time">By install time</string>
+    <string name="list_sort_by_update_time">By update time</string>
+
     <!-- Template manage -->
     <string name="template_usage_hint">Establish templates for \"restless\" apps, controlling applist they can obtain.\n\nBlacklist (recommended): the apps selected in the template will be invisible to the apps applying the template\nWhitelist: the apps not selected in the template will be invisible to the apps applying the template.</string>
     <string name="template_work_mode">Work mode</string>

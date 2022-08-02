@@ -5,8 +5,8 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
-import coil.load
 import com.tsng.hidemyapplist.databinding.AppItemViewBinding
+import icu.nullptr.hidemyapplist.hmaApp
 import icu.nullptr.hidemyapplist.util.PackageHelper
 
 class AppItemView @JvmOverloads constructor(
@@ -37,6 +37,6 @@ class AppItemView @JvmOverloads constructor(
     fun load(packageName: String) {
         binding.packageName.text = packageName
         binding.label.text = PackageHelper.loadAppLabel(packageName)
-        binding.icon.load(PackageHelper.loadPackageInfo(packageName))
+        binding.icon.setImageBitmap(hmaApp.appIconLoader.loadIcon(PackageHelper.loadPackageInfo(packageName).applicationInfo))
     }
 }

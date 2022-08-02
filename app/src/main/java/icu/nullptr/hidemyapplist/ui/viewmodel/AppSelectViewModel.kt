@@ -50,14 +50,22 @@ class AppSelectViewModel(
             if (value) checked.add(this) else checked.remove(this)
         }
 
+    fun sortList() {
+        viewModelScope.launch {
+            val newList = list.toMutableList()
+            sortList(newList)
+            list = newList
+            adapter.notifyDataSetChanged()
+        }
+    }
+
     private fun sortList(listToSort: MutableList<String>) {
         if (filterOnlyEnabled) listToSort.removeIf { !it.isChecked }
-        if (!PrefManager.filter_showSystem) listToSort.removeIf { PackageHelper.isSystem(it) }
         var comparator = when (PrefManager.filter_sortMethod) {
-            PrefManager.AppFilter.BY_LABEL -> comparators.byLabel
-            PrefManager.AppFilter.BY_PACKAGE_NAME -> comparators.byPackageName
-            PrefManager.AppFilter.BY_RECENT_UPDATE -> comparators.byRecentUpdate
-            PrefManager.AppFilter.BY_RECENT_INSTALL -> comparators.byRecentInstall
+            PrefManager.SortMethod.BY_LABEL -> comparators.byLabel
+            PrefManager.SortMethod.BY_PACKAGE_NAME -> comparators.byPackageName
+            PrefManager.SortMethod.BY_INSTALL_TIME -> comparators.byInstallTime
+            PrefManager.SortMethod.BY_UPDATE_TIME -> comparators.byUpdateTime
         }
         if (PrefManager.filter_reverseOrder) comparator = comparator.reversed()
         listToSort.sortWith(comparators.first.then(comparator))
@@ -77,15 +85,15 @@ class AppSelectViewModel(
             val n2 = o2.lowercase(Locale.getDefault())
             Collator.getInstance(Locale.getDefault()).compare(n1, n2)
         }
-        val byRecentUpdate = Comparator<String> { o1, o2 ->
-            val n1 = PackageHelper.loadPackageInfo(o1).lastUpdateTime
-            val n2 = PackageHelper.loadPackageInfo(o2).lastUpdateTime
-            n1.compareTo(n2)
-        }
-        val byRecentInstall = Comparator<String> { o1, o2 ->
+        val byInstallTime = Comparator<String> { o1, o2 ->
             val n1 = PackageHelper.loadPackageInfo(o1).firstInstallTime
             val n2 = PackageHelper.loadPackageInfo(o2).firstInstallTime
-            n1.compareTo(n2)
+            n2.compareTo(n1)
+        }
+        val byUpdateTime = Comparator<String> { o1, o2 ->
+            val n1 = PackageHelper.loadPackageInfo(o1).lastUpdateTime
+            val n2 = PackageHelper.loadPackageInfo(o2).lastUpdateTime
+            n2.compareTo(n1)
         }
     }
 }
