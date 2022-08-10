@@ -1,5 +1,6 @@
 package icu.nullptr.hidemyapplist.ui.activity
 
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.core.view.WindowCompat
 import androidx.navigation.Navigation
@@ -23,6 +24,10 @@ class MainActivity : MaterialActivity() {
         setupWithNavController(binding.bottomNav, navController)
 
         MobileAds.initialize(this)
+    }
+
+    override fun onApplyUserThemeResource(theme: Resources.Theme, isDecorView: Boolean) {
+        theme.applyStyle(rikka.material.preference.R.style.ThemeOverlay_Rikka_Material3_Preference, true)
     }
 
     override fun onSupportNavigateUp(): Boolean {

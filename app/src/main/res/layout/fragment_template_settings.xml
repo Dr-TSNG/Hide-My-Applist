@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:buttonText="@string/edit_list"
-            app:icon="@drawable/outline_apps_24" />
+            app:icon="@drawable/baseline_apps_24" />
 
         <icu.nullptr.hidemyapplist.ui.view.ListItemView
             android:id="@+id/applied_apps"

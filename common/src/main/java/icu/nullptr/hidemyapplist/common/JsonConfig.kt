@@ -28,10 +28,10 @@ data class JsonConfig(
 
     @Serializable
     data class AppConfig(
-        val useWhitelist: Boolean,
-        val excludeSystemApps: Boolean,
-        val applyTemplates: MutableSet<String>,
-        val extraAppList: MutableSet<String>
+        var useWhitelist: Boolean = false,
+        var excludeSystemApps: Boolean = false,
+        var applyTemplates: MutableSet<String> = mutableSetOf(),
+        var extraAppList: MutableSet<String> = mutableSetOf()
     ) {
         override fun toString() = encoder.encodeToString(this)
     }

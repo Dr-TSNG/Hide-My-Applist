@@ -36,15 +36,14 @@ val minSdkVer by extra(24)
 val targetSdkVer by extra(32)
 
 val appVerName by extra("3.0.0")
-val appVerCode by extra(75)
-val serviceVer by extra(75)
-val minBackupVer by extra(65)
+val serviceVerCode by extra(75)
+val minBackupVerCode by extra(65)
 
 val androidSourceCompatibility = JavaVersion.VERSION_11
 val androidTargetCompatibility = JavaVersion.VERSION_11
 
-val gitCommitCount by extra("git rev-list HEAD --count".execute())
-val gitCommitHash by extra("git rev-parse --verify --short HEAD".execute())
+val gitCommitCount = "git rev-list HEAD --count".execute().toInt()
+val gitCommitHash = "git rev-parse --verify --short HEAD".execute()
 
 val localProperties = Properties()
 localProperties.load(file("local.properties").inputStream())
@@ -60,7 +59,7 @@ fun Project.configureBaseExtension() {
         defaultConfig {
             minSdk = minSdkVer
             targetSdk = targetSdkVer
-            versionCode = appVerCode
+            versionCode = gitCommitCount
             versionName = appVerName
             if (localProperties.getProperty("buildWithGitSuffix").toBoolean())
                 versionNameSuffix = ".r${gitCommitCount}.${gitCommitHash}"

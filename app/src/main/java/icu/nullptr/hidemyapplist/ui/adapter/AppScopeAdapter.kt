@@ -1,13 +1,12 @@
 package icu.nullptr.hidemyapplist.ui.adapter
 
 import android.view.ViewGroup
-import icu.nullptr.hidemyapplist.service.ConfigManager
 import icu.nullptr.hidemyapplist.ui.view.AppItemView
 
 class AppScopeAdapter(
-    filterOnlyEnabled: Boolean,
-    private val checked: MutableSet<String>
-) : AppSelectAdapter(if (filterOnlyEnabled) ConfigManager::isUsingHide else null) {
+    private val checked: MutableSet<String>,
+    firstFilter: ((String) -> Boolean)?,
+) : AppSelectAdapter(firstFilter) {
 
     private inline var String.isChecked
         get() = checked.contains(this)

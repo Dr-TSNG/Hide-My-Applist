@@ -4,16 +4,15 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-val serviceVer: Int by rootProject.extra
-val minExtensionVer: Int by rootProject.extra
-val minBackupVer: Int by rootProject.extra
+val serviceVerCode: Int by rootProject.extra
+val minBackupVerCode: Int by rootProject.extra
 
 android {
     namespace = "icu.nullptr.hidemyapplist.common"
 
     defaultConfig {
-        buildConfigField("int", "SERVICE_VERSION", serviceVer.toString())
-        buildConfigField("int", "MIN_BACKUP_VERSION", minBackupVer.toString())
+        buildConfigField("int", "SERVICE_VERSION", serviceVerCode.toString())
+        buildConfigField("int", "MIN_BACKUP_VERSION", minBackupVerCode.toString())
     }
 }
 

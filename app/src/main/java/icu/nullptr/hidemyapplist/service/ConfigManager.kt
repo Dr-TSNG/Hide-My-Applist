@@ -31,7 +31,9 @@ object ConfigManager {
     }
 
     fun saveConfig() {
-        configFile.writeText(config.toString())
+        val text = config.toString()
+        configFile.writeText(text)
+        ServiceHelper.submitConfig(text)
     }
 
     fun hasTemplate(name: String?): Boolean {
@@ -81,14 +83,24 @@ object ConfigManager {
 
     fun updateTemplateAppliedApps(name: String, appliedList: List<String>) {
         Log.d(TAG, "updateTemplateAppliedApps: $name list = $appliedList")
-        config.scope.forEach { (_, appInfo) ->
-            if (appliedList.contains(name)) appInfo.applyTemplates.add(name)
+        config.scope.forEach { (app, appInfo) ->
+            if (appliedList.contains(app)) appInfo.applyTemplates.add(name)
             else appInfo.applyTemplates.remove(name)
         }
         saveConfig()
     }
 
-    fun isUsingHide(packageName: String): Boolean {
+    fun isHideEnabled(packageName: String): Boolean {
         return config.scope.containsKey(packageName)
+    }
+
+    fun getAppConfig(packageName: String): JsonConfig.AppConfig? {
+        return config.scope[packageName]
+    }
+
+    fun setAppConfig(packageName: String, appConfig: JsonConfig.AppConfig?) {
+        if (appConfig == null) config.scope.remove(packageName)
+        else config.scope[packageName] = appConfig
+        saveConfig()
     }
 }

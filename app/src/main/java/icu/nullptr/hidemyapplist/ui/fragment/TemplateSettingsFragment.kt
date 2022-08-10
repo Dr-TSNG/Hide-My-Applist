@@ -24,8 +24,8 @@ import kotlinx.coroutines.launch
 class TemplateSettingsFragment : Fragment(R.layout.fragment_template_settings) {
 
     private val binding by viewBinding<FragmentTemplateSettingsBinding>()
-    private val args by navArgs<TemplateSettingsFragmentArgs>()
     private val viewModel by viewModels<TemplateSettingsViewModel>() {
+        val args by navArgs<TemplateSettingsFragmentArgs>()
         TemplateSettingsViewModel.Factory(args)
     }
 
@@ -82,22 +82,23 @@ class TemplateSettingsFragment : Fragment(R.layout.fragment_template_settings) {
                 viewModel.targetAppList.value = bundle.getStringArrayList("checked")!!
                 clearFragmentResultListener("app_select")
             }
-            val selectArgs = ScopeFragmentArgs(
+            val args = ScopeFragmentArgs(
                 filterOnlyEnabled = false,
                 checked = viewModel.targetAppList.value.toTypedArray()
             )
-            navController.navigate(R.id.nav_app_select, selectArgs.toBundle())
+            navController.navigate(R.id.nav_scope, args.toBundle())
         }
         binding.appliedApps.setOnClickListener {
             setFragmentResultListener("app_select") { _, bundle ->
                 viewModel.appliedAppList.value = bundle.getStringArrayList("checked")!!
                 clearFragmentResultListener("app_select")
             }
-            val selectArgs = ScopeFragmentArgs(
+            val args = ScopeFragmentArgs(
                 filterOnlyEnabled = true,
+                isWhiteList = viewModel.isWhiteList,
                 checked = viewModel.appliedAppList.value.toTypedArray()
             )
-            navController.navigate(R.id.nav_app_select, selectArgs.toBundle())
+            navController.navigate(R.id.nav_scope, args.toBundle())
         }
 
         lifecycleScope.launch {

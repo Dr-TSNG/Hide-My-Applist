@@ -4,13 +4,21 @@ import android.view.ViewGroup
 import icu.nullptr.hidemyapplist.service.ConfigManager
 import icu.nullptr.hidemyapplist.ui.view.AppItemView
 
-class AppManageAdapter : AppSelectAdapter() {
+class AppManageAdapter(
+    private val onItemClickListener: (String) -> Unit
+) : AppSelectAdapter() {
 
     inner class ViewHolder(view: AppItemView) : AppSelectAdapter.ViewHolder(view) {
+        init {
+            view.setOnClickListener {
+                onItemClickListener.invoke(filteredList[absoluteAdapterPosition])
+            }
+        }
+
         override fun bind(packageName: String) {
             (itemView as AppItemView).let {
                 it.load(packageName)
-                it.showEnabled = ConfigManager.isUsingHide(packageName)
+                it.showEnabled = ConfigManager.isHideEnabled(packageName)
             }
         }
     }

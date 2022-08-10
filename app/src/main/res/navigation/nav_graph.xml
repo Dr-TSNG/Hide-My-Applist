@@ -39,11 +39,23 @@
         android:name="icu.nullptr.hidemyapplist.ui.fragment.AppManageFragment"
         android:label="@string/title_app_manage" />
     <fragment
-        android:id="@+id/nav_app_select"
+        android:id="@+id/nav_app_settings"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.AppSettingsFragment"
+        android:label="@string/title_app_settings">
+        <argument
+            android:name="packageName"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_scope"
         android:name="icu.nullptr.hidemyapplist.ui.fragment.ScopeFragment"
         android:label="@string/title_app_select">
         <argument
             android:name="filterOnlyEnabled"
+            app:argType="boolean" />
+        <argument
+            android:name="isWhiteList"
+            android:defaultValue="false"
             app:argType="boolean" />
         <argument
             android:name="checked"

@@ -55,7 +55,7 @@ class TemplateAdapter(
         list = ConfigManager.getTemplateList().apply {
             sortWith { o1, o2 ->
                 if (o1.isWhiteList != o2.isWhiteList) {
-                    if (o1.isWhiteList) -1 else 1
+                    o1.isWhiteList.compareTo(o2.isWhiteList)
                 } else {
                     Collator.getInstance(Locale.getDefault()).compare(o1.name, o2.name)
                 }

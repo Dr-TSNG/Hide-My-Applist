@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import icu.nullptr.hidemyapplist.service.ConfigManager
 import icu.nullptr.hidemyapplist.ui.adapter.AppScopeAdapter
 import icu.nullptr.hidemyapplist.ui.util.navController
 import icu.nullptr.hidemyapplist.ui.viewmodel.AppSelectViewModel
@@ -17,7 +18,10 @@ class ScopeFragment : AppSelectFragment() {
         checked = args.checked.toMutableSet()
         AppSelectViewModel.Factory(
             firstComparator = Comparator.comparing { !checked.contains(it) },
-            adapter = AppScopeAdapter(args.filterOnlyEnabled, checked)
+            adapter = run {
+                if (!args.filterOnlyEnabled) AppScopeAdapter(checked, null)
+                else AppScopeAdapter(checked) { ConfigManager.getAppConfig(it)?.useWhitelist == args.isWhiteList }
+            }
         )
     }
 

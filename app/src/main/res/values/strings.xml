@@ -9,6 +9,7 @@
     <string name="title_template_settings">Template settings</string>
     <string name="title_app_manage">App manage</string>
     <string name="title_app_select">Select apps</string>
+    <string name="title_app_settings">App settings</string>
 
     <string name="do_not_dual">Do not dual this app</string>
     <string name="show_crash_log">Show crash log</string>
@@ -16,6 +17,8 @@
     <string name="edit_list">Edit list</string>
     <string name="delete">Delete</string>
     <string name="enabled">Enabled</string>
+    <string name="application">Application</string>
+    <string name="preferences">Preferences</string>
 
     <!-- Home -->
     <string name="xposed_activated">Module Activated [%d]</string>
@@ -53,20 +56,15 @@
     <string name="template_applied_count">Applied to %d apps</string>
     <string name="template_apps_visible_count">%d apps visible</string>
     <string name="template_apps_invisible_count">%d apps invisible</string>
-    <string name="template_query_param_rules_count">%d query param rules</string>
 
-    <string name="template_enable_hide">Enable hide</string>
-    <string name="template_config">Template config</string>
-    <string name="template_choose">Choose template</string>
-    <string name="template_exclude_system_apps">Exclude system apps</string>
-    <string name="template_exclude_system_apps_summary">If this is not enabled, remember to check webview in whitelist to avoid crashes of built-in browser</string>
-    <string name="template_extra_apps_visible_count">%d additional apps visible</string>
-    <string name="template_extra_apps_invisible_count">%d additional apps invisible</string>
-    <string name="template_copy_app_config">Copy this config to other apps</string>
-
-    <string name="template_add_filter_rules">Add custom interception rules</string>
-    <string name="template_add_new_filter_rule_hint">Fill in an item to be filtered</string>
-    <string name="template_delete_filter_rule">Delete the rule?</string>
+    <string name="app_enable_hide">Enable hide</string>
+    <string name="app_template_config">Template config</string>
+    <string name="app_choose_template">Choose template</string>
+    <string name="app_exclude_system_apps">Exclude system apps</string>
+    <string name="app_exclude_system_apps_summary">If this is not enabled, remember to check webview in whitelist to avoid crashes of built-in browser</string>
+    <string name="app_template_using">Using %d templates</string>
+    <string name="app_extra_apps_visible_count">%d additional apps visible</string>
+    <string name="app_extra_apps_invisible_count">%d additional apps invisible</string>
 
     <!-- Settings -->
     <string name="settings_module">Module</string>
