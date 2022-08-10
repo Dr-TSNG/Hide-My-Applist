@@ -9,6 +9,7 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.*
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialContainerTransform
@@ -23,7 +24,10 @@ import kotlinx.coroutines.launch
 class TemplateSettingsFragment : Fragment(R.layout.fragment_template_settings) {
 
     private val binding by viewBinding<FragmentTemplateSettingsBinding>()
-    private val viewModel by viewModels<TemplateSettingsViewModel>()
+    private val args by navArgs<TemplateSettingsFragmentArgs>()
+    private val viewModel by viewModels<TemplateSettingsViewModel>() {
+        TemplateSettingsViewModel.Factory(args)
+    }
 
     private fun onBack() {
         viewModel.name = viewModel.name?.trim()
@@ -49,15 +53,6 @@ class TemplateSettingsFragment : Fragment(R.layout.fragment_template_settings) {
             drawingViewId = R.id.nav_host_fragment
             scrimColor = Color.TRANSPARENT
         }
-
-        val args = TemplateSettingsFragmentArgs.fromBundle(requireArguments())
-        args.name?.let {
-            viewModel.name = it
-            viewModel.originalName = it
-            viewModel.appliedAppList.value = ConfigManager.getTemplateAppliedAppList(it)
-            viewModel.targetAppList.value = ConfigManager.getTemplateTargetAppList(it)
-        }
-        viewModel.isWhiteList = args.isWhiteList
     }
 
     override fun onGetLayoutInflater(savedInstanceState: Bundle?): LayoutInflater {
@@ -87,8 +82,7 @@ class TemplateSettingsFragment : Fragment(R.layout.fragment_template_settings) {
                 viewModel.targetAppList.value = bundle.getStringArrayList("checked")!!
                 clearFragmentResultListener("app_select")
             }
-            val selectArgs = AppSelectFragmentArgs(
-                isMultiSelect = true,
+            val selectArgs = ScopeFragmentArgs(
                 filterOnlyEnabled = false,
                 checked = viewModel.targetAppList.value.toTypedArray()
             )
@@ -99,8 +93,7 @@ class TemplateSettingsFragment : Fragment(R.layout.fragment_template_settings) {
                 viewModel.appliedAppList.value = bundle.getStringArrayList("checked")!!
                 clearFragmentResultListener("app_select")
             }
-            val selectArgs = AppSelectFragmentArgs(
-                isMultiSelect = true,
+            val selectArgs = ScopeFragmentArgs(
                 filterOnlyEnabled = true,
                 checked = viewModel.appliedAppList.value.toTypedArray()
             )

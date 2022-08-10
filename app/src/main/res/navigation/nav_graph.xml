@@ -40,11 +40,8 @@
         android:label="@string/title_app_manage" />
     <fragment
         android:id="@+id/nav_app_select"
-        android:name="icu.nullptr.hidemyapplist.ui.fragment.AppSelectFragment"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.ScopeFragment"
         android:label="@string/title_app_select">
-        <argument
-            android:name="isMultiSelect"
-            app:argType="boolean" />
         <argument
             android:name="filterOnlyEnabled"
             app:argType="boolean" />

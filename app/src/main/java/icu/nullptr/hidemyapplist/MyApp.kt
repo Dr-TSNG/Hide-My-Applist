@@ -20,7 +20,7 @@ class MyApp : Application() {
     val globalScope = CoroutineScope(Dispatchers.Default)
     val appIconLoader by lazy {
         val iconSize = resources.getDimensionPixelSize(R.dimen.app_icon_size)
-        AppIconLoader(iconSize, true, this)
+        AppIconLoader(iconSize, false, this)
     }
 
     @SuppressLint("SdCardPath")

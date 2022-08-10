@@ -5,10 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tsng.hidemyapplist.R
@@ -20,20 +17,12 @@ import icu.nullptr.hidemyapplist.ui.viewmodel.AppSelectViewModel
 import icu.nullptr.hidemyapplist.util.PackageHelper
 import kotlinx.coroutines.launch
 
-class AppSelectFragment : Fragment(R.layout.fragment_app_select) {
+abstract class AppSelectFragment : Fragment(R.layout.fragment_app_select) {
 
     private val binding by viewBinding<FragmentAppSelectBinding>()
-    private val args by navArgs<AppSelectFragmentArgs>()
-    private val viewModel by viewModels<AppSelectViewModel> {
-        AppSelectViewModel.Factory(args)
-    }
+    protected abstract val viewModel: AppSelectViewModel
 
-    private fun onBack() {
-        if (viewModel.isMultiSelect) {
-            setFragmentResult("app_select", Bundle().apply {
-                putStringArrayList("checked", ArrayList(viewModel.checked))
-            })
-        }
+    protected open fun onBack() {
         navController.navigateUp()
     }
 

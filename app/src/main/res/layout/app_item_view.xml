@@ -34,8 +34,9 @@
             android:layout_height="wrap_content"
             android:fontFamily="serif"
             android:text="@string/enabled"
-            android:textAppearance="?textAppearanceBodyMedium"
-            android:textColor="?colorPrimary" />
+            android:textColor="?colorPrimary"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/package_name"

@@ -87,4 +87,8 @@ object ConfigManager {
         }
         saveConfig()
     }
+
+    fun isUsingHide(packageName: String): Boolean {
+        return config.scope.containsKey(packageName)
+    }
 }
