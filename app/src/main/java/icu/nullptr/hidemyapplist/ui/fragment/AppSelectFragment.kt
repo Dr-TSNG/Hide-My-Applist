@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -15,6 +16,7 @@ import icu.nullptr.hidemyapplist.ui.util.navController
 import icu.nullptr.hidemyapplist.ui.util.setupToolbar
 import icu.nullptr.hidemyapplist.ui.viewmodel.AppSelectViewModel
 import icu.nullptr.hidemyapplist.util.PackageHelper
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 abstract class AppSelectFragment : Fragment(R.layout.fragment_app_select) {
@@ -84,9 +86,11 @@ abstract class AppSelectFragment : Fragment(R.layout.fragment_app_select) {
         }
 
         lifecycleScope.launch {
-            PackageHelper.isRefreshing.collect {
-                binding.swipeRefresh.isRefreshing = it
-            }
+            PackageHelper.isRefreshing
+                .flowWithLifecycle(lifecycle)
+                .collect {
+                    binding.swipeRefresh.isRefreshing = it
+                }
         }
     }
 }

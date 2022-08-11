@@ -52,7 +52,7 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         loadConfig()
         installHooks()
         instance = this
-        logI(TAG, "HMAService initialized")
+        logI(TAG, "HMA service initialized")
     }
 
     private fun searchDataDir() {

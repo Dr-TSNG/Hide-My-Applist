@@ -1,8 +1,8 @@
 package icu.nullptr.hidemyapplist.service
 
 import android.util.Log
-import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
+import icu.nullptr.hidemyapplist.common.BuildConfig
 import icu.nullptr.hidemyapplist.common.JsonConfig
 import icu.nullptr.hidemyapplist.hmaApp
 import icu.nullptr.hidemyapplist.ui.util.makeToast
@@ -23,7 +23,8 @@ object ConfigManager {
             config = JsonConfig.parse(configFile.readText())
             val configVersion = config.configVersion
             if (configVersion < 65) throw RuntimeException("Config version too old")
-            config.configVersion = BuildConfig.VERSION_CODE
+            config.configVersion = BuildConfig.SERVICE_VERSION
+            saveConfig()
         }.onFailure {
             makeToast(R.string.config_damaged)
             throw RuntimeException("Config file too old or damaged", it)

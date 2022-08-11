@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import com.google.android.material.color.DynamicColors
 import com.tsng.hidemyapplist.R
+import icu.nullptr.hidemyapplist.service.ConfigManager
 import icu.nullptr.hidemyapplist.ui.util.makeToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
