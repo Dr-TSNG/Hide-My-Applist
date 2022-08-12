@@ -52,12 +52,13 @@ class AppSettingsFragment : Fragment(R.layout.fragment_settings) {
 
         if (childFragmentManager.findFragmentById(R.id.settings_container) == null) {
             childFragmentManager.beginTransaction()
-                .replace(R.id.settings_container, AppPreferenceFragment(this))
+                .replace(R.id.settings_container, AppPreferenceFragment())
                 .commit()
         }
     }
 
     class AppPreferenceDataStore(private val pack: AppSettingsViewModel.Pack) : PreferenceDataStore() {
+
         override fun getBoolean(key: String, defValue: Boolean): Boolean {
             return when (key) {
                 "enableHide" -> pack.enabled
@@ -77,8 +78,10 @@ class AppSettingsFragment : Fragment(R.layout.fragment_settings) {
         }
     }
 
-    class AppPreferenceFragment(private val parent: AppSettingsFragment) : PreferenceFragmentCompat() {
-        private val pack = parent.viewModel.pack
+    class AppPreferenceFragment : PreferenceFragmentCompat() {
+
+        private val parent get() = requireParentFragment() as AppSettingsFragment
+        private val pack get() = parent.viewModel.pack
 
         private fun updateApplyTemplates() {
             findPreference<Preference>("applyTemplates")?.title =

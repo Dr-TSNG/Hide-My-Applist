@@ -12,20 +12,34 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.databinding.FragmentAppSelectBinding
 import icu.nullptr.hidemyapplist.service.PrefManager
+import icu.nullptr.hidemyapplist.ui.adapter.AppSelectAdapter
 import icu.nullptr.hidemyapplist.ui.util.navController
 import icu.nullptr.hidemyapplist.ui.util.setupToolbar
-import icu.nullptr.hidemyapplist.ui.viewmodel.AppSelectViewModel
 import icu.nullptr.hidemyapplist.util.PackageHelper
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 abstract class AppSelectFragment : Fragment(R.layout.fragment_app_select) {
 
     private val binding by viewBinding<FragmentAppSelectBinding>()
-    protected abstract val viewModel: AppSelectViewModel
+
+    protected abstract val firstComparator: Comparator<String>
+    protected abstract val adapter: AppSelectAdapter
+
+    private var search = ""
 
     protected open fun onBack() {
         navController.navigateUp()
+    }
+
+    private fun applyFilter() {
+        adapter.filter.filter(search)
+    }
+
+    private fun sortList() {
+        lifecycleScope.launch {
+            PackageHelper.sortList(firstComparator)
+            applyFilter()
+        }
     }
 
     private fun onMenuOptionSelected(item: MenuItem) {
@@ -55,7 +69,7 @@ abstract class AppSelectFragment : Fragment(R.layout.fragment_app_select) {
                 PrefManager.filter_reverseOrder = item.isChecked
             }
         }
-        viewModel.sortList()
+        sortList()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,7 +94,7 @@ abstract class AppSelectFragment : Fragment(R.layout.fragment_app_select) {
             findItem(R.id.menu_reverse_order).isChecked = PrefManager.filter_reverseOrder
         }
         binding.list.layoutManager = LinearLayoutManager(context)
-        binding.list.adapter = viewModel.adapter
+        binding.list.adapter = adapter
         binding.swipeRefresh.setOnRefreshListener {
             PackageHelper.invalidateCache()
         }
@@ -92,5 +106,7 @@ abstract class AppSelectFragment : Fragment(R.layout.fragment_app_select) {
                     binding.swipeRefresh.isRefreshing = it
                 }
         }
+
+        sortList()
     }
 }
