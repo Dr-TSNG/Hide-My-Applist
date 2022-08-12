@@ -7,6 +7,7 @@ import android.util.Log
 import com.github.kyuubiran.ezxhelper.utils.findFieldObject
 import com.github.kyuubiran.ezxhelper.utils.getObjectAs
 import icu.nullptr.hidemyapplist.common.BuildConfig
+import icu.nullptr.hidemyapplist.common.Constants
 import icu.nullptr.hidemyapplist.common.IHMAService
 import icu.nullptr.hidemyapplist.common.JsonConfig
 import icu.nullptr.hidemyapplist.xposed.hook.FrameworkLegacy
@@ -130,7 +131,7 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
     }
 
     fun shouldHide(caller: String?, query: String?): Boolean {
-        if (caller == null || query == null) return false
+        if (caller == null || query == null || query in Constants.packagesShouldNotHide) return false
         if (caller in query) return false
         val appConfig = config.scope[caller] ?: return false
         if (appConfig.useWhitelist && appConfig.excludeSystemApps && query in systemApps) return false

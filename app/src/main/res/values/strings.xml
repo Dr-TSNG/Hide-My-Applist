@@ -71,7 +71,7 @@
     <string name="app_template_config">Template config</string>
     <string name="app_choose_template">Choose template</string>
     <string name="app_exclude_system_apps">Exclude system apps</string>
-    <string name="app_exclude_system_apps_summary">If this is not enabled, remember to check webview in whitelist to avoid crashes of built-in browser</string>
+    <string name="app_exclude_system_apps_summary">Turn off this option only when really necessary. It is likely to cause crash with it disabled</string>
     <string name="app_template_using">Using %d templates</string>
     <string name="app_extra_apps_visible_count">%d additional apps visible</string>
     <string name="app_extra_apps_invisible_count">%d additional apps invisible</string>
