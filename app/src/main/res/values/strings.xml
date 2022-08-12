@@ -23,6 +23,8 @@
     <string name="whitelist">Whitelist</string>
     <string name="application">Application</string>
     <string name="preferences">Preferences</string>
+    <string name="refresh">Refresh</string>
+    <string name="filter">Filter</string>
 
     <!-- Home -->
     <string name="home_xposed_activated">Module Activated [%d]</string>
@@ -73,6 +75,12 @@
     <string name="app_template_using">Using %d templates</string>
     <string name="app_extra_apps_visible_count">%d additional apps visible</string>
     <string name="app_extra_apps_invisible_count">%d additional apps invisible</string>
+
+    <!-- Logs -->
+    <string name="logs_save">Save logs</string>
+    <string name="logs_clear">Clear logs</string>
+    <string name="logs_empty">No logs to save</string>
+    <string name="logs_saved">Logs saved</string>
 
     <!-- Settings -->
     <string name="settings_module">Module</string>

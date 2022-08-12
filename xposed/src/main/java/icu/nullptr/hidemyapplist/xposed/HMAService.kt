@@ -74,6 +74,7 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         logFile = File("$dataDir/log/runtime.log")
         oldLogFile = File("$dataDir/log/old.log")
         logFile.renameTo(oldLogFile)
+        logFile.createNewFile()
 
         logcatAvailable = true
         logI(TAG, "Data dir: $dataDir")
@@ -193,6 +194,7 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         synchronized(loggerLock) {
             oldLogFile.delete()
             logFile.renameTo(oldLogFile)
+            logFile.createNewFile()
         }
     }
 }

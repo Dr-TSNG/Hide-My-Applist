@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/menu_refresh"
+        android:icon="@drawable/baseline_refresh_24"
+        android:showAsAction="always"
+        android:title="@string/refresh" />
+    <item
+        android:id="@+id/menu_save"
+        android:icon="@drawable/outline_save_24"
+        android:showAsAction="ifRoom"
+        android:title="@string/logs_save" />
+    <item
+        android:id="@+id/menu_delete"
+        android:icon="@drawable/outline_delete_24"
+        android:showAsAction="ifRoom"
+        android:title="@string/logs_clear" />
+    <item
+        android:showAsAction="never"
+        android:title="@string/filter">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_filter_debug"
+                    android:title="Debug"
+                    tools:ignore="HardcodedText" />
+                <item
+                    android:id="@+id/menu_filter_info"
+                    android:title="Info"
+                    tools:ignore="HardcodedText" />
+                <item
+                    android:id="@+id/menu_filter_warn"
+                    android:title="Warn"
+                    tools:ignore="HardcodedText" />
+                <item
+                    android:id="@+id/menu_filter_error"
+                    android:title="Error"
+                    tools:ignore="HardcodedText" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/menu_reverse_order"
+        android:checkable="true"
+        android:title="@string/list_reverse_order" />
+</menu>
