@@ -31,11 +31,25 @@ object ConfigManager {
         }
     }
 
-    fun saveConfig() {
+    private fun saveConfig() {
         val text = config.toString()
         configFile.writeText(text)
         ServiceHelper.submitConfig(text)
     }
+
+    var detailLog: Boolean
+        get() = config.detailLog
+        set(value) {
+            config.detailLog = value
+            saveConfig()
+        }
+
+    var maxLogSize: Int
+        get() = config.maxLogSize
+        set(value) {
+            config.maxLogSize = value
+            saveConfig()
+        }
 
     fun hasTemplate(name: String?): Boolean {
         return config.templates.containsKey(name)

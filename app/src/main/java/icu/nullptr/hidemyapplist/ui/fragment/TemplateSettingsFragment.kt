@@ -2,10 +2,8 @@ package icu.nullptr.hidemyapplist.ui.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.addCallback
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.*
 import androidx.lifecycle.lifecycleScope
@@ -53,12 +51,6 @@ class TemplateSettingsFragment : Fragment(R.layout.fragment_template_settings) {
             drawingViewId = R.id.nav_host_fragment
             scrimColor = Color.TRANSPARENT
         }
-    }
-
-    override fun onGetLayoutInflater(savedInstanceState: Bundle?): LayoutInflater {
-        val inflater = super.onGetLayoutInflater(savedInstanceState)
-        val contextThemeWrapper = ContextThemeWrapper(requireContext(), rikka.material.preference.R.style.ThemeOverlay_Rikka_Material3_Preference)
-        return inflater.cloneInContext(contextThemeWrapper)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

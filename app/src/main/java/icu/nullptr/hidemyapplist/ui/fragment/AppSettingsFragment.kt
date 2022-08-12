@@ -57,7 +57,6 @@ class AppSettingsFragment : Fragment(R.layout.fragment_settings) {
         }
     }
 
-
     class AppPreferenceDataStore(private val pack: AppSettingsViewModel.Pack) : PreferenceDataStore() {
         override fun getBoolean(key: String, defValue: Boolean): Boolean {
             return when (key) {
