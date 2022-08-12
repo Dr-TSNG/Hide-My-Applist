@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="xposed_activated">Module Actif</string>
-    <string name="xposed_not_activated">Module Non Actif</string>
-    <string name="xposed_service_on">Service du système en cours d\’exécution</string>
-    <string name="xposed_service_off">Service du système en arrêt</string>
-    <string name="xposed_service_old">Module mis à jour, redémarrage nécessaire</string>
-    <string name="xposed_serve_times">Hide My Applist à intercepté au total ## requêtes</string>
-</resources>

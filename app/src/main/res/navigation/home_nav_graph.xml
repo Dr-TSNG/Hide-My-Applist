@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_nav_graph"
+    app:startDestination="@id/nav_home">
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_template_manage"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.TemplateManageFragment"
+        android:label="@string/title_template_manage" />
+    <fragment
+        android:id="@+id/nav_template_settings"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.TemplateSettingsFragment"
+        android:label="@string/title_template_settings">
+        <argument
+            android:name="name"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="isWhiteList"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_app_manage"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.AppManageFragment"
+        android:label="@string/title_app_manage" />
+    <fragment
+        android:id="@+id/nav_app_settings"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.AppSettingsFragment"
+        android:label="@string/title_app_settings">
+        <argument
+            android:name="packageName"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_scope"
+        android:name="icu.nullptr.hidemyapplist.ui.fragment.ScopeFragment"
+        android:label="@string/title_app_select">
+        <argument
+            android:name="filterOnlyEnabled"
+            app:argType="boolean" />
+        <argument
+            android:name="isWhiteList"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
+            android:name="checked"
+            app:argType="string[]" />
+    </fragment>
+</navigation>

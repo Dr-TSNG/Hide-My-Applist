@@ -10,7 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-    if: ${{ !startsWith(github.event.head_commit.message, 'docs:') }}
+    if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') }}
 
     steps:
       - name: Checkout
@@ -34,7 +34,7 @@ jobs:
           echo storePassword='${{ secrets.KEY_STORE_PASSWORD }}' >> local.properties
           echo keyAlias='${{ secrets.ALIAS }}' >> local.properties
           echo keyPassword='${{ secrets.ALIAS_KEY_PASSWORD }}' >> local.properties
-          echo fileDir='../key.jks' >> local.properties
+          echo fileDir='key.jks' >> local.properties
           echo "${{ secrets.KEY_STORE }}" | base64 --decode > key.jks
           echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
 
@@ -51,33 +51,35 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Gradle prebuild
-        run: ./gradlew prebuild
+        run: |
+          echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
+          ./gradlew prebuild
 
       - name: Build release
         id: buildRelease
         run: |
-          ./gradlew :app:assembleRelease
-          echo "::set-output name=releaseName::`ls app/build/outputs/apk/release/V*-release.apk | awk -F '(/|.apk)' '{print $6}'`"
+          ./gradlew :app:buildRelease
+          echo "::set-output name=releaseName::`ls app/build/apk/release/HMA*-release.apk | awk -F '(/|.apk)' '{print $5}'`"
 
       - name: Build debug
         id: buildDebug
         run: |
-          ./gradlew :app:assembleDebug
-          echo "::set-output name=debugName::`ls app/build/outputs/apk/debug/V*-debug.apk | awk -F '(/|.apk)' '{print $6}'`"
+          ./gradlew :app:buildDebug
+          echo "::set-output name=debugName::`ls app/build/apk/debug/HMA*-debug.apk | awk -F '(/|.apk)' '{print $5}'`"
 
       - name: Upload release
         if: success()
         uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.buildRelease.outputs.releaseName }}
-          path: "app/build/outputs/apk/release/*.apk"
+          path: "app/build/apk/release/HMA*-release.apk"
 
       - name: Upload debug
         if: success()
         uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.buildDebug.outputs.debugName }}
-          path: "app/build/outputs/apk/debug/*.apk"
+          path: "app/build/apk/debug/HMA*-debug.apk"
 
       - name: Upload mappings
         uses: actions/upload-artifact@v2
@@ -93,8 +95,8 @@ jobs:
           COMMIT_URL: ${{ github.event.head_commit.url }}
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
-          OUTPUT="app/build/outputs/apk/"
-          export release=$(find $OUTPUT -name "V*-release.apk")
-          export debug=$(find $OUTPUT -name "V*-debug.apk")
+          OUTPUT="app/build/apk/"
+          export release=$(find $OUTPUT -name "HMA*-release.apk")
+          export debug=$(find $OUTPUT -name "HMA*-debug.apk")
           ESCAPED=`python3 -c 'import json,os,urllib.parse; msg = json.dumps(os.environ["COMMIT_MESSAGE"]); print(urllib.parse.quote(msg if len(msg) <= 1024 else json.dumps(os.environ["COMMIT_URL"])))'`
           curl -v "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup?chat_id=${CHANNEL_ID}&media=%5B%7B%22type%22:%22document%22,%20%22media%22:%22attach://release%22%7D,%7B%22type%22:%22document%22,%20%22media%22:%22attach://debug%22,%22caption%22:${ESCAPED}%7D%5D"  -F release="@$release" -F debug="@$debug"

@@ -40,10 +40,12 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Gradle prebuild
-        run: ./gradlew prebuild
+        run: |
+          echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
+          ./gradlew prebuild
 
       - name: Build debug
         id: buildDebug
         run: |
           ./gradlew :app:assembleDebug
-          echo "::set-output name=debugName::`ls app/build/outputs/apk/debug/V*-debug.apk | awk -F '(/|.apk)' '{print $6}'`"
+          echo "::set-output name=debugName::`ls app/build/apk/debug/HMA*-debug.apk | awk -F '(/|.apk)' '{print $6}'`"

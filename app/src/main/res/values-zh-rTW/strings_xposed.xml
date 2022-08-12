@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="xposed_activated">已啟動模組</string>
-    <string name="xposed_not_activated">未啟動模組</string>
-    <string name="xposed_service_on">系統服務執行中</string>
-    <string name="xposed_service_off">系統服務未執行</string>
-    <string name="xposed_service_old">模組已更新，請重啟</string>
-    <string name="xposed_serve_times">隱藏應用程式列表已為您攔截合計 ## 次請求</string>
-</resources>

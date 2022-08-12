@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="gray">#607D8B</color>
+    <color name="invalid">#8F6B32</color>
     <color name="debug">#000000</color>
     <color name="info">#154A74</color>
-    <color name="error">#FF0000</color>
-    <color name="service_off">#666600</color>
-    <color name="colorPrimary">#336699</color>
-    <color name="colorPrimaryDark">#154A74</color>
+    <color name="warn">#375634</color>
 </resources>

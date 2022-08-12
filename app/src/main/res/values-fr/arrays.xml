@@ -1,8 +1,0 @@
-<resources>
-    <string-array name="detect_methods">
-        <item>Reqêtes API</item>
-        <item>Requêtes intentionnelles</item>
-        <item>Détections d\’ID</item>
-        <item>Détections de fichiers</item>
-    </string-array>
-</resources>

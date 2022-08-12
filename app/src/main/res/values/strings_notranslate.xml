@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="shell" translatable="false">Shell</string>
-    <string name="no_root_permission" translatable="false">failed to acquire root permission</string>
-    <string name="execute_successfully" translatable="false">execute successfully</string>
-    <string name="execute_failed" translatable="false">execute failed</string>
-</resources>

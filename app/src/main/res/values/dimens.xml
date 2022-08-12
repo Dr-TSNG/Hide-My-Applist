@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="card_title_margin_bottom">2dp</dimen>
+    <dimen name="info_card_margin_horizontal">12dp</dimen>
+    <dimen name="item_padding_horizontal">20dp</dimen>
+    <dimen name="item_padding_vertical">16dp</dimen>
+    <dimen name="vector_icon_size">28dp</dimen>
+    <dimen name="app_icon_size">42dp</dimen>
+
+    <dimen name="primary_elevation">6dp</dimen>
+    <dimen name="secondary_elevation">1dp</dimen>
+</resources>

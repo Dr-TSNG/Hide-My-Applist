@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="toolbar_search">Rechercher</string>
-    <string name="toolbar_show_system_apps">Afficher les applications système</string>
-    <string name="toolbar_refresh">Rafraîchir</string>
-    <string name="toolbar_export">Exporter</string>
-    <string name="toolbar_clean">Effacer</string>
-    <string name="toolbar_raw_logs">Afficher les journaux bruts</string>
-</resources>

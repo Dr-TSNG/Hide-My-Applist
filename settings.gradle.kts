@@ -1,27 +1,37 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
-        maven("https://jcenter.bintray.com")
         maven("https://jitpack.io")
         maven("https://api.xposed.info/")
     }
 }
 
 pluginManagement {
+    val agpVersion: String by settings
     repositories {
         gradlePluginPortal()
         google()
         mavenCentral()
     }
     plugins {
-        id("com.android.application").version("7.1.1")
-        id("com.android.library").version("7.1.1")
-        id("org.jetbrains.kotlin.android").version("1.6.10")
+        id("com.android.application") version agpVersion
+        id("com.android.library") version agpVersion
+        id("androidx.navigation.safeargs") version "2.5.0"
+        id("dev.rikka.tools.materialthemebuilder") version "1.3.3"
+        id("dev.rikka.tools.refine") version "3.1.1"
+        id("org.jetbrains.kotlin.android") version "1.7.0"
+        kotlin("plugin.serialization") version "1.7.0"
     }
 }
 
-rootProject.name = "Hide My Applist"
+rootProject.name = "HideMyApplist"
 
-include(":app")
+include(
+    ":app",
+    ":common",
+    ":xposed"
+)
