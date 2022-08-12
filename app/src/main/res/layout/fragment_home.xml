@@ -85,7 +85,7 @@
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?textAppearanceTitleMedium"
                                 android:textColor="@android:color/white"
-                                tools:text="@string/xposed_activated" />
+                                tools:text="@string/home_xposed_activated" />
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/service_status"
@@ -94,7 +94,7 @@
                                 android:layout_marginTop="2dp"
                                 android:textAppearance="?textAppearanceBodyMedium"
                                 android:textColor="@android:color/white"
-                                tools:text="@string/xposed_service_on" />
+                                tools:text="@string/home_xposed_service_on" />
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/filter_count"
@@ -103,7 +103,7 @@
                                 android:layout_marginTop="8dp"
                                 android:textAppearance="?textAppearanceBodySmall"
                                 android:textColor="@android:color/white"
-                                tools:text="@string/xposed_filter_count" />
+                                tools:text="@string/home_xposed_filter_count" />
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>

@@ -17,16 +17,13 @@ class AboutActivity : AbsAboutActivity() {
     }
 
     override fun onItemsCreated(items: MutableList<Any>) {
-        items.add(Category(getString(R.string.about_title)))
+        items.add(Category(getString(R.string.title_about)))
         items.add(Card(getString(R.string.about_description)))
 
         items.add(Category(getString(R.string.about_how_to_use_title)))
         items.add(Card(getString(R.string.about_how_to_use_description_1)))
         items.add(Line())
         items.add(Card(getString(R.string.about_how_to_use_description_2)))
-
-        items.add(Category(getString(R.string.about_hook_differences_title)))
-        items.add(Card(getString(R.string.about_hook_differences_description)))
 
         items.add(Category(getString(R.string.about_developer)))
         items.add(Contributor(R.drawable.cont_author, "\uD835\uDD93\uD835\uDD9A\uD835\uDD91\uD835\uDD91\uD835\uDD95\uD835\uDD99\uD835\uDD97", "Developer", "https://github.com/Dr-TSNG"))
@@ -47,9 +44,7 @@ class AboutActivity : AbsAboutActivity() {
         items.add(Category(getString(R.string.about_open_source)))
         items.add(License("MultiType", "drakeet", License.APACHE_2, "https://github.com/drakeet/MultiType"))
         items.add(License("about-page", "drakeet", License.APACHE_2, "https://github.com/drakeet/about-page"))
-        items.add(License("SmartRefreshLayout", "scwang90", License.APACHE_2, "https://github.com/scwang90/SmartRefreshLayout"))
         items.add(License("EzXHelper", "KyuubiRan", License.APACHE_2, "https://github.com/KyuubiRan/EzXHelper"))
-        items.add(License("libsu", "topjohnwu", License.APACHE_2, "https://github.com/topjohnwu/libsu"))
         items.add(License("okhttp", "square", License.APACHE_2, "https://github.com/square/okhttp"))
     }
 }

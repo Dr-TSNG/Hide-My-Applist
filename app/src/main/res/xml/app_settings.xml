@@ -15,9 +15,9 @@
         <rikka.material.preference.MaterialSwitchPreference
             android:icon="@drawable/outline_settings_24"
             android:key="useWhiteList"
-            android:summaryOff="@string/template_blacklist"
-            android:summaryOn="@string/template_whitelist"
-            android:title="@string/template_work_mode" />
+            android:summaryOff="@string/blacklist"
+            android:summaryOn="@string/whitelist"
+            android:title="@string/work_mode" />
         <rikka.material.preference.MaterialSwitchPreference
             android:dependency="useWhiteList"
             android:disableDependentsState="true"

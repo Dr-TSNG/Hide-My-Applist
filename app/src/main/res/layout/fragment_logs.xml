@@ -22,7 +22,7 @@
         android:layout_height="match_parent"
         android:fontFamily="serif"
         android:gravity="center"
-        android:text="@string/xposed_service_off"
+        android:text="@string/home_xposed_service_off"
         android:textAppearance="?textAppearanceTitleLarge" />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -1,5 +1,6 @@
 package icu.nullptr.hidemyapplist.ui.fragment
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -17,6 +18,7 @@ import com.tsng.hidemyapplist.databinding.FragmentHomeBinding
 import icu.nullptr.hidemyapplist.hmaApp
 import icu.nullptr.hidemyapplist.service.ConfigManager
 import icu.nullptr.hidemyapplist.service.ServiceHelper
+import icu.nullptr.hidemyapplist.ui.activity.AboutActivity
 import icu.nullptr.hidemyapplist.ui.util.*
 import java.io.IOException
 
@@ -29,11 +31,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             if (uri == null) return@backup
             ConfigManager.configFile.inputStream().use { input ->
                 hmaApp.contentResolver.openOutputStream(uri).use { output ->
-                    if (output == null) makeToast(R.string.settings_export_failed)
+                    if (output == null) makeToast(R.string.home_export_failed)
                     else input.copyTo(output)
                 }
             }
-            makeToast(R.string.settings_exported)
+            makeToast(R.string.home_exported)
         }
 
     private val restoreSAFLauncher =
@@ -42,20 +44,20 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             runCatching {
                 val backup = hmaApp.contentResolver
                     .openInputStream(uri)?.reader().use { it?.readText() }
-                    ?: throw IOException(getString(R.string.settings_import_file_damaged))
+                    ?: throw IOException(getString(R.string.home_import_file_damaged))
                 ConfigManager.importConfig(backup)
-                makeToast(R.string.settings_import_successful)
+                makeToast(R.string.home_import_successful)
             }.onFailure {
                 it.printStackTrace()
                 MaterialAlertDialogBuilder(requireContext())
                     .setCancelable(false)
-                    .setTitle(R.string.settings_import_failed)
+                    .setTitle(R.string.home_import_failed)
                     .setMessage(it.message)
                     .setPositiveButton(android.R.string.ok, null)
                     .setNegativeButton(R.string.show_crash_log) { _, _ ->
                         MaterialAlertDialogBuilder(requireActivity())
                             .setCancelable(false)
-                            .setTitle(R.string.settings_import_failed)
+                            .setTitle(R.string.home_import_failed)
                             .setMessage(it.stackTraceToString())
                             .setPositiveButton(android.R.string.ok, null)
                             .show()
@@ -71,7 +73,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setupToolbar(binding.toolbar, getString(R.string.app_name))
+        setupToolbar(
+            toolbar = binding.toolbar,
+            title = getString(R.string.app_name),
+            menuRes = R.menu.menu_about,
+            onMenuOptionSelected = {
+                startActivity(Intent(requireContext(), AboutActivity::class.java))
+            }
+        )
+
         binding.adBanner.loadAd(AdRequest.Builder().build())
         binding.templateManage.setOnClickListener {
             val extras = FragmentNavigatorExtras(binding.manageCard to "transition_manage")
@@ -103,17 +113,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
         if (hmaApp.isHooked) {
             binding.moduleStatusIcon.setImageResource(R.drawable.outline_done_all_24)
-            binding.moduleStatus.text = String.format(getString(R.string.xposed_activated), BuildConfig.VERSION_CODE)
+            binding.moduleStatus.text = String.format(getString(R.string.home_xposed_activated), BuildConfig.VERSION_CODE)
         } else {
             binding.moduleStatusIcon.setImageResource(R.drawable.outline_extension_off_24)
-            binding.moduleStatus.setText(R.string.xposed_not_activated)
+            binding.moduleStatus.setText(R.string.home_xposed_not_activated)
         }
         if (serviceVersion != 0) {
-            binding.serviceStatus.text = String.format(getString(R.string.xposed_service_on), serviceVersion)
+            binding.serviceStatus.text = String.format(getString(R.string.home_xposed_service_on), serviceVersion)
             binding.filterCount.visibility = View.VISIBLE
-            binding.filterCount.text = String.format(getString(R.string.xposed_filter_count), ServiceHelper.getFilterCount())
+            binding.filterCount.text = String.format(getString(R.string.home_xposed_filter_count), ServiceHelper.getFilterCount())
         } else {
-            binding.serviceStatus.setText(R.string.xposed_service_off)
+            binding.serviceStatus.setText(R.string.home_xposed_service_off)
             binding.filterCount.visibility = View.GONE
         }
     }

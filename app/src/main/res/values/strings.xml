@@ -10,6 +10,7 @@
     <string name="title_app_manage">App manage</string>
     <string name="title_app_select">Select apps</string>
     <string name="title_app_settings">App settings</string>
+    <string name="title_about">About</string>
 
     <string name="do_not_dual">Do not dual this app</string>
     <string name="show_crash_log">Show crash log</string>
@@ -17,20 +18,30 @@
     <string name="edit_list">Edit list</string>
     <string name="delete">Delete</string>
     <string name="enabled">Enabled</string>
+    <string name="work_mode">Work mode</string>
+    <string name="blacklist">Blacklist</string>
+    <string name="whitelist">Whitelist</string>
     <string name="application">Application</string>
     <string name="preferences">Preferences</string>
 
     <!-- Home -->
-    <string name="xposed_activated">Module Activated [%d]</string>
-    <string name="xposed_not_activated">Module Not Activated</string>
-    <string name="xposed_service_on">System service running [%d]</string>
-    <string name="xposed_service_off">System service not running</string>
-    <string name="xposed_service_old">Module updated, need reboot</string>
-    <string name="xposed_filter_count">Hide My Applist has filtered total %d requests</string>
+    <string name="home_xposed_activated">Module Activated [%d]</string>
+    <string name="home_xposed_not_activated">Module Not Activated</string>
+    <string name="home_xposed_service_on">System service running [%d]</string>
+    <string name="home_xposed_service_off">System service not running</string>
+    <string name="home_xposed_service_old">Module updated, need reboot</string>
+    <string name="home_xposed_filter_count">Hide My Applist has filtered total %d requests</string>
     <string name="home_manage">Manage</string>
     <string name="home_backup_and_restore">Backup &amp; Restore</string>
     <string name="home_backup_config">Backup config</string>
     <string name="home_restore_config">Restore config</string>
+    <string name="home_import_successful">Import successful</string>
+    <string name="home_import_failed">Import failed</string>
+    <string name="home_import_app_version_too_old">Module version lower than the backup</string>
+    <string name="home_import_backup_version_too_old">Backup version too old</string>
+    <string name="home_import_file_damaged">Backup file was damaged</string>
+    <string name="home_export_failed">Export failed</string>
+    <string name="home_exported">Backed up config</string>
 
     <!-- App select -->
     <string name="list_show_system">Show system</string>
@@ -43,13 +54,9 @@
 
     <!-- Template manage -->
     <string name="template_usage_hint">Establish templates for \"restless\" apps, controlling applist they can obtain.\n\nBlacklist (recommended): the apps selected in the template will be invisible to the apps applying the template\nWhitelist: the apps not selected in the template will be invisible to the apps applying the template.</string>
-    <string name="template_work_mode">Work mode</string>
-    <string name="template_blacklist">Blacklist</string>
-    <string name="template_whitelist">Whitelist</string>
     <string name="template_new_blacklist">Create a blacklist template</string>
     <string name="template_new_whitelist">Create a whitelist template</string>
     <string name="template_delete">Are you sure to delete the template?</string>
-
     <string name="template_name">Template name</string>
     <string name="template_name_invalid">Name invalid</string>
     <string name="template_name_already_exist">Template name already exist</string>
@@ -57,6 +64,7 @@
     <string name="template_apps_visible_count">%d apps visible</string>
     <string name="template_apps_invisible_count">%d apps invisible</string>
 
+    <!-- App settings -->
     <string name="app_enable_hide">Enable hide</string>
     <string name="app_template_config">Template config</string>
     <string name="app_choose_template">Choose template</string>
@@ -83,37 +91,21 @@
     <string name="settings_force_clean_env_toast_successful">Runtime environment cleaned</string>
     <string name="settings_force_clean_env_toast_failed">Permission denied</string>
 
-    <string name="settings_backup">Backup</string>
-    <string name="settings_import_config">Import config</string>
-    <string name="settings_import_successful">Import successful</string>
-    <string name="settings_import_failed">Import failed</string>
-    <string name="settings_import_app_version_too_old">Module version lower than the backup</string>
-    <string name="settings_import_backup_version_too_old">Backup version too old</string>
-    <string name="settings_import_file_damaged">Backup file was damaged</string>
-    <string name="settings_export_config">Export config</string>
-    <string name="settings_export_failed">Export failed</string>
-    <string name="settings_exported">Backed up config</string>
-
     <string name="settings_update">Update</string>
     <string name="settings_disable_update">Disable update notification</string>
     <string name="settings_receive_beta_update">Receive beta update</string>
     <string name="settings_receive_beta_update_summary">Beta version may be unstable</string>
 
     <!-- About -->
-    <string name="about_title">About this module</string>
     <string name="about_description">
-        Although It is incorrect to detect specific app installation, yet not every app using root provides random packagename support. In this case, detected apps that use root (such as Fake Location and Storage Isolation) is equal to detected root itself.\n\nAt the same time, some smart apps use various loopholes to acquire your applist, so that it can draw a persona for you.\n\nThis module provides some methods to test whether you have already hidden your applist nicely. Also, it can work as an Xposed module to hide some apps or reject applist requests to protect your privacy.
+        Although It is incorrect to detect specific app installation, yet not every app using root provides random package name support. In this case, detected apps that use root (such as Fake Location and Storage Isolation) is equal to detected root itself.\n\nAt the same time, some smart apps use various loopholes to acquire your app list, so that it can draw a persona for you.\n\nThis module provides some methods to test whether you have already hidden your applist nicely. Also, it can work as an Xposed module to hide some apps or reject app list requests to protect your privacy.
     </string>
     <string name="about_how_to_use_title">How to use this module</string>
     <string name="about_how_to_use_description_1">
-        #How to enable hide#\nYou can create templates in \"Manage Templates\". Then apply the templates in \"Select Effective Apps\". (You can also select extra apps for targets.) You should and ONLY should check \"System Framework\" in Xposed module scope / whitelist.
+        You can create templates in \"Template manage\".\nThen apply the templates to apps in \"App manage\". (You can also select extra apps for targets.)\nYou should and ONLY should check \"System Framework\" in Xposed module scope / whitelist.
     </string>
     <string name="about_how_to_use_description_2">
-        #Is template modification effective in real time#\nExcept for file interception, yes. To update file interception policy, you need to force stop and restart target apps.
-    </string>
-    <string name="about_hook_differences_title">Differences among hook methods</string>
-    <string name="about_hook_differences_description">
-        Normal apps use some of API requests to acquire applist, but bad apps will use other methods (loopholes) to detect it.
+        Config modification effective in real time.
     </string>
     <string name="about_developer">Developer</string>
     <string name="about_support">Support and feedback</string>
