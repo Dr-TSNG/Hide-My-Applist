@@ -10,11 +10,11 @@ import icu.nullptr.hidemyapplist.xposed.Utils
 import icu.nullptr.hidemyapplist.xposed.logE
 import icu.nullptr.hidemyapplist.xposed.logI
 
-@TargetApi(Build.VERSION_CODES.R)
-class FrameworkTarget30(private val service: HMAService) : IFrameworkHook {
+@TargetApi(Build.VERSION_CODES.P)
+class FrameworkTarget28(private val service: HMAService) : IFrameworkHook {
 
     companion object {
-        private const val TAG = "FrameworkTarget30"
+        private const val TAG = "FrameworkTarget28"
     }
 
     private val hooks = mutableSetOf<XC_MethodHook.Unhook>()
@@ -22,13 +22,13 @@ class FrameworkTarget30(private val service: HMAService) : IFrameworkHook {
 
     override fun load() {
         logI(TAG, "Load hook")
-        findMethod("com.android.server.pm.AppsFilter") {
-            name == "shouldFilterApplication"
+        findMethod(service.pms::class.java, findSuper = true) {
+            name == "filterAppAccessLPr"
         }.hookBefore { param ->
             runCatching {
-                val callingUid = param.args[0] as Int
+                val callingUid = param.args[1] as Int
                 val callingApps = service.pms.getPackagesForUid(callingUid) ?: return@hookBefore
-                val targetApp = Utils.getPackageNameFromPackageSettings(param.args[2])
+                val targetApp = Utils.getPackageNameFromPackageSettings(param.args[0])
                 for (caller in callingApps) {
                     if (service.shouldHide(caller, targetApp)) {
                         param.result = true

@@ -10,6 +10,7 @@ import icu.nullptr.hidemyapplist.common.BuildConfig
 import icu.nullptr.hidemyapplist.common.IHMAService
 import icu.nullptr.hidemyapplist.common.JsonConfig
 import icu.nullptr.hidemyapplist.xposed.hook.FrameworkLegacy
+import icu.nullptr.hidemyapplist.xposed.hook.FrameworkTarget28
 import icu.nullptr.hidemyapplist.xposed.hook.FrameworkTarget30
 import icu.nullptr.hidemyapplist.xposed.hook.IFrameworkHook
 import java.io.File
@@ -112,6 +113,8 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             frameworkHooks.add(FrameworkTarget30(this))
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            frameworkHooks.add(FrameworkTarget28(this))
         } else {
             frameworkHooks.add(FrameworkLegacy(this))
         }
