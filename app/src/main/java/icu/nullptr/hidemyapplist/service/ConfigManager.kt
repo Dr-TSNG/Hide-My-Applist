@@ -13,8 +13,8 @@ object ConfigManager {
     data class TemplateInfo(val name: String?, val isWhiteList: Boolean)
 
     private const val TAG = "ConfigManager"
-    private val configFile = File("${hmaApp.filesDir.absolutePath}/config.json")
     private lateinit var config: JsonConfig
+    val configFile = File("${hmaApp.filesDir.absolutePath}/config.json")
 
     init {
         if (!configFile.exists())
@@ -50,6 +50,12 @@ object ConfigManager {
             config.maxLogSize = value
             saveConfig()
         }
+
+    fun importConfig(json: String) {
+        config = JsonConfig.parse(json)
+        config.configVersion = BuildConfig.SERVICE_VERSION
+        saveConfig()
+    }
 
     fun hasTemplate(name: String?): Boolean {
         return config.templates.containsKey(name)

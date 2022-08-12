@@ -3,24 +3,66 @@ package icu.nullptr.hidemyapplist.ui.fragment
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.ads.AdRequest
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialElevationScale
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.databinding.FragmentHomeBinding
 import icu.nullptr.hidemyapplist.hmaApp
+import icu.nullptr.hidemyapplist.service.ConfigManager
 import icu.nullptr.hidemyapplist.service.ServiceHelper
-import icu.nullptr.hidemyapplist.ui.util.getColor
-import icu.nullptr.hidemyapplist.ui.util.navController
-import icu.nullptr.hidemyapplist.ui.util.setupToolbar
-import icu.nullptr.hidemyapplist.ui.util.themeColor
+import icu.nullptr.hidemyapplist.ui.util.*
+import java.io.IOException
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val binding by viewBinding<FragmentHomeBinding>()
+
+    private val backupSAFLauncher =
+        registerForActivityResult(CreateDocument("application/json")) backup@{ uri ->
+            if (uri == null) return@backup
+            ConfigManager.configFile.inputStream().use { input ->
+                hmaApp.contentResolver.openOutputStream(uri).use { output ->
+                    if (output == null) makeToast(R.string.settings_export_failed)
+                    else input.copyTo(output)
+                }
+            }
+            makeToast(R.string.settings_exported)
+        }
+
+    private val restoreSAFLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) restore@{ uri ->
+            if (uri == null) return@restore
+            runCatching {
+                val backup = hmaApp.contentResolver
+                    .openInputStream(uri)?.reader().use { it?.readText() }
+                    ?: throw IOException(getString(R.string.settings_import_file_damaged))
+                ConfigManager.importConfig(backup)
+                makeToast(R.string.settings_import_successful)
+            }.onFailure {
+                it.printStackTrace()
+                MaterialAlertDialogBuilder(requireContext())
+                    .setCancelable(false)
+                    .setTitle(R.string.settings_import_failed)
+                    .setMessage(it.message)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setNegativeButton(R.string.show_crash_log) { _, _ ->
+                        MaterialAlertDialogBuilder(requireActivity())
+                            .setCancelable(false)
+                            .setTitle(R.string.settings_import_failed)
+                            .setMessage(it.stackTraceToString())
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show()
+                    }
+                    .show()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +79,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
         binding.appManage.setOnClickListener {
             navController.navigate(R.id.nav_app_manage)
+        }
+        binding.backupConfig.setOnClickListener {
+            backupSAFLauncher.launch("HMA_Config.json")
+        }
+        binding.restoreConfig.setOnClickListener {
+            restoreSAFLauncher.launch("application/json")
         }
     }
 
