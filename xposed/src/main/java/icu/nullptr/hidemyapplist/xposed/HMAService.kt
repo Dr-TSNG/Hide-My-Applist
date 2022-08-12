@@ -81,7 +81,12 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
 
     private fun loadConfig() {
         File("$dataDir/filter_count").also {
-            if (it.exists()) filterCount = it.readText().toInt()
+            runCatching {
+                if (it.exists()) filterCount = it.readText().toInt()
+            }.onFailure { e ->
+                logW(TAG, "Failed to load filter count, set to 0", e)
+                it.writeText("0")
+            }
         }
         if (!configFile.exists()) {
             logI(TAG, "Config file not found")
