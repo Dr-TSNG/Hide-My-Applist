@@ -1,19 +1,18 @@
 package icu.nullptr.hidemyapplist.xposed
 
-import android.content.ComponentName
-import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.IPackageManager
+import android.os.Build
 import android.util.Log
-import com.github.kyuubiran.ezxhelper.utils.*
-import de.robv.android.xposed.XC_MethodHook
+import com.github.kyuubiran.ezxhelper.utils.findFieldObject
+import com.github.kyuubiran.ezxhelper.utils.getObjectAs
 import icu.nullptr.hidemyapplist.common.BuildConfig
-import icu.nullptr.hidemyapplist.common.Constants
 import icu.nullptr.hidemyapplist.common.IHMAService
 import icu.nullptr.hidemyapplist.common.JsonConfig
-import icu.nullptr.hidemyapplist.xposed.Utils.getBinderCaller
+import icu.nullptr.hidemyapplist.xposed.hook.FrameworkLegacy
+import icu.nullptr.hidemyapplist.xposed.hook.FrameworkTarget30
+import icu.nullptr.hidemyapplist.xposed.hook.IFrameworkHook
 import java.io.File
-import java.lang.reflect.Method
 
 class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
 
@@ -33,11 +32,13 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
     private val configLock = Any()
     private val loggerLock = Any()
     private val systemApps = mutableSetOf<String>()
-    private val allHooks = mutableSetOf<XC_MethodHook.Unhook>()
-    private fun XC_MethodHook.Unhook.yes() = allHooks.add(this)
+    private val frameworkHooks = mutableSetOf<IFrameworkHook>()
 
-    private var config = JsonConfig()
-    private var filterCount = 0
+    var config = JsonConfig()
+        private set
+
+    var filterCount = 0
+        @JvmName("getFilterCountInternal") get
         set(value) {
             field = value
             if (field % 100 == 0) {
@@ -49,9 +50,9 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
 
     init {
         searchDataDir()
+        instance = this
         loadConfig()
         installHooks()
-        instance = this
         logI(TAG, "HMA service initialized")
     }
 
@@ -109,55 +110,17 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
             }
         }
 
-        val pmMethods = buildSet<Method> {
-            addAll(pms::class.java.declaredMethods)
-            val pmsClass = loadClass(Constants.CLASS_PMS)
-            if (pms::class.java != pmsClass) { // Has custom pms
-                val added = mapTo(mutableSetOf()) { it.name }
-                pmsClass.declaredMethods.forEach {
-                    if (!added.contains(it.name)) add(it)
-                }
-            }
-        }
-        for (method in pmMethods) when (method.name) {
-            "getAllPackages"
-            -> removeList(method, false, listOf()).yes()
-
-            "getInstalledPackages",
-            "getInstalledApplications",
-            "getPackagesHoldingPermissions",
-            "queryInstrumentation"
-            -> removeList(method, true, listOf("packageName")).yes()
-
-            "getPackageInfo",
-            "getPackageGids",
-            "getApplicationInfo",
-            "getInstallSourceInfo",
-            "getInstallerPackageName",
-            "getLaunchIntentForPackage",
-            "getLeanbackLaunchIntentForPackage"
-            -> setResult(method, null).yes()
-
-            "queryIntentActivities",
-            "queryIntentActivityOptions",
-            "queryIntentReceivers",
-            "queryIntentServices",
-            "queryIntentContentProviders"
-            -> removeList(method, true, listOf("activityInfo", "packageName")).yes()
-
-            "getActivityInfo",
-            "resolveActivity",
-            "resolveActivityAsUser"
-            -> resolveIntent(method, null).yes()
-
-            "getPackageUid"
-            -> setResult(method, -1).yes()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            frameworkHooks.add(FrameworkTarget30(this))
+        } else {
+            frameworkHooks.add(FrameworkLegacy(this))
         }
 
+        frameworkHooks.forEach(IFrameworkHook::load)
         logI(TAG, "Hooks installed")
     }
 
-    private fun shouldHide(caller: String?, query: String?): Boolean {
+    fun shouldHide(caller: String?, query: String?): Boolean {
         if (caller == null || query == null) return false
         if (caller in query) return false
         val appConfig = config.scope[caller] ?: return false
@@ -172,73 +135,6 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         return appConfig.useWhitelist
     }
 
-    @Suppress("UNCHECKED_CAST")
-    private fun removeList(
-        method: Method,
-        isParceled: Boolean,
-        pkgNameObjList: List<String>
-    ) = method.hookAfter { param ->
-        if (param.hasThrowable()) return@hookAfter
-        val caller = param.thisObject.getBinderCaller()
-        if (caller !in config.scope) return@hookAfter
-
-        var isHidden = false
-        val list =
-            if (isParceled) param.result.invokeMethodAs<MutableList<Any>>("getList")!!
-            else param.result as MutableList<Any>
-        val iterator = list.iterator()
-        val removed = mutableListOf<String>()
-
-        while (iterator.hasNext()) {
-            val pkg = Utils.getRecursiveField(iterator.next(), pkgNameObjList) as String?
-            if (shouldHide(caller, pkg)) {
-                iterator.remove()
-                isHidden = true
-                if (config.detailLog) removed.add(pkg!!)
-            }
-        }
-
-        if (isHidden) {
-            filterCount++
-            logI(TAG, "@Hide PMS caller: $caller method: ${param.method.name}")
-            logD(TAG, "RemoveList $removed")
-        }
-    }
-
-    private fun setResult(
-        method: Method,
-        result: Any?
-    ) = method.hookAfter { param ->
-        val caller = param.thisObject.getBinderCaller()
-        if (caller !in config.scope) return@hookAfter
-
-        if (shouldHide(caller, param.args[0] as String?)) {
-            filterCount++
-            param.result = result
-            logI(TAG, "@Hide PMS caller: $caller method: ${param.method.name} param: ${param.args[0]}")
-        }
-    }
-
-    private fun resolveIntent(
-        method: Method,
-        result: Any?
-    ) = method.hookAfter { param ->
-        val caller = param.thisObject.getBinderCaller()
-        if (caller !in config.scope) return@hookAfter
-
-        when (val it = param.args[0]) {
-            is Intent -> listOf(it.action, it.component?.packageName)
-            is ComponentName -> listOf(it.packageName, it.className)
-            else -> emptyList()
-        }.forEach {
-            if (shouldHide(caller, it)) {
-                filterCount++
-                param.result = result
-                logI(TAG, "@Hide PMS caller: $caller method: ${param.method.name} param: ${param.args[0]}")
-                return@hookAfter
-            }
-        }
-    }
 
     override fun stopService(cleanEnv: Boolean) {
         logI(TAG, "Stop service")
@@ -246,8 +142,8 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
             logcatAvailable = false
         }
         synchronized(configLock) {
-            allHooks.forEach(XC_MethodHook.Unhook::unhook)
-            allHooks.clear()
+            frameworkHooks.forEach(IFrameworkHook::unHook)
+            frameworkHooks.clear()
             if (cleanEnv) {
                 logI(TAG, "Clean runtime environment")
                 File(dataDir).deleteRecursively()

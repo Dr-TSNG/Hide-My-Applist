@@ -119,7 +119,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.moduleStatus.setText(R.string.home_xposed_not_activated)
         }
         if (serviceVersion != 0) {
-            binding.serviceStatus.text = String.format(getString(R.string.home_xposed_service_on), serviceVersion)
+            if (serviceVersion < icu.nullptr.hidemyapplist.common.BuildConfig.SERVICE_VERSION) {
+                binding.serviceStatus.text = String.format(getString(R.string.home_xposed_service_old))
+            } else {
+                binding.serviceStatus.text = String.format(getString(R.string.home_xposed_service_on), serviceVersion)
+            }
             binding.filterCount.visibility = View.VISIBLE
             binding.filterCount.text = String.format(getString(R.string.home_xposed_filter_count), ServiceHelper.getFilterCount())
         } else {
