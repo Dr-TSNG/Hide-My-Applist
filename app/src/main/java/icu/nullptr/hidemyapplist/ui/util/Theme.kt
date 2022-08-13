@@ -13,8 +13,11 @@ import androidx.fragment.app.Fragment
 @ColorInt
 fun Context.themeColor(
     @AttrRes themeAttrId: Int
-) = obtainStyledAttributes(intArrayOf(themeAttrId)).use {
-    it.getColor(0, Color.MAGENTA)
+): Int {
+    val style = obtainStyledAttributes(intArrayOf(themeAttrId))
+    val color = style.getColor(0, Color.MAGENTA)
+    style.recycle()
+    return color
 }
 
 @ColorInt
