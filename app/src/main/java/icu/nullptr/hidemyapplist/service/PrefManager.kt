@@ -10,9 +10,11 @@ object PrefManager {
     private const val PREF_HIDE_ICON = "hide_icon"
     private const val PREF_DISABLE_UPDATE = "disable_update"
     private const val PREF_RECEIVE_BETA_UPDATE = "receive_beta_update"
-    private const val PREF_FILTER_SHOW_SYSTEM = "filter_show_system"
-    private const val PREF_FILTER_SORT_METHOD = "filter_sort_method"
-    private const val PREF_FILTER_REVERSE_ORDER = "filter_reverse_order"
+    private const val PREF_APP_FILTER_SHOW_SYSTEM = "app_filter_show_system"
+    private const val PREF_APP_FILTER_SORT_METHOD = "app_filter_sort_method"
+    private const val PREF_APP_FILTER_REVERSE_ORDER = "app_filter_reverse_order"
+    private const val PREF_LOG_FILTER_LEVEL = "log_filter_level"
+    private const val PREF_LOG_FILTER_REVERSE_ORDER = "log_filter_reverse_order"
 
     enum class SortMethod {
         BY_LABEL, BY_PACKAGE_NAME, BY_INSTALL_TIME, BY_UPDATE_TIME
@@ -39,15 +41,23 @@ object PrefManager {
         get() = pref.getBoolean(PREF_RECEIVE_BETA_UPDATE, false)
         set(value) = pref.edit().putBoolean(PREF_RECEIVE_BETA_UPDATE, value).apply()
 
-    var filter_showSystem: Boolean
-        get() = pref.getBoolean(PREF_FILTER_SHOW_SYSTEM, false)
-        set(value) = pref.edit().putBoolean(PREF_FILTER_SHOW_SYSTEM, value).apply()
+    var appFilter_showSystem: Boolean
+        get() = pref.getBoolean(PREF_APP_FILTER_SHOW_SYSTEM, false)
+        set(value) = pref.edit().putBoolean(PREF_APP_FILTER_SHOW_SYSTEM, value).apply()
 
-    var filter_sortMethod: SortMethod
-        get() = SortMethod.values()[pref.getInt(PREF_FILTER_SORT_METHOD, SortMethod.BY_LABEL.ordinal)]
-        set(value) = pref.edit().putInt(PREF_FILTER_SORT_METHOD, value.ordinal).apply()
+    var appFilter_sortMethod: SortMethod
+        get() = SortMethod.values()[pref.getInt(PREF_APP_FILTER_SORT_METHOD, SortMethod.BY_LABEL.ordinal)]
+        set(value) = pref.edit().putInt(PREF_APP_FILTER_SORT_METHOD, value.ordinal).apply()
 
-    var filter_reverseOrder: Boolean
-        get() = pref.getBoolean(PREF_FILTER_REVERSE_ORDER, false)
-        set(value) = pref.edit().putBoolean(PREF_FILTER_REVERSE_ORDER, value).apply()
+    var appFilter_reverseOrder: Boolean
+        get() = pref.getBoolean(PREF_APP_FILTER_REVERSE_ORDER, false)
+        set(value) = pref.edit().putBoolean(PREF_APP_FILTER_REVERSE_ORDER, value).apply()
+
+    var logFilter_level: Int
+        get() = pref.getInt(PREF_LOG_FILTER_LEVEL, 0)
+        set(value) = pref.edit().putInt(PREF_LOG_FILTER_LEVEL, value).apply()
+
+    var logFilter_reverseOrder: Boolean
+        get() = pref.getBoolean(PREF_LOG_FILTER_REVERSE_ORDER, false)
+        set(value) = pref.edit().putBoolean(PREF_LOG_FILTER_REVERSE_ORDER, value).apply()
 }

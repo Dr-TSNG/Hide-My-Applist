@@ -51,6 +51,13 @@ object ConfigManager {
             saveConfig()
         }
 
+    var forceMountData: Boolean
+        get() = config.forceMountData
+        set(value) {
+            config.forceMountData = value
+            saveConfig()
+        }
+
     fun importConfig(json: String) {
         config = JsonConfig.parse(json)
         config.configVersion = BuildConfig.SERVICE_VERSION

@@ -23,7 +23,7 @@ abstract class AppSelectAdapter(
                 val constraintLowered = constraint.toString().lowercase()
                 val filteredList = PackageHelper.appList.first().filter {
                     if (firstFilter?.invoke(it) == false) return@filter false
-                    if (!PrefManager.filter_showSystem && PackageHelper.isSystem(it)) return@filter false
+                    if (!PrefManager.appFilter_showSystem && PackageHelper.isSystem(it)) return@filter false
                     val label = PackageHelper.loadAppLabel(it)
                     val packageInfo = PackageHelper.loadPackageInfo(it)
                     label.lowercase().contains(constraintLowered) || packageInfo.packageName.lowercase().contains(constraintLowered)

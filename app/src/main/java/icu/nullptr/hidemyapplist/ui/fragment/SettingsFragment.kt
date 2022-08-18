@@ -1,5 +1,6 @@
 package icu.nullptr.hidemyapplist.ui.fragment
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import com.tsng.hidemyapplist.databinding.FragmentSettingsBinding
 import icu.nullptr.hidemyapplist.service.ConfigManager
 import icu.nullptr.hidemyapplist.service.PrefManager
 import icu.nullptr.hidemyapplist.ui.util.setupToolbar
+import rikka.material.preference.MaterialSwitchPreference
 import rikka.preference.SimpleMenuPreference
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
@@ -32,6 +34,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             return when (key) {
                 "detailLog" -> ConfigManager.detailLog
                 "hideIcon" -> PrefManager.hideIcon
+                "forceMountData" -> ConfigManager.forceMountData
                 "disableUpdate" -> PrefManager.disableUpdate
                 "receiveBetaUpdate" -> PrefManager.receiveBetaUpdate
                 else -> throw IllegalArgumentException("Invalid key: $key")
@@ -48,6 +51,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         override fun putBoolean(key: String, value: Boolean) {
             when (key) {
                 "detailLog" -> ConfigManager.detailLog = value
+                "forceMountData" -> ConfigManager.forceMountData = value
                 "hideIcon" -> PrefManager.hideIcon = value
                 "disableUpdate" -> PrefManager.disableUpdate = value
                 "receiveBetaUpdate" -> PrefManager.receiveBetaUpdate = value
@@ -67,11 +71,17 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             preferenceManager.preferenceDataStore = SettingsPreferenceDataStore()
             setPreferencesFromResource(R.xml.settings, rootKey)
+
             findPreference<SimpleMenuPreference>("maxLogSize")?.let {
                 it.summary = it.entry
                 it.setOnPreferenceChangeListener { _, newValue ->
                     it.summary = it.entries[it.findIndexOfValue(newValue as String)]
                     true
+                }
+            }
+            findPreference<MaterialSwitchPreference>("forceMountData")?.let {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                    it.isEnabled = false
                 }
             }
         }

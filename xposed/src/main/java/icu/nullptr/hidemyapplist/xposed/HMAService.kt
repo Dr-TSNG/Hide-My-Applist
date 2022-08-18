@@ -7,12 +7,10 @@ import android.util.Log
 import com.github.kyuubiran.ezxhelper.utils.findFieldObject
 import com.github.kyuubiran.ezxhelper.utils.getObjectAs
 import icu.nullptr.hidemyapplist.common.BuildConfig
+import icu.nullptr.hidemyapplist.common.Constants
 import icu.nullptr.hidemyapplist.common.IHMAService
 import icu.nullptr.hidemyapplist.common.JsonConfig
-import icu.nullptr.hidemyapplist.xposed.hook.FrameworkLegacy
-import icu.nullptr.hidemyapplist.xposed.hook.FrameworkTarget28
-import icu.nullptr.hidemyapplist.xposed.hook.FrameworkTarget30
-import icu.nullptr.hidemyapplist.xposed.hook.IFrameworkHook
+import icu.nullptr.hidemyapplist.xposed.hook.*
 import java.io.File
 
 class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
@@ -74,6 +72,7 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         logFile = File("$dataDir/log/runtime.log")
         oldLogFile = File("$dataDir/log/old.log")
         logFile.renameTo(oldLogFile)
+        logFile.createNewFile()
 
         logcatAvailable = true
         logI(TAG, "Data dir: $dataDir")
@@ -117,19 +116,24 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            frameworkHooks.add(FrameworkTarget30(this))
+            frameworkHooks.add(PmsHookTarget30(this))
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            frameworkHooks.add(FrameworkTarget28(this))
+            frameworkHooks.add(PmsHookTarget28(this))
         } else {
-            frameworkHooks.add(FrameworkLegacy(this))
+            frameworkHooks.add(PmsHookLegacy(this))
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            frameworkHooks.add(ZygoteArgsHook(this))
         }
 
         frameworkHooks.forEach(IFrameworkHook::load)
         logI(TAG, "Hooks installed")
     }
 
+    fun isHookEnabled(packageName: String) = config.scope.containsKey(packageName)
+
     fun shouldHide(caller: String?, query: String?): Boolean {
-        if (caller == null || query == null) return false
+        if (caller == null || query == null || query in Constants.packagesShouldNotHide) return false
         if (caller in query) return false
         val appConfig = config.scope[caller] ?: return false
         if (appConfig.useWhitelist && appConfig.excludeSystemApps && query in systemApps) return false
@@ -150,7 +154,7 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
             logcatAvailable = false
         }
         synchronized(configLock) {
-            frameworkHooks.forEach(IFrameworkHook::unHook)
+            frameworkHooks.forEach(IFrameworkHook::unload)
             frameworkHooks.clear()
             if (cleanEnv) {
                 logI(TAG, "Clean runtime environment")
@@ -179,6 +183,7 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
                 return
             }
             config = newConfig
+            frameworkHooks.forEach(IFrameworkHook::onConfigChanged)
         }
         logD(TAG, "Config synced")
     }
@@ -193,6 +198,7 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         synchronized(loggerLock) {
             oldLogFile.delete()
             logFile.renameTo(oldLogFile)
+            logFile.createNewFile()
         }
     }
 }

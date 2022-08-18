@@ -46,27 +46,27 @@ abstract class AppSelectFragment : Fragment(R.layout.fragment_app_select) {
         when (item.itemId) {
             R.id.menu_show_system -> {
                 item.isChecked = !item.isChecked
-                PrefManager.filter_showSystem = item.isChecked
+                PrefManager.appFilter_showSystem = item.isChecked
             }
             R.id.menu_sort_by_label -> {
                 item.isChecked = true
-                PrefManager.filter_sortMethod = PrefManager.SortMethod.BY_LABEL
+                PrefManager.appFilter_sortMethod = PrefManager.SortMethod.BY_LABEL
             }
             R.id.menu_sort_by_package_name -> {
                 item.isChecked = true
-                PrefManager.filter_sortMethod = PrefManager.SortMethod.BY_PACKAGE_NAME
+                PrefManager.appFilter_sortMethod = PrefManager.SortMethod.BY_PACKAGE_NAME
             }
             R.id.menu_sort_by_install_time -> {
                 item.isChecked = true
-                PrefManager.filter_sortMethod = PrefManager.SortMethod.BY_INSTALL_TIME
+                PrefManager.appFilter_sortMethod = PrefManager.SortMethod.BY_INSTALL_TIME
             }
             R.id.menu_sort_by_update_time -> {
                 item.isChecked = true
-                PrefManager.filter_sortMethod = PrefManager.SortMethod.BY_UPDATE_TIME
+                PrefManager.appFilter_sortMethod = PrefManager.SortMethod.BY_UPDATE_TIME
             }
             R.id.menu_reverse_order -> {
                 item.isChecked = !item.isChecked
-                PrefManager.filter_reverseOrder = item.isChecked
+                PrefManager.appFilter_reverseOrder = item.isChecked
             }
         }
         sortList()
@@ -84,14 +84,14 @@ abstract class AppSelectFragment : Fragment(R.layout.fragment_app_select) {
         )
 
         with(binding.toolbar.menu) {
-            findItem(R.id.menu_show_system).isChecked = PrefManager.filter_showSystem
-            when (PrefManager.filter_sortMethod) {
+            findItem(R.id.menu_show_system).isChecked = PrefManager.appFilter_showSystem
+            when (PrefManager.appFilter_sortMethod) {
                 PrefManager.SortMethod.BY_LABEL -> findItem(R.id.menu_sort_by_label).isChecked = true
                 PrefManager.SortMethod.BY_PACKAGE_NAME -> findItem(R.id.menu_sort_by_package_name).isChecked = true
                 PrefManager.SortMethod.BY_INSTALL_TIME -> findItem(R.id.menu_sort_by_install_time).isChecked = true
                 PrefManager.SortMethod.BY_UPDATE_TIME -> findItem(R.id.menu_sort_by_update_time).isChecked = true
             }
-            findItem(R.id.menu_reverse_order).isChecked = PrefManager.filter_reverseOrder
+            findItem(R.id.menu_reverse_order).isChecked = PrefManager.appFilter_reverseOrder
         }
         binding.list.layoutManager = LinearLayoutManager(context)
         binding.list.adapter = adapter

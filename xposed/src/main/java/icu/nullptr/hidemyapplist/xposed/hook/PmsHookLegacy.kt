@@ -14,10 +14,10 @@ import icu.nullptr.hidemyapplist.xposed.logD
 import icu.nullptr.hidemyapplist.xposed.logI
 import java.lang.reflect.Method
 
-class FrameworkLegacy(private val service: HMAService) : IFrameworkHook {
+class PmsHookLegacy(private val service: HMAService) : IFrameworkHook {
 
     companion object {
-        private const val TAG = "LegacyHook"
+        private const val TAG = "PmsHookLegacy"
     }
 
     private val hooks = mutableSetOf<XC_MethodHook.Unhook>()
@@ -139,5 +139,5 @@ class FrameworkLegacy(private val service: HMAService) : IFrameworkHook {
         }
     }
 
-    override fun unHook() = hooks.forEach(XC_MethodHook.Unhook::unhook)
+    override fun unload() = hooks.forEach(XC_MethodHook.Unhook::unhook)
 }

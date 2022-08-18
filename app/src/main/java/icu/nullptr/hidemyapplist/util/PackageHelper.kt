@@ -84,13 +84,13 @@ object PackageHelper {
     }
 
     suspend fun sortList(firstComparator: Comparator<String>) {
-        var comparator = when (PrefManager.filter_sortMethod) {
+        var comparator = when (PrefManager.appFilter_sortMethod) {
             PrefManager.SortMethod.BY_LABEL -> Comparators.byLabel
             PrefManager.SortMethod.BY_PACKAGE_NAME -> Comparators.byPackageName
             PrefManager.SortMethod.BY_INSTALL_TIME -> Comparators.byInstallTime
             PrefManager.SortMethod.BY_UPDATE_TIME -> Comparators.byUpdateTime
         }
-        if (PrefManager.filter_reverseOrder) comparator = comparator.reversed()
+        if (PrefManager.appFilter_reverseOrder) comparator = comparator.reversed()
         val list = mAppList.first()
         list.sortWith(firstComparator.then(comparator))
         mAppList.emit(list)

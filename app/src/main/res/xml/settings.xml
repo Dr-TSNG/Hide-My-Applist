@@ -16,6 +16,13 @@
             android:title="@string/settings_hide_icon" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/settings_experimental">
+        <rikka.material.preference.MaterialSwitchPreference
+            android:key="forceMountData"
+            android:summary="@string/settings_force_mount_data_summary"
+            android:title="@string/settings_force_mount_data" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/settings_update">
         <rikka.material.preference.MaterialSwitchPreference
             android:disableDependentsState="true"

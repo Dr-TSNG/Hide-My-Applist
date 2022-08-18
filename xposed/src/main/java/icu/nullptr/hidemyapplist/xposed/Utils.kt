@@ -32,7 +32,7 @@ object Utils {
 
     fun getPackageNameFromPackageSettings(packageSettings: Any): String {
         return with(packageSettings.toString()) {
-            substring(lastIndexOf(' '), lastIndexOf('/'))
+            substring(lastIndexOf(' ') + 1, lastIndexOf('/'))
         }
     }
 }
