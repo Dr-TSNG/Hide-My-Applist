@@ -10,39 +10,41 @@ import icu.nullptr.hidemyapplist.xposed.Utils
 import icu.nullptr.hidemyapplist.xposed.logE
 import icu.nullptr.hidemyapplist.xposed.logI
 
-@TargetApi(Build.VERSION_CODES.R)
-class FrameworkTarget30(private val service: HMAService) : IFrameworkHook {
+@TargetApi(Build.VERSION_CODES.P)
+class PmsHookTarget28(private val service: HMAService) : IFrameworkHook {
 
     companion object {
-        private const val TAG = "FrameworkTarget30"
+        private const val TAG = "PmsHookTarget28"
     }
 
-    private val hooks = mutableSetOf<XC_MethodHook.Unhook>()
-    private fun XC_MethodHook.Unhook.yes() = hooks.add(this)
+    private var hook: XC_MethodHook.Unhook? = null
 
     override fun load() {
         logI(TAG, "Load hook")
-        findMethod("com.android.server.pm.AppsFilter") {
-            name == "shouldFilterApplication"
+        hook = findMethod(service.pms::class.java, findSuper = true) {
+            name == "filterAppAccessLPr"
         }.hookBefore { param ->
             runCatching {
-                val callingUid = param.args[0] as Int
+                val callingUid = param.args[1] as Int
                 val callingApps = service.pms.getPackagesForUid(callingUid) ?: return@hookBefore
-                val targetApp = Utils.getPackageNameFromPackageSettings(param.args[2])
+                val targetApp = Utils.getPackageNameFromPackageSettings(param.args[0])
                 for (caller in callingApps) {
                     if (service.shouldHide(caller, targetApp)) {
                         param.result = true
                         service.filterCount++
-                        logI(TAG, "@Filter caller: $caller, target: $targetApp")
+                        logI(TAG, "@Filter caller: $callingUid $caller, target: $targetApp")
                         return@hookBefore
                     }
                 }
             }.onFailure {
                 logE(TAG, "Fatal error occurred, disable hooks", it)
-                unHook()
+                unload()
             }
-        }.yes()
+        }
     }
 
-    override fun unHook() = hooks.forEach(XC_MethodHook.Unhook::unhook)
+    override fun unload() {
+        hook?.unhook()
+        hook = null
+    }
 }
