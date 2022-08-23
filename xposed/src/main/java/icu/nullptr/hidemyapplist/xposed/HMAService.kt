@@ -4,8 +4,6 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.IPackageManager
 import android.os.Build
 import android.util.Log
-import com.github.kyuubiran.ezxhelper.utils.findFieldObject
-import com.github.kyuubiran.ezxhelper.utils.getObjectAs
 import icu.nullptr.hidemyapplist.common.BuildConfig
 import icu.nullptr.hidemyapplist.common.Constants
 import icu.nullptr.hidemyapplist.common.IHMAService
@@ -107,13 +105,8 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
     }
 
     private fun installHooks() {
-        val mSettings = pms.findFieldObject(findSuper = true) { name == "mSettings" }
-        val mPackages = mSettings.getObjectAs<Map<String, *>>("mPackages")
-        for ((name, ps) in mPackages) {
-            if (ps != null && (ps.getObjectAs<Int>("pkgFlags") and ApplicationInfo.FLAG_SYSTEM != 0)) {
-                systemApps.add(name)
-            }
-        }
+        Utils.getInstalledApplicationsCompat(pms, ApplicationInfo.FLAG_SYSTEM.toLong(), 0)
+            .mapTo(systemApps) { it.packageName }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             frameworkHooks.add(PmsHookTarget30(this))
