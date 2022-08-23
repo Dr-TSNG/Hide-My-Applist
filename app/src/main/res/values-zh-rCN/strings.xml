@@ -114,7 +114,7 @@
     </string>
     <string name="about_how_to_use_title">如何使用此模块</string>
     <string name="about_how_to_use_description_1">
-        您可以在“模板管理”中创建模板。\n然后，将模板应用到“应用管理”中的应用。\n（您也可以为目标选择额外的应用程序。）\n注意：您应确保在 Xposed 中设置的模块作用域/白名单中有且仅有“系统框架”。(部分系统中“系统框架”可能显示为 "Android")
+        您可以在“模板管理”中创建模板。\n然后，将模板应用于“应用管理”中的应用。\n（您也可以为目标应用选择额外可见或不可见的应用。）\n注意：您应确保在 Xposed 中设置的模块作用域/白名单中有且仅有“系统框架”。(部分系统中“系统框架”可能显示为 "Android")
     </string>
     <string name="about_how_to_use_description_2">
        所做的配置修改即时生效。
