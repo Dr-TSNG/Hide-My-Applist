@@ -55,7 +55,7 @@
     <string name="list_sort_by_update_time">By update time</string>
 
     <!-- Template manage -->
-    <string name="template_usage_hint">Establish templates for \"restless\" apps, controlling applist they can obtain.\n\nBlacklist (recommended): the apps selected in the template will be invisible to the apps applying the template\nWhitelist: the apps not selected in the template will be invisible to the apps applying the template.</string>
+    <string name="template_usage_hint">Establish templates for \"restless\" apps, controlling applist they can obtain.\n\nBlacklist (recommended): the apps selected in the template will be invisible to the apps applying the template.\nWhitelist: the apps not selected in the template will be invisible to the apps applying the template.</string>
     <string name="template_new_blacklist">Create a blacklist template</string>
     <string name="template_new_whitelist">Create a whitelist template</string>
     <string name="template_delete">Are you sure to delete the template?</string>
