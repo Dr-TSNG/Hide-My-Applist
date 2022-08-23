@@ -2,7 +2,6 @@ package icu.nullptr.hidemyapplist.xposed
 
 import android.content.pm.IPackageManager
 import android.os.Binder
-import android.os.Build
 import android.os.IBinder
 import android.os.Parcel
 import com.github.kyuubiran.ezxhelper.utils.argTypes
@@ -20,7 +19,7 @@ object BridgeService {
     fun start(pms: IPackageManager) {
         logI(TAG, "Initialize HMAService")
         val service = HMAService(pms)
-        appUid = service.pms.getPackageUid(Constants.APP_PACKAGE_NAME, 0, 0)
+        appUid = Utils.getPackageUidCompat(service.pms, Constants.APP_PACKAGE_NAME, 0, 0)
         logD(TAG, "Client uid: $appUid")
         doHooks()
         logI(TAG, "Bridge service initialized")
