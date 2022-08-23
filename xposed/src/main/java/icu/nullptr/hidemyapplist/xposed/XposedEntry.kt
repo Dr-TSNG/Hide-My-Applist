@@ -56,7 +56,7 @@ class XposedEntry : IXposedHookZygoteInit, IXposedHookLoadPackage {
                 }
             }
 
-            logD(TAG, "Constructor hooks installed")
+            logD(TAG, "ServiceManager hook installed")
             thread {
                 runCatching {
                     waitSystemService("package")

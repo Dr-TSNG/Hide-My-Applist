@@ -1,6 +1,9 @@
 package icu.nullptr.hidemyapplist.xposed
 
+import android.content.pm.ApplicationInfo
+import android.content.pm.IPackageManager
 import android.os.Binder
+import android.os.Build
 import com.github.kyuubiran.ezxhelper.utils.invokeMethodAutoAs
 import de.robv.android.xposed.XposedHelpers
 import java.util.*
@@ -34,5 +37,13 @@ object Utils {
         return with(packageSettings.toString()) {
             substring(lastIndexOf(' ') + 1, lastIndexOf('/'))
         }
+    }
+
+    fun getInstalledApplicationsCompat(pms: IPackageManager, flags: Long, userId: Int): List<ApplicationInfo> {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            pms.getInstalledApplications(flags, userId)
+        } else {
+            pms.getInstalledApplications(flags.toInt(), userId)
+        }.list
     }
 }
