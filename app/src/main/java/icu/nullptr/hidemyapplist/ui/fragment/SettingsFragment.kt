@@ -12,6 +12,7 @@ import com.tsng.hidemyapplist.databinding.FragmentSettingsBinding
 import icu.nullptr.hidemyapplist.service.ConfigManager
 import icu.nullptr.hidemyapplist.service.PrefManager
 import icu.nullptr.hidemyapplist.ui.util.setupToolbar
+import rikka.material.app.DayNightDelegate
 import rikka.material.preference.MaterialSwitchPreference
 import rikka.preference.SimpleMenuPreference
 
@@ -35,6 +36,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 "detailLog" -> ConfigManager.detailLog
                 "hideIcon" -> PrefManager.hideIcon
                 "forceMountData" -> ConfigManager.forceMountData
+                "followSystemAccent" -> PrefManager.followSystemAccent
+                "blackDarkTheme" -> PrefManager.blackDarkTheme
                 "disableUpdate" -> PrefManager.disableUpdate
                 "receiveBetaUpdate" -> PrefManager.receiveBetaUpdate
                 else -> throw IllegalArgumentException("Invalid key: $key")
@@ -44,6 +47,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         override fun getString(key: String, defValue: String?): String {
             return when (key) {
                 "maxLogSize" -> ConfigManager.maxLogSize.toString()
+                "themeColor" -> PrefManager.themeColor
+                "darkTheme" -> PrefManager.darkTheme.toString()
                 else -> throw IllegalArgumentException("Invalid key: $key")
             }
         }
@@ -53,6 +58,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 "detailLog" -> ConfigManager.detailLog = value
                 "forceMountData" -> ConfigManager.forceMountData = value
                 "hideIcon" -> PrefManager.hideIcon = value
+                "followSystemAccent" -> PrefManager.followSystemAccent = value
+                "blackDarkTheme" -> PrefManager.blackDarkTheme = value
                 "disableUpdate" -> PrefManager.disableUpdate = value
                 "receiveBetaUpdate" -> PrefManager.receiveBetaUpdate = value
                 else -> throw IllegalArgumentException("Invalid key: $key")
@@ -62,6 +69,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         override fun putString(key: String, value: String?) {
             when (key) {
                 "maxLogSize" -> ConfigManager.maxLogSize = value!!.toInt()
+                "themeColor" -> PrefManager.themeColor = value!!
+                "darkTheme" -> PrefManager.darkTheme = value!!.toInt()
                 else -> throw IllegalArgumentException("Invalid key: $key")
             }
         }
@@ -72,18 +81,39 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             preferenceManager.preferenceDataStore = SettingsPreferenceDataStore()
             setPreferencesFromResource(R.xml.settings, rootKey)
 
-            findPreference<SimpleMenuPreference>("maxLogSize")?.let {
-                it.summary = it.entry
-                it.setOnPreferenceChangeListener { _, newValue ->
-                    it.summary = it.entries[it.findIndexOfValue(newValue as String)]
-                    true
-                }
-            }
             findPreference<MaterialSwitchPreference>("forceMountData")?.let {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
                     it.isEnabled = false
                 }
             }
+
+            findPreference<MaterialSwitchPreference>("followSystemAccent")
+                ?.setOnPreferenceChangeListener { _, _ ->
+                    activity?.recreate()
+                    true
+                }
+
+            findPreference<SimpleMenuPreference>("themeColor")
+                ?.setOnPreferenceChangeListener { _, _ ->
+                    activity?.recreate()
+                    true
+                }
+
+            findPreference<SimpleMenuPreference>("darkTheme")
+                ?.setOnPreferenceChangeListener { _, newValue ->
+                    val newMode = (newValue as String).toInt()
+                    if (PrefManager.darkTheme != newMode) {
+                        DayNightDelegate.setDefaultNightMode(newMode)
+                        activity?.recreate()
+                    }
+                    true
+                }
+
+            findPreference<MaterialSwitchPreference>("blackDarkTheme")
+                ?.setOnPreferenceChangeListener { _, _ ->
+                    activity?.recreate()
+                    true
+                }
         }
     }
 }

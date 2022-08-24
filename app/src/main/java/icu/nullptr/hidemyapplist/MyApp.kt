@@ -2,7 +2,6 @@ package icu.nullptr.hidemyapplist
 
 import android.annotation.SuppressLint
 import android.app.Application
-import com.google.android.material.color.DynamicColors
 import com.tsng.hidemyapplist.R
 import icu.nullptr.hidemyapplist.service.PrefManager
 import icu.nullptr.hidemyapplist.ui.util.makeToast
@@ -36,6 +35,5 @@ class MyApp : Application() {
 
         DayNightDelegate.setApplicationContext(this)
         DayNightDelegate.setDefaultNightMode(PrefManager.darkTheme)
-        DynamicColors.applyToActivitiesIfAvailable(this)
     }
 }

@@ -41,7 +41,7 @@ object PrefManager {
         set(value) = pref.edit().putBoolean(PREF_FOLLOW_SYSTEM_ACCENT, value).apply()
 
     var themeColor: String
-        get() = pref.getString(PREF_THEME_COLOR, "COLOR_BLUE")!!
+        get() = pref.getString(PREF_THEME_COLOR, "MATERIAL_BLUE")!!
         set(value) = pref.edit().putString(PREF_THEME_COLOR, value).apply()
 
     var hideIcon: Boolean

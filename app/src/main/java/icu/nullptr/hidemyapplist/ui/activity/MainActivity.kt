@@ -3,11 +3,11 @@ package icu.nullptr.hidemyapplist.ui.activity
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
-import androidx.core.view.WindowCompat
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.google.android.gms.ads.MobileAds
+import com.google.android.material.color.DynamicColors
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.databinding.ActivityMainBinding
 import icu.nullptr.hidemyapplist.ui.util.ThemeUtils
@@ -16,11 +16,11 @@ import rikka.material.app.MaterialActivity
 class MainActivity : MaterialActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (ThemeUtils.isSystemAccent) DynamicColors.applyToActivityIfAvailable(this)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         setupWithNavController(binding.bottomNav, navController)
