@@ -25,12 +25,17 @@
     <string name="preferences">偏好设置</string>
     <string name="refresh">刷新</string>
     <string name="filter">筛选</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
 
     <!-- Home -->
     <string name="home_xposed_activated">模块已激活 [%d]</string>
     <string name="home_xposed_not_activated">模块未激活</string>
     <string name="home_xposed_service_on">系统服务运行中 [%d]</string>
     <string name="home_xposed_service_off">系统服务未运行</string>
+    <string name="home_detection_test">检测测试</string>
+    <string name="home_download_test_app_title">下载测试应用</string>
+    <string name="home_download_test_app_message">我们开发了一个独立的测试应用，并已将检测测试迁移。是否现在下载？</string>
     <string name="home_xposed_service_old">模块已更新，需要重启</string>
     <string name="home_xposed_filter_count">HMA 已经过滤了 %d 次请求</string>
     <string name="home_manage">管理</string>
@@ -88,10 +93,6 @@
     <string name="settings_max_log_size">日志缓冲区大小</string>
     <string name="settings_hide_icon">在启动器中隐藏图标</string>
     <string name="settings_hide_icon_summary">你仍然可以在 Xposed 管理器中打开此应用</string>
-
-    <string name="settings_experimental">实验性功能</string>
-    <string name="settings_force_mount_data">对于目标 API 低于 30 的应用，强制绑定挂载数据存储</string>
-    <string name="settings_force_mount_data_summary">此项仅适用于 Android 11 及以上版本的系统</string>
     
     <string name="settings_theme">主题</string>
     <string name="settings_system_theme_color">系统主题色</string>
@@ -100,6 +101,10 @@
     <string name="settings_pure_black_dark_theme">纯黑主题</string>
     <string name="settings_pure_black_dark_theme_summary">当深色主题启用时使用纯黑主题</string>
 
+    <string name="settings_experimental">实验性功能</string>
+    <string name="settings_force_mount_data">对于目标 API 低于 30 的应用，强制绑定挂载数据存储</string>
+    <string name="settings_force_mount_data_summary">此项仅适用于 Android 11 及以上版本的系统</string>
+    
     <string name="settings_service">服务</string>
     <string name="settings_stop_system_service">停止系统服务</string>
     <string name="settings_stop_system_service_summary">需要重启以启动系统服务</string>
