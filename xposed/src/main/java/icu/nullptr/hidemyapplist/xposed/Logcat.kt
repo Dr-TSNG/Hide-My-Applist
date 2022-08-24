@@ -2,7 +2,6 @@ package icu.nullptr.hidemyapplist.xposed
 
 import android.util.Log
 import de.robv.android.xposed.XposedBridge
-import icu.nullptr.hidemyapplist.common.BuildConfig
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,11 +23,7 @@ private fun parseLog(level: Int, tag: String, msg: String, cause: Throwable? = n
 private fun log(level: Int, tag: String, msg: String, cause: Throwable? = null) {
     val parsedLog = parseLog(level, tag, msg, cause)
     HMAService.instance?.addLog(level, parsedLog)
-    if (BuildConfig.DEBUG) {
-        Log.println(level, tag, parsedLog)
-    } else {
-        XposedBridge.log(parsedLog)
-    }
+    XposedBridge.log(parsedLog)
 }
 
 fun logD(tag: String, msg: String, cause: Throwable? = null) = log(Log.DEBUG, tag, msg, cause)

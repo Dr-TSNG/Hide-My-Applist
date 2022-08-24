@@ -4,10 +4,13 @@ import android.content.pm.IPackageManager
 import android.os.ServiceManager
 import android.util.Log
 import com.github.kyuubiran.ezxhelper.init.EzXHelperInit
+import com.github.kyuubiran.ezxhelper.utils.findMethod
 import com.github.kyuubiran.ezxhelper.utils.getFieldByDesc
+import com.github.kyuubiran.ezxhelper.utils.hookAfter
 import com.github.kyuubiran.ezxhelper.utils.hookAllConstructorAfter
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.IXposedHookZygoteInit
+import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 import icu.nullptr.hidemyapplist.common.Constants
 import kotlin.concurrent.thread
@@ -42,19 +45,18 @@ class XposedEntry : IXposedHookZygoteInit, IXposedHookLoadPackage {
             logI(TAG, "Hook entry")
 
             var pms: IPackageManager? = null
-            hookAllConstructorAfter(Constants.CLASS_PMS) { param ->
-                pms = param.thisObject as IPackageManager
-                logI(TAG, "Got pms: $pms")
-            }
-            for (clazz in Constants.CLASS_EXT_PMS) {
-                runCatching {
-                    hookAllConstructorAfter(clazz) { param ->
-                        pms = param.thisObject as IPackageManager
-                        logI(TAG, "Got custom pms: $pms")
-                    }
+            var serviceManagerHook: XC_MethodHook.Unhook? = null
+            serviceManagerHook = findMethod("android.os.ServiceManager") {
+                name == "addService"
+            }.hookAfter { param ->
+                if (param.args[0] == "package") {
+                    pms = param.args[1] as IPackageManager
+                    logI(TAG, "Got pms: $pms")
+                    serviceManagerHook?.unhook()
                 }
             }
-            logD(TAG, "Constructor hooks installed")
+
+            logD(TAG, "ServiceManager hook installed")
             thread {
                 runCatching {
                     waitSystemService("package")

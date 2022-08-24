@@ -20,6 +20,8 @@ import icu.nullptr.hidemyapplist.service.ConfigManager
 import icu.nullptr.hidemyapplist.service.ServiceHelper
 import icu.nullptr.hidemyapplist.ui.activity.AboutActivity
 import icu.nullptr.hidemyapplist.ui.util.*
+import icu.nullptr.hidemyapplist.ui.util.ThemeUtils.getColor
+import icu.nullptr.hidemyapplist.ui.util.ThemeUtils.themeColor
 import java.io.IOException
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
