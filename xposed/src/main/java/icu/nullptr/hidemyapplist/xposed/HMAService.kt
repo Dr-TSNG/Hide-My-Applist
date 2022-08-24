@@ -105,8 +105,9 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
     }
 
     private fun installHooks() {
-        Utils.getInstalledApplicationsCompat(pms, ApplicationInfo.FLAG_SYSTEM.toLong(), 0)
-            .mapTo(systemApps) { it.packageName }
+        Utils.getInstalledApplicationsCompat(pms, 0, 0).mapNotNullTo(systemApps) {
+            if (it.flags and ApplicationInfo.FLAG_SYSTEM != 0) it.packageName else null
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             frameworkHooks.add(PmsHookTarget33(this))
