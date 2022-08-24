@@ -92,6 +92,13 @@
     <string name="settings_experimental">实验性功能</string>
     <string name="settings_force_mount_data">对于目标 API 低于 30 的应用，强制绑定挂载数据存储</string>
     <string name="settings_force_mount_data_summary">此项仅适用于 Android 11 及以上版本的系统</string>
+    
+    <string name="settings_theme">主题</string>
+    <string name="settings_system_theme_color">系统主题色</string>
+    <string name="settings_theme_color">主题颜色</string>
+    <string name="settings_dark_theme">深色主题</string>
+    <string name="settings_pure_black_dark_theme">纯黑主题</string>
+    <string name="settings_pure_black_dark_theme_summary">当深色主题启用时使用纯黑主题</string>
 
     <string name="settings_service">服务</string>
     <string name="settings_stop_system_service">停止系统服务</string>
@@ -122,4 +129,25 @@
     <string name="about_developer">开发者</string>
     <string name="about_support">支持与反馈</string>
     <string name="about_open_source">开放源代码许可</string>
+    
+    <!-- Colors -->
+    <string name="color_sakura">樱花</string>
+    <string name="color_red">红色</string>
+    <string name="color_pink">粉色</string>
+    <string name="color_purple">紫色</string>
+    <string name="color_deep_purple">深紫</string>
+    <string name="color_indigo">靛青</string>
+    <string name="color_blue">蓝色</string>
+    <string name="color_light_blue">浅蓝</string>
+    <string name="color_cyan">青色</string>
+    <string name="color_teal">青绿</string>
+    <string name="color_green">绿色</string>
+    <string name="color_light_green">浅绿</string>
+    <string name="color_lime">酸橙</string>
+    <string name="color_yellow">黄色</string>
+    <string name="color_amber">琥珀</string>
+    <string name="color_orange">橙色</string>
+    <string name="color_deep_orange">深橙</string>
+    <string name="color_brown">棕色</string>
+    <string name="color_blue_grey">灰蓝</string>
 </resources>
