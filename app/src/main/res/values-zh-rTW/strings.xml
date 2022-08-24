@@ -49,6 +49,8 @@
     <string name="home_import_file_damaged">備份檔案損壞</string>
     <string name="home_export_failed">備份失敗</string>
     <string name="home_exported">備份完成</string>
+    <string name="home_new_update">有新的版本更新：%s</string>
+    <string name="home_update">更新：%s</string>
 
     <!-- App select -->
     <string name="list_show_system">顯示系統應用</string>
@@ -60,7 +62,7 @@
     <string name="list_sort_by_update_time">按更新時間</string>
 
     <!-- Template manage -->
-    <string name="template_usage_hint">為不安分的「應用程式」建立模板，控制他們可以讀取的應用程式列表。\n\n黑名單 (推薦使用)：開啟此模板的應用程式將看不到黑名單內勾選的應用程式。\n白名單：開啟此模板的應用程式將只能看到白名單模板勾選內的應用程式。</string>
+    <string name="template_usage_hint">為不安分的「應用程式」建立模板，控制他們可讀取的應用程式列表。\n\n黑名單 (推薦使用)：開啟此模板的應用程式將看不到黑名單內勾選的應用程式。\n白名單：開啟此模板的應用程式將只能看到白名單模板勾選內的應用程式。</string>
     <string name="template_new_blacklist">建立黑名單模板</string>
     <string name="template_new_whitelist">建立白名單模板</string>
     <string name="template_delete">你確定要刪除該模板嗎？?</string>
