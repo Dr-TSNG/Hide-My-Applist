@@ -49,6 +49,7 @@
     <string name="home_import_file_damaged">Backup file was damaged</string>
     <string name="home_export_failed">Export failed</string>
     <string name="home_exported">Backed up config</string>
+    <string name="home_new_update">New update available: %s</string>
 
     <!-- App select -->
     <string name="list_show_system">Show system</string>

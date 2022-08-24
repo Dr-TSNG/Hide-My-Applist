@@ -47,5 +47,6 @@ class AboutActivity : AbsAboutActivity() {
         items.add(License("EzXHelper", "KyuubiRan", License.APACHE_2, "https://github.com/KyuubiRan/EzXHelper"))
         items.add(License("libsu", "topjohnwu", License.APACHE_2, "https://github.com/topjohnwu/libsu"))
         items.add(License("okhttp", "square", License.APACHE_2, "https://github.com/square/okhttp"))
+        items.add(License("rxhttp", "liujingxing", License.APACHE_2, "https://github.com/liujingxing/rxhttp"))
     }
 }
