@@ -68,16 +68,18 @@ fun Project.configureBaseExtension() {
             consumerProguardFiles("proguard-rules.pro")
         }
 
-        val signingCfg = signingConfigs.create("config") {
-            storeFile = rootProject.file(localProperties.getProperty("fileDir"))
-            storePassword = localProperties.getProperty("storePassword")
-            keyAlias = localProperties.getProperty("keyAlias")
-            keyPassword = localProperties.getProperty("keyPassword")
+        val config = localProperties.getProperty("fileDir")?.let {
+            signingConfigs.create("config") {
+                storeFile = file(it)
+                storePassword = localProperties.getProperty("storePassword")
+                keyAlias = localProperties.getProperty("keyAlias")
+                keyPassword = localProperties.getProperty("keyPassword")
+            }
         }
 
         buildTypes {
             all {
-                signingConfig = signingCfg
+                signingConfig = config ?: signingConfigs["debug"]
             }
             named("release") {
                 isMinifyEnabled = true

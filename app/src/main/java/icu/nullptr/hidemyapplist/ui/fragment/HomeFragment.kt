@@ -184,7 +184,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             withContext(Dispatchers.Main) {
                 PrefManager.lastVersion = BuildConfig.VERSION_CODE
                 MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(R.string.home_new_update)
+                    .setTitle(String.format(getString(R.string.home_update), updateInfo.versionName))
                     .setMessage(Html.fromHtml(updateInfo.content, Html.FROM_HTML_MODE_COMPACT))
                     .setPositiveButton(android.R.string.ok, null)
                     .setCancelable(false)
