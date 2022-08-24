@@ -111,7 +111,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
 
             findPreference<MaterialSwitchPreference>("forceMountData")
-                ?.isEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                ?.isEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
 
             findPreference<Preference>("stopSystemService")?.setOnPreferenceClickListener {
                 if (ServiceHelper.getServiceVersion() != 0) {
