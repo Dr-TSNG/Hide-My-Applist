@@ -12,7 +12,7 @@
     <string name="title_app_settings">應用程式設定</string>
     <string name="title_about">關於</string>
 
-    <string name="do_not_dual">Do not dual this app</string>
+    <string name="do_not_dual">請勿雙開此應用程式</string>
     <string name="show_crash_log">顯示崩潰日誌</string>
     <string name="config_damaged">配置損壞，請清理應用程式的資料</string>
     <string name="edit_list">編輯列表</string>
@@ -21,10 +21,12 @@
     <string name="work_mode">工作模式</string>
     <string name="blacklist">黑名單</string>
     <string name="whitelist">白名單</string>
-    <string name="application">Application</string>
-    <string name="preferences">Preferences</string>
+    <string name="application">應用程式</string>
+    <string name="preferences">偏好設定</string>
     <string name="refresh">重新整理</string>
     <string name="filter">篩選</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
 
     <!-- Home -->
     <string name="home_xposed_activated">模塊已啟用 [%d]</string>
@@ -34,6 +36,9 @@
     <string name="home_xposed_service_old">模塊更新，需要重啟</string>
     <string name="home_xposed_filter_count">HMA 已經過濾了 %d 的請求</string>
     <string name="home_manage">管理</string>
+    <string name="home_detection_test">檢測測試</string>
+    <string name="home_download_test_app_title">下載檢測應用程式</string>
+    <string name="home_download_test_app_message">我們開發了一個獨立的測試應用程式，是否立刻下載使用?</string>
     <string name="home_backup_and_restore">備份 &amp; 還原</string>
     <string name="home_backup_config">備份設定</string>
     <string name="home_restore_config">還原設定</string>
@@ -71,7 +76,7 @@
     <string name="app_template_config">模板設定</string>
     <string name="app_choose_template">選擇模板</string>
     <string name="app_exclude_system_apps">排除系統應用</string>
-    <string name="app_exclude_system_apps_summary">只有在真正必要時才關閉這個選項。如果關閉它，很可能會導致崩潰。</string>
+    <string name="app_exclude_system_apps_summary">只有在真正必要時才關閉這個選項。如果關閉它，很可能會導致崩潰</string>
     <string name="app_template_using">%d 個應用啟用</string>
     <string name="app_extra_apps_visible_count">%d 額外可見的應用</string>
     <string name="app_extra_apps_invisible_count">%d 額外不可見的應用</string>
@@ -88,6 +93,13 @@
     <string name="settings_max_log_size">記錄器的緩衝區大小</string>
     <string name="settings_hide_icon">在啟動器中 HMA 圖示</string>
     <string name="settings_hide_icon_summary">你仍然可以在 Xposed 管理器中開啟 HMA</string>
+
+    <string name="settings_theme">主題</string>
+    <string name="settings_system_theme_color">系統主題色</string>
+    <string name="settings_theme_color">主題色</string>
+    <string name="settings_dark_theme">深色主題</string>
+    <string name="settings_pure_black_dark_theme">純黑的深色主題</string>
+    <string name="settings_pure_black_dark_theme_summary">如果啟用了深色主題，則使用純黑色的背景色</string>
 
     <string name="settings_experimental">實驗性功能</string>
     <string name="settings_force_mount_data">對於目標 API 低於 30 的應用，強制繫結掛載資料儲存</string>
@@ -122,4 +134,25 @@
     <string name="about_developer">開發者</string>
     <string name="about_support">支援和反饋</string>
     <string name="about_open_source">開源許可證</string>
+
+    <!-- Colors -->
+    <string name="color_sakura">櫻花</string>
+    <string name="color_red">紅色</string>
+    <string name="color_pink">粉紅色</string>
+    <string name="color_purple">紫色</string>
+    <string name="color_deep_purple">深紫色</string>
+    <string name="color_indigo">靛藍</string>
+    <string name="color_blue">藍色</string>
+    <string name="color_light_blue">淺藍色</string>
+    <string name="color_cyan">青色</string>
+    <string name="color_teal">藍綠色</string>
+    <string name="color_green">綠色</string>
+    <string name="color_light_green">淺綠色</string>
+    <string name="color_lime">青檸色</string>
+    <string name="color_yellow">黃色</string>
+    <string name="color_amber">琥珀色</string>
+    <string name="color_orange">橙色</string>
+    <string name="color_deep_orange">深橙色</string>
+    <string name="color_brown">棕色</string>
+    <string name="color_blue_grey">藍灰色</string>
 </resources>
