@@ -3,15 +3,20 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.PrintStream
 import java.util.*
 
+val officialBuild: Boolean by rootProject.extra
+
 plugins {
     kotlin("android")
     kotlin("plugin.serialization")
     id("com.android.application")
     id("com.google.devtools.ksp")
-    id("com.google.gms.google-services")
     id("dev.rikka.tools.materialthemebuilder")
     id("dev.rikka.tools.refine")
     id("androidx.navigation.safeargs.kotlin")
+}
+
+if (officialBuild) {
+    plugins.apply("com.google.gms.google-services")
 }
 
 android {

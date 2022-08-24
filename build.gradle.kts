@@ -47,6 +47,7 @@ val gitCommitHash = "git rev-parse --verify --short HEAD".execute()
 
 val localProperties = Properties()
 localProperties.load(file("local.properties").inputStream())
+val officialBuild by extra(localProperties.getProperty("officialBuild", "false") == "true")
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
