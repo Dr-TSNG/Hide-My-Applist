@@ -25,6 +25,10 @@ jobs:
         with:
           java-version: '11'
 
+      - name: Write properties
+        run: |
+          echo buildWithGitSuffix=true >> local.properties
+
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
