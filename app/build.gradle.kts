@@ -10,6 +10,7 @@ plugins {
     kotlin("plugin.serialization")
     id("com.android.application")
     id("com.google.devtools.ksp")
+    id("dev.rikka.tools.autoresconfig")
     id("dev.rikka.tools.materialthemebuilder")
     id("dev.rikka.tools.refine")
     id("androidx.navigation.safeargs.kotlin")
@@ -25,6 +26,13 @@ android {
     buildFeatures {
         viewBinding = true
     }
+}
+
+autoResConfig {
+    generateClass.set(true)
+    generateRes.set(false)
+    generatedClassFullName.set("icu.nullptr.hidemyapplist.util.LangList")
+    generatedArrayFirstItem.set("SYSTEM")
 }
 
 materialThemeBuilder {

@@ -10,6 +10,8 @@ object PrefManager {
 
     private const val PREF_LAST_VERSION = "last_version"
 
+    private const val PREF_LOCALE = "language"
+
     private const val PREF_DARK_THEME = "dark_theme"
     private const val PREF_BLACK_DARK_THEME = "black_dark_theme"
     private const val PREF_FOLLOW_SYSTEM_ACCENT = "follow_system_accent"
@@ -18,6 +20,7 @@ object PrefManager {
     private const val PREF_HIDE_ICON = "hide_icon"
     private const val PREF_DISABLE_UPDATE = "disable_update"
     private const val PREF_RECEIVE_BETA_UPDATE = "receive_beta_update"
+
     private const val PREF_APP_FILTER_SHOW_SYSTEM = "app_filter_show_system"
     private const val PREF_APP_FILTER_SORT_METHOD = "app_filter_sort_method"
     private const val PREF_APP_FILTER_REVERSE_ORDER = "app_filter_reverse_order"
@@ -33,6 +36,10 @@ object PrefManager {
     var lastVersion: Int
         get() = pref.getInt(PREF_LAST_VERSION, 0)
         set(value) = pref.edit().putInt(PREF_LAST_VERSION, value).apply()
+
+    var locale: String
+        get() = pref.getString(PREF_LOCALE, "SYSTEM")!!
+        set(value) = pref.edit().putString(PREF_LOCALE, value).apply()
 
     var darkTheme: Int
         get() = pref.getInt(PREF_DARK_THEME, DayNightDelegate.MODE_NIGHT_FOLLOW_SYSTEM)

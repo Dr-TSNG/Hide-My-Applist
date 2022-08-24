@@ -9,6 +9,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import me.zhanghai.android.appiconloader.AppIconLoader
 import rikka.material.app.DayNightDelegate
+import rikka.material.app.LocaleDelegate
+import java.util.*
 import kotlin.system.exitProcess
 
 lateinit var hmaApp: MyApp
@@ -24,6 +26,7 @@ class MyApp : Application() {
         AppIconLoader(iconSize, false, this)
     }
 
+    @Suppress("DEPRECATION")
     @SuppressLint("SdCardPath")
     override fun onCreate() {
         super.onCreate()
@@ -35,5 +38,14 @@ class MyApp : Application() {
 
         DayNightDelegate.setApplicationContext(this)
         DayNightDelegate.setDefaultNightMode(PrefManager.darkTheme)
+        LocaleDelegate.defaultLocale = getLocale(PrefManager.locale)
+        val config = resources.configuration
+        config.setLocale(LocaleDelegate.defaultLocale)
+        resources.updateConfiguration(config, resources.displayMetrics)
+    }
+
+    fun getLocale(tag: String): Locale {
+        return if (tag == "SYSTEM") LocaleDelegate.systemLocale
+        else Locale.forLanguageTag(tag)
     }
 }

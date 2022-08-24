@@ -168,7 +168,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         if (updateInfo.versionCode > BuildConfig.VERSION_CODE) {
             withContext(Dispatchers.Main) {
                 MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(String.format(getString(R.string.home_new_update), updateInfo.versionName))
+                    .setTitle(getString(R.string.home_new_update, updateInfo.versionName))
                     .setMessage(Html.fromHtml(updateInfo.content, Html.FROM_HTML_MODE_COMPACT))
                     .setPositiveButton("GitHub") { _, _ ->
                         startActivity(Intent(Intent.ACTION_VIEW, updateInfo.downloadUrl.toUri()))
@@ -184,7 +184,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             withContext(Dispatchers.Main) {
                 PrefManager.lastVersion = BuildConfig.VERSION_CODE
                 MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(String.format(getString(R.string.home_update), updateInfo.versionName))
+                    .setTitle(getString(R.string.home_update, updateInfo.versionName))
                     .setMessage(Html.fromHtml(updateInfo.content, Html.FROM_HTML_MODE_COMPACT))
                     .setPositiveButton(android.R.string.ok, null)
                     .setCancelable(false)
