@@ -119,8 +119,8 @@
 
     <string name="settings_update">更新</string>
     <string name="settings_disable_update">禁用更新通知</string>
-    <string name="settings_receive_beta_update">接收 Bata 版更新</string>
-    <string name="settings_receive_beta_update_summary">注意：Bata 版可能存在不稳定性</string>
+    <string name="settings_receive_beta_update">接收 Beta 版更新</string>
+    <string name="settings_receive_beta_update_summary">注意：Beta 版可能存在不稳定性</string>
 
     <!-- About -->
     <string name="about_description">
