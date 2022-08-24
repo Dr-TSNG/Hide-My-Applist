@@ -33,6 +33,13 @@ object Utils {
         return this.invokeMethodAutoAs<String>("getNameForUid", Binder.getCallingUid())
     }
 
+    fun <T> binderLocalScope(block: () -> T): T {
+        val identity = Binder.clearCallingIdentity()
+        val result = block()
+        Binder.restoreCallingIdentity(identity)
+        return result
+    }
+
     fun getPackageNameFromPackageSettings(packageSettings: Any): String {
         return with(packageSettings.toString()) {
             substring(lastIndexOf(' ') + 1, lastIndexOf('/'))
