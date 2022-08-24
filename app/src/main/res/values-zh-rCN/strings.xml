@@ -87,6 +87,9 @@
     <string name="settings_max_log_size">日志缓冲区大小</string>
     <string name="settings_hide_icon">在启动器中隐藏图标</string>
     <string name="settings_hide_icon_summary">你仍然可以在 Xposed 管理器中打开此应用</string>
+    <string name="settings_language">语言</string>
+    <string name="settings_translate">参与翻译</string>
+    <string name="settings_translate_summary">帮助我们把 %s 翻译到你的语言</string>
     <string name="settings_theme">主题</string>
     <string name="settings_system_theme_color">系统主题色</string>
     <string name="settings_theme_color">主题颜色</string>
