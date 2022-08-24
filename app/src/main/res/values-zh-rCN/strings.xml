@@ -8,7 +8,7 @@
     <string name="title_template_manage">模板管理</string>
     <string name="title_template_settings">模板设置</string>
     <string name="title_app_manage">应用管理</string>
-    <string name="title_app_select">选择生效应用</string>
+    <string name="title_app_select">选择应用</string>
     <string name="title_app_settings">应用设置</string>
     <string name="title_about">关于</string>
 
@@ -50,6 +50,7 @@
     <string name="home_export_failed">备份失败</string>
     <string name="home_exported">备份完成</string>
     <string name="home_new_update">更新可用： %s</string>
+    <string name="home_update">更新： %s</string>
 
     <!-- App select -->
     <string name="list_show_system">显示系统应用</string>
