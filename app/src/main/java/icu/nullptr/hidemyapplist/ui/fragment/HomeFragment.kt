@@ -1,6 +1,7 @@
 package icu.nullptr.hidemyapplist.ui.fragment
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -91,6 +92,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
         binding.appManage.setOnClickListener {
             navController.navigate(R.id.nav_app_manage)
+        }
+        binding.detectionTest.setOnClickListener {
+            val intent = hmaApp.packageManager.getLaunchIntentForPackage("icu.nullptr.applistdetector")
+            if (intent == null) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.home_download_test_app_title)
+                    .setMessage(R.string.home_download_test_app_message)
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Dr-TSNG/ApplistDetector/releases")))
+                    }
+                    .show()
+            } else startActivity(intent)
         }
         binding.backupConfig.setOnClickListener {
             backupSAFLauncher.launch("HMA_Config.json")

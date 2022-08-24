@@ -4,13 +4,18 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.preference.Preference
 import androidx.preference.PreferenceDataStore
 import androidx.preference.PreferenceFragmentCompat
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.topjohnwu.superuser.Shell
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.databinding.FragmentSettingsBinding
 import icu.nullptr.hidemyapplist.service.ConfigManager
 import icu.nullptr.hidemyapplist.service.PrefManager
+import icu.nullptr.hidemyapplist.service.ServiceHelper
+import icu.nullptr.hidemyapplist.ui.util.makeToast
 import icu.nullptr.hidemyapplist.ui.util.setupToolbar
 import rikka.material.app.DayNightDelegate
 import rikka.material.preference.MaterialSwitchPreference
@@ -81,39 +86,65 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             preferenceManager.preferenceDataStore = SettingsPreferenceDataStore()
             setPreferencesFromResource(R.xml.settings, rootKey)
 
-            findPreference<MaterialSwitchPreference>("forceMountData")?.let {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-                    it.isEnabled = false
-                }
+            findPreference<MaterialSwitchPreference>("followSystemAccent")?.setOnPreferenceChangeListener { _, _ ->
+                activity?.recreate()
+                true
             }
 
-            findPreference<MaterialSwitchPreference>("followSystemAccent")
-                ?.setOnPreferenceChangeListener { _, _ ->
-                    activity?.recreate()
-                    true
-                }
+            findPreference<SimpleMenuPreference>("themeColor")?.setOnPreferenceChangeListener { _, _ ->
+                activity?.recreate()
+                true
+            }
 
-            findPreference<SimpleMenuPreference>("themeColor")
-                ?.setOnPreferenceChangeListener { _, _ ->
+            findPreference<SimpleMenuPreference>("darkTheme")?.setOnPreferenceChangeListener { _, newValue ->
+                val newMode = (newValue as String).toInt()
+                if (PrefManager.darkTheme != newMode) {
+                    DayNightDelegate.setDefaultNightMode(newMode)
                     activity?.recreate()
-                    true
                 }
+                true
+            }
 
-            findPreference<SimpleMenuPreference>("darkTheme")
-                ?.setOnPreferenceChangeListener { _, newValue ->
-                    val newMode = (newValue as String).toInt()
-                    if (PrefManager.darkTheme != newMode) {
-                        DayNightDelegate.setDefaultNightMode(newMode)
-                        activity?.recreate()
+            findPreference<MaterialSwitchPreference>("blackDarkTheme")?.setOnPreferenceChangeListener { _, _ ->
+                activity?.recreate()
+                true
+            }
+
+            findPreference<MaterialSwitchPreference>("forceMountData")
+                ?.isEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
+            findPreference<Preference>("stopSystemService")?.setOnPreferenceClickListener {
+                if (ServiceHelper.getServiceVersion() != 0) {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(R.string.settings_is_clean_env)
+                        .setMessage(R.string.settings_is_clean_env_summary)
+                        .setPositiveButton(R.string.yes) { _, _ ->
+                            ServiceHelper.stopSystemService(true)
+                            makeToast(R.string.settings_stop_system_service)
+                        }
+                        .setNegativeButton(R.string.no) { _, _ ->
+                            ServiceHelper.stopSystemService(false)
+                            makeToast(R.string.settings_stop_system_service)
+                        }
+                        .setNeutralButton(android.R.string.cancel, null)
+                        .show()
+                } else makeToast(R.string.home_xposed_service_off)
+                true
+            }
+
+            findPreference<Preference>("forceCleanEnv")?.setOnPreferenceClickListener {
+                MaterialAlertDialogBuilder(requireActivity())
+                    .setTitle(R.string.settings_force_clean_env)
+                    .setMessage(R.string.settings_is_clean_env_summary)
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        val result = Shell.cmd("rm -rf /data/system/hide_my_applist*").exec().isSuccess && Shell.isAppGrantedRoot() == true
+                        if (result) makeToast(R.string.settings_force_clean_env_toast_successful)
+                        else makeToast(R.string.settings_force_clean_env_toast_failed)
                     }
-                    true
-                }
-
-            findPreference<MaterialSwitchPreference>("blackDarkTheme")
-                ?.setOnPreferenceChangeListener { _, _ ->
-                    activity?.recreate()
-                    true
-                }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+                true
+            }
         }
     }
 }
