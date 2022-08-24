@@ -93,6 +93,13 @@
     <string name="settings_force_mount_data">Force bind mount data storage for apps whose target API lower than 30</string>
     <string name="settings_force_mount_data_summary">This option is only available on Android 11 and above</string>
 
+    <string name="settings_theme">Theme</string>
+    <string name="settings_system_theme_color">System theme color</string>
+    <string name="settings_theme_color">Theme color</string>
+    <string name="settings_dark_theme">Dark theme</string>
+    <string name="settings_pure_black_dark_theme">Pure black dark theme</string>
+    <string name="settings_pure_black_dark_theme_summary">Use the pure black theme if dark theme is enabled</string>
+
     <string name="settings_service">Service</string>
     <string name="settings_stop_system_service">Stop system service</string>
     <string name="settings_stop_system_service_summary">Need reboot to restart service</string>
@@ -122,4 +129,25 @@
     <string name="about_developer">Developer</string>
     <string name="about_support">Support and feedback</string>
     <string name="about_open_source">Open source licenses</string>
+
+    <!-- Colors -->
+    <string name="color_sakura">Sakura</string>
+    <string name="color_red">Red</string>
+    <string name="color_pink">Pink</string>
+    <string name="color_purple">Purple</string>
+    <string name="color_deep_purple">Deep purple</string>
+    <string name="color_indigo">Indigo</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_light_blue">Light blue</string>
+    <string name="color_cyan">Cyan</string>
+    <string name="color_teal">Teal</string>
+    <string name="color_green">Green</string>
+    <string name="color_light_green">Light green</string>
+    <string name="color_lime">Lime</string>
+    <string name="color_yellow">Yellow</string>
+    <string name="color_amber">Amber</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_deep_orange">Deep orange</string>
+    <string name="color_brown">Brown</string>
+    <string name="color_blue_grey">Blue grey</string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.gms.ads.AdRequest
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.databinding.FragmentAppSelectBinding
 import icu.nullptr.hidemyapplist.service.PrefManager
@@ -83,6 +84,7 @@ abstract class AppSelectFragment : Fragment(R.layout.fragment_app_select) {
             onMenuOptionSelected = this::onMenuOptionSelected
         )
 
+        binding.adBanner.loadAd(AdRequest.Builder().build())
         with(binding.toolbar.menu) {
             findItem(R.id.menu_show_system).isChecked = PrefManager.appFilter_showSystem
             when (PrefManager.appFilter_sortMethod) {
