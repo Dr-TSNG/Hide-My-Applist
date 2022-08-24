@@ -91,7 +91,7 @@ jobs:
       - name: Post to channel
         if: ${{ github.event_name != 'pull_request' && success() && github.ref == 'refs/heads/master' }}
         env:
-          CHANNEL_ID: ${{ secrets.TELEGRAM_TO }}
+          CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL }}
           BOT_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           COMMIT_URL: ${{ github.event.head_commit.url }}
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
