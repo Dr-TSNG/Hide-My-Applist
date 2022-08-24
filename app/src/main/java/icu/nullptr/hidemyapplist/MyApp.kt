@@ -4,11 +4,12 @@ import android.annotation.SuppressLint
 import android.app.Application
 import com.google.android.material.color.DynamicColors
 import com.tsng.hidemyapplist.R
-import icu.nullptr.hidemyapplist.service.ConfigManager
+import icu.nullptr.hidemyapplist.service.PrefManager
 import icu.nullptr.hidemyapplist.ui.util.makeToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import me.zhanghai.android.appiconloader.AppIconLoader
+import rikka.material.app.DayNightDelegate
 import kotlin.system.exitProcess
 
 lateinit var hmaApp: MyApp
@@ -32,6 +33,9 @@ class MyApp : Application() {
             exitProcess(0)
         }
         hmaApp = this
+
+        DayNightDelegate.setApplicationContext(this)
+        DayNightDelegate.setDefaultNightMode(PrefManager.darkTheme)
         DynamicColors.applyToActivitiesIfAvailable(this)
     }
 }
