@@ -24,7 +24,8 @@
             android:theme="@style/AppTheme.About" />
         <activity
             android:name="icu.nullptr.hidemyapplist.ui.activity.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS" />
