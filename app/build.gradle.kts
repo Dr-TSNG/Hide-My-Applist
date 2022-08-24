@@ -3,13 +3,20 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.PrintStream
 import java.util.*
 
+val officialBuild: Boolean by rootProject.extra
+
 plugins {
     kotlin("android")
+    kotlin("plugin.serialization")
     id("com.android.application")
-    id("com.google.gms.google-services")
+    id("com.google.devtools.ksp")
     id("dev.rikka.tools.materialthemebuilder")
     id("dev.rikka.tools.refine")
     id("androidx.navigation.safeargs.kotlin")
+}
+
+if (officialBuild) {
+    plugins.apply("com.google.gms.google-services")
 }
 
 android {
@@ -104,10 +111,17 @@ afterEvaluate {
     afterEval()
 }
 
+kotlin {
+    sourceSets.debug {
+        kotlin.srcDir("build/generated/ksp/debug/kotlin")
+    }
+}
+
 dependencies {
     implementation(projects.common)
     runtimeOnly(projects.xposed)
 
+    val rxhttpVersion = "2.9.2"
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.1")
     implementation("androidx.preference:preference-ktx:1.2.0")
@@ -115,6 +129,8 @@ dependencies {
     implementation("com.drakeet.about:about:2.5.1")
     implementation("com.drakeet.multitype:multitype:4.3.0")
     implementation("com.github.kirich1409:viewbindingpropertydelegate:1.5.6")
+    implementation("com.github.liujingxing.rxhttp:rxhttp:$rxhttpVersion")
+    implementation("com.github.liujingxing.rxhttp:converter-serialization:$rxhttpVersion")
     implementation("com.github.topjohnwu.libsu:core:5.0.2")
     implementation("com.google.android.material:material:1.6.1")
     implementation("com.google.android.gms:play-services-ads:21.1.0")
@@ -125,6 +141,7 @@ dependencies {
     implementation("dev.rikka.rikkax.material:material-preference:2.0.0")
     implementation("me.zhanghai.android.appiconloader:appiconloader:1.4.0")
     compileOnly("dev.rikka.hidden:stub:3.2.0")
+    ksp("com.github.liujingxing.rxhttp:rxhttp-compiler:$rxhttpVersion")
 }
 
 configurations.all {

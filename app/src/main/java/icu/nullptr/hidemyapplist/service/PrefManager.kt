@@ -8,6 +8,8 @@ import rikka.material.app.DayNightDelegate
 
 object PrefManager {
 
+    private const val PREF_LAST_VERSION = "last_version"
+
     private const val PREF_DARK_THEME = "dark_theme"
     private const val PREF_BLACK_DARK_THEME = "black_dark_theme"
     private const val PREF_FOLLOW_SYSTEM_ACCENT = "follow_system_accent"
@@ -27,6 +29,10 @@ object PrefManager {
     }
 
     private val pref = hmaApp.getSharedPreferences("settings", MODE_PRIVATE)
+
+    var lastVersion: Int
+        get() = pref.getInt(PREF_LAST_VERSION, 0)
+        set(value) = pref.edit().putInt(PREF_LAST_VERSION, value).apply()
 
     var darkTheme: Int
         get() = pref.getInt(PREF_DARK_THEME, DayNightDelegate.MODE_NIGHT_FOLLOW_SYSTEM)

@@ -5,6 +5,7 @@ import java.util.Set;
 public class Constants {
 
     public static final String APP_PACKAGE_NAME = "com.tsng.hidemyapplist";
+    public static final String UPDATE_URL_BASE = "https://cdn.jsdelivr.net/gh/Dr-TSNG/Hide-My-Applist@updates/";
     public static final String CLASS_PMS = "com.android.server.pm.PackageManagerService";
     public static final String[] CLASS_EXT_PMS = {
             "com.android.server.pm.OplusPackageManagerService",

@@ -4,10 +4,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.ads.AdRequest
@@ -16,13 +19,20 @@ import com.google.android.material.transition.MaterialElevationScale
 import com.tsng.hidemyapplist.BuildConfig
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.databinding.FragmentHomeBinding
+import icu.nullptr.hidemyapplist.data.fetchLatestUpdate
 import icu.nullptr.hidemyapplist.hmaApp
 import icu.nullptr.hidemyapplist.service.ConfigManager
+import icu.nullptr.hidemyapplist.service.PrefManager
 import icu.nullptr.hidemyapplist.service.ServiceHelper
 import icu.nullptr.hidemyapplist.ui.activity.AboutActivity
-import icu.nullptr.hidemyapplist.ui.util.*
 import icu.nullptr.hidemyapplist.ui.util.ThemeUtils.getColor
 import icu.nullptr.hidemyapplist.ui.util.ThemeUtils.themeColor
+import icu.nullptr.hidemyapplist.ui.util.makeToast
+import icu.nullptr.hidemyapplist.ui.util.navController
+import icu.nullptr.hidemyapplist.ui.util.setupToolbar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -112,6 +122,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.restoreConfig.setOnClickListener {
             restoreSAFLauncher.launch("application/json")
         }
+
+        lifecycleScope.launch {
+            loadUpdateDialog()
+        }
     }
 
     override fun onStart() {
@@ -145,6 +159,37 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         } else {
             binding.serviceStatus.setText(R.string.home_xposed_service_off)
             binding.filterCount.visibility = View.GONE
+        }
+    }
+
+    private suspend fun loadUpdateDialog() {
+        if (PrefManager.disableUpdate) return
+        val updateInfo = fetchLatestUpdate() ?: return
+        if (updateInfo.versionCode > BuildConfig.VERSION_CODE) {
+            withContext(Dispatchers.Main) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(String.format(getString(R.string.home_new_update), updateInfo.versionName))
+                    .setMessage(Html.fromHtml(updateInfo.content, Html.FROM_HTML_MODE_COMPACT))
+                    .setPositiveButton("GitHub") { _, _ ->
+                        startActivity(Intent(Intent.ACTION_VIEW, updateInfo.downloadUrl.toUri()))
+                    }
+                    .setNegativeButton("Telegram") { _, _ ->
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/HideMyApplist")))
+                    }
+                    .setNeutralButton(android.R.string.cancel, null)
+                    .setCancelable(false)
+                    .show()
+            }
+        } else if (updateInfo.versionCode > PrefManager.lastVersion) {
+            withContext(Dispatchers.Main) {
+                PrefManager.lastVersion = BuildConfig.VERSION_CODE
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(String.format(getString(R.string.home_update), updateInfo.versionName))
+                    .setMessage(Html.fromHtml(updateInfo.content, Html.FROM_HTML_MODE_COMPACT))
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setCancelable(false)
+                    .show()
+            }
         }
     }
 }
