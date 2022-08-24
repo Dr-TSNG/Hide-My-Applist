@@ -87,6 +87,9 @@
     <string name="settings_max_log_size">Logger buffer sizes</string>
     <string name="settings_hide_icon">Hide module icon in launcher</string>
     <string name="settings_hide_icon_summary">You can still open the app in Xposed manager</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_translate">Participate in translation</string>
+    <string name="settings_translate_summary">Help us translate %s into your language</string>
     <string name="settings_theme">Theme</string>
     <string name="settings_system_theme_color">System theme color</string>
     <string name="settings_theme_color">Theme color</string>
