@@ -1,6 +1,7 @@
 package icu.nullptr.hidemyapplist.ui.activity
 
 import android.content.res.Resources
+import android.graphics.Color
 import android.os.Bundle
 import androidx.core.view.WindowCompat
 import androidx.navigation.Navigation
@@ -9,6 +10,7 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.google.android.gms.ads.MobileAds
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.databinding.ActivityMainBinding
+import icu.nullptr.hidemyapplist.ui.util.ThemeUtils
 import rikka.material.app.MaterialActivity
 
 class MainActivity : MaterialActivity() {
@@ -26,12 +28,22 @@ class MainActivity : MaterialActivity() {
         MobileAds.initialize(this)
     }
 
-    override fun onApplyUserThemeResource(theme: Resources.Theme, isDecorView: Boolean) {
-        theme.applyStyle(rikka.material.preference.R.style.ThemeOverlay_Rikka_Material3_Preference, true)
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    override fun onApplyUserThemeResource(theme: Resources.Theme, isDecorView: Boolean) {
+        if (!ThemeUtils.isSystemAccent) theme.applyStyle(ThemeUtils.colorThemeStyleRes, true)
+        theme.applyStyle(ThemeUtils.getNightThemeStyleRes(this), true)
+        theme.applyStyle(rikka.material.preference.R.style.ThemeOverlay_Rikka_Material3_Preference, true)
+    }
+
+    override fun computeUserThemeKey() = ThemeUtils.colorTheme + ThemeUtils.getNightThemeStyleRes(this)
+
+    override fun onApplyTranslucentSystemBars() {
+        super.onApplyTranslucentSystemBars()
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = Color.TRANSPARENT
     }
 }
