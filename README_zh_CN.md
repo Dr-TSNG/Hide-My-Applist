@@ -1,6 +1,8 @@
 # Hide My Applist
 
 [![Stars](https://img.shields.io/github/stars/Dr-TSNG/Hide-My-Applist?label=Stars)](https://github.com/Dr-TSNG)
+[![Crowdin](https://badges.crowdin.net/hide-my-applist/localized.svg)](https://crowdin.com/project/hide-my-applist)
+[![Build](https://img.shields.io/github/workflow/status/Dr-TSNG/Hide-My-Applist/Main?logo=github)](https://github.com/Dr-TSNG/Hide-My-Applist/actions)
 [![Release](https://img.shields.io/github/v/release/Dr-TSNG/Hide-My-Applist?label=Release)](https://github.com/Dr-TSNG/Hide-My-Applist/releases/latest)
 [![Download](https://img.shields.io/github/downloads/Dr-TSNG/Hide-My-Applist/total)](https://github.com/Dr-TSNG/Hide-My-Applist/releases/latest)
 [![Channel](https://img.shields.io/badge/Telegram-Channel-blue.svg?logo=telegram)](https://t.me/HideMyApplist)
@@ -18,10 +20,3 @@
 
 ## 更新日志
 [参考发布页面](https://github.com/Dr-TSNG/Hide-My-Applist/releases)  
-
-## 文档（未翻译）
-### Custom query params
-This refers to the string params of methods of [PackageManagerService](https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/pm/PackageManagerService.java)  
-
-How to use it: pms methods whose string params contain configured strings will be intercepted  
-Notice that under **MOST** circumstances you do not need to switch on this interception nor need to add any rule.  
