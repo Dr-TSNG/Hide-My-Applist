@@ -25,6 +25,8 @@
     <string name="preferences">Preferences</string>
     <string name="refresh">Refresh</string>
     <string name="filter">Filter</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!-- Home -->
     <string name="home_xposed_activated">Module Activated [%d]</string>
@@ -34,6 +36,9 @@
     <string name="home_xposed_service_old">Module updated, need reboot</string>
     <string name="home_xposed_filter_count">Hide My Applist has filtered total %d requests</string>
     <string name="home_manage">Manage</string>
+    <string name="home_detection_test">Detection test</string>
+    <string name="home_download_test_app_title">Download test app</string>
+    <string name="home_download_test_app_message">We have developed an individual detection test app and migrated detection test to it. Do you want to download it now?</string>
     <string name="home_backup_and_restore">Backup &amp; Restore</string>
     <string name="home_backup_config">Backup config</string>
     <string name="home_restore_config">Restore config</string>
@@ -89,16 +94,16 @@
     <string name="settings_hide_icon">Hide module icon in launcher</string>
     <string name="settings_hide_icon_summary">You can still open the app in Xposed manager</string>
 
-    <string name="settings_experimental">Experimental</string>
-    <string name="settings_force_mount_data">Force bind mount data storage for apps whose target API lower than 30</string>
-    <string name="settings_force_mount_data_summary">This option is only available on Android 11 and above</string>
-
     <string name="settings_theme">Theme</string>
     <string name="settings_system_theme_color">System theme color</string>
     <string name="settings_theme_color">Theme color</string>
     <string name="settings_dark_theme">Dark theme</string>
     <string name="settings_pure_black_dark_theme">Pure black dark theme</string>
     <string name="settings_pure_black_dark_theme_summary">Use the pure black theme if dark theme is enabled</string>
+
+    <string name="settings_experimental">Experimental</string>
+    <string name="settings_force_mount_data">Force bind mount data storage for apps whose target API lower than 30</string>
+    <string name="settings_force_mount_data_summary">This option is only available on Android 11 and above</string>
 
     <string name="settings_service">Service</string>
     <string name="settings_stop_system_service">Stop system service</string>

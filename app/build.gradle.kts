@@ -115,7 +115,7 @@ dependencies {
     implementation("com.drakeet.about:about:2.5.1")
     implementation("com.drakeet.multitype:multitype:4.3.0")
     implementation("com.github.kirich1409:viewbindingpropertydelegate:1.5.6")
-    implementation("com.github.topjohnwu.libsu:core:3.1.2")
+    implementation("com.github.topjohnwu.libsu:core:5.0.2")
     implementation("com.google.android.material:material:1.6.1")
     implementation("com.google.android.gms:play-services-ads:21.1.0")
     implementation("com.google.firebase:firebase-analytics-ktx:21.1.0")

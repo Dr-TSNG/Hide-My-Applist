@@ -59,6 +59,19 @@
             android:title="@string/settings_force_mount_data" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/settings_service">
+        <Preference
+            android:icon="@drawable/outline_stop_circle_24"
+            android:key="stopSystemService"
+            android:summary="@string/settings_stop_system_service_summary"
+            android:title="@string/settings_stop_system_service" />
+        <Preference
+            android:icon="@drawable/outline_cleaning_services_24"
+            android:key="forceCleanEnv"
+            android:summary="@string/settings_force_clean_env_summary"
+            android:title="@string/settings_force_clean_env" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/settings_update">
         <rikka.material.preference.MaterialSwitchPreference
             android:disableDependentsState="true"
