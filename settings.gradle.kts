@@ -20,6 +20,7 @@ pluginManagement {
     plugins {
         id("com.android.application") version agpVersion
         id("com.android.library") version agpVersion
+        id("com.google.devtools.ksp") version "1.7.10-1.0.6"
         id("androidx.navigation.safeargs") version "2.5.0"
         id("dev.rikka.tools.materialthemebuilder") version "1.3.3"
         id("dev.rikka.tools.refine") version "3.1.1"
