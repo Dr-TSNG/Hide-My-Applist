@@ -25,15 +25,9 @@ jobs:
         with:
           java-version: '11'
 
-      - name: Creat key
+      - name: Write properties
         run: |
-          PASSWD=$(echo $RANDOM | md5sum | head -c 15)
-          keytool -genkey -noprompt -v -keystore android.keystore -alias PRCHECKSIGN -keyalg RSA -keysize 2048 -validity 10000 -keypass ${PASSWD} -storepass ${PASSWD} -dname "CN=xx, OU=xx, O=xx, L=xx, S=xx, C=xx" 
           echo buildWithGitSuffix=true >> local.properties
-          echo storePassword="${PASSWD}" >> local.properties
-          echo keyAlias="PRCHECKSIGN" >> local.properties
-          echo keyPassword="${PASSWD}" >> local.properties
-          echo fileDir='../android.keystore' >> local.properties
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
