@@ -5,6 +5,7 @@ import android.os.Build
 import com.github.kyuubiran.ezxhelper.utils.findMethod
 import com.github.kyuubiran.ezxhelper.utils.hookBefore
 import de.robv.android.xposed.XC_MethodHook
+import icu.nullptr.hidemyapplist.common.Constants
 import icu.nullptr.hidemyapplist.xposed.HMAService
 import icu.nullptr.hidemyapplist.xposed.Utils
 import icu.nullptr.hidemyapplist.xposed.logE
@@ -34,7 +35,10 @@ class PmsHookTarget33(private val service: HMAService) : IFrameworkHook {
             runCatching {
                 val snapshot = param.args[0]
                 val callingUid = param.args[1] as Int
-                val callingApps = getPackagesForUidMethod.invoke(snapshot, callingUid) as Array<String>? ?: return@hookBefore
+                if (callingUid == Constants.UID_SYSTEM) return@hookBefore
+                val callingApps = Utils.binderLocalScope {
+                    getPackagesForUidMethod.invoke(snapshot, callingUid) as Array<String>?
+                } ?: return@hookBefore
                 val targetApp = Utils.getPackageNameFromPackageSettings(param.args[3]) // PackageSettings <- PackageStateInternal
                 for (caller in callingApps) {
                     if (service.shouldHide(caller, targetApp)) {

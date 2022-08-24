@@ -8,6 +8,7 @@ import com.github.kyuubiran.ezxhelper.utils.argTypes
 import com.github.kyuubiran.ezxhelper.utils.hookBefore
 import com.github.kyuubiran.ezxhelper.utils.method
 import com.github.kyuubiran.ezxhelper.utils.staticMethod
+import icu.nullptr.hidemyapplist.common.BuildConfig
 import icu.nullptr.hidemyapplist.common.Constants
 
 object BridgeService {
@@ -17,7 +18,7 @@ object BridgeService {
     private var appUid = 0
 
     fun start(pms: IPackageManager) {
-        logI(TAG, "Initialize HMAService")
+        logI(TAG, "Initialize HMAService - Version ${BuildConfig.SERVICE_VERSION}")
         val service = HMAService(pms)
         appUid = Utils.getPackageUidCompat(service.pms, Constants.APP_PACKAGE_NAME, 0, 0)
         logD(TAG, "Client uid: $appUid")
