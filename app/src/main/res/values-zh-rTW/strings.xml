@@ -87,6 +87,9 @@
     <string name="settings_max_log_size">記錄器的緩衝區大小</string>
     <string name="settings_hide_icon">在啟動器中隱藏圖示</string>
     <string name="settings_hide_icon_summary">你仍然可以在 Xposed 管理器中開啟並管理此應用</string>
+    <string name="settings_language">語言</string>
+    <string name="settings_translate">參與翻譯</string>
+    <string name="settings_translate_summary">幫助我們翻譯 %s 到您的語言</string>
     <string name="settings_theme">主題</string>
     <string name="settings_system_theme_color">系統主題色</string>
     <string name="settings_theme_color">主題色</string>
