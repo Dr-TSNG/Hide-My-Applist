@@ -46,4 +46,12 @@ object Utils {
             pms.getInstalledApplications(flags.toInt(), userId)
         }.list
     }
+
+    fun getPackageUidCompat(pms: IPackageManager, packageName: String, flags: Long, userId: Int): Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            pms.getPackageUid(packageName, flags, userId)
+        } else {
+            pms.getPackageUid(packageName, flags.toInt(), userId)
+        }
+    }
 }
