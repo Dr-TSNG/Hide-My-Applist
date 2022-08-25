@@ -88,9 +88,9 @@ class AppSettingsFragment : Fragment(R.layout.fragment_settings) {
                 getString(R.string.app_template_using, pack.config.applyTemplates.size)
         }
 
-        private fun updateExtraAppList() {
+        private fun updateExtraAppList(useWhiteList: Boolean) {
             findPreference<Preference>("extraAppList")?.title =
-                if (pack.config.useWhitelist) getString(R.string.app_extra_apps_visible_count, pack.config.extraAppList.size)
+                if (useWhiteList) getString(R.string.app_extra_apps_visible_count, pack.config.extraAppList.size)
                 else getString(R.string.app_extra_apps_invisible_count, pack.config.extraAppList.size)
         }
 
@@ -102,11 +102,11 @@ class AppSettingsFragment : Fragment(R.layout.fragment_settings) {
                 it.title = PackageHelper.loadAppLabel(pack.app)
                 it.summary = PackageHelper.loadPackageInfo(pack.app).packageName
             }
-            findPreference<SwitchPreferenceCompat>("useWhiteList")?.setOnPreferenceChangeListener { _, _ ->
+            findPreference<SwitchPreferenceCompat>("useWhiteList")?.setOnPreferenceChangeListener { _, newValue ->
                 pack.config.applyTemplates.clear()
                 pack.config.extraAppList.clear()
                 updateApplyTemplates()
-                updateExtraAppList()
+                updateExtraAppList(newValue as Boolean)
                 true
             }
             findPreference<Preference>("applyTemplates")?.setOnPreferenceClickListener {
@@ -132,7 +132,7 @@ class AppSettingsFragment : Fragment(R.layout.fragment_settings) {
             findPreference<Preference>("extraAppList")?.setOnPreferenceClickListener {
                 parent.setFragmentResultListener("app_select") { _, bundle ->
                     pack.config.extraAppList = bundle.getStringArrayList("checked")!!.toMutableSet()
-                    updateExtraAppList()
+                    updateExtraAppList(pack.config.useWhitelist)
                     parent.clearFragmentResultListener("app_select")
                 }
 
@@ -144,7 +144,7 @@ class AppSettingsFragment : Fragment(R.layout.fragment_settings) {
                 true
             }
             updateApplyTemplates()
-            updateExtraAppList()
+            updateExtraAppList(pack.config.useWhitelist)
         }
     }
 }
