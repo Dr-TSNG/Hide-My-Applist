@@ -30,7 +30,7 @@ data class JsonConfig(
     @Serializable
     data class AppConfig(
         var useWhitelist: Boolean = false,
-        var excludeSystemApps: Boolean = false,
+        var excludeSystemApps: Boolean = true,
         var applyTemplates: MutableSet<String> = mutableSetOf(),
         var extraAppList: MutableSet<String> = mutableSetOf()
     ) {
