@@ -26,7 +26,7 @@
     <string name="yes">是</string>
     <string name="no">否</string>
     <!-- Home -->
-    <string name="home_xposed_activated">Module Activated [%s-%d]</string>
+    <string name="home_xposed_activated">模組已啟用 [%s-%d]</string>
     <string name="home_xposed_not_activated">模組未啟用</string>
     <string name="home_xposed_service_on">系統服務正在執行 [%d]</string>
     <string name="home_xposed_service_off">系統服務未執行</string>
