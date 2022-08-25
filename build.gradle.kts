@@ -35,7 +35,7 @@ fun String.execute(currentWorkingDir: File = file("./")): String {
 val minSdkVer by extra(24)
 val targetSdkVer by extra(33)
 
-val appVerName by extra("3.0.0-Beta")
+val appVerName by extra("3.0.1-Beta")
 val serviceVerCode by extra(84)
 val minBackupVerCode by extra(65)
 

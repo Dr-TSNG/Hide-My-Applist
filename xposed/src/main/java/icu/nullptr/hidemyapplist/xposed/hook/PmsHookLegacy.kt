@@ -50,7 +50,7 @@ class PmsHookLegacy(private val service: HMAService) : IFrameworkHook {
 
         if (isHidden) {
             service.filterCount++
-            logI(TAG, "@Hide PMS caller: $caller method: ${param.method.name}")
+            logI(TAG, "@${method.name} caller: $caller")
             logD(TAG, "RemoveList $removed")
         }
     }
@@ -65,7 +65,7 @@ class PmsHookLegacy(private val service: HMAService) : IFrameworkHook {
         if (service.shouldHide(caller, param.args[0] as String?)) {
             service.filterCount++
             param.result = result
-            logI(TAG, "@Hide PMS caller: $caller method: ${param.method.name} param: ${param.args[0]}")
+            logI(TAG, "@${method.name} caller: $caller param: ${param.args[0]}")
         }
     }
 
@@ -84,7 +84,7 @@ class PmsHookLegacy(private val service: HMAService) : IFrameworkHook {
             if (service.shouldHide(caller, it)) {
                 service.filterCount++
                 param.result = result
-                logI(TAG, "@Hide PMS caller: $caller method: ${param.method.name} param: ${param.args[0]}")
+                logI(TAG, "@${method.name} caller: $caller param: ${param.args[0]}")
                 return@hookAfter
             }
         }

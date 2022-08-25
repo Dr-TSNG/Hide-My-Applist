@@ -26,7 +26,7 @@ class PmsHookTarget28(private val service: HMAService) : IFrameworkHook {
     override fun load() {
         logI(TAG, "Load hook")
         hooks += findMethod(service.pms::class.java, findSuper = true) {
-            name == "filterAppAccessLPr" && parameterTypes.size == 5
+            name == "filterAppAccessLPr" && parameterCount == 5
         }.hookBefore { param ->
             runCatching {
                 val callingUid = param.args[1] as Int
@@ -39,7 +39,7 @@ class PmsHookTarget28(private val service: HMAService) : IFrameworkHook {
                     if (service.shouldHide(caller, targetApp)) {
                         param.result = true
                         service.filterCount++
-                        logI(TAG, "@Filter caller: $callingUid $caller, target: $targetApp")
+                        logI(TAG, "@filterAppAccessLPr caller: $callingUid $caller, target: $targetApp")
                         return@hookBefore
                     }
                 }
@@ -60,10 +60,12 @@ class PmsHookTarget28(private val service: HMAService) : IFrameworkHook {
                 val list = param.result as MutableCollection<ResolveInfo>
                 val listToRemove = mutableSetOf<ResolveInfo>()
                 for (resolveInfo in list) {
+                    val targetApp = with(resolveInfo) {
+                        activityInfo?.packageName ?: serviceInfo?.packageName ?: providerInfo?.packageName ?: resolvePackageName
+                    }
                     for (caller in callingApps) {
-                        val targetApp = resolveInfo.resolvePackageName
                         if (service.shouldHide(caller, targetApp)) {
-                            logI(TAG, "@Filter caller: $callingUid $caller, target: $targetApp")
+                            logI(TAG, "@applyPostResolutionFilter caller: $callingUid $caller, target: $targetApp")
                             listToRemove.add(resolveInfo)
                             break
                         }
