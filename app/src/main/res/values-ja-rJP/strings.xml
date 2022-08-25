@@ -113,13 +113,10 @@
     <string name="settings_receive_beta_update">ベータ版アップデートを受け取る</string>
     <string name="settings_receive_beta_update_summary">ベータ版は不安定な場合があります</string>
     <!-- About -->
-    <string name="about_description">        Although It is incorrect to detect specific app installation, yet not every app using root provides random package name support. In this case, detected apps that use root (such as Fake Location and Storage Isolation) is equal to detected root itself.\n\nAt the same time, some smart apps use various loopholes to acquire your app list, so that it can draw a persona for you.\n\nThis module provides some methods to test whether you have already hidden your applist nicely. Also, it can work as an Xposed module to hide some apps or reject app list requests to protect your privacy.
-    </string>
+    <string name="about_description">特定のアプリのインストールを検出するのは正しくありませんが、ルートを使用するすべてのアプリがランダムなパッケージ名のサポートを提供するわけではありません。  この場合、検出された root を使用するアプリ (Fake Location や Storage Isolation など) は、検出された root 自体と同じです。\n\n同時に、一部のスマート アプリは、さまざまな抜け穴を使用してアプリ リストを取得し、描画できるようにします。 \n\nこのモジュールは、アプリリストを適切に非表示にしているかどうかをテストする方法をいくつか提供します。  また、Xposed モジュールとして機能して、一部のアプリを非表示にしたり、アプリ リストのリクエストを拒否してプライバシーを保護したりできます。</string>
     <string name="about_how_to_use_title">このモジュールの使用方法</string>
-    <string name="about_how_to_use_description_1">        You can create templates in \"Template manage\".\nThen apply the templates to apps in \"App manage\". (You can also select extra apps for targets.)\nYou should and ONLY should check \"System Framework\" in Xposed module scope / whitelist.
-    </string>
-    <string name="about_how_to_use_description_2">        Config modification effective in real time.
-    </string>
+    <string name="about_how_to_use_description_1">「テンプレート管理」でテンプレートを作成できます。\n次に、「アプリ管理」でテンプレートをアプリに適用します。 (ターゲットに追加のアプリを選択することもできます。)\nXposed モジュール スコープ/ホワイトリストで「システム フレームワーク」をチェックする必要があります。    </string>
+    <string name="about_how_to_use_description_2">リアルタイムで有効な構成変更。    </string>
     <string name="about_developer">デベロッパー</string>
     <string name="about_support">サポートとフィードバック</string>
     <string name="about_open_source">オープンソースライセンス</string>
