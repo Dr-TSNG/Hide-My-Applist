@@ -34,7 +34,8 @@ class PmsHookTarget28(private val service: HMAService) : IFrameworkHook {
                 val callingApps = Utils.binderLocalScope {
                     service.pms.getPackagesForUid(callingUid)
                 } ?: return@hookBefore
-                val targetApp = Utils.getPackageNameFromPackageSettings(param.args[0])
+                val packageSettings = param.args[0] ?: return@hookBefore
+                val targetApp = Utils.getPackageNameFromPackageSettings(packageSettings)
                 for (caller in callingApps) {
                     if (service.shouldHide(caller, targetApp)) {
                         param.result = true
