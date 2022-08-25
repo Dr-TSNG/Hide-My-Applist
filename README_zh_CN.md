@@ -18,5 +18,8 @@
 与此同时，部分“不安分”的应用会使用各种漏洞绕过系统权限来获取你的应用列表，从而对你建立用户画像。（如陈叔叔将安装了 V2Ray 的用户分为一类），或是类似于某某校园某某乐跑的软件会要求你卸载作弊软件。  
 该模块提供了一些检测方式用于测试您是否成功地隐藏了某些特定的包名，如 Magisk/Edxposed Manager；同时可作为 Xposed 模块用于隐藏应用列表或特定应用，保护隐私。  
 
+## 贡献翻译
+您可以点击 [这里](https://crowdin.com/project/hide-my-applist) 贡献翻译。
+
 ## 更新日志
 [参考发布页面](https://github.com/Dr-TSNG/Hide-My-Applist/releases)  
