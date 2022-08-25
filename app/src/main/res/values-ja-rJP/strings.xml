@@ -26,7 +26,7 @@
     <string name="yes">はい</string>
     <string name="no">いいえ</string>
     <!-- Home -->
-    <string name="home_xposed_activated">モジュールは有効です [%d]</string>
+    <string name="home_xposed_activated">モジュールは有効です [%s-%d]</string>
     <string name="home_xposed_not_activated">モジュールは無効です</string>
     <string name="home_xposed_service_on">システムサービスの実行中 [%d]</string>
     <string name="home_xposed_service_off">システムサービスは実行されていません</string>
