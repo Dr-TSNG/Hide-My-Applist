@@ -21,7 +21,6 @@ class PmsHookLegacy(private val service: HMAService) : IFrameworkHook {
     }
 
     private val hooks = mutableSetOf<XC_MethodHook.Unhook>()
-    private fun XC_MethodHook.Unhook.yes() = hooks.add(this)
 
     @Suppress("UNCHECKED_CAST")
     private fun removeList(
@@ -51,7 +50,7 @@ class PmsHookLegacy(private val service: HMAService) : IFrameworkHook {
 
         if (isHidden) {
             service.filterCount++
-            logI(TAG, "@Hide PMS caller: $caller method: ${param.method.name}")
+            logI(TAG, "@${method.name} caller: $caller")
             logD(TAG, "RemoveList $removed")
         }
     }
@@ -66,7 +65,7 @@ class PmsHookLegacy(private val service: HMAService) : IFrameworkHook {
         if (service.shouldHide(caller, param.args[0] as String?)) {
             service.filterCount++
             param.result = result
-            logI(TAG, "@Hide PMS caller: $caller method: ${param.method.name} param: ${param.args[0]}")
+            logI(TAG, "@${method.name} caller: $caller param: ${param.args[0]}")
         }
     }
 
@@ -85,7 +84,7 @@ class PmsHookLegacy(private val service: HMAService) : IFrameworkHook {
             if (service.shouldHide(caller, it)) {
                 service.filterCount++
                 param.result = result
-                logI(TAG, "@Hide PMS caller: $caller method: ${param.method.name} param: ${param.args[0]}")
+                logI(TAG, "@${method.name} caller: $caller param: ${param.args[0]}")
                 return@hookAfter
             }
         }
@@ -105,13 +104,13 @@ class PmsHookLegacy(private val service: HMAService) : IFrameworkHook {
         }
         for (method in pmMethods) when (method.name) {
             "getAllPackages"
-            -> removeList(method, false, listOf()).yes()
+            -> hooks += removeList(method, false, listOf())
 
             "getInstalledPackages",
             "getInstalledApplications",
             "getPackagesHoldingPermissions",
             "queryInstrumentation"
-            -> removeList(method, true, listOf("packageName")).yes()
+            -> hooks += removeList(method, true, listOf("packageName"))
 
             "getPackageInfo",
             "getPackageGids",
@@ -120,24 +119,27 @@ class PmsHookLegacy(private val service: HMAService) : IFrameworkHook {
             "getInstallerPackageName",
             "getLaunchIntentForPackage",
             "getLeanbackLaunchIntentForPackage"
-            -> setResult(method, null).yes()
+            -> hooks += setResult(method, null)
 
             "queryIntentActivities",
             "queryIntentActivityOptions",
             "queryIntentReceivers",
             "queryIntentServices",
             "queryIntentContentProviders"
-            -> removeList(method, true, listOf("activityInfo", "packageName")).yes()
+            -> hooks += removeList(method, true, listOf("activityInfo", "packageName"))
 
             "getActivityInfo",
             "resolveActivity",
             "resolveActivityAsUser"
-            -> resolveIntent(method, null).yes()
+            -> hooks += resolveIntent(method, null)
 
             "getPackageUid"
-            -> setResult(method, -1).yes()
+            -> hooks += setResult(method, -1)
         }
     }
 
-    override fun unload() = hooks.forEach(XC_MethodHook.Unhook::unhook)
+    override fun unload() {
+        hooks.forEach(XC_MethodHook.Unhook::unhook)
+        hooks.clear()
+    }
 }

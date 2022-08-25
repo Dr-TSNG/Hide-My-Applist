@@ -35,8 +35,8 @@ fun String.execute(currentWorkingDir: File = file("./")): String {
 val minSdkVer by extra(24)
 val targetSdkVer by extra(33)
 
-val appVerName by extra("3.0.0")
-val serviceVerCode by extra(83)
+val appVerName by extra("3.0.2-Beta")
+val serviceVerCode by extra(85)
 val minBackupVerCode by extra(65)
 
 val androidSourceCompatibility = JavaVersion.VERSION_11

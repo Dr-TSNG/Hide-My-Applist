@@ -44,7 +44,7 @@ class PmsHookTarget33(private val service: HMAService) : IFrameworkHook {
                     if (service.shouldHide(caller, targetApp)) {
                         param.result = true
                         service.filterCount++
-                        logI(TAG, "@Filter caller: $callingUid $caller, target: $targetApp")
+                        logI(TAG, "@shouldFilterApplication caller: $callingUid $caller, target: $targetApp")
                         return@hookBefore
                     }
                 }

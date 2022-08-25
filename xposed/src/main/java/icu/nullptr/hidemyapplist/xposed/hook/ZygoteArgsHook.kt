@@ -30,7 +30,7 @@ class ZygoteArgsHook(private val service: HMAService) : IFrameworkHook {
                 for (app in apps) {
                     if (service.isHookEnabled(app)) {
                         param.args[param.args.size - 3] = true // bindMountAppsData
-                        logI(TAG, "@Hide force mount data: $uid $app")
+                        logI(TAG, "@startViaZygote force mount data: $uid $app")
                         return@hookBefore
                     }
                 }
