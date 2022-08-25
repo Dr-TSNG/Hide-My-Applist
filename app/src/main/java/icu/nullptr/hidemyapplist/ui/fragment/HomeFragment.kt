@@ -143,7 +143,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
         if (hmaApp.isHooked) {
             binding.moduleStatusIcon.setImageResource(R.drawable.outline_done_all_24)
-            binding.moduleStatus.text = String.format(getString(R.string.home_xposed_activated), BuildConfig.VERSION_CODE)
+            binding.moduleStatus.text = String.format(getString(R.string.home_xposed_activated), BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
         } else {
             binding.moduleStatusIcon.setImageResource(R.drawable.outline_extension_off_24)
             binding.moduleStatus.setText(R.string.home_xposed_not_activated)
