@@ -68,7 +68,7 @@ body:
     attributes:
       label: Version requirement/版本要求
       options:
-        - label: I am using the latest [CI debug build](https://github.com/Dr-TSNG/Hide-My-Applist/actions) of Hide-My-Applist with detail log for debugging enabled/我正在使用最新[ CI 调试版本 ](https://github.com/Dr-TSNG/Hide-My-Applist/actions)且启用详细日志
+        - label: I am using the latest [CI debug build](https://github.com/Dr-TSNG/Hide-My-Applist/actions) of Hide-My-Applist with detail log for debugging enabled/我正在使用最新 [CI 调试版本] (https://github.com/Dr-TSNG/Hide-My-Applist/actions)且启用详细日志
           required: true
   - type: textarea
     attributes:
