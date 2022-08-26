@@ -12,7 +12,7 @@
     <string name="title_about">關於</string>
     <string name="do_not_dual">請勿雙開此應用程式</string>
     <string name="show_crash_log">顯示崩潰日誌</string>
-    <string name="config_damaged">設定案損毀，請清理應用程式的資料</string>
+    <string name="config_damaged">設定損毀，請清理應用程式的資料</string>
     <string name="edit_list">編輯列表</string>
     <string name="delete">刪除</string>
     <string name="enabled">啟用</string>
