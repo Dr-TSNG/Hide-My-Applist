@@ -49,7 +49,7 @@ body:
   - type: input
     attributes:
       label: Hide-My-Applist version/Hide-My-Applist 版本
-      description:  Please check [Actions](https://github.com/Dr-TSNG/Hide-My-Applist/actions) for the latest CI debug build. Don't just type "latest". Specify actual version, otherwise your issue will be closed./请前往[Actions](https://github.com/Dr-TSNG/Hide-My-Applist/actions)获取最新的 CI 调试版本。不要直接填用“最新版”。给出具体版本号，不然 issue 会被关闭。
+      description:  Please check [Actions](https://github.com/Dr-TSNG/Hide-My-Applist/actions) for the latest CI debug build. Don't just type "latest". Specify actual version, otherwise your issue will be closed./请前往 [Actions](https://github.com/Dr-TSNG/Hide-My-Applist/actions) 获取最新的 CI 调试版本。不要直接填用“最新版”。给出具体版本号，不然 issue 会被关闭。
       placeholder: V_._._(-Beta).r___._______-debug
     validations:
       required: true
@@ -68,7 +68,7 @@ body:
     attributes:
       label: Version requirement/版本要求
       options:
-        - label: I am using the latest [CI debug build](https://github.com/Dr-TSNG/Hide-My-Applist/actions) of Hide-My-Applist with detail log for debugging enabled/我正在使用最新 [CI 调试版本] (https://github.com/Dr-TSNG/Hide-My-Applist/actions)且启用详细日志
+        - label: I am using the latest [CI debug build](https://github.com/Dr-TSNG/Hide-My-Applist/actions) of Hide-My-Applist with detail log for debugging enabled/我正在使用最新 [CI 调试版本](https://github.com/Dr-TSNG/Hide-My-Applist/actions) 且启用详细日志
           required: true
   - type: textarea
     attributes:
