@@ -1,5 +1,6 @@
 package icu.nullptr.hidemyapplist.service
 
+import android.os.Build
 import android.util.Log
 import com.tsng.hidemyapplist.R
 import icu.nullptr.hidemyapplist.common.BuildConfig
@@ -52,7 +53,9 @@ object ConfigManager {
         }
 
     var forceMountData: Boolean
-        get() = config.forceMountData
+        get() =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) config.forceMountData
+            else false
         set(value) {
             config.forceMountData = value
             saveConfig()
