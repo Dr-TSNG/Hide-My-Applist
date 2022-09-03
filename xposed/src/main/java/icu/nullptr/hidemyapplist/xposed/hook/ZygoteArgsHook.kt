@@ -5,6 +5,7 @@ import android.os.Build
 import com.github.kyuubiran.ezxhelper.utils.findMethod
 import com.github.kyuubiran.ezxhelper.utils.hookBefore
 import de.robv.android.xposed.XC_MethodHook
+import icu.nullptr.hidemyapplist.common.Constants
 import icu.nullptr.hidemyapplist.xposed.HMAService
 import icu.nullptr.hidemyapplist.xposed.logE
 import icu.nullptr.hidemyapplist.xposed.logI
@@ -26,6 +27,7 @@ class ZygoteArgsHook(private val service: HMAService) : IFrameworkHook {
         }.hookBefore { param ->
             runCatching {
                 val uid = param.args[2] as Int
+                if (uid == Constants.UID_SYSTEM) return@hookBefore
                 val apps = service.pms.getPackagesForUid(uid) ?: return@hookBefore
                 for (app in apps) {
                     if (service.isHookEnabled(app)) {
