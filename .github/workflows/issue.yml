@@ -9,12 +9,12 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-    - name: Close spam & invalid issues
-      uses: actions/github-script@v5.0.0
+    - name: Close spam and invalid issues
+      uses: actions/github-script@v6.2.0
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          let response = await octokit.rest.issues.listForRepo({
+          let response = await github.rest.issues.listForRepo({
             owner: context.repo.owner,
             repo: context.repo.repo,
             state: 'open'
@@ -35,13 +35,13 @@ jobs:
             }
             if(close){
                 var id = issue['number'];
-                octokit.rest.issues.createComment({
+                github.rest.issues.createComment({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     issue_number: id,
                     body: 'This issue has been marked as **spam** or **invalid**. For feedback please read **Wiki: How to ask a question**, then open a new issue.'
                 });
-                octokit.rest.issues.update({
+                github.rest.issues.update({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: id,
@@ -50,7 +50,7 @@ jobs:
             }
             if(lock){
                 var lid = issue['number'];
-                octokit.rest.issues.lock({
+                github.rest.issues.lock({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: id,
