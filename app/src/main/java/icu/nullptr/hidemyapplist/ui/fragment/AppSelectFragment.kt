@@ -84,7 +84,9 @@ abstract class AppSelectFragment : Fragment(R.layout.fragment_app_select) {
             onMenuOptionSelected = this::onMenuOptionSelected
         )
 
-        binding.adBanner.loadAd(AdRequest.Builder().build())
+        runCatching {
+            binding.adBanner.loadAd(AdRequest.Builder().build())
+        }
         with(binding.toolbar.menu) {
             findItem(R.id.menu_show_system).isChecked = PrefManager.appFilter_showSystem
             when (PrefManager.appFilter_sortMethod) {

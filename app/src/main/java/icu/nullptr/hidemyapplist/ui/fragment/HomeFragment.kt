@@ -95,7 +95,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         )
 
-        binding.adBanner.loadAd(AdRequest.Builder().build())
+        runCatching {
+            binding.adBanner.loadAd(AdRequest.Builder().build())
+        }
         binding.templateManage.setOnClickListener {
             val extras = FragmentNavigatorExtras(binding.manageCard to "transition_manage")
             navController.navigate(R.id.nav_template_manage, null, null, extras)
