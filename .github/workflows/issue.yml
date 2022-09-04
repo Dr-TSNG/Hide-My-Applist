@@ -50,11 +50,11 @@ jobs:
             }
             if(lock){
                 var lid = issue['number'];
-                github.issues.update({
+                github.issues.lock({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: id,
-                  state: 'locked'
+                  lock_reason: "spam"
                 });
             }                
           });
