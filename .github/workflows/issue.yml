@@ -20,7 +20,6 @@ jobs:
             state: 'open'
           });
           let data = response['data'];
-          console.log(data);
           data.forEach(function(issue){
             var title = issue['title'];
             var labels = issue['labels'];
@@ -109,7 +108,7 @@ jobs:
             status: 'completed'
           });
           
-          let data = response.workflow_runs['data'];
+          let data = response['workflow_runs']['data'];
           data.forEach(function(workflow_runs){
             var del = false;
                 if(workflow_runs['status'] == 'completed'){
