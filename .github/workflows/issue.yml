@@ -1,6 +1,8 @@
-name: Close issue
+name: Issue check
 
 on:
+  schedule:
+    - cron: '20 11 * *'
   issues:
     types: [labeled]
 
@@ -10,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check if issue title exists
+      if: github.event_name == 'issues'
       uses: actions/github-script@v6.2.0
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -42,6 +45,7 @@ jobs:
             }            
           });
     - name: Close spam and invalid issues
+      if: github.event_name == 'issues'
       uses: actions/github-script@v6.2.0
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -96,30 +100,14 @@ jobs:
                 });
             }                
           });
-    - name: Del runs
-      uses: actions/github-script@v6.2.0
+    - name: Close stale
+      if: github.event_name !== 'issues'
+      uses: actions/stale@v5.1.1
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          let response = await github.rest.actions.listWorkflowRuns({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            workflow_id: 'issue.yml',
-            status: 'completed'
-          });
-          
-          let data = response['workflow_runs']['data'];
-          data.forEach(function(workflow_runs){
-            var del = false;
-                if(workflow_runs['status'] == 'completed'){
-                    del = true;
-                }
-            if(del){
-            var id = workflow_runs['id'];
-            github.rest.actions.deleteWorkflowRun({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                run_id: id
-            });
-            }
-          });
+        days-before-stale: 1
+        stale-issue-label: stale
+        stale-issue-message: It has not been updated for more than a day. If there is no update after 48h, this Issue will be closed.
+        only-labels: bug
+        days-before-close: 3
+        close-issue-message: It has not been updated for three days, so it was automatically closed. Open a new Issue if necessary.
+        
