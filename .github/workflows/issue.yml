@@ -11,7 +11,7 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-    - name: Check if issue title exists
+    - name: Check title
       if: github.event_name == 'issues'
       uses: actions/github-script@v6.2.0
       with:
@@ -44,7 +44,7 @@ jobs:
                 });
             }            
           });
-    - name: Close spam and invalid issues
+    - name: Close spam and invalid
       if: github.event_name == 'issues'
       uses: actions/github-script@v6.2.0
       with:
