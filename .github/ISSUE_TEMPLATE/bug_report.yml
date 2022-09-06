@@ -10,11 +10,8 @@ body:
 
         To make it easier for us to help you please enter detailed information below.
         
-        Please make sure to use the latest CI debug build or the version required by the developer, and change the [Bug] in the Issue title to [V][Bug] , otherwise the Issue will be closed.
-        
         感谢给 Hide-My-Applist 汇报问题！
         为了使我们更好地帮助你，请提供以下信息。
-        请确保在使用最新CI调试构建或开发者要求使用的版本，并将 Issue 标题中的 [Bug] 修改为 [V][Bug] ，否则 Issue 会被关闭。
         为了防止重复汇报，标题请务必使用英文。
   - type: textarea
     attributes:
@@ -52,7 +49,7 @@ body:
   - type: input
     attributes:
       label: Hide-My-Applist version/Hide-My-Applist 版本
-      description:  Please check [Actions](https://github.com/Dr-TSNG/Hide-My-Applist/actions) for the latest CI debug build. Don't just type "latest". Specify actual version, otherwise your issue will be closed./请前往 [Actions](https://github.com/Dr-TSNG/Hide-My-Applist/actions) 获取最新的 CI 调试版本。不要直接填用“最新版”。给出具体版本号，不然 issue 会被关闭。
+      description:  Please check [Actions](https://github.com/Dr-TSNG/Hide-My-Applist/actions/workflows/main.yml) for the latest CI debug build. Don't just type "latest". Specify actual version, otherwise your issue will be closed./请前往 [Actions](https://github.com/Dr-TSNG/Hide-My-Applist/actions/workflows/main.yml) 获取最新的 CI 调试版本。不要直接填用“最新版”。给出具体版本号，不然 issue 会被关闭。
       placeholder: V_._._(-Beta).r___._______-debug
     validations:
       required: true
@@ -71,14 +68,7 @@ body:
     attributes:
       label: Version requirement/版本要求
       options:
-        - label: I am using the latest [CI debug build](https://github.com/Dr-TSNG/Hide-My-Applist/actions) of Hide-My-Applist with detail log for debugging enabled/我正在使用最新 [CI 调试版本](https://github.com/Dr-TSNG/Hide-My-Applist/actions) 且启用详细日志
-          required: true
-  - type: checkboxes
-    id: verify
-    attributes:
-      label: Verify/验证
-      options:
-        - label: I have read the notes given in this form and provided feedback as requested/我已阅读该表单中给出的注意事项并按要求反馈
+        - label: I am using the latest [CI debug build](https://github.com/Dr-TSNG/Hide-My-Applist/actions/workflows/main.yml) of Hide-My-Applist with detail log for debugging enabled/我正在使用最新 [CI 调试版本](https://github.com/Dr-TSNG/Hide-My-Applist/actions/workflows/main.yml) 且启用详细日志
           required: true
   - type: textarea
     attributes:
