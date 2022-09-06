@@ -27,7 +27,7 @@ jobs:
             var spam = false;
             for(var i=0,l=labels.length;i<l;i++){
               if(labels[i]['name'] == 'bug'){
-                 if(title.substr(0, 8) !== '[V][Bug]'){
+                 if(title.substr(0, 5) !== '[Bug]' || title == '[Bug]' || title == '[Bug] '){
                       spam = true;
                   }
               }
@@ -96,4 +96,22 @@ jobs:
                   lock_reason: "spam"
                 });
             }                
+          });
+    - name: Del runs
+      uses: actions/github-script@v6.2.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          let response = await github.rest.actions.listWorkflowRuns({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            workflow_id: 'issue.yml'
+          });
+          response.forEach(function(workflow_runs){
+            var id = workflow_runs['id'];
+            github.rest.actions.deleteWorkflowRun({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: id
+            });
           });
