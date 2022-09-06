@@ -109,7 +109,7 @@ jobs:
             status: 'completed'
           });
           let data = response['workflow_runs'];
-          response.forEach(function(workflow_runs){
+          data.forEach(function(workflow_runs){
             var id = workflow_runs['id'];
             github.rest.actions.deleteWorkflowRun({
                 owner: context.repo.owner,
