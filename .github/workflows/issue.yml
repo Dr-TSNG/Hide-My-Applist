@@ -105,8 +105,10 @@ jobs:
           let response = await github.rest.actions.listWorkflowRuns({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            workflow_id: 'issue.yml'
+            workflow_id: 'issue.yml',
+            status: 'completed'
           });
+          let data = response['workflow_runs'];
           response.forEach(function(workflow_runs){
             var id = workflow_runs['id'];
             github.rest.actions.deleteWorkflowRun({
