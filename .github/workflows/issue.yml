@@ -110,7 +110,7 @@ jobs:
       if: github.event_name != 'issues'
       uses: actions/stale@v5.1.1
       with:
-        days-before-stale: 1
+        days-before-stale: 0.01
         stale-issue-label: stale
         stale-issue-message: It has not been updated for more than a day. If there is no update after 48h, this Issue will be closed.
         only-labels: bug
