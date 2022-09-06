@@ -2,7 +2,7 @@ name: Issue check
 
 on:
   schedule:
-  - cron: "21 11 * * *"
+  - cron: "26 11 * * *"
   issues:
     types: [labeled]
 
@@ -61,12 +61,16 @@ jobs:
             var labels = issue['labels'];
             var close = false;
             var lock = false;
+            var rmbug = false;
             for(var i=0,l=labels.length;i<l;i++){
                 if(labels[i]['name'] == 'invalid' || labels[i]['name'] == 'spam'){
                     close = true;
                 }
                 if(labels[i]['name'] == 'spam'){
                     lock = true;
+                }
+                if(labels[i]['name'] == 'bug'){
+                    rmbug = true;
                 }
             }
             if(close){
@@ -77,12 +81,14 @@ jobs:
                     issue_number: id,
                     body: 'This issue has been marked as **spam** or **invalid**. For feedback please **follow the rules in the report form**, then open a new issue.'
                 });
-                github.rest.issues.removeLabel({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    issue_number: id,
-                    name: 'bug'
-                });
+                if(rmbug){
+                  github.rest.issues.removeLabel({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      issue_number: id,
+                      name: 'bug'
+                  });
+                }
                 github.rest.issues.update({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
