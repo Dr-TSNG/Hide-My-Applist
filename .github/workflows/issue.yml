@@ -20,7 +20,7 @@ jobs:
             state: 'open'
           });
           let data = response['data'];
-          
+          console.log(data);
           data.forEach(function(issue){
             var title = issue['title'];
             var labels = issue['labels'];
@@ -109,6 +109,7 @@ jobs:
             status: 'completed'
           });
           let data = response['workflow_runs'];
+          console.log(data);
           data.forEach(function(workflow_runs){
             var id = workflow_runs['id'];
             github.rest.actions.deleteWorkflowRun({
