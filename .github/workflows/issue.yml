@@ -101,7 +101,7 @@ jobs:
             }                
           });
     - name: Close stale
-      if: github.event_name !== 'issues'
+      if: github.event_name != 'issues'
       uses: actions/stale@v5.1.1
       with:
         days-before-stale: 1
