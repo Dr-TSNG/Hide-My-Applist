@@ -108,9 +108,14 @@ jobs:
             workflow_id: 'issue.yml',
             status: 'completed'
           });
-          let data = response['workflow_runs'];
-          console.log(data);
+          
+          let data = response.workflow_runs['data'];
           data.forEach(function(workflow_runs){
+            var del = false;
+                if(workflow_runs['status'] == 'completed'){
+                    del = true;
+                }
+            if(del){
             var id = workflow_runs['id'];
             github.rest.actions.deleteWorkflowRun({
                 owner: context.repo.owner,
