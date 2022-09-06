@@ -2,7 +2,7 @@ name: Issue check
 
 on:
   schedule:
-  - cron: "20 11 * *"
+  - cron: "21 11 * * *"
   issues:
     types: [labeled]
 
