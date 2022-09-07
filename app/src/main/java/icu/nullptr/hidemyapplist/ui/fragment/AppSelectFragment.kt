@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.addCallback
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -88,6 +89,17 @@ abstract class AppSelectFragment : Fragment(R.layout.fragment_app_select) {
             binding.adBanner.loadAd(AdRequest.Builder().build())
         }
         with(binding.toolbar.menu) {
+            val searchView = findItem(R.id.menu_search).actionView as SearchView
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String) = false
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    search = newText
+                    applyFilter()
+                    return true
+                }
+            })
+
             findItem(R.id.menu_show_system).isChecked = PrefManager.appFilter_showSystem
             when (PrefManager.appFilter_sortMethod) {
                 PrefManager.SortMethod.BY_LABEL -> findItem(R.id.menu_sort_by_label).isChecked = true

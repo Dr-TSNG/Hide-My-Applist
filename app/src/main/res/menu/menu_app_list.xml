@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/menu_search"
+        android:title="@string/search"
+        android:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:showAsAction="ifRoom" />
+    <item
         android:id="@+id/menu_show_system"
         android:checkable="true"
         android:showAsAction="never"
