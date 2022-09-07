@@ -25,6 +25,7 @@
     <string name="filter">フィルター</string>
     <string name="yes">はい</string>
     <string name="no">いいえ</string>
+    <string name="search">Search</string>
     <!-- Home -->
     <string name="home_xposed_activated">モジュールは有効です [%s-%d]</string>
     <string name="home_xposed_not_activated">モジュールは無効です</string>
