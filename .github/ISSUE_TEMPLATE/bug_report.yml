@@ -74,6 +74,8 @@ body:
         - Version required by the developer/开发者要求的版本
         - Public release/beta version/公开发布/测试版
         - Other/其他
+    validations:
+      required: true
   - type: textarea
     attributes:
       label: Logs/日志
