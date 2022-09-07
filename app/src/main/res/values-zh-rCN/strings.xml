@@ -25,6 +25,7 @@
     <string name="filter">筛选</string>
     <string name="yes">是</string>
     <string name="no">否</string>
+    <string name="search">搜索</string>
     <!-- Home -->
     <string name="home_xposed_activated">模块已激活 [%s-%d]</string>
     <string name="home_xposed_not_activated">模块未激活</string>
