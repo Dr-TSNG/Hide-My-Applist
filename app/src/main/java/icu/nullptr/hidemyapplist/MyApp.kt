@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import com.tsng.hidemyapplist.R
 import icu.nullptr.hidemyapplist.service.PrefManager
+import icu.nullptr.hidemyapplist.ui.receiver.AppChangeReceiver
 import icu.nullptr.hidemyapplist.ui.util.makeToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +36,7 @@ class MyApp : Application() {
             exitProcess(0)
         }
         hmaApp = this
+        AppChangeReceiver.register(this)
 
         DayNightDelegate.setApplicationContext(this)
         DayNightDelegate.setDefaultNightMode(PrefManager.darkTheme)
