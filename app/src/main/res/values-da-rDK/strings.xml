@@ -25,6 +25,7 @@
     <string name="filter">Filter</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="search">Search</string>
     <!-- Home -->
     <string name="home_xposed_activated">Module Activated [%s-%d]</string>
     <string name="home_xposed_not_activated">Module Not Activated</string>
