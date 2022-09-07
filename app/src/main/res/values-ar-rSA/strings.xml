@@ -25,6 +25,7 @@
     <string name="filter">تصفية</string>
     <string name="yes">نعـم</string>
     <string name="no">لا</string>
+    <string name="search">Search</string>
     <!-- Home -->
     <string name="home_xposed_activated">الوحـدة مفعـلة [%s-%d]</string>
     <string name="home_xposed_not_activated">الوحـدة غير مفعـلة</string>
