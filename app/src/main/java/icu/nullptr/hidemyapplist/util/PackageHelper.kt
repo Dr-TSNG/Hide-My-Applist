@@ -5,6 +5,7 @@ import android.content.pm.IPackageManager
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import icu.nullptr.hidemyapplist.common.Constants
 import icu.nullptr.hidemyapplist.hmaApp
 import icu.nullptr.hidemyapplist.service.PrefManager
 import kotlinx.coroutines.Dispatchers
@@ -71,6 +72,7 @@ object PackageHelper {
                 val packages = pm.getInstalledPackages(0)
                 mutableMapOf<String, PackageCache>().also {
                     for (packageInfo in packages) {
+                        if (packageInfo.packageName in Constants.packagesShouldNotHide) continue
                         val label = pm.getApplicationLabel(packageInfo.applicationInfo).toString()
                         val icon = hmaApp.appIconLoader.loadIcon(packageInfo.applicationInfo)
                         it[packageInfo.packageName] = PackageCache(packageInfo, label, icon)

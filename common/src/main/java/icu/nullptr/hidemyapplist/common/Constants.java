@@ -9,10 +9,6 @@ public class Constants {
     public static final String UPDATE_URL_BASE = "https://cdn.jsdelivr.net/gh/Dr-TSNG/Hide-My-Applist@updates/";
     public static final String TRANSLATE_URL = "https://crowdin.com/project/hide-my-applist";
     public static final String CLASS_PMS = "com.android.server.pm.PackageManagerService";
-    public static final String[] CLASS_EXT_PMS = {
-            "com.android.server.pm.OplusPackageManagerService",
-            "com.android.server.pm.OppoPackageManagerService"
-    };
 
     public static final String DESCRIPTOR = "android.content.pm.IPackageManager";
     public static final int TRANSACTION = 'H' << 24 | 'M' << 16 | 'A' << 8 | 'D';

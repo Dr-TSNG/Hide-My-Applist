@@ -129,7 +129,8 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
     fun isHookEnabled(packageName: String) = config.scope.containsKey(packageName)
 
     fun shouldHide(caller: String?, query: String?): Boolean {
-        if (caller == null || query == null || query in Constants.packagesShouldNotHide) return false
+        if (caller == null || query == null) return false
+        if (caller in Constants.packagesShouldNotHide || query in Constants.packagesShouldNotHide) return false
         if (caller == Constants.GMS_PACKAGE_NAME && query == Constants.APP_PACKAGE_NAME) return false // If apply hide on gms, hma app will crash 😓
         if (caller in query) return false
         val appConfig = config.scope[caller] ?: return false
