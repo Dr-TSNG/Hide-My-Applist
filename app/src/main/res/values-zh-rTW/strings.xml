@@ -25,6 +25,7 @@
     <string name="filter">篩選</string>
     <string name="yes">是</string>
     <string name="no">否</string>
+    <string name="search">搜索</string>
     <!-- Home -->
     <string name="home_xposed_activated">模組已啟用 [%s-%d]</string>
     <string name="home_xposed_not_activated">模組未啟用</string>
