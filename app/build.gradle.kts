@@ -130,8 +130,8 @@ dependencies {
     runtimeOnly(projects.xposed)
 
     val rxhttpVersion = "2.9.3"
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.2")
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("com.drakeet.about:about:2.5.1")
@@ -141,8 +141,8 @@ dependencies {
     implementation("com.github.liujingxing.rxhttp:converter-serialization:$rxhttpVersion")
     implementation("com.github.topjohnwu.libsu:core:5.0.2")
     implementation("com.google.android.material:material:1.6.1")
-    implementation("com.google.android.gms:play-services-ads:21.1.0")
-    implementation("com.google.firebase:firebase-analytics-ktx:21.1.0")
+    implementation("com.google.android.gms:play-services-ads:21.2.0")
+    implementation("com.google.firebase:firebase-analytics-ktx:21.1.1")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("dev.rikka.hidden:compat:3.2.0")
     implementation("dev.rikka.rikkax.material:material:2.5.1")
