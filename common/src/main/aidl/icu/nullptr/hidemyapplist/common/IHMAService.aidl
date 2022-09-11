@@ -1,5 +1,7 @@
 package icu.nullptr.hidemyapplist.common;
 
+import icu.nullptr.hidemyapplist.common.LDMP;
+
 interface IHMAService {
 
     void stopService(boolean cleanEnv) = 0;
@@ -13,4 +15,6 @@ interface IHMAService {
     String getLogs() = 4;
 
     void clearLogs() = 5;
+
+    Map<String, LDMP> getLDMP(int uid) = 6;
 }

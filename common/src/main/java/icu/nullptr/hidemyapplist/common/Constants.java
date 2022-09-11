@@ -16,6 +16,7 @@ public class Constants {
     public static final int ACTION_GET_BINDER = 1;
 
     public static final int UID_SYSTEM = 1000;
+    public static final int PER_USER_RANGE = 100000;
 
     public static final Set<String> packagesShouldNotHide = Set.of(
             "android",

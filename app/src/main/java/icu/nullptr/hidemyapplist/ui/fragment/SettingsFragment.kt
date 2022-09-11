@@ -51,6 +51,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 "blackDarkTheme" -> PrefManager.blackDarkTheme
                 "detailLog" -> ConfigManager.detailLog
                 "hideIcon" -> PrefManager.hideIcon
+                "legacyDataMirror" -> ConfigManager.legacyDataMirror
                 "forceMountData" -> ConfigManager.forceMountData
                 "disableUpdate" -> PrefManager.disableUpdate
                 "receiveBetaUpdate" -> PrefManager.receiveBetaUpdate
@@ -73,6 +74,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 "followSystemAccent" -> PrefManager.followSystemAccent = value
                 "blackDarkTheme" -> PrefManager.blackDarkTheme = value
                 "detailLog" -> ConfigManager.detailLog = value
+                "legacyDataMirror" -> ConfigManager.legacyDataMirror = value
                 "forceMountData" -> ConfigManager.forceMountData = value
                 "hideIcon" -> PrefManager.hideIcon = value
                 "disableUpdate" -> PrefManager.disableUpdate = value

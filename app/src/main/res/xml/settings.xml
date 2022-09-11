@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/settings_language">
         <rikka.preference.SimpleMenuPreference
             android:defaultValue="SYSTEM"
             android:icon="@drawable/outline_language_24"
             android:key="language"
             android:summary="%s"
-            app:title="@string/settings_language" />
+            android:title="@string/settings_language" />
         <Preference
             android:icon="@drawable/outline_translate_24"
             android:key="translation"
@@ -66,6 +65,11 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_experimental">
+        <rikka.material.preference.MaterialSwitchPreference
+            android:icon="@drawable/outline_storage_24"
+            android:key="legacyDataMirror"
+            android:summary="@string/settings_legacy_data_mirror_summary"
+            android:title="@string/settings_legacy_data_mirror" />
         <rikka.material.preference.MaterialSwitchPreference
             android:icon="@drawable/outline_storage_24"
             android:key="forceMountData"

@@ -109,6 +109,8 @@
     <string name="settings_pure_black_dark_theme_summary">Use the pure black theme if dark theme is enabled</string>
 
     <string name="settings_experimental">Experimental</string>
+    <string name="settings_legacy_data_mirror">Legacy data mirror support (Requires Magisk module)</string>
+    <string name="settings_legacy_data_mirror_summary">This option is only available on Android 10 and below</string>
     <string name="settings_force_mount_data">Force bind mount data storage for apps whose target API lower than 30</string>
     <string name="settings_force_mount_data_summary">This option is only available on Android 11 and above</string>
 

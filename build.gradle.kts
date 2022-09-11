@@ -36,7 +36,7 @@ val minSdkVer by extra(24)
 val targetSdkVer by extra(33)
 
 val appVerName by extra("3.0.5-Beta")
-val serviceVerCode by extra(88)
+val serviceVerCode by extra(89)
 val minBackupVerCode by extra(65)
 
 val androidSourceCompatibility = JavaVersion.VERSION_11

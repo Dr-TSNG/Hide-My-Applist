@@ -4,10 +4,7 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.IPackageManager
 import android.os.Build
 import android.util.Log
-import icu.nullptr.hidemyapplist.common.BuildConfig
-import icu.nullptr.hidemyapplist.common.Constants
-import icu.nullptr.hidemyapplist.common.IHMAService
-import icu.nullptr.hidemyapplist.common.JsonConfig
+import icu.nullptr.hidemyapplist.common.*
 import icu.nullptr.hidemyapplist.xposed.hook.*
 import java.io.File
 
@@ -17,6 +14,12 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         private const val TAG = "HMA-Service"
         var instance: HMAService? = null
     }
+
+    class ServiceDelegate(
+        var getLDMPProxy: ((Int) -> Map<String, LDMP>?)? = null
+    )
+
+    val serviceDelegate = ServiceDelegate()
 
     @Volatile
     var logcatAvailable = false
@@ -118,8 +121,11 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         } else {
             frameworkHooks.add(PmsHookLegacy(this))
         }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             frameworkHooks.add(ZygoteArgsHook(this))
+        } else {
+            frameworkHooks.add(LegacyDataMirror(this))
         }
 
         frameworkHooks.forEach(IFrameworkHook::load)
@@ -199,4 +205,6 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
             logFile.createNewFile()
         }
     }
+
+    override fun getLDMP(uid: Int) = serviceDelegate.getLDMPProxy?.invoke(uid)
 }

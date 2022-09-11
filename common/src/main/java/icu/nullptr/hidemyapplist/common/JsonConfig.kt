@@ -15,6 +15,7 @@ data class JsonConfig(
     var configVersion: Int = BuildConfig.SERVICE_VERSION,
     var detailLog: Boolean = false,
     var maxLogSize: Int = 512,
+    var legacyDataMirror: Boolean = false,
     var forceMountData: Boolean = true,
     val templates: MutableMap<String, Template> = mutableMapOf(),
     val scope: MutableMap<String, AppConfig> = mutableMapOf()
