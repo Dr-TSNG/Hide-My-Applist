@@ -12,7 +12,7 @@
     <string name="title_app_settings">App settings</string>
     <string name="title_about">About</string>
 
-    <string name="do_not_dual">Do not install HMA to a user other than the primary user</string>
+    <string name="do_not_dual">Do not install HMA to secondary user</string>
     <string name="show_crash_log">Show crash log</string>
     <string name="config_damaged">Config file damaged. Please clean the app data</string>
     <string name="edit_list">Edit list</string>
