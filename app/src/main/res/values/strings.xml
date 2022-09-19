@@ -12,7 +12,7 @@
     <string name="title_app_settings">App settings</string>
     <string name="title_about">About</string>
 
-    <string name="do_not_dual">Do not dual this app</string>
+    <string name="do_not_dual">Do not install HMA to secondary user</string>
     <string name="show_crash_log">Show crash log</string>
     <string name="config_damaged">Config file damaged. Please clean the app data</string>
     <string name="edit_list">Edit list</string>
@@ -54,7 +54,7 @@
     <string name="home_update">Update: %s</string>
 
     <!-- App select -->
-    <string name="list_show_system">Show system</string>
+    <string name="list_show_system">Show system apps</string>
     <string name="list_sorting">Sorting</string>
     <string name="list_reverse_order">Reverse order</string>
     <string name="list_sort_by_label">By app name</string>
