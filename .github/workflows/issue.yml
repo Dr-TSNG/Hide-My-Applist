@@ -31,7 +31,7 @@ jobs:
             var invalid = false;
             for(var i=0,l=labels.length;i<l;i++){
               if(labels[i]['name'] == 'bug'){
-                 if(title.substr(0, 5) !== '[Bug]' || title.trim() == '[Bug]'){
+                 if(title.substr(0, 5) !== '[Bug]' || title.trim() == '[Bug]' || title.includes("hide root")){
                       spam = true;
                   }
                  if(body.search("### Version requirement/版本要求\n\nPublic release/beta version/公开发布/测试版\n\n") != -1 || body.search("### Version requirement/版本要求\n\nOther/其他\n\n") != -1){
