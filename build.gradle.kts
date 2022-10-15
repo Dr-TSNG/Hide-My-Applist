@@ -9,10 +9,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath(kotlin("gradle-plugin", version = "1.7.10"))
+        classpath(kotlin("gradle-plugin", version = "1.7.20"))
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.2")
-        classpath("com.android.tools.build:gradle:7.2.2")
-        classpath("com.google.gms:google-services:4.3.13")
+        classpath("com.android.tools.build:gradle:7.3.1")
+        classpath("com.google.gms:google-services:4.3.14")
     }
 }
 
@@ -34,6 +34,7 @@ fun String.execute(currentWorkingDir: File = file("./")): String {
 
 val minSdkVer by extra(24)
 val targetSdkVer by extra(33)
+val buildToolsVer by extra("32.0.0")
 
 val appVerName by extra("3.0.5-Beta")
 val serviceVerCode by extra(89)
@@ -56,6 +57,7 @@ tasks.register("clean", Delete::class) {
 fun Project.configureBaseExtension() {
     extensions.findByType<BaseExtension>()?.run {
         compileSdkVersion(targetSdkVer)
+        buildToolsVersion = buildToolsVer
 
         defaultConfig {
             minSdk = minSdkVer

@@ -76,7 +76,7 @@ fun afterEval() = android.applicationVariants.forEach { variant ->
 
     val outSrcDir = file("$buildDir/generated/source/signInfo/${variantLowered}")
     val outSrc = file("$outSrcDir/com/tsng/hidemyapplist/Magic.java")
-    val signInfoTask = task("generate${variantCapped}SignInfo") {
+    val signInfoTask = tasks.register("generate${variantCapped}SignInfo") {
         dependsOn("validateSigning${variantCapped}")
         outputs.file(outSrc)
         doLast {
@@ -100,7 +100,7 @@ fun afterEval() = android.applicationVariants.forEach { variant ->
             }
         }
     }
-    variant.registerJavaGeneratingTask(signInfoTask, arrayListOf(outSrcDir))
+    variant.registerJavaGeneratingTask(signInfoTask, outSrcDir)
 
     val kotlinCompileTask = tasks.findByName("compile${variantCapped}Kotlin") as KotlinCompile
     kotlinCompileTask.dependsOn(signInfoTask)
@@ -134,21 +134,21 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.5.2")
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-    implementation("com.drakeet.about:about:2.5.1")
+    implementation("com.drakeet.about:about:2.5.2")
     implementation("com.drakeet.multitype:multitype:4.3.0")
     implementation("com.github.kirich1409:viewbindingpropertydelegate:1.5.6")
     implementation("com.github.liujingxing.rxhttp:rxhttp:$rxhttpVersion")
     implementation("com.github.liujingxing.rxhttp:converter-serialization:$rxhttpVersion")
     implementation("com.github.topjohnwu.libsu:core:5.0.2")
     implementation("com.google.android.material:material:1.6.1")
-    implementation("com.google.android.gms:play-services-ads:21.2.0")
-    implementation("com.google.firebase:firebase-analytics-ktx:21.1.1")
+    implementation("com.google.android.gms:play-services-ads:21.3.0")
+    implementation("com.google.firebase:firebase-analytics-ktx:21.2.0")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
-    implementation("dev.rikka.hidden:compat:3.2.0")
+    implementation("dev.rikka.hidden:compat:3.4.2")
     implementation("dev.rikka.rikkax.material:material:2.5.1")
     implementation("dev.rikka.rikkax.material:material-preference:2.0.0")
-    implementation("me.zhanghai.android.appiconloader:appiconloader:1.4.0")
-    compileOnly("dev.rikka.hidden:stub:3.2.0")
+    implementation("me.zhanghai.android.appiconloader:appiconloader:1.5.0")
+    compileOnly("dev.rikka.hidden:stub:3.4.2")
     ksp("com.github.liujingxing.rxhttp:rxhttp-compiler:$rxhttpVersion")
 }
 

@@ -19,8 +19,8 @@ android {
 dependencies {
     implementation(projects.common)
 
-    implementation("com.github.kyuubiran:EzXHelper:1.0.1")
-    implementation("dev.rikka.hidden:compat:3.2.0")
+    implementation("com.github.kyuubiran:EzXHelper:1.0.3")
+    implementation("dev.rikka.hidden:compat:3.4.2")
     compileOnly("de.robv.android.xposed:api:82")
-    compileOnly("dev.rikka.hidden:stub:3.2.0")
+    compileOnly("dev.rikka.hidden:stub:3.4.2")
 }
