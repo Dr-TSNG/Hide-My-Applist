@@ -7,7 +7,7 @@ public class Constants {
     public static final String APP_PACKAGE_NAME = "com.tsng.hidemyapplist";
     public static final String GMS_PACKAGE_NAME = "com.google.android.gms";
     public static final String GSF_PACKAGE_NAME = "com.google.android.gsf";
-    public static final String UPDATE_URL_BASE = "https://cdn.jsdelivr.net/gh/Dr-TSNG/Hide-My-Applist@updates/";
+    public static final String UPDATE_URL_BASE = "https://api.nullptr.icu/android/hide-my-applist/static/";
     public static final String TRANSLATE_URL = "https://crowdin.com/project/hide-my-applist";
     public static final String CLASS_PMS = "com.android.server.pm.PackageManagerService";
 
