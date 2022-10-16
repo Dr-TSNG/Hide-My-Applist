@@ -26,6 +26,14 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    applicationVariants.all {
+        kotlin {
+            sourceSets.getByName(name) {
+                kotlin.srcDir("build/generated/ksp/$name/kotlin")
+            }
+        }
+    }
 }
 
 autoResConfig {
@@ -119,17 +127,11 @@ afterEvaluate {
     afterEval()
 }
 
-kotlin {
-    sourceSets.debug {
-        kotlin.srcDir("build/generated/ksp/debug/kotlin")
-    }
-}
-
 dependencies {
     implementation(projects.common)
     runtimeOnly(projects.xposed)
 
-    val rxhttpVersion = "2.9.3"
+    val rxhttpVersion = "2.9.5"
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.2")
     implementation("androidx.preference:preference-ktx:1.2.0")

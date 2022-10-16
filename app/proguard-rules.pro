@@ -11,3 +11,6 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
+
+-keep class icu.nullptr.hidemyapplist.data.UpdateData { *; }
+-keep class icu.nullptr.hidemyapplist.data.UpdateData$* { *; }
