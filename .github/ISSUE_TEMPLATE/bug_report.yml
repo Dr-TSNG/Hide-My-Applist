@@ -8,11 +8,13 @@ body:
       value: |
         Thanks for reporting issues of Hide-My-Applist!
 
+        To prevent spam, please fill in the title after "[Bug]".
+
         To make it easier for us to help you please enter detailed information below.
         
         感谢给 Hide-My-Applist 汇报问题！
         为了使我们更好地帮助你，请提供以下信息。
-        为了防止重复汇报，标题请务必使用英文。
+        为了防止重复汇报与垃圾信息，标题请务必使用英文，在“[Bug]”之后填写内容。
   - type: textarea
     attributes:
       label: Steps to reproduce/复现步骤
