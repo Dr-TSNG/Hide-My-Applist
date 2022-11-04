@@ -51,7 +51,7 @@ body:
   - type: input
     attributes:
       label: Hide-My-Applist version/Hide-My-Applist 版本
-      description:  Please check [Actions](https://github.com/Dr-TSNG/Hide-My-Applist/actions/workflows/main.yml) for the latest CI debug build. Don't just type "latest". Specify actual version, otherwise your issue will be closed./请前往 [Actions](https://github.com/Dr-TSNG/Hide-My-Applist/actions/workflows/main.yml) 获取最新的 CI debug 版本。不要直接填用“最新版”。给出具体版本号，不然 issue 会被关闭。
+      description:  Please check [Actions](https://github.com/Dr-TSNG/Hide-My-Applist/actions/workflows/main.yml) for the latest CI debug build. Don't just type "latest". Specify actual version (**MUST** contains `.rXXX.XXX-debug`), otherwise your issue will be closed./请前往 [Actions](https://github.com/Dr-TSNG/Hide-My-Applist/actions/workflows/main.yml) 获取最新的 CI debug 版本。不要直接填用“最新版”。版本号**必须**包含 `·rXXX.XXX-debug`，否则 issue 会被自动关闭。
       placeholder: V_._._(-Beta).r___._______-debug
     validations:
       required: true
