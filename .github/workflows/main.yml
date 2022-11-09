@@ -4,8 +4,9 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/workflows/issue.yml'
       - '**.md'
-      - '**.yml'
 
 jobs:
   build:
@@ -93,10 +94,11 @@ jobs:
           name: mappings
           path: "app/build/outputs/mapping/release"
 
-      - name: Post to channel
+      - name: Post to group
         if: ${{ github.event_name != 'pull_request' && success() && github.ref == 'refs/heads/master' }}
         env:
           CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL }}
+          TOPIC_ID: ${{ secrets.TELEGRAM_TOPIC }}
           BOT_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           COMMIT_URL: ${{ github.event.head_commit.url }}
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
@@ -105,4 +107,4 @@ jobs:
           export release=$(find $OUTPUT -name "HMA*-release.apk")
           export debug=$(find $OUTPUT -name "HMA*-debug.apk")
           ESCAPED=`python3 -c 'import json,os,urllib.parse; msg = json.dumps(os.environ["COMMIT_MESSAGE"]); print(urllib.parse.quote(msg if len(msg) <= 1024 else json.dumps(os.environ["COMMIT_URL"])))'`
-          curl -v "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup?chat_id=${CHANNEL_ID}&media=%5B%7B%22type%22:%22document%22,%20%22media%22:%22attach://release%22%7D,%7B%22type%22:%22document%22,%20%22media%22:%22attach://debug%22,%22caption%22:${ESCAPED}%7D%5D"  -F release="@$release" -F debug="@$debug"
+          curl -v "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup?chat_id=${CHANNEL_ID}&message_thread_id=${TOPIC_ID}&media=%5B%7B%22type%22:%22document%22,%20%22media%22:%22attach://release%22%7D,%7B%22type%22:%22document%22,%20%22media%22:%22attach://debug%22,%22caption%22:${ESCAPED}%7D%5D"  -F release="@$release" -F debug="@$debug"
