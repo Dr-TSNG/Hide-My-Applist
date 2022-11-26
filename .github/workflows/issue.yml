@@ -2,7 +2,7 @@ name: Issue check
 
 on:
   schedule:
-  - cron: "0 */12 * * *"
+  - cron: "0 0 */15 * *"
   issues:
     types: [labeled]
 
@@ -124,10 +124,10 @@ jobs:
       if: github.event_name != 'issues'
       uses: actions/stale@v5.1.1
       with:
-        days-before-stale: 1
+        days-before-stale: 14
         stale-issue-label: stale
-        stale-issue-message: It has not been updated for more than a day. If there is no update after 48h, this Issue will be closed.
+        stale-issue-message: It has not been updated for more than 14d. If there is no further update, this Issue will be closed.
         only-labels: bug
-        days-before-close: 3
-        close-issue-message: It has not been updated for three days, so it was automatically closed. Open a new Issue if necessary.
+        days-before-close: 28
+        close-issue-message: It has not been updated for 28 days, so it was automatically closed. Open a new Issue if necessary.
         
