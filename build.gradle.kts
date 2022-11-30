@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath(kotlin("gradle-plugin", version = "1.7.20"))
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.2")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
         classpath("com.android.tools.build:gradle:7.3.1")
         classpath("com.google.gms:google-services:4.3.14")
     }
@@ -34,7 +34,7 @@ fun String.execute(currentWorkingDir: File = file("./")): String {
 
 val minSdkVer by extra(24)
 val targetSdkVer by extra(33)
-val buildToolsVer by extra("32.0.0")
+val buildToolsVer by extra("33.0.1")
 
 val appVerName by extra("3.0.5-Beta")
 val serviceVerCode by extra(89)

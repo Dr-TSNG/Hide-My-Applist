@@ -131,9 +131,9 @@ dependencies {
     implementation(projects.common)
     runtimeOnly(projects.xposed)
 
-    val rxhttpVersion = "2.9.5"
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.2")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.2")
+    val rxhttpVersion = "3.0.0"
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("com.drakeet.about:about:2.5.2")
@@ -141,16 +141,16 @@ dependencies {
     implementation("com.github.kirich1409:viewbindingpropertydelegate:1.5.6")
     implementation("com.github.liujingxing.rxhttp:rxhttp:$rxhttpVersion")
     implementation("com.github.liujingxing.rxhttp:converter-serialization:$rxhttpVersion")
-    implementation("com.github.topjohnwu.libsu:core:5.0.2")
-    implementation("com.google.android.material:material:1.6.1")
+    implementation("com.github.topjohnwu.libsu:core:5.0.3")
+    implementation("com.google.android.material:material:1.7.0")
     implementation("com.google.android.gms:play-services-ads:21.3.0")
     implementation("com.google.firebase:firebase-analytics-ktx:21.2.0")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
-    implementation("dev.rikka.hidden:compat:3.4.2")
+    implementation("dev.rikka.hidden:compat:3.4.3")
     implementation("dev.rikka.rikkax.material:material:2.5.1")
     implementation("dev.rikka.rikkax.material:material-preference:2.0.0")
     implementation("me.zhanghai.android.appiconloader:appiconloader:1.5.0")
-    compileOnly("dev.rikka.hidden:stub:3.4.2")
+    compileOnly("dev.rikka.hidden:stub:3.4.3")
     ksp("com.github.liujingxing.rxhttp:rxhttp-compiler:$rxhttpVersion")
 }
 
