@@ -36,7 +36,6 @@ class MainActivity : MaterialActivity() {
     override fun onApplyUserThemeResource(theme: Resources.Theme, isDecorView: Boolean) {
         if (!ThemeUtils.isSystemAccent) theme.applyStyle(ThemeUtils.colorThemeStyleRes, true)
         theme.applyStyle(ThemeUtils.getNightThemeStyleRes(this), true)
-        theme.applyStyle(rikka.material.preference.R.style.ThemeOverlay_Rikka_Material3_Preference, true)
     }
 
     override fun computeUserThemeKey() = ThemeUtils.colorTheme + ThemeUtils.getNightThemeStyleRes(this)

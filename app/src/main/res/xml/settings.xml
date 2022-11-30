@@ -14,7 +14,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_theme">
-        <rikka.material.preference.MaterialSwitchPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:disableDependentsState="true"
             android:icon="@drawable/outline_palette_24"
@@ -37,7 +37,7 @@
             android:key="darkTheme"
             android:summary="%s"
             android:title="@string/dark_theme" />
-        <rikka.material.preference.MaterialSwitchPreference
+        <SwitchPreference
             android:icon="@drawable/outline_invert_colors_24"
             android:key="blackDarkTheme"
             android:summary="@string/settings_pure_black_dark_theme_summary"
@@ -45,7 +45,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_module">
-        <rikka.material.preference.MaterialSwitchPreference
+        <SwitchPreference
             android:icon="@drawable/outline_bug_report_24"
             android:key="detailLog"
             android:title="@string/settings_detail_log" />
@@ -57,7 +57,7 @@
             android:key="maxLogSize"
             android:summary="%s"
             android:title="@string/settings_max_log_size" />
-        <rikka.material.preference.MaterialSwitchPreference
+        <SwitchPreference
             android:icon="@drawable/outline_hide_image_24"
             android:key="hideIcon"
             android:summary="@string/settings_hide_icon_summary"
@@ -65,12 +65,12 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_experimental">
-        <rikka.material.preference.MaterialSwitchPreference
+        <SwitchPreference
             android:icon="@drawable/outline_storage_24"
             android:key="legacyDataMirror"
             android:summary="@string/settings_legacy_data_mirror_summary"
             android:title="@string/settings_legacy_data_mirror" />
-        <rikka.material.preference.MaterialSwitchPreference
+        <SwitchPreference
             android:icon="@drawable/outline_storage_24"
             android:key="forceMountData"
             android:summary="@string/settings_force_mount_data_summary"
@@ -91,12 +91,12 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_update">
-        <rikka.material.preference.MaterialSwitchPreference
+        <SwitchPreference
             android:disableDependentsState="true"
             android:icon="@drawable/outline_update_disabled_24"
             android:key="disableUpdate"
             android:title="@string/settings_disable_update" />
-        <rikka.material.preference.MaterialSwitchPreference
+        <SwitchPreference
             android:dependency="disableUpdate"
             android:icon="@drawable/outline_speed_24"
             android:key="receiveBetaUpdate"

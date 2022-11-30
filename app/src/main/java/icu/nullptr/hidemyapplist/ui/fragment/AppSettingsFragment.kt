@@ -9,10 +9,7 @@ import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import androidx.preference.Preference
-import androidx.preference.PreferenceDataStore
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreferenceCompat
+import androidx.preference.*
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsng.hidemyapplist.R
@@ -102,7 +99,7 @@ class AppSettingsFragment : Fragment(R.layout.fragment_settings) {
                 it.title = PackageHelper.loadAppLabel(pack.app)
                 it.summary = PackageHelper.loadPackageInfo(pack.app).packageName
             }
-            findPreference<SwitchPreferenceCompat>("useWhiteList")?.setOnPreferenceChangeListener { _, newValue ->
+            findPreference<SwitchPreference>("useWhiteList")?.setOnPreferenceChangeListener { _, newValue ->
                 pack.config.applyTemplates.clear()
                 pack.config.extraAppList.clear()
                 updateApplyTemplates()

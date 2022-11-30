@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceDataStore
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.topjohnwu.superuser.Shell
@@ -26,7 +27,6 @@ import icu.nullptr.hidemyapplist.ui.util.setupToolbar
 import icu.nullptr.hidemyapplist.util.LangList
 import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate
-import rikka.material.preference.MaterialSwitchPreference
 import rikka.preference.SimpleMenuPreference
 import java.util.*
 
@@ -138,7 +138,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 }
             }
 
-            findPreference<MaterialSwitchPreference>("followSystemAccent")?.setOnPreferenceChangeListener { _, _ ->
+            findPreference<SwitchPreference>("followSystemAccent")?.setOnPreferenceChangeListener { _, _ ->
                 activity?.recreate()
                 true
             }
@@ -157,12 +157,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 true
             }
 
-            findPreference<MaterialSwitchPreference>("blackDarkTheme")?.setOnPreferenceChangeListener { _, _ ->
+            findPreference<SwitchPreference>("blackDarkTheme")?.setOnPreferenceChangeListener { _, _ ->
                 activity?.recreate()
                 true
             }
 
-            findPreference<MaterialSwitchPreference>("forceMountData")
+            findPreference<SwitchPreference>("forceMountData")
                 ?.isEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
 
             findPreference<Preference>("stopSystemService")?.setOnPreferenceClickListener {

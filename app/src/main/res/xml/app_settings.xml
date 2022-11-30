@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <PreferenceCategory android:title="@string/application">
         <Preference android:key="appInfo" />
-        <rikka.material.preference.MaterialSwitchPreference
+        <SwitchPreference
             android:icon="@drawable/outline_shield_24"
             android:key="enableHide"
             android:title="@string/app_enable_hide" />
@@ -12,13 +12,13 @@
     <PreferenceCategory
         android:dependency="enableHide"
         android:title="@string/preferences">
-        <rikka.material.preference.MaterialSwitchPreference
+        <SwitchPreference
             android:icon="@drawable/outline_settings_24"
             android:key="useWhiteList"
             android:summaryOff="@string/blacklist"
             android:summaryOn="@string/whitelist"
             android:title="@string/work_mode" />
-        <rikka.material.preference.MaterialSwitchPreference
+        <SwitchPreference
             android:dependency="useWhiteList"
             android:disableDependentsState="true"
             android:icon="@drawable/baseline_call_split_24"
