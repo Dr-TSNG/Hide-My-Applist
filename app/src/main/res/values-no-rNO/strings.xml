@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Hide My Applist</string>
-    <string name="title_home">Home</string>
-    <string name="title_logs">Logs</string>
-    <string name="title_settings">Settings</string>
-    <string name="title_template_manage">Template manage</string>
-    <string name="title_template_settings">Template settings</string>
-    <string name="title_app_manage">App manage</string>
-    <string name="title_app_select">Select apps</string>
-    <string name="title_app_settings">App settings</string>
-    <string name="title_about">About</string>
-    <string name="do_not_dual">Do not dual this app</string>
+    <string name="title_home">Hjem</string>
+    <string name="title_logs">Logger</string>
+    <string name="title_settings">Innstillinger</string>
+    <string name="title_template_manage">Styr maler</string>
+    <string name="title_template_settings">Mal innstillinger</string>
+    <string name="title_app_manage">Velg applikasjoner</string>
+    <string name="title_app_select">Velg applikasjoner</string>
+    <string name="title_app_settings">Applikasjon innstillinger</string>
+    <string name="title_about">Info</string>
+    <string name="do_not_dual">Ikke installer HMA til en sekundær bruker</string>
     <string name="show_crash_log">Show crash log</string>
     <string name="config_damaged">Config file damaged. Please clean the app data</string>
     <string name="edit_list">Edit list</string>
-    <string name="delete">Delete</string>
-    <string name="enabled">Enabled</string>
+    <string name="delete">Slett</string>
+    <string name="enabled">Aktivert</string>
     <string name="work_mode">Work mode</string>
     <string name="blacklist">Blacklist</string>
     <string name="whitelist">Whitelist</string>
-    <string name="application">Application</string>
-    <string name="preferences">Preferences</string>
+    <string name="application">Applikasjon</string>
+    <string name="preferences">Preferanser</string>
     <string name="refresh">Refresh</string>
     <string name="filter">Filter</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="search">Search</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nei</string>
+    <string name="search">Søk</string>
     <!-- Home -->
-    <string name="home_xposed_activated">Module Activated [%s-%d]</string>
-    <string name="home_xposed_not_activated">Module Not Activated</string>
-    <string name="home_xposed_service_on">System service running [%d]</string>
-    <string name="home_xposed_service_off">System service not running</string>
-    <string name="home_xposed_service_old">Module updated, need reboot</string>
-    <string name="home_xposed_filter_count">Hide My Applist has filtered total %d requests</string>
+    <string name="home_xposed_activated">Modul aktivert [%s-%d]</string>
+    <string name="home_xposed_not_activated">Modul ikke aktivert</string>
+    <string name="home_xposed_service_on">System service funker [%d]</string>
+    <string name="home_xposed_service_off">System service funker ikke</string>
+    <string name="home_xposed_service_old">Modul oppdatert, trenger restart</string>
+    <string name="home_xposed_filter_count">Hma har filtrert %d forespørsler</string>
     <string name="home_manage">Manage</string>
     <string name="home_detection_test">Detection test</string>
     <string name="home_download_test_app_title">Download test app</string>
@@ -50,7 +50,7 @@
     <string name="home_new_update">New update available: %s</string>
     <string name="home_update">Update: %s</string>
     <!-- App select -->
-    <string name="list_show_system">Show system</string>
+    <string name="list_show_system">Show system apps</string>
     <string name="list_sorting">Sorting</string>
     <string name="list_reverse_order">Reverse order</string>
     <string name="list_sort_by_label">By app name</string>
@@ -84,6 +84,8 @@
     <string name="logs_saved">Logs saved</string>
     <!-- Settings -->
     <string name="settings_module">Module</string>
+    <string name="settings_force_mount_data">Force bind mount data storage for apps whose target API lower than 30</string>
+    <string name="settings_force_mount_data_summary">This option is only available on Android 11 and above</string>
     <string name="settings_detail_log">Detail log for debugging</string>
     <string name="settings_max_log_size">Logger buffer sizes</string>
     <string name="settings_hide_icon">Hide module icon in launcher</string>
@@ -97,9 +99,6 @@
     <string name="settings_dark_theme">Dark theme</string>
     <string name="settings_pure_black_dark_theme">Pure black dark theme</string>
     <string name="settings_pure_black_dark_theme_summary">Use the pure black theme if dark theme is enabled</string>
-    <string name="settings_experimental">Experimental</string>
-    <string name="settings_force_mount_data">Force bind mount data storage for apps whose target API lower than 30</string>
-    <string name="settings_force_mount_data_summary">This option is only available on Android 11 and above</string>
     <string name="settings_service">Service</string>
     <string name="settings_stop_system_service">Stop system service</string>
     <string name="settings_stop_system_service_summary">Need reboot to restart service</string>

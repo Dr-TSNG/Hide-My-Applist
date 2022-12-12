@@ -10,7 +10,7 @@
     <string name="title_app_select">تحديد التطبيقات</string>
     <string name="title_app_settings">إعـدادات التطبيـق</string>
     <string name="title_about">عـن</string>
-    <string name="do_not_dual">لا تستنسـخ هـذا التطبيـق</string>
+    <string name="do_not_dual">لا تقم بتثبيت HMA للمستخدم الثانوي</string>
     <string name="show_crash_log">عـرض سجـل التعطيل</string>
     <string name="config_damaged">مِلف التكوين تالف. رجاءًا قـم بحذف بيانات التطبيق</string>
     <string name="edit_list">تعديـل القائـمة</string>
@@ -25,7 +25,7 @@
     <string name="filter">تصفية</string>
     <string name="yes">نعـم</string>
     <string name="no">لا</string>
-    <string name="search">Search</string>
+    <string name="search">بحث</string>
     <!-- Home -->
     <string name="home_xposed_activated">الوحـدة مفعـلة [%s-%d]</string>
     <string name="home_xposed_not_activated">الوحـدة غير مفعـلة</string>
@@ -50,7 +50,7 @@
     <string name="home_new_update">متوفر تحديث جديد: %s</string>
     <string name="home_update">تحديث: %s</string>
     <!-- App select -->
-    <string name="list_show_system">إظهار النظام</string>
+    <string name="list_show_system">إظهار تطبيقات النظام</string>
     <string name="list_sorting">الترتيب حسب</string>
     <string name="list_reverse_order">عكسي</string>
     <string name="list_sort_by_label">اسم التطبيق</string>
@@ -84,6 +84,8 @@
     <string name="logs_saved">تم حفظ السجلات</string>
     <!-- Settings -->
     <string name="settings_module">الوحدة</string>
+    <string name="settings_force_mount_data">فرض ربط تحميل تخزين البيانات للتطبيقات التي قد يكون الـ API لها أقل من 30</string>
+    <string name="settings_force_mount_data_summary">هذا الخِيار متاح فقط في إصدارات أندرويد ١١ وأعلي</string>
     <string name="settings_detail_log">سجل مُفصل للتصحيح</string>
     <string name="settings_max_log_size">أحجام التخزين المؤقت للمسجل</string>
     <string name="settings_hide_icon">إخفاء أيقونة الوحدة من قائمة التطبيقات</string>
@@ -97,9 +99,6 @@
     <string name="settings_dark_theme">المظهر الداكن</string>
     <string name="settings_pure_black_dark_theme">السمة السوداء الخالصة</string>
     <string name="settings_pure_black_dark_theme_summary">استخدم السمة السوداء الخالصة إذا كان المظهر الداكن مُفعل</string>
-    <string name="settings_experimental">تجريبي</string>
-    <string name="settings_force_mount_data">فرض ربط تحميل تخزين البيانات للتطبيقات التي قد يكون الـ API لها أقل من 30</string>
-    <string name="settings_force_mount_data_summary">هذا الخِيار متاح فقط في إصدارات أندرويد ١١ وأعلي</string>
     <string name="settings_service">الخدمة</string>
     <string name="settings_stop_system_service">إيقاف خدمة النظام</string>
     <string name="settings_stop_system_service_summary">تحتاج إلى إعادة التشغيل لإعادة تشغيل الخدمة</string>
