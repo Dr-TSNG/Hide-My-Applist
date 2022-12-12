@@ -31,13 +31,8 @@ suspend fun fetchLatestUpdate(): UpdateInfo? {
     val updateData = RxHttp.get(Constants.UPDATE_URL_BASE + "updates.json")
         .toAwait<UpdateData>()
         .tryAwait() ?: return null
-    val (isBeta, item) = if (PrefManager.receiveBetaUpdate) {
-        true to (updateData.beta ?: updateData.release)
-    } else {
-        false to updateData.release
-    }
-    if (item == null) return null
-
+    val isBeta = PrefManager.receiveBetaUpdate && updateData.beta != null
+    val item = (if (isBeta) updateData.beta else updateData.release) ?: return null
     val variantPrefix = if (isBeta) "beta" else "release"
     val languagePrefix = if (Locale.getDefault().language.contains("zh")) "zh" else "en"
     val content = RxHttp.get(Constants.UPDATE_URL_BASE + variantPrefix + "-" + languagePrefix + ".html")
