@@ -10,7 +10,7 @@
     <string name="title_app_select">Select apps</string>
     <string name="title_app_settings">App settings</string>
     <string name="title_about">About</string>
-    <string name="do_not_dual">Do not dual this app</string>
+    <string name="do_not_dual">Do not install HMA to secondary user</string>
     <string name="show_crash_log">Show crash log</string>
     <string name="config_damaged">Config file damaged. Please clean the app data</string>
     <string name="edit_list">Edit list</string>
@@ -50,7 +50,7 @@
     <string name="home_new_update">New update available: %s</string>
     <string name="home_update">Update: %s</string>
     <!-- App select -->
-    <string name="list_show_system">Show system</string>
+    <string name="list_show_system">Show system apps</string>
     <string name="list_sorting">Sorting</string>
     <string name="list_reverse_order">Reverse order</string>
     <string name="list_sort_by_label">By app name</string>
@@ -84,6 +84,8 @@
     <string name="logs_saved">Logs saved</string>
     <!-- Settings -->
     <string name="settings_module">Module</string>
+    <string name="settings_force_mount_data">Force bind mount data storage for apps whose target API lower than 30</string>
+    <string name="settings_force_mount_data_summary">This option is only available on Android 11 and above</string>
     <string name="settings_detail_log">Detail log for debugging</string>
     <string name="settings_max_log_size">Logger buffer sizes</string>
     <string name="settings_hide_icon">Hide module icon in launcher</string>
@@ -97,9 +99,6 @@
     <string name="settings_dark_theme">Dark theme</string>
     <string name="settings_pure_black_dark_theme">Pure black dark theme</string>
     <string name="settings_pure_black_dark_theme_summary">Use the pure black theme if dark theme is enabled</string>
-    <string name="settings_experimental">Experimental</string>
-    <string name="settings_force_mount_data">Force bind mount data storage for apps whose target API lower than 30</string>
-    <string name="settings_force_mount_data_summary">This option is only available on Android 11 and above</string>
     <string name="settings_service">Service</string>
     <string name="settings_stop_system_service">Stop system service</string>
     <string name="settings_stop_system_service_summary">Need reboot to restart service</string>
