@@ -10,7 +10,7 @@
     <string name="title_app_select">選擇應用程式</string>
     <string name="title_app_settings">應用程式設定</string>
     <string name="title_about">關於</string>
-    <string name="do_not_dual">請勿雙開此應用程式</string>
+    <string name="do_not_dual">不要多開或將 HMA 安裝給次要使用者</string>
     <string name="show_crash_log">顯示崩潰日誌</string>
     <string name="config_damaged">設定損毀，請清理應用程式的資料</string>
     <string name="edit_list">編輯列表</string>
@@ -50,10 +50,10 @@
     <string name="home_new_update">有新的版本更新：%s</string>
     <string name="home_update">更新：%s</string>
     <!-- App select -->
-    <string name="list_show_system">顯示系統應用</string>
+    <string name="list_show_system">顯示系統應用程式</string>
     <string name="list_sorting">排序</string>
     <string name="list_reverse_order">倒序</string>
-    <string name="list_sort_by_label">依據應用名稱</string>
+    <string name="list_sort_by_label">依據應用程式名稱</string>
     <string name="list_sort_by_package_name">依據應用包名稱</string>
     <string name="list_sort_by_install_time">依據安裝時間</string>
     <string name="list_sort_by_update_time">依據更新時間</string>
@@ -84,6 +84,8 @@
     <string name="logs_saved">日誌已儲存</string>
     <!-- Settings -->
     <string name="settings_module">模塊</string>
+    <string name="settings_force_mount_data">於目標 API 低於 30 的應用，強制繫結掛載資料儲存</string>
+    <string name="settings_force_mount_data_summary">該選項僅適用於 Android 11 及以上的系統，開啟後還受到檢測可能須重新啟動您的設備，並檢查 Android/data 及 Android/obb 下是否有相對應的目錄，如果有請手動刪除 (某些應用在啟動後可能會重新生產相對應目錄)</string>
     <string name="settings_detail_log">除錯用的詳細日誌</string>
     <string name="settings_max_log_size">記錄器的緩衝區大小</string>
     <string name="settings_hide_icon">在啟動器中隱藏圖示</string>
@@ -97,9 +99,6 @@
     <string name="settings_dark_theme">深色主題</string>
     <string name="settings_pure_black_dark_theme">純黑的深色主題</string>
     <string name="settings_pure_black_dark_theme_summary">如果啟用了深色主題，則使用純黑色的背景色</string>
-    <string name="settings_experimental">實驗性功能</string>
-    <string name="settings_force_mount_data">於目標 API 低於 30 的應用，強制繫結掛載資料儲存</string>
-    <string name="settings_force_mount_data_summary">該選項僅適用於 Android 11 及以上的系統，開啟後還受到檢測可能須重新啟動您的設備，並檢查 Android/data 及 Android/obb 下是否有相對應的目錄，如果有請手動刪除 (某些應用在啟動後可能會重新生產相對應目錄)</string>
     <string name="settings_service">服務</string>
     <string name="settings_stop_system_service">停止系統服務</string>
     <string name="settings_stop_system_service_summary">需要重啟來重啟服務</string>
@@ -114,7 +113,7 @@
     <string name="settings_receive_beta_update">接收 Beta 版更新</string>
     <string name="settings_receive_beta_update_summary">注意：Beta 版可能會相當不穩定</string>
     <!-- About -->
-    <string name="about_description">        雖然檢測特定的應用程式安裝來判斷使否有使用 root 是不正卻也不應該的，但並不是每個使用 root 的應用程式都提供隨機包名的功能。\n在這種情況下，檢測到的使用 root 的應用程式 (例如 Fake Location 和儲存隔離) 就等於檢測到了 root 本身。\n\n同時，一些應用會利用各種漏洞來獲取你的應用列表，並預設你是使用 roor 的使用者。\n\n這個模組提供了一些方法來測試你是否已經很好地隱藏了你的應用列表。\n同時它可以作為一個 Xposed 模塊來隱藏一些應用程式或拒絕應用程式列表請求，以保護你的隱私。
+    <string name="about_description">        雖然檢測特定的應用程式安裝來判斷使否有使用 root 是不正卻也不應該的，但並不是每個使用 root 的應用程式都提供隨機包名的功能。\n在這種情況下，檢測到的使用 root 的應用程式 (例如 Fake Location 和儲存隔離) 就等於檢測到了 root 本身。\n\n同時，一些應用會利用各種漏洞來獲取你的應用列表，並預設你是使用 root 的使用者。\n\n這個模組提供了一些方法來測試你是否已經很好地隱藏了你的應用列表。\n同時它可以作為一個 Xposed 模塊來隱藏一些應用程式或拒絕應用程式列表請求，以保護你的隱私。
     </string>
     <string name="about_how_to_use_title">如何使用此模組</string>
     <string name="about_how_to_use_description_1">        首先在 「模板管理」中建立模板。\n然後在 「應用管理」選擇想隱藏應用列表的應用程式並「啟用隱藏」並選擇設定好的模板。\n(當然你也可以選擇額外的應用程式隱藏或顯示)\n注意：你應該而且只應該在 Xposed 模組作用域或白名單中僅勾選「系統框架」(某些系統中可能會將系統框架顯示為 Android)
