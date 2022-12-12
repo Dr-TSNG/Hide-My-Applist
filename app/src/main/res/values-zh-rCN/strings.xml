@@ -10,7 +10,7 @@
     <string name="title_app_select">选择应用</string>
     <string name="title_app_settings">应用配置</string>
     <string name="title_about">关于</string>
-    <string name="do_not_dual">请勿双开此应用</string>
+    <string name="do_not_dual">请勿多开或将隐藏应用列表安装到其他用户</string>
     <string name="show_crash_log">显示崩溃日志</string>
     <string name="config_damaged">配置文件损坏，请清除应用数据</string>
     <string name="edit_list">编辑列表</string>
@@ -84,6 +84,8 @@
     <string name="logs_saved">日志已保存</string>
     <!-- Settings -->
     <string name="settings_module">模块</string>
+    <string name="settings_force_mount_data">对于目标 API 低于 30 的应用，强制绑定挂载数据存储</string>
+    <string name="settings_force_mount_data_summary">此项仅适用于 Android 11 及以上版本的系统</string>
     <string name="settings_detail_log">详细日志</string>
     <string name="settings_max_log_size">日志缓冲区大小</string>
     <string name="settings_hide_icon">在启动器中隐藏图标</string>
@@ -97,9 +99,6 @@
     <string name="settings_dark_theme">深色主题</string>
     <string name="settings_pure_black_dark_theme">纯黑主题</string>
     <string name="settings_pure_black_dark_theme_summary">当深色主题启用时使用纯黑主题</string>
-    <string name="settings_experimental">实验性功能</string>
-    <string name="settings_force_mount_data">对于目标 API 低于 30 的应用，强制绑定挂载数据存储</string>
-    <string name="settings_force_mount_data_summary">此项仅适用于 Android 11 及以上版本的系统</string>
     <string name="settings_service">服务</string>
     <string name="settings_stop_system_service">停止系统服务</string>
     <string name="settings_stop_system_service_summary">需要重启设备才能再次启动系统服务</string>
