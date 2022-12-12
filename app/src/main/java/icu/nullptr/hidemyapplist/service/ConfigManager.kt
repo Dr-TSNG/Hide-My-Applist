@@ -52,15 +52,6 @@ object ConfigManager {
             saveConfig()
         }
 
-    var legacyDataMirror: Boolean
-        get() =
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) config.legacyDataMirror
-            else false
-        set(value) {
-            config.legacyDataMirror = value
-            saveConfig()
-        }
-
     var forceMountData: Boolean
         get() =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) config.forceMountData

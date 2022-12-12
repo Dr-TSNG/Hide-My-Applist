@@ -15,12 +15,6 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         var instance: HMAService? = null
     }
 
-    class ServiceDelegate(
-        var getLDMPProxy: ((Int) -> Map<String, LDMP>?)? = null
-    )
-
-    val serviceDelegate = ServiceDelegate()
-
     @Volatile
     var logcatAvailable = false
 
@@ -124,8 +118,6 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             frameworkHooks.add(ZygoteArgsHook(this))
-        } else {
-            frameworkHooks.add(LegacyDataMirror(this))
         }
 
         frameworkHooks.forEach(IFrameworkHook::load)
@@ -150,7 +142,6 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
 
         return appConfig.useWhitelist
     }
-
 
     override fun stopService(cleanEnv: Boolean) {
         logI(TAG, "Stop service")
@@ -205,6 +196,4 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
             logFile.createNewFile()
         }
     }
-
-    override fun getLDMP(uid: Int) = serviceDelegate.getLDMPProxy?.invoke(uid)
 }
