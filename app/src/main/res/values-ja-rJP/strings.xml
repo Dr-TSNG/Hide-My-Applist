@@ -10,7 +10,7 @@
     <string name="title_app_select">アプリの選択</string>
     <string name="title_app_settings">アプリの設定</string>
     <string name="title_about">About</string>
-    <string name="do_not_dual">このアプリをデュアルしないでください</string>
+    <string name="do_not_dual">Do not install HMA to secondary user</string>
     <string name="show_crash_log">クラッシュログの表示</string>
     <string name="config_damaged">構成ファイルが破損しています。 アプリのデータを消去してください。</string>
     <string name="edit_list">リストの編集</string>
@@ -50,7 +50,7 @@
     <string name="home_new_update">利用可能なアップデート: %s</string>
     <string name="home_update">アップデート: %s</string>
     <!-- App select -->
-    <string name="list_show_system">システムを表示</string>
+    <string name="list_show_system">Show system apps</string>
     <string name="list_sorting">並び替え</string>
     <string name="list_reverse_order">逆順</string>
     <string name="list_sort_by_label">アプリ名で</string>
@@ -84,6 +84,8 @@
     <string name="logs_saved">ログを保存しました</string>
     <!-- Settings -->
     <string name="settings_module">モジュール</string>
+    <string name="settings_force_mount_data">ターゲット API が 30 未満のアプリを強制的にdataにマウント</string>
+    <string name="settings_force_mount_data_summary">このオプションは、Android 11 以降でのみ使用できます</string>
     <string name="settings_detail_log">デバッグ用詳細ログ</string>
     <string name="settings_max_log_size">ロガーのバッファサイズ</string>
     <string name="settings_hide_icon">ランチャーでモジュール アイコンを非表示にする</string>
@@ -97,9 +99,6 @@
     <string name="settings_dark_theme">ダークテーマ</string>
     <string name="settings_pure_black_dark_theme">ピュアブラックテーマ</string>
     <string name="settings_pure_black_dark_theme_summary">ブラック有効になっている場合は、ピュアブラックのテーマを使用してください</string>
-    <string name="settings_experimental">実験的</string>
-    <string name="settings_force_mount_data">ターゲット API が 30 未満のアプリを強制的にdataにマウント</string>
-    <string name="settings_force_mount_data_summary">このオプションは、Android 11 以降でのみ使用できます</string>
     <string name="settings_service">サービス</string>
     <string name="settings_stop_system_service">システムサービスを停止する</string>
     <string name="settings_stop_system_service_summary">サービスを再開するには再起動が必要です</string>
