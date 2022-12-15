@@ -84,7 +84,7 @@ jobs:
 
       - name: Upload debug
         if: success()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.buildDebug.outputs.debugName }}
           path: "app/build/apk/debug/HMA*-debug.apk"
