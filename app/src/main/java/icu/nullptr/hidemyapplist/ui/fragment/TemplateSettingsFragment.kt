@@ -27,25 +27,25 @@ class TemplateSettingsFragment : Fragment(R.layout.fragment_template_settings) {
         TemplateSettingsViewModel.Factory(args)
     }
 
-    private fun onBack() {
+    private fun onBack(delete: Boolean) {
         viewModel.name = viewModel.name?.trim()
-        if (viewModel.name != viewModel.originalName && (ConfigManager.hasTemplate(viewModel.name) || viewModel.name == null)) {
+        if (viewModel.name != viewModel.originalName && (ConfigManager.hasTemplate(viewModel.name) || viewModel.name == null) || delete) {
             val builder = MaterialAlertDialogBuilder(requireContext())
-                .setTitle(if (viewModel.name == null) R.string.template_name_null else R.string.template_name_invalid)
-                .setMessage(if (viewModel.name == null) R.string.template_delete else R.string.template_name_already_exist)
+                .setTitle(if (delete) R.string.template_delete_title else R.string.template_name_invalid)
+                .setMessage(if (delete) R.string.template_delete else R.string.template_name_already_exist)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
-                    if (viewModel.name == null) saveResult()
+                    saveResult(delete)
                 }
-            if (viewModel.name == null) builder.setNegativeButton(android.R.string.cancel, null)
+            if (delete) builder.setNegativeButton(android.R.string.cancel, null)
             builder.show()
         } else {
-            saveResult()
+            saveResult(false)
         }
     }
 
-    private fun saveResult() {
+    private fun saveResult(delete: Boolean) {
         setFragmentResult("template_settings", Bundle().apply {
-            putString("name", viewModel.name)
+            putString("name",if (delete) null else viewModel.name)
             putStringArrayList("appliedList", viewModel.appliedAppList.value)
             putStringArrayList("targetList", viewModel.targetAppList.value)
         })
@@ -61,16 +61,15 @@ class TemplateSettingsFragment : Fragment(R.layout.fragment_template_settings) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) { onBack() }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) { onBack(false) }
         setupToolbar(
             toolbar = binding.toolbar,
             title = getString(R.string.title_template_settings),
             navigationIcon = R.drawable.baseline_arrow_back_24,
-            navigationOnClick = { onBack() },
+            navigationOnClick = { onBack(false) },
             menuRes = R.menu.menu_delete,
             onMenuOptionSelected = {
-                viewModel.name = null
-                onBack()
+                onBack(true)
             }
         )
 
