@@ -22,7 +22,8 @@ private fun parseLog(level: Int, tag: String, msg: String, cause: Throwable? = n
 
 private fun log(level: Int, tag: String, msg: String, cause: Throwable? = null) {
     val parsedLog = parseLog(level, tag, msg, cause)
-    HMAService.instance?.addLog(level, parsedLog)
+    if (level <= Log.DEBUG && HMAService.instance?.config?.detailLog == false) return
+    HMAService.instance?.addLog(parsedLog)
     XposedBridge.log(parsedLog)
 }
 

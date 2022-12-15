@@ -6,10 +6,8 @@ import com.github.kyuubiran.ezxhelper.utils.findMethod
 import com.github.kyuubiran.ezxhelper.utils.hookBefore
 import de.robv.android.xposed.XC_MethodHook
 import icu.nullptr.hidemyapplist.common.Constants
-import icu.nullptr.hidemyapplist.xposed.HMAService
-import icu.nullptr.hidemyapplist.xposed.Utils
-import icu.nullptr.hidemyapplist.xposed.logE
-import icu.nullptr.hidemyapplist.xposed.logI
+import icu.nullptr.hidemyapplist.xposed.*
+import java.util.concurrent.atomic.AtomicReference
 
 @TargetApi(Build.VERSION_CODES.R)
 class PmsHookTarget30(private val service: HMAService) : IFrameworkHook {
@@ -19,6 +17,7 @@ class PmsHookTarget30(private val service: HMAService) : IFrameworkHook {
     }
 
     private var hook: XC_MethodHook.Unhook? = null
+    private var lastFilteredApp: AtomicReference<String?> = AtomicReference(null)
 
     override fun load() {
         logI(TAG, "Load hook")
@@ -36,7 +35,9 @@ class PmsHookTarget30(private val service: HMAService) : IFrameworkHook {
                     if (service.shouldHide(caller, targetApp)) {
                         param.result = true
                         service.filterCount++
-                        logI(TAG, "@shouldFilterApplication caller: $callingUid $caller, target: $targetApp")
+                        val last = lastFilteredApp.getAndSet(caller)
+                        if (last != caller) logI(TAG, "@shouldFilterApplication: query from $caller")
+                        logD(TAG, "@shouldFilterApplication caller: $callingUid $caller, target: $targetApp")
                         return@hookBefore
                     }
                 }

@@ -8,10 +8,8 @@ import com.github.kyuubiran.ezxhelper.utils.hookAfter
 import com.github.kyuubiran.ezxhelper.utils.hookBefore
 import de.robv.android.xposed.XC_MethodHook
 import icu.nullptr.hidemyapplist.common.Constants
-import icu.nullptr.hidemyapplist.xposed.HMAService
-import icu.nullptr.hidemyapplist.xposed.Utils
-import icu.nullptr.hidemyapplist.xposed.logE
-import icu.nullptr.hidemyapplist.xposed.logI
+import icu.nullptr.hidemyapplist.xposed.*
+import java.util.concurrent.atomic.AtomicReference
 
 @TargetApi(Build.VERSION_CODES.P)
 class PmsHookTarget28(private val service: HMAService) : IFrameworkHook {
@@ -21,6 +19,7 @@ class PmsHookTarget28(private val service: HMAService) : IFrameworkHook {
     }
 
     private val hooks = mutableListOf<XC_MethodHook.Unhook>()
+    private var lastFilteredApp: AtomicReference<String?> = AtomicReference(null)
 
     @Suppress("UNCHECKED_CAST")
     override fun load() {
@@ -40,7 +39,9 @@ class PmsHookTarget28(private val service: HMAService) : IFrameworkHook {
                     if (service.shouldHide(caller, targetApp)) {
                         param.result = true
                         service.filterCount++
-                        logI(TAG, "@filterAppAccessLPr caller: $callingUid $caller, target: $targetApp")
+                        val last = lastFilteredApp.getAndSet(caller)
+                        if (last != caller) logI(TAG, "@filterAppAccessLPr query from $caller")
+                        logD(TAG, "@filterAppAccessLPr caller: $callingUid $caller, target: $targetApp")
                         return@hookBefore
                     }
                 }
@@ -66,7 +67,9 @@ class PmsHookTarget28(private val service: HMAService) : IFrameworkHook {
                     }
                     for (caller in callingApps) {
                         if (service.shouldHide(caller, targetApp)) {
-                            logI(TAG, "@applyPostResolutionFilter caller: $callingUid $caller, target: $targetApp")
+                            val last = lastFilteredApp.getAndSet(caller)
+                            if (last != caller) logI(TAG, "@applyPostResolutionFilter query from $caller")
+                            logD(TAG, "@applyPostResolutionFilter caller: $callingUid $caller, target: $targetApp")
                             listToRemove.add(resolveInfo)
                             break
                         }

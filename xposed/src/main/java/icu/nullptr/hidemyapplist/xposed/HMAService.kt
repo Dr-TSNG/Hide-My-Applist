@@ -3,7 +3,6 @@ package icu.nullptr.hidemyapplist.xposed
 import android.content.pm.ApplicationInfo
 import android.content.pm.IPackageManager
 import android.os.Build
-import android.util.Log
 import icu.nullptr.hidemyapplist.common.*
 import icu.nullptr.hidemyapplist.xposed.hook.*
 import java.io.File
@@ -160,8 +159,7 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         instance = null
     }
 
-    fun addLog(level: Int, parsedMsg: String) {
-        if (level <= Log.DEBUG && !config.detailLog) return
+    fun addLog(parsedMsg: String) {
         synchronized(loggerLock) {
             if (!logcatAvailable) return
             if (logFile.length() / 1024 > config.maxLogSize) clearLogs()
