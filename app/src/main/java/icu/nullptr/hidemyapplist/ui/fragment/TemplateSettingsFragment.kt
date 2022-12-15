@@ -22,27 +22,34 @@ import kotlinx.coroutines.launch
 class TemplateSettingsFragment : Fragment(R.layout.fragment_template_settings) {
 
     private val binding by viewBinding<FragmentTemplateSettingsBinding>()
-    private val viewModel by viewModels<TemplateSettingsViewModel>() {
+    private val viewModel by viewModels<TemplateSettingsViewModel> {
         val args by navArgs<TemplateSettingsFragmentArgs>()
         TemplateSettingsViewModel.Factory(args)
     }
 
     private fun onBack() {
         viewModel.name = viewModel.name?.trim()
-        if (viewModel.name != viewModel.originalName && ConfigManager.hasTemplate(viewModel.name)) {
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.template_name_invalid)
-                .setMessage(R.string.template_name_already_exist)
-                .setPositiveButton(android.R.string.ok, null)
-                .show()
+        if (viewModel.name != viewModel.originalName && (ConfigManager.hasTemplate(viewModel.name) || viewModel.name == null)) {
+            val builder = MaterialAlertDialogBuilder(requireContext())
+                .setTitle(if (viewModel.name == null) R.string.template_name_null else R.string.template_name_invalid)
+                .setMessage(if (viewModel.name == null) R.string.template_delete else R.string.template_name_already_exist)
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    if (viewModel.name == null) saveResult()
+                }
+            if (viewModel.name == null) builder.setNegativeButton(android.R.string.cancel, null)
+            builder.show()
         } else {
-            setFragmentResult("template_settings", Bundle().apply {
-                putString("name", viewModel.name)
-                putStringArrayList("appliedList", viewModel.appliedAppList.value)
-                putStringArrayList("targetList", viewModel.targetAppList.value)
-            })
-            navController.navigateUp()
+            saveResult()
         }
+    }
+
+    private fun saveResult() {
+        setFragmentResult("template_settings", Bundle().apply {
+            putString("name", viewModel.name)
+            putStringArrayList("appliedList", viewModel.appliedAppList.value)
+            putStringArrayList("targetList", viewModel.targetAppList.value)
+        })
+        navController.navigateUp()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -69,6 +69,7 @@
     <string name="template_delete">Are you sure to delete the template?</string>
     <string name="template_name">Template name</string>
     <string name="template_name_invalid">Name invalid</string>
+    <string name="template_name_null">Delete Template</string>
     <string name="template_name_already_exist">Template name already exist</string>
     <string name="template_applied_count">Applied to %d apps</string>
     <string name="template_apps_visible_count">%d apps visible</string>
