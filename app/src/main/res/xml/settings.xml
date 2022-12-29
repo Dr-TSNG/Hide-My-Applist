@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory android:title="@string/settings_language">
         <rikka.preference.SimpleMenuPreference
             android:defaultValue="SYSTEM"
@@ -45,11 +46,11 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_module">
-        <SwitchPreference
+        <Preference
             android:icon="@drawable/outline_storage_24"
-            android:key="forceMountData"
-            android:summary="@string/settings_force_mount_data_summary"
-            android:title="@string/settings_force_mount_data" />
+            android:key="dataIsolation"
+            android:title="@string/settings_data_isolation"
+            app:fragment="icu.nullptr.hidemyapplist.ui.fragment.SettingsFragment$DataIsolationPreferenceFragment" />
         <SwitchPreference
             android:icon="@drawable/outline_bug_report_24"
             android:key="detailLog"

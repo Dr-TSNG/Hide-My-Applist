@@ -11,6 +11,9 @@ public class Constants {
     public static final String TRANSLATE_URL = "https://crowdin.com/project/hide-my-applist";
     public static final String CLASS_PMS = "com.android.server.pm.PackageManagerService";
 
+    public static final String ANDROID_APP_DATA_ISOLATION_ENABLED_PROPERTY = "persist.zygote.app_data_isolation";
+    public static final String ANDROID_VOLD_APP_DATA_ISOLATION_ENABLED_PROPERTY = "persist.sys.vold_app_data_isolation_enabled";
+
     public static final String DESCRIPTOR = "android.content.pm.IPackageManager";
     public static final int TRANSACTION = 'H' << 24 | 'M' << 16 | 'A' << 8 | 'D';
     public static final int ACTION_GET_BINDER = 1;

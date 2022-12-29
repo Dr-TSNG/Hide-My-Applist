@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/system">
+        <SwitchPreference
+            android:icon="@drawable/ic_outline_layers_24"
+            android:key="appDataIsolation"
+            android:summary="@string/settings_change_require_root"
+            android:title="@string/settings_app_data_isolation" />
+        <SwitchPreference
+            android:icon="@drawable/ic_outline_layers_24"
+            android:key="voldAppDataIsolation"
+            android:summary="@string/settings_change_require_root"
+            android:title="@string/settings_vold_app_data_isolation" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_module">
+        <SwitchPreference
+            android:icon="@drawable/outline_storage_24"
+            android:key="forceMountData"
+            android:summary="@string/settings_force_mount_data_summary"
+            android:title="@string/settings_force_mount_data" />
+    </PreferenceCategory>
+</PreferenceScreen>

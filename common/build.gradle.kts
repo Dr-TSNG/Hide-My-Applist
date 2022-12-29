@@ -1,5 +1,6 @@
 plugins {
     id("com.android.library")
+    id("dev.rikka.tools.refine")
     kotlin("android")
     kotlin("plugin.serialization")
 }
@@ -18,4 +19,5 @@ android {
 
 dependencies {
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+    compileOnly("dev.rikka.hidden:stub:3.4.3")
 }

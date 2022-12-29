@@ -14,9 +14,9 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.topjohnwu.superuser.Shell
 import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.databinding.FragmentSettingsBinding
+import icu.nullptr.hidemyapplist.common.CommonUtils
 import icu.nullptr.hidemyapplist.common.Constants
 import icu.nullptr.hidemyapplist.hmaApp
 import icu.nullptr.hidemyapplist.service.ConfigManager
@@ -25,12 +25,13 @@ import icu.nullptr.hidemyapplist.service.ServiceClient
 import icu.nullptr.hidemyapplist.ui.util.makeToast
 import icu.nullptr.hidemyapplist.ui.util.setupToolbar
 import icu.nullptr.hidemyapplist.util.LangList
+import icu.nullptr.hidemyapplist.util.SuUtils
 import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate
 import rikka.preference.SimpleMenuPreference
 import java.util.*
 
-class SettingsFragment : Fragment(R.layout.fragment_settings) {
+class SettingsFragment : Fragment(R.layout.fragment_settings), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     private val binding by viewBinding<FragmentSettingsBinding>()
 
@@ -44,6 +45,16 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
     }
 
+    override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat, pref: Preference): Boolean {
+        val fragment = childFragmentManager.fragmentFactory.instantiate(requireContext().classLoader, pref.fragment!!)
+        fragment.arguments = pref.extras
+        childFragmentManager.beginTransaction()
+            .replace(R.id.settings_container, fragment)
+            .addToBackStack(null)
+            .commit()
+        return true
+    }
+
     class SettingsPreferenceDataStore : PreferenceDataStore() {
         override fun getBoolean(key: String, defValue: Boolean): Boolean {
             return when (key) {
@@ -51,6 +62,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 "blackDarkTheme" -> PrefManager.blackDarkTheme
                 "detailLog" -> ConfigManager.detailLog
                 "hideIcon" -> PrefManager.hideIcon
+                "appDataIsolation" -> CommonUtils.isAppDataIsolationEnabled
+                "voldAppDataIsolation" -> CommonUtils.isVoldAppDataIsolationEnabled
                 "forceMountData" -> ConfigManager.forceMountData
                 "disableUpdate" -> PrefManager.disableUpdate
                 "receiveBetaUpdate" -> PrefManager.receiveBetaUpdate
@@ -75,6 +88,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 "detailLog" -> ConfigManager.detailLog = value
                 "forceMountData" -> ConfigManager.forceMountData = value
                 "hideIcon" -> PrefManager.hideIcon = value
+                "appDataIsolation" -> Unit
+                "voldAppDataIsolation" -> Unit
                 "disableUpdate" -> PrefManager.disableUpdate = value
                 "receiveBetaUpdate" -> PrefManager.receiveBetaUpdate = value
                 else -> throw IllegalArgumentException("Invalid key: $key")
@@ -92,7 +107,56 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
     }
 
+    class DataIsolationPreferenceFragment : PreferenceFragmentCompat() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            preferenceManager.preferenceDataStore = SettingsPreferenceDataStore()
+            setPreferencesFromResource(R.xml.settings_data_isolation, rootKey)
+
+            findPreference<SwitchPreference>("appDataIsolation")?.let {
+                it.setOnPreferenceChangeListener { _, newValue ->
+                    val value = if (newValue as Boolean) 1 else 0
+                    val result = SuUtils.execPrivileged("resetprop ${Constants.ANDROID_APP_DATA_ISOLATION_ENABLED_PROPERTY} $value")
+                    if (result) makeToast(R.string.settings_need_reboot)
+                    else makeToast(R.string.settings_permission_denied)
+                    it.isChecked = CommonUtils.isAppDataIsolationEnabled
+                    false
+                }
+            }
+
+            findPreference<SwitchPreference>("voldAppDataIsolation")?.let {
+                it.setOnPreferenceChangeListener { _, newValue ->
+                    val value = if (newValue as Boolean) 1 else 0
+                    val result = SuUtils.execPrivileged("resetprop ${Constants.ANDROID_VOLD_APP_DATA_ISOLATION_ENABLED_PROPERTY} $value")
+                    if (result) makeToast(R.string.settings_need_reboot)
+                    else makeToast(R.string.settings_permission_denied)
+                    it.isChecked = CommonUtils.isVoldAppDataIsolationEnabled
+                    false
+                }
+            }
+        }
+    }
+
     class SettingsPreferenceFragment : PreferenceFragmentCompat() {
+        private fun Boolean.enabledString(): String {
+            return if (this) getString(R.string.enabled)
+            else getString(R.string.disabled)
+        }
+
+        private fun configureDataIsolation() {
+            findPreference<Preference>("dataIsolation")?.let {
+                it.isEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+                it.summary = when {
+                    it.isEnabled -> getString(
+                        R.string.settings_data_isolation_summary,
+                        CommonUtils.isAppDataIsolationEnabled.enabledString(),
+                        CommonUtils.isVoldAppDataIsolationEnabled.enabledString(),
+                        ConfigManager.forceMountData.enabledString()
+                    )
+                    else -> getString(R.string.settings_data_isolation_unsupported)
+                }
+            }
+        }
+
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             preferenceManager.preferenceDataStore = SettingsPreferenceDataStore()
             setPreferencesFromResource(R.xml.settings, rootKey)
@@ -160,8 +224,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 true
             }
 
-            findPreference<SwitchPreference>("forceMountData")
-                ?.isEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+            configureDataIsolation()
 
             findPreference<Preference>("stopSystemService")?.setOnPreferenceClickListener {
                 if (ServiceClient.serviceVersion != 0) {
@@ -187,14 +250,19 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     .setTitle(R.string.settings_force_clean_env)
                     .setMessage(R.string.settings_is_clean_env_summary)
                     .setPositiveButton(android.R.string.ok) { _, _ ->
-                        val result = Shell.cmd("rm -rf /data/system/hide_my_applist*").exec().isSuccess && Shell.isAppGrantedRoot() == true
+                        val result = SuUtils.execPrivileged("rm -rf /data/system/hide_my_applist*")
                         if (result) makeToast(R.string.settings_force_clean_env_toast_successful)
-                        else makeToast(R.string.settings_force_clean_env_toast_failed)
+                        else makeToast(R.string.settings_permission_denied)
                     }
                     .setNegativeButton(android.R.string.cancel, null)
                     .show()
                 true
             }
+        }
+
+        override fun onResume() {
+            super.onResume()
+            configureDataIsolation()
         }
     }
 }
