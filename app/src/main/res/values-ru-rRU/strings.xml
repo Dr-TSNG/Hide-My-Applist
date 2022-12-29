@@ -16,6 +16,7 @@
     <string name="edit_list">Редактировать список</string>
     <string name="delete">Удалить</string>
     <string name="enabled">Включено</string>
+    <string name="disabled">Disabled</string>
     <string name="work_mode">Режим работы</string>
     <string name="blacklist">Чёрный список</string>
     <string name="whitelist">Белый список</string>
@@ -26,6 +27,7 @@
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="search">Поиск</string>
+    <string name="system">System</string>
     <!-- Home -->
     <string name="home_xposed_activated">Модуль активирован [%s-%d]</string>
     <string name="home_xposed_not_activated">Модуль не активирован</string>
@@ -64,6 +66,7 @@
     <string name="template_delete">Вы уверены, что хотите удалить шаблон?</string>
     <string name="template_name">Название шаблона</string>
     <string name="template_name_invalid">Неверное название</string>
+    <string name="template_delete_title">Delete Template</string>
     <string name="template_name_already_exist">Шаблон с таким названием уже существует</string>
     <string name="template_applied_count">Применено к %d приложениям</string>
     <string name="template_apps_visible_count">Видимы %d приложений</string>
@@ -84,8 +87,16 @@
     <string name="logs_saved">Логи сохранены</string>
     <!-- Settings -->
     <string name="settings_module">Модуль</string>
-    <string name="settings_force_mount_data">Принудительно монтировать хранилище в data для приложений, у которых target API ниже, чем 30</string>
-    <string name="settings_force_mount_data_summary">Это опция доступна только на Android 11 и выше</string>
+    <string name="settings_data_isolation">Data isolation</string>
+    <string name="settings_data_isolation_summary">App data: %s\nVold app data: %s\nForce mount: %s</string>
+    <string name="settings_data_isolation_unsupported">This option is only available on Android 11 and above</string>
+    <string name="settings_app_data_isolation">App data isolation</string>
+    <string name="settings_vold_app_data_isolation">Vold app data isolation</string>
+    <string name="settings_change_require_root">Changing requires root permission</string>
+    <string name="settings_need_reboot">Changing requires reboot</string>
+    <string name="settings_permission_denied">Permission denied</string>
+    <string name="settings_force_mount_data">Enforce data isolation for all apps</string>
+    <string name="settings_force_mount_data_summary">Data isolation is disabled for apps target API lower than 30 by default</string>
     <string name="settings_detail_log">Подробные логи для отладки</string>
     <string name="settings_max_log_size">Размер буфера логов</string>
     <string name="settings_hide_icon">Скрыть иконку модуля на главном экране</string>
@@ -107,7 +118,6 @@
     <string name="settings_force_clean_env">Принудительно очистить среду выполнения (root)</string>
     <string name="settings_force_clean_env_summary">Только если не удается запустить системную службу, в противном случае вам следует нажать на опцию выше.</string>
     <string name="settings_force_clean_env_toast_successful">Среда выполнения очищена успешно</string>
-    <string name="settings_force_clean_env_toast_failed">Отказано в доступе</string>
     <string name="settings_update">Обновления</string>
     <string name="settings_disable_update">Отключить уведомления об обновлениях</string>
     <string name="settings_receive_beta_update">Получать обновления до бета-версий</string>
