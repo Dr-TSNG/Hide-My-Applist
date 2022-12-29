@@ -21,7 +21,7 @@ import icu.nullptr.hidemyapplist.common.Constants
 import icu.nullptr.hidemyapplist.hmaApp
 import icu.nullptr.hidemyapplist.service.ConfigManager
 import icu.nullptr.hidemyapplist.service.PrefManager
-import icu.nullptr.hidemyapplist.service.ServiceHelper
+import icu.nullptr.hidemyapplist.service.ServiceClient
 import icu.nullptr.hidemyapplist.ui.util.makeToast
 import icu.nullptr.hidemyapplist.ui.util.setupToolbar
 import icu.nullptr.hidemyapplist.util.LangList
@@ -164,16 +164,16 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 ?.isEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
 
             findPreference<Preference>("stopSystemService")?.setOnPreferenceClickListener {
-                if (ServiceHelper.getServiceVersion() != 0) {
+                if (ServiceClient.serviceVersion != 0) {
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle(R.string.settings_is_clean_env)
                         .setMessage(R.string.settings_is_clean_env_summary)
                         .setPositiveButton(R.string.yes) { _, _ ->
-                            ServiceHelper.stopSystemService(true)
+                            ServiceClient.stopService(true)
                             makeToast(R.string.settings_stop_system_service)
                         }
                         .setNegativeButton(R.string.no) { _, _ ->
-                            ServiceHelper.stopSystemService(false)
+                            ServiceClient.stopService(false)
                             makeToast(R.string.settings_stop_system_service)
                         }
                         .setNeutralButton(android.R.string.cancel, null)

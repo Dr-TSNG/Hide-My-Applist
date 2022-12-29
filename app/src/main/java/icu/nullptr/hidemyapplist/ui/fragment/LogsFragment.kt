@@ -13,7 +13,7 @@ import com.tsng.hidemyapplist.R
 import com.tsng.hidemyapplist.databinding.FragmentLogsBinding
 import icu.nullptr.hidemyapplist.hmaApp
 import icu.nullptr.hidemyapplist.service.PrefManager
-import icu.nullptr.hidemyapplist.service.ServiceHelper
+import icu.nullptr.hidemyapplist.service.ServiceClient
 import icu.nullptr.hidemyapplist.ui.adapter.LogAdapter
 import icu.nullptr.hidemyapplist.ui.util.makeToast
 import icu.nullptr.hidemyapplist.ui.util.setupToolbar
@@ -44,7 +44,7 @@ class LogsFragment : Fragment(R.layout.fragment_logs) {
 
     private fun updateLogs() {
         lifecycleScope.launch {
-            logCache = ServiceHelper.getLogs()
+            logCache = ServiceClient.logs
             val raw = logCache?.split("\n")
             if (raw == null) {
                 binding.serviceOff.visibility = View.VISIBLE
@@ -80,7 +80,7 @@ class LogsFragment : Fragment(R.layout.fragment_logs) {
                 saveSAFLauncher.launch("hma_logs_$date.log")
             }
             R.id.menu_delete -> {
-                ServiceHelper.cleanLogs()
+                ServiceClient.clearLogs()
                 updateLogs()
             }
             R.id.menu_filter_debug -> {

@@ -23,7 +23,7 @@ import icu.nullptr.hidemyapplist.data.fetchLatestUpdate
 import icu.nullptr.hidemyapplist.hmaApp
 import icu.nullptr.hidemyapplist.service.ConfigManager
 import icu.nullptr.hidemyapplist.service.PrefManager
-import icu.nullptr.hidemyapplist.service.ServiceHelper
+import icu.nullptr.hidemyapplist.service.ServiceClient
 import icu.nullptr.hidemyapplist.ui.activity.AboutActivity
 import icu.nullptr.hidemyapplist.ui.util.ThemeUtils.getColor
 import icu.nullptr.hidemyapplist.ui.util.ThemeUtils.themeColor
@@ -132,7 +132,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onStart() {
         super.onStart()
-        val serviceVersion = ServiceHelper.getServiceVersion()
+        val serviceVersion = ServiceClient.serviceVersion
         val color = when {
             !hmaApp.isHooked -> getColor(R.color.gray)
             serviceVersion == 0 -> getColor(R.color.invalid)
@@ -146,19 +146,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         if (hmaApp.isHooked) {
             binding.moduleStatusIcon.setImageResource(R.drawable.outline_done_all_24)
             val versionNameSimple = BuildConfig.VERSION_NAME.substringBefore(".r")
-            binding.moduleStatus.text = String.format(getString(R.string.home_xposed_activated), versionNameSimple, BuildConfig.VERSION_CODE)
+            binding.moduleStatus.text = getString(R.string.home_xposed_activated, versionNameSimple, BuildConfig.VERSION_CODE)
         } else {
             binding.moduleStatusIcon.setImageResource(R.drawable.outline_extension_off_24)
             binding.moduleStatus.setText(R.string.home_xposed_not_activated)
         }
         if (serviceVersion != 0) {
             if (serviceVersion < icu.nullptr.hidemyapplist.common.BuildConfig.SERVICE_VERSION) {
-                binding.serviceStatus.text = String.format(getString(R.string.home_xposed_service_old))
+                binding.serviceStatus.text = getString(R.string.home_xposed_service_old)
             } else {
-                binding.serviceStatus.text = String.format(getString(R.string.home_xposed_service_on), serviceVersion)
+                binding.serviceStatus.text = getString(R.string.home_xposed_service_on, serviceVersion)
             }
             binding.filterCount.visibility = View.VISIBLE
-            binding.filterCount.text = String.format(getString(R.string.home_xposed_filter_count), ServiceHelper.getFilterCount())
+            binding.filterCount.text = getString(R.string.home_xposed_filter_count, ServiceClient.filterCount)
         } else {
             binding.serviceStatus.setText(R.string.home_xposed_service_off)
             binding.filterCount.visibility = View.GONE

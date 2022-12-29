@@ -35,7 +35,7 @@ object ConfigManager {
     private fun saveConfig() {
         val text = config.toString()
         configFile.writeText(text)
-        ServiceHelper.submitConfig(text)
+        ServiceClient.syncConfig(text)
     }
 
     var detailLog: Boolean
