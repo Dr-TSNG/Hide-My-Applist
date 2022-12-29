@@ -1,6 +1,3 @@
-# Magic
--keep class com.tsng.hidemyapplist.Magic { *; }
-
 # Xposed
 -keepclassmembers class icu.nullptr.hidemyapplist.MyApp {
     boolean isHooked;
@@ -14,3 +11,5 @@
 
 -keep class icu.nullptr.hidemyapplist.data.UpdateData { *; }
 -keep class icu.nullptr.hidemyapplist.data.UpdateData$* { *; }
+
+-keep,allowoptimization class * extends androidx.preference.PreferenceFragmentCompat

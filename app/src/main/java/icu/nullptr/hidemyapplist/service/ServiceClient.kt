@@ -45,7 +45,6 @@ object ServiceClient : IHMAService, DeathRecipient {
             pm.transact(Constants.TRANSACTION, data, reply, 0)
             reply.readException()
             val binder = reply.readStrongBinder()
-            binder.linkToDeath(this, 0)
             IHMAService.Stub.asInterface(binder)
         } catch (e: RemoteException) {
             Log.d(TAG, "Failed to get binder")
@@ -56,6 +55,7 @@ object ServiceClient : IHMAService, DeathRecipient {
         }
         if (remote != null) {
             Log.i(TAG, "Binder acquired")
+            remote.asBinder().linkToDeath(this, 0)
             service = Proxy.newProxyInstance(
                 javaClass.classLoader,
                 arrayOf(IHMAService::class.java),
