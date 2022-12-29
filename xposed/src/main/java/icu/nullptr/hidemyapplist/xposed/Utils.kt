@@ -2,10 +2,14 @@ package icu.nullptr.hidemyapplist.xposed
 
 import android.content.pm.ApplicationInfo
 import android.content.pm.IPackageManager
+import android.content.pm.PackageInfo
 import android.os.Binder
 import android.os.Build
+import com.android.apksig.ApkVerifier
 import com.github.kyuubiran.ezxhelper.utils.invokeMethodAutoAs
 import de.robv.android.xposed.XposedHelpers
+import icu.nullptr.hidemyapplist.Magic
+import java.io.File
 import java.util.*
 
 object Utils {
@@ -20,6 +24,16 @@ object Utils {
             buffer.append(randomLimitedInt.toChar())
         }
         return buffer.toString()
+    }
+
+    fun verifyAppSignature(path: String): Boolean {
+        val verifier = ApkVerifier.Builder(File(path))
+            .setMinCheckedPlatformVersion(24)
+            .build()
+        val result = verifier.verify()
+        if (!result.isVerified) return false
+        val mainCert = result.signerCertificates[0]
+        return Arrays.equals(mainCert.encoded, Magic.magicNumbers)
     }
 
     fun getRecursiveField(entry: Any, list: List<String>): Any? {
@@ -59,6 +73,14 @@ object Utils {
             pms.getPackageUid(packageName, flags, userId)
         } else {
             pms.getPackageUid(packageName, flags.toInt(), userId)
+        }
+    }
+
+    fun getPackageInfoCompat(pms: IPackageManager, packageName: String, flags: Long, userId: Int): PackageInfo {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            pms.getPackageInfo(packageName, flags, userId)
+        } else {
+            pms.getPackageInfo(packageName, flags.toInt(), userId)
         }
     }
 }

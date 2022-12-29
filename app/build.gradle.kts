@@ -1,6 +1,3 @@
-import com.android.ide.common.signing.KeystoreHelper
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.io.PrintStream
 import java.util.*
 
 val officialBuild: Boolean by rootProject.extra
@@ -25,6 +22,10 @@ android {
 
     buildFeatures {
         viewBinding = true
+    }
+
+    kotlinOptions {
+        jvmTarget = "11"
     }
 
     applicationVariants.all {
@@ -82,39 +83,6 @@ fun afterEval() = android.applicationVariants.forEach { variant ->
     val variantCapped = variant.name.capitalize(Locale.ROOT)
     val variantLowered = variant.name.toLowerCase(Locale.ROOT)
 
-    val outSrcDir = file("$buildDir/generated/source/signInfo/${variantLowered}")
-    val outSrc = file("$outSrcDir/com/tsng/hidemyapplist/Magic.java")
-    val signInfoTask = tasks.register("generate${variantCapped}SignInfo") {
-        dependsOn("validateSigning${variantCapped}")
-        outputs.file(outSrc)
-        doLast {
-            val sign = android.buildTypes[variantLowered].signingConfig
-            outSrc.parentFile.mkdirs()
-            val certificateInfo = KeystoreHelper.getCertificateInfo(
-                sign?.storeType,
-                sign?.storeFile,
-                sign?.storePassword,
-                sign?.keyPassword,
-                sign?.keyAlias
-            )
-            PrintStream(outSrc).apply {
-                println("package com.tsng.hidemyapplist;")
-                println("public final class Magic {")
-                print("public static final byte[] magicNumbers = {")
-                val bytes = certificateInfo.certificate.encoded
-                print(bytes.joinToString(",") { it.toString() })
-                println("};")
-                println("}")
-            }
-        }
-    }
-    variant.registerJavaGeneratingTask(signInfoTask, outSrcDir)
-
-    val kotlinCompileTask = tasks.findByName("compile${variantCapped}Kotlin") as KotlinCompile
-    kotlinCompileTask.dependsOn(signInfoTask)
-    val srcSet = objects.sourceDirectorySet("magic", "magic").srcDir(outSrcDir)
-    kotlinCompileTask.source(srcSet)
-
     task<Sync>("build$variantCapped") {
         dependsOn("assemble$variantCapped")
         from("$buildDir/outputs/apk/$variantLowered")
@@ -143,7 +111,7 @@ dependencies {
     implementation("com.github.liujingxing.rxhttp:converter-serialization:$rxhttpVersion")
     implementation("com.github.topjohnwu.libsu:core:5.0.3")
     implementation("com.google.android.material:material:1.7.0")
-    implementation("com.google.android.gms:play-services-ads:21.3.0")
+    implementation("com.google.android.gms:play-services-ads:21.4.0")
     implementation("com.google.firebase:firebase-analytics-ktx:21.2.0")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("dev.rikka.hidden:compat:3.4.3")

@@ -1,6 +1,5 @@
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.gradle.BaseExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.konan.properties.Properties
 
 buildscript {
@@ -100,12 +99,6 @@ fun Project.configureBaseExtension() {
             named("release") {
                 isShrinkResources = true
             }
-        }
-    }
-
-    extensions.findByType<KotlinCompile>()?.run {
-        kotlinOptions {
-            jvmTarget = "11"
         }
     }
 }
