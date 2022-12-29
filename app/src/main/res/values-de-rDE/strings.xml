@@ -16,6 +16,7 @@
     <string name="edit_list">Liste ändern</string>
     <string name="delete">Löschen</string>
     <string name="enabled">Aktiviert</string>
+    <string name="disabled">Disabled</string>
     <string name="work_mode">Arbeitsmodus</string>
     <string name="blacklist">Verweigerungsliste</string>
     <string name="whitelist">Zulassungsliste</string>
@@ -26,6 +27,7 @@
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <string name="search">Suchen</string>
+    <string name="system">System</string>
     <!-- Home -->
     <string name="home_xposed_activated">Modul aktiviert [%s-%d]</string>
     <string name="home_xposed_not_activated">Modul nicht aktiviert</string>
@@ -64,6 +66,7 @@
     <string name="template_delete">Are you sure to delete the template?</string>
     <string name="template_name">Template name</string>
     <string name="template_name_invalid">Name invalid</string>
+    <string name="template_delete_title">Delete Template</string>
     <string name="template_name_already_exist">Template name already exist</string>
     <string name="template_applied_count">Applied to %d apps</string>
     <string name="template_apps_visible_count">%d apps visible</string>
@@ -84,8 +87,16 @@
     <string name="logs_saved">Logs saved</string>
     <!-- Settings -->
     <string name="settings_module">Module</string>
-    <string name="settings_force_mount_data">Force bind mount data storage for apps whose target API lower than 30</string>
-    <string name="settings_force_mount_data_summary">This option is only available on Android 11 and above</string>
+    <string name="settings_data_isolation">Data isolation</string>
+    <string name="settings_data_isolation_summary">App data: %s\nVold app data: %s\nForce mount: %s</string>
+    <string name="settings_data_isolation_unsupported">This option is only available on Android 11 and above</string>
+    <string name="settings_app_data_isolation">App data isolation</string>
+    <string name="settings_vold_app_data_isolation">Vold app data isolation</string>
+    <string name="settings_change_require_root">Changing requires root permission</string>
+    <string name="settings_need_reboot">Changing requires reboot</string>
+    <string name="settings_permission_denied">Permission denied</string>
+    <string name="settings_force_mount_data">Enforce data isolation for all apps</string>
+    <string name="settings_force_mount_data_summary">Data isolation is disabled for apps target API lower than 30 by default</string>
     <string name="settings_detail_log">Detail log for debugging</string>
     <string name="settings_max_log_size">Logger buffer sizes</string>
     <string name="settings_hide_icon">Hide module icon in launcher</string>
@@ -107,7 +118,6 @@
     <string name="settings_force_clean_env">Reinigung der Laufzeitumgebung erzwingen (Root)</string>
     <string name="settings_force_clean_env_summary">Only if system service fails to start, otherwise you should click the above option.</string>
     <string name="settings_force_clean_env_toast_successful">Runtime environment cleaned</string>
-    <string name="settings_force_clean_env_toast_failed">Permission denied</string>
     <string name="settings_update">Update</string>
     <string name="settings_disable_update">Disable update notification</string>
     <string name="settings_receive_beta_update">Receive beta update</string>
