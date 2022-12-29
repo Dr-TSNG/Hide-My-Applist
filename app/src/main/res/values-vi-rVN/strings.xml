@@ -16,6 +16,7 @@
     <string name="edit_list">Sửa danh sách</string>
     <string name="delete">Xóa</string>
     <string name="enabled">Bật</string>
+    <string name="disabled">Disabled</string>
     <string name="work_mode">Chế độ hoạt động</string>
     <string name="blacklist">DS đen</string>
     <string name="whitelist">DS trắng</string>
@@ -26,6 +27,7 @@
     <string name="yes">Có</string>
     <string name="no">Không</string>
     <string name="search">Tìm</string>
+    <string name="system">System</string>
     <!-- Home -->
     <string name="home_xposed_activated">Mô đun đã kích hoạt [%s-%d]</string>
     <string name="home_xposed_not_activated">Mô đun ko kích hoạt</string>
@@ -64,6 +66,7 @@
     <string name="template_delete">Bạn có chắc chắn xóa mẫu không?</string>
     <string name="template_name">Tên mẫu</string>
     <string name="template_name_invalid">Tên không hợp lệ</string>
+    <string name="template_delete_title">Delete Template</string>
     <string name="template_name_already_exist">Tên mẫu đã tồn tại</string>
     <string name="template_applied_count">Applied to %d apps</string>
     <string name="template_apps_visible_count">%d ứng dụng hiện hình</string>
@@ -84,8 +87,16 @@
     <string name="logs_saved">Đã lưu nhật ký</string>
     <!-- Settings -->
     <string name="settings_module">Mô đun</string>
-    <string name="settings_force_mount_data">Buộc lưu trữ dữ liệu gắn kết liên kết cho các ứng dụng có API mục tiêu thấp hơn 30</string>
-    <string name="settings_force_mount_data_summary">Tùy chọn chỉ khả dụng trên Android 11 về sau</string>
+    <string name="settings_data_isolation">Data isolation</string>
+    <string name="settings_data_isolation_summary">App data: %s\nVold app data: %s\nForce mount: %s</string>
+    <string name="settings_data_isolation_unsupported">This option is only available on Android 11 and above</string>
+    <string name="settings_app_data_isolation">App data isolation</string>
+    <string name="settings_vold_app_data_isolation">Vold app data isolation</string>
+    <string name="settings_change_require_root">Changing requires root permission</string>
+    <string name="settings_need_reboot">Changing requires reboot</string>
+    <string name="settings_permission_denied">Permission denied</string>
+    <string name="settings_force_mount_data">Enforce data isolation for all apps</string>
+    <string name="settings_force_mount_data_summary">Data isolation is disabled for apps target API lower than 30 by default</string>
     <string name="settings_detail_log">Nhật ký chi tiết gỡ lỗi</string>
     <string name="settings_max_log_size">Kích cỡ bộ đệm nhật ký</string>
     <string name="settings_hide_icon">Ẩn mô đun trong Trình khởi chạy</string>
@@ -107,7 +118,6 @@
     <string name="settings_force_clean_env">Buộc môi trường thời gian chạy sạch (root)</string>
     <string name="settings_force_clean_env_summary">Chỉ khi dịch vụ hệ thống không khởi động được, nếu không bạn nên nhấp vào tùy chọn trên.</string>
     <string name="settings_force_clean_env_toast_successful">Môi trường Runtime đã sạch</string>
-    <string name="settings_force_clean_env_toast_failed">Từ chối cấp quyền</string>
     <string name="settings_update">Cập nhật</string>
     <string name="settings_disable_update">Tắt thông báo</string>
     <string name="settings_receive_beta_update">Nhận bản beta</string>

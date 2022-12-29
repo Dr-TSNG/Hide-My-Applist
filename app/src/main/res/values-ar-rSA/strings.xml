@@ -16,6 +16,7 @@
     <string name="edit_list">تعديـل القائـمة</string>
     <string name="delete">حـذف</string>
     <string name="enabled">مفعّـل</string>
+    <string name="disabled">Disabled</string>
     <string name="work_mode">نـظام العـمل</string>
     <string name="blacklist">القائـمة السوداء</string>
     <string name="whitelist">القائمة البيضاء</string>
@@ -26,6 +27,7 @@
     <string name="yes">نعـم</string>
     <string name="no">لا</string>
     <string name="search">بحث</string>
+    <string name="system">System</string>
     <!-- Home -->
     <string name="home_xposed_activated">الوحـدة مفعـلة [%s-%d]</string>
     <string name="home_xposed_not_activated">الوحـدة غير مفعـلة</string>
@@ -64,6 +66,7 @@
     <string name="template_delete">هل أنت متأكد من حذف هذا القالب؟</string>
     <string name="template_name">اسم القالب</string>
     <string name="template_name_invalid">الاسم غير صالح</string>
+    <string name="template_delete_title">Delete Template</string>
     <string name="template_name_already_exist">اسم القالب موجود بالفعل</string>
     <string name="template_applied_count">مطبق علي %d تطبيقات</string>
     <string name="template_apps_visible_count">%d تطبيقات مرئية</string>
@@ -84,8 +87,16 @@
     <string name="logs_saved">تم حفظ السجلات</string>
     <!-- Settings -->
     <string name="settings_module">الوحدة</string>
-    <string name="settings_force_mount_data">فرض ربط تحميل تخزين البيانات للتطبيقات التي قد يكون الـ API لها أقل من 30</string>
-    <string name="settings_force_mount_data_summary">هذا الخِيار متاح فقط في إصدارات أندرويد ١١ وأعلي</string>
+    <string name="settings_data_isolation">Data isolation</string>
+    <string name="settings_data_isolation_summary">App data: %s\nVold app data: %s\nForce mount: %s</string>
+    <string name="settings_data_isolation_unsupported">This option is only available on Android 11 and above</string>
+    <string name="settings_app_data_isolation">App data isolation</string>
+    <string name="settings_vold_app_data_isolation">Vold app data isolation</string>
+    <string name="settings_change_require_root">Changing requires root permission</string>
+    <string name="settings_need_reboot">Changing requires reboot</string>
+    <string name="settings_permission_denied">Permission denied</string>
+    <string name="settings_force_mount_data">Enforce data isolation for all apps</string>
+    <string name="settings_force_mount_data_summary">Data isolation is disabled for apps target API lower than 30 by default</string>
     <string name="settings_detail_log">سجل مُفصل للتصحيح</string>
     <string name="settings_max_log_size">أحجام التخزين المؤقت للمسجل</string>
     <string name="settings_hide_icon">إخفاء أيقونة الوحدة من قائمة التطبيقات</string>
@@ -107,7 +118,6 @@
     <string name="settings_force_clean_env">إجبار تنظيف بيئة العمل (جذر)</string>
     <string name="settings_force_clean_env_summary">فقط إذا فشلت خدمة النظام في البَدْء، وإلا يجب عليك أن تضغط علي الخِيار أعلاه.</string>
     <string name="settings_force_clean_env_toast_successful">تـم تنظيف بيئة التشغيل</string>
-    <string name="settings_force_clean_env_toast_failed">الإذن مرفوض</string>
     <string name="settings_update">تحديث</string>
     <string name="settings_disable_update">إيقاف إشعارات التحديث</string>
     <string name="settings_receive_beta_update">استقبال تحديثات الـبِيتا</string>

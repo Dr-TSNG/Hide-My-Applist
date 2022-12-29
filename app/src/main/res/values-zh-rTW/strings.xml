@@ -16,6 +16,7 @@
     <string name="edit_list">編輯列表</string>
     <string name="delete">刪除</string>
     <string name="enabled">啟用</string>
+    <string name="disabled">Disabled</string>
     <string name="work_mode">工作模式</string>
     <string name="blacklist">黑名單</string>
     <string name="whitelist">白名單</string>
@@ -26,6 +27,7 @@
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="search">搜索</string>
+    <string name="system">System</string>
     <!-- Home -->
     <string name="home_xposed_activated">模組已啟用 [%s-%d]</string>
     <string name="home_xposed_not_activated">模組未啟用</string>
@@ -64,6 +66,7 @@
     <string name="template_delete">你確定要刪除該模板嗎?</string>
     <string name="template_name">模板名稱</string>
     <string name="template_name_invalid">名稱無效</string>
+    <string name="template_delete_title">Delete Template</string>
     <string name="template_name_already_exist">模板名稱已經存在</string>
     <string name="template_applied_count">已對 %d 個應用程式啟用</string>
     <string name="template_apps_visible_count">對 %d 個應用程式顯示</string>
@@ -84,8 +87,16 @@
     <string name="logs_saved">日誌已儲存</string>
     <!-- Settings -->
     <string name="settings_module">模塊</string>
-    <string name="settings_force_mount_data">於目標 API 低於 30 的應用，強制繫結掛載資料儲存</string>
-    <string name="settings_force_mount_data_summary">該選項僅適用於 Android 11 及以上的系統，開啟後還受到檢測可能須重新啟動您的設備，並檢查 Android/data 及 Android/obb 下是否有相對應的目錄，如果有請手動刪除 (某些應用在啟動後可能會重新生產相對應目錄)</string>
+    <string name="settings_data_isolation">Data isolation</string>
+    <string name="settings_data_isolation_summary">App data: %s\nVold app data: %s\nForce mount: %s</string>
+    <string name="settings_data_isolation_unsupported">This option is only available on Android 11 and above</string>
+    <string name="settings_app_data_isolation">App data isolation</string>
+    <string name="settings_vold_app_data_isolation">Vold app data isolation</string>
+    <string name="settings_change_require_root">Changing requires root permission</string>
+    <string name="settings_need_reboot">Changing requires reboot</string>
+    <string name="settings_permission_denied">Permission denied</string>
+    <string name="settings_force_mount_data">Enforce data isolation for all apps</string>
+    <string name="settings_force_mount_data_summary">Data isolation is disabled for apps target API lower than 30 by default</string>
     <string name="settings_detail_log">除錯用的詳細日誌</string>
     <string name="settings_max_log_size">記錄器的緩衝區大小</string>
     <string name="settings_hide_icon">在啟動器中隱藏圖示</string>
@@ -107,7 +118,6 @@
     <string name="settings_force_clean_env">強制清理執行環境 (root)</string>
     <string name="settings_force_clean_env_summary">只有在系統服務無法啟動的情況下使用</string>
     <string name="settings_force_clean_env_toast_successful">執行環境已清理</string>
-    <string name="settings_force_clean_env_toast_failed">root 使用權限被拒絕</string>
     <string name="settings_update">更新</string>
     <string name="settings_disable_update">禁用更新通知</string>
     <string name="settings_receive_beta_update">接收 Beta 版更新</string>

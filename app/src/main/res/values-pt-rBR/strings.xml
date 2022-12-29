@@ -10,12 +10,13 @@
     <string name="title_app_select">Selecionar aplicativo</string>
     <string name="title_app_settings">Configurações do aplicativo</string>
     <string name="title_about">Sobre</string>
-    <string name="do_not_dual">Do not install HMA to secondary user</string>
+    <string name="do_not_dual">Não instale HMA no usuário secundário</string>
     <string name="show_crash_log">Mostrar registro do crash</string>
     <string name="config_damaged">Arquivo de configuração danificado. Por favor limpe os dados do aplicativo</string>
     <string name="edit_list">Editar lista</string>
     <string name="delete">Deletar</string>
     <string name="enabled">Ligado</string>
+    <string name="disabled">Disabled</string>
     <string name="work_mode">Modo de trabalho</string>
     <string name="blacklist">Lista negra</string>
     <string name="whitelist">Lista branca</string>
@@ -26,6 +27,7 @@
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="search">Pesquisar</string>
+    <string name="system">System</string>
     <!-- Home -->
     <string name="home_xposed_activated">Módulo ativado [%s-%d]</string>
     <string name="home_xposed_not_activated">Módulo não ativado</string>
@@ -50,13 +52,13 @@
     <string name="home_new_update">Nova atualização acessível: %s</string>
     <string name="home_update">Atualização: %s</string>
     <!-- App select -->
-    <string name="list_show_system">Show system apps</string>
+    <string name="list_show_system">Mostrar apps do sistema</string>
     <string name="list_sorting">Ordenar</string>
-    <string name="list_reverse_order">Reverse order</string>
-    <string name="list_sort_by_label">By app name</string>
-    <string name="list_sort_by_package_name">By package name</string>
-    <string name="list_sort_by_install_time">By install time</string>
-    <string name="list_sort_by_update_time">By update time</string>
+    <string name="list_reverse_order">Ordem reversa</string>
+    <string name="list_sort_by_label">Pelo nome</string>
+    <string name="list_sort_by_package_name">Pelo nome do pacote</string>
+    <string name="list_sort_by_install_time">Pela data de instalação</string>
+    <string name="list_sort_by_update_time">Pela data de atualização</string>
     <!-- Template manage -->
     <string name="template_usage_hint">Establish templates for \"restless\" apps, controlling applist they can obtain.\n\nBlacklist (recommended): the apps selected in the template will be invisible to the apps applying the template.\nWhitelist: the apps not selected in the template will be invisible to the apps applying the template.</string>
     <string name="template_new_blacklist">Create a blacklist template</string>
@@ -64,6 +66,7 @@
     <string name="template_delete">Are you sure to delete the template?</string>
     <string name="template_name">Template name</string>
     <string name="template_name_invalid">Name invalid</string>
+    <string name="template_delete_title">Delete Template</string>
     <string name="template_name_already_exist">Template name already exist</string>
     <string name="template_applied_count">Applied to %d apps</string>
     <string name="template_apps_visible_count">%d apps visible</string>
@@ -84,8 +87,16 @@
     <string name="logs_saved">Logs saved</string>
     <!-- Settings -->
     <string name="settings_module">Module</string>
-    <string name="settings_force_mount_data">Force bind mount data storage for apps whose target API lower than 30</string>
-    <string name="settings_force_mount_data_summary">This option is only available on Android 11 and above</string>
+    <string name="settings_data_isolation">Data isolation</string>
+    <string name="settings_data_isolation_summary">App data: %s\nVold app data: %s\nForce mount: %s</string>
+    <string name="settings_data_isolation_unsupported">This option is only available on Android 11 and above</string>
+    <string name="settings_app_data_isolation">App data isolation</string>
+    <string name="settings_vold_app_data_isolation">Vold app data isolation</string>
+    <string name="settings_change_require_root">Changing requires root permission</string>
+    <string name="settings_need_reboot">Changing requires reboot</string>
+    <string name="settings_permission_denied">Permission denied</string>
+    <string name="settings_force_mount_data">Enforce data isolation for all apps</string>
+    <string name="settings_force_mount_data_summary">Data isolation is disabled for apps target API lower than 30 by default</string>
     <string name="settings_detail_log">Detail log for debugging</string>
     <string name="settings_max_log_size">Logger buffer sizes</string>
     <string name="settings_hide_icon">Hide module icon in launcher</string>
@@ -107,7 +118,6 @@
     <string name="settings_force_clean_env">Forçar a limpar o ambiente do runtime (root)</string>
     <string name="settings_force_clean_env_summary">Apenas se o serviço de sistema falhar ao iniciar, por outro lado, você deve clicar acima da opção.</string>
     <string name="settings_force_clean_env_toast_successful">Ambiente do runtime limpado</string>
-    <string name="settings_force_clean_env_toast_failed">Permissão negado</string>
     <string name="settings_update">Atualize</string>
     <string name="settings_disable_update">Desabilitar notificações de atualizações</string>
     <string name="settings_receive_beta_update">Receber atualizações beta</string>

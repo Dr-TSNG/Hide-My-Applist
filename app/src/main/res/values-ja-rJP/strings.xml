@@ -16,6 +16,7 @@
     <string name="edit_list">リストの編集</string>
     <string name="delete">削除</string>
     <string name="enabled">有効</string>
+    <string name="disabled">Disabled</string>
     <string name="work_mode">作業モード</string>
     <string name="blacklist">ブラックリスト</string>
     <string name="whitelist">ホワイトリスト</string>
@@ -26,6 +27,7 @@
     <string name="yes">はい</string>
     <string name="no">いいえ</string>
     <string name="search">Search</string>
+    <string name="system">System</string>
     <!-- Home -->
     <string name="home_xposed_activated">モジュールは有効です [%s-%d]</string>
     <string name="home_xposed_not_activated">モジュールは無効です</string>
@@ -64,6 +66,7 @@
     <string name="template_delete">テンプレートを削除してもよろしいですか？</string>
     <string name="template_name">テンプレート名</string>
     <string name="template_name_invalid">無効な名前</string>
+    <string name="template_delete_title">Delete Template</string>
     <string name="template_name_already_exist">このテンプレート名は既に存在します</string>
     <string name="template_applied_count">%d 個のアプリに適用</string>
     <string name="template_apps_visible_count">%d 個のアプリが表示されます</string>
@@ -84,8 +87,16 @@
     <string name="logs_saved">ログを保存しました</string>
     <!-- Settings -->
     <string name="settings_module">モジュール</string>
-    <string name="settings_force_mount_data">ターゲット API が 30 未満のアプリを強制的にdataにマウント</string>
-    <string name="settings_force_mount_data_summary">このオプションは、Android 11 以降でのみ使用できます</string>
+    <string name="settings_data_isolation">Data isolation</string>
+    <string name="settings_data_isolation_summary">App data: %s\nVold app data: %s\nForce mount: %s</string>
+    <string name="settings_data_isolation_unsupported">This option is only available on Android 11 and above</string>
+    <string name="settings_app_data_isolation">App data isolation</string>
+    <string name="settings_vold_app_data_isolation">Vold app data isolation</string>
+    <string name="settings_change_require_root">Changing requires root permission</string>
+    <string name="settings_need_reboot">Changing requires reboot</string>
+    <string name="settings_permission_denied">Permission denied</string>
+    <string name="settings_force_mount_data">Enforce data isolation for all apps</string>
+    <string name="settings_force_mount_data_summary">Data isolation is disabled for apps target API lower than 30 by default</string>
     <string name="settings_detail_log">デバッグ用詳細ログ</string>
     <string name="settings_max_log_size">ロガーのバッファサイズ</string>
     <string name="settings_hide_icon">ランチャーでモジュール アイコンを非表示にする</string>
@@ -107,7 +118,6 @@
     <string name="settings_force_clean_env">クリーンなランタイム環境を強制する(root)</string>
     <string name="settings_force_clean_env_summary">システム サービスの開始に失敗した場合のみ、それ以外の場合は上記のオプションをクリックする必要があります。</string>
     <string name="settings_force_clean_env_toast_successful">ランタイムのクリーン</string>
-    <string name="settings_force_clean_env_toast_failed">アクセス拒否</string>
     <string name="settings_update">アップデート</string>
     <string name="settings_disable_update">アップデートの通知を無効にする</string>
     <string name="settings_receive_beta_update">ベータ版アップデートを受け取る</string>
