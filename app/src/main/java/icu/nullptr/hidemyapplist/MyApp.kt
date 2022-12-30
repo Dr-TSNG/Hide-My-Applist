@@ -3,6 +3,7 @@ package icu.nullptr.hidemyapplist
 import android.annotation.SuppressLint
 import android.app.Application
 import com.tsng.hidemyapplist.R
+import icu.nullptr.hidemyapplist.service.ConfigManager
 import icu.nullptr.hidemyapplist.service.PrefManager
 import icu.nullptr.hidemyapplist.ui.receiver.AppChangeReceiver
 import icu.nullptr.hidemyapplist.ui.util.makeToast
@@ -37,6 +38,7 @@ class MyApp : Application() {
         }
         hmaApp = this
         AppChangeReceiver.register(this)
+        ConfigManager.init()
 
         DayNightDelegate.setApplicationContext(this)
         DayNightDelegate.setDefaultNightMode(PrefManager.darkTheme)

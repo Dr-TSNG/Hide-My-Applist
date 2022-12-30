@@ -27,7 +27,7 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
     private val systemApps = mutableSetOf<String>()
     private val frameworkHooks = mutableSetOf<IFrameworkHook>()
 
-    var config = JsonConfig()
+    var config = JsonConfig().apply { detailLog = true }
         private set
 
     var filterCount = 0
@@ -92,7 +92,7 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
             logE(TAG, "Failed to parse config.json", it)
             return
         }
-        if (loading.configVersion != BuildConfig.SERVICE_VERSION) {
+        if (loading.configVersion != BuildConfig.CONFIG_VERSION) {
             logW(TAG, "Config version mismatch, need to reload")
             return
         }
@@ -171,7 +171,7 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
         synchronized(configLock) {
             configFile.writeText(json)
             val newConfig = JsonConfig.parse(json)
-            if (newConfig.configVersion != BuildConfig.SERVICE_VERSION) {
+            if (newConfig.configVersion != BuildConfig.CONFIG_VERSION) {
                 logW(TAG, "Sync config: version mismatch, need reboot")
                 return
             }
@@ -185,7 +185,9 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
 
     override fun getFilterCount() = filterCount
 
-    override fun getLogs() = synchronized(loggerLock) { logFile.readText() }
+    override fun getLogs() = synchronized(loggerLock) {
+        logFile.readText()
+    }
 
     override fun clearLogs() {
         synchronized(loggerLock) {

@@ -12,7 +12,7 @@ private val encoder = Json {
 
 @Serializable
 data class JsonConfig(
-    var configVersion: Int = BuildConfig.SERVICE_VERSION,
+    var configVersion: Int = BuildConfig.CONFIG_VERSION,
     var detailLog: Boolean = false,
     var maxLogSize: Int = 512,
     var forceMountData: Boolean = true,

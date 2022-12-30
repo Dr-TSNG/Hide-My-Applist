@@ -17,14 +17,15 @@ object ConfigManager {
     private lateinit var config: JsonConfig
     val configFile = File("${hmaApp.filesDir.absolutePath}/config.json")
 
-    init {
-        if (!configFile.exists())
+    fun init() {
+        if (!configFile.exists()) {
             configFile.writeText(JsonConfig().toString())
+        }
         runCatching {
             config = JsonConfig.parse(configFile.readText())
             val configVersion = config.configVersion
             if (configVersion < 65) throw RuntimeException("Config version too old")
-            config.configVersion = BuildConfig.SERVICE_VERSION
+            config.configVersion = BuildConfig.CONFIG_VERSION
             saveConfig()
         }.onFailure {
             makeToast(R.string.config_damaged)
@@ -63,7 +64,7 @@ object ConfigManager {
 
     fun importConfig(json: String) {
         config = JsonConfig.parse(json)
-        config.configVersion = BuildConfig.SERVICE_VERSION
+        config.configVersion = BuildConfig.CONFIG_VERSION
         saveConfig()
     }
 
