@@ -35,7 +35,7 @@ val minSdkVer by extra(24)
 val targetSdkVer by extra(33)
 val buildToolsVer by extra("33.0.1")
 
-val appVerName by extra("3.1.0-beta")
+val appVerName by extra("3.1.1")
 val configVerCode by extra(90)
 val serviceVerCode by extra(95)
 val minBackupVerCode by extra(65)
