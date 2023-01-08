@@ -16,7 +16,7 @@
     <string name="edit_list">Éditer la liste</string>
     <string name="delete">Supprimer</string>
     <string name="enabled">Activer</string>
-    <string name="disabled">Disabled</string>
+    <string name="disabled">Désactivé</string>
     <string name="work_mode">Mode travail</string>
     <string name="blacklist">Liste noir</string>
     <string name="whitelist">Liste blanche</string>
@@ -27,7 +27,7 @@
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="search">Rechercher</string>
-    <string name="system">System</string>
+    <string name="system">Système</string>
     <!-- Home -->
     <string name="home_xposed_activated">Module Actif [%s-%d]</string>
     <string name="home_xposed_not_activated">Module Inactivé</string>
@@ -87,16 +87,16 @@
     <string name="logs_saved">Journeaux sauvegardés</string>
     <!-- Settings -->
     <string name="settings_module">Module</string>
-    <string name="settings_data_isolation">Data isolation</string>
+    <string name="settings_data_isolation">Isolation des données</string>
     <string name="settings_data_isolation_summary">App data: %s\nVold app data: %s\nForce mount: %s</string>
-    <string name="settings_data_isolation_unsupported">This option is only available on Android 11 and above</string>
-    <string name="settings_app_data_isolation">App data isolation</string>
-    <string name="settings_vold_app_data_isolation">Vold app data isolation</string>
-    <string name="settings_change_require_root">Changing requires root permission</string>
-    <string name="settings_need_reboot">Changing requires reboot</string>
-    <string name="settings_permission_denied">Permission denied</string>
-    <string name="settings_force_mount_data">Enforce data isolation for all apps</string>
-    <string name="settings_force_mount_data_summary">Data isolation is disabled for apps target API lower than 30 by default</string>
+    <string name="settings_data_isolation_unsupported">Cette option est uniquement disponible sur Android 11 et supérieur</string>
+    <string name="settings_app_data_isolation">Isolation des données d\'application</string>
+    <string name="settings_vold_app_data_isolation">Forcer l\'isolement des données d\'application</string>
+    <string name="settings_change_require_root">Changer les permissions d\'accès à la racine requises</string>
+    <string name="settings_need_reboot">La modification nécessite un redémarrage</string>
+    <string name="settings_permission_denied">Permission refusée</string>
+    <string name="settings_force_mount_data">Assurer l\'isolement des données pour toutes les applications</string>
+    <string name="settings_force_mount_data_summary">Isolation des données désactivée par défaut pour les applications dont l\'API ciblée est inférieure à 30</string>
     <string name="settings_detail_log">Journeaux détaillés pour débugguage</string>
     <string name="settings_max_log_size">Tailles du tampon d\'enregistrement</string>
     <string name="settings_hide_icon">Masquer l\'icône du module dans le lanceur</string>
