@@ -99,7 +99,7 @@ dependencies {
     implementation(projects.common)
     runtimeOnly(projects.xposed)
 
-    val rxhttpVersion = "3.0.0"
+    val rxhttpVersion = "3.0.1"
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
     implementation("androidx.preference:preference-ktx:1.2.0")
