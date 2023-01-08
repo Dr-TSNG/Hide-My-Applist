@@ -32,7 +32,7 @@
     <string name="home_xposed_activated">Модуль активирован [%s-%d]</string>
     <string name="home_xposed_not_activated">Модуль не активирован</string>
     <string name="home_xposed_service_on">Системная служба работает [%d]</string>
-    <string name="home_xposed_service_off">Системная служба не работает [%d]</string>
+    <string name="home_xposed_service_off">Системная служба не работает</string>
     <string name="home_xposed_service_old">Модуль был обновлён, требуется перезагрузка</string>
     <string name="home_xposed_filter_count">Всего Hide My Applist отфильтровал %d запросов</string>
     <string name="home_manage">Управление</string>
