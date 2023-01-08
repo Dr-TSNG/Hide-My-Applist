@@ -37,7 +37,7 @@ val buildToolsVer by extra("33.0.1")
 
 val appVerName by extra("3.1.0-beta")
 val configVerCode by extra(90)
-val serviceVerCode by extra(94)
+val serviceVerCode by extra(95)
 val minBackupVerCode by extra(65)
 
 val androidSourceCompatibility = JavaVersion.VERSION_11
