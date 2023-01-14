@@ -2,7 +2,7 @@
 
 [![Stars](https://img.shields.io/github/stars/Dr-TSNG/Hide-My-Applist?label=Stars)](https://github.com/Dr-TSNG)
 [![Crowdin](https://badges.crowdin.net/hide-my-applist/localized.svg)](https://crowdin.com/project/hide-my-applist)
-[![Build](https://img.shields.io/github/workflow/status/Dr-TSNG/Hide-My-Applist/Main?logo=github)](https://github.com/Dr-TSNG/Hide-My-Applist/actions)
+[![Build](https://img.shields.io/github/actions/workflow/status/Dr-TSNG/Hide-My-Applist/main.yml?branch=master&logo=github)](https://github.com/Dr-TSNG/Hide-My-Applist/actions)
 [![Release](https://img.shields.io/github/v/release/Dr-TSNG/Hide-My-Applist?label=Release)](https://github.com/Dr-TSNG/Hide-My-Applist/releases/latest)
 [![Download](https://img.shields.io/github/downloads/Dr-TSNG/Hide-My-Applist/total)](https://github.com/Dr-TSNG/Hide-My-Applist/releases/latest)
 [![Channel](https://img.shields.io/badge/Telegram-Channel-blue.svg?logo=telegram)](https://t.me/HideMyApplist)
