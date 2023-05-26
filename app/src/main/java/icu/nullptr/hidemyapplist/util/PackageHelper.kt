@@ -69,7 +69,7 @@ object PackageHelper {
         hmaApp.globalScope.launch {
             mRefreshing.emit(true)
             val cache = withContext(Dispatchers.IO) {
-                val packages = pm.getInstalledPackages(0)
+                val packages = pm.getInstalledPackages(PackageManager.MATCH_UNINSTALLED_PACKAGES)
                 mutableMapOf<String, PackageCache>().also {
                     for (packageInfo in packages) {
                         if (packageInfo.packageName in Constants.packagesShouldNotHide) continue
