@@ -20,6 +20,6 @@ android {
 }
 
 dependencies {
-    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     compileOnly("dev.rikka.hidden:stub:3.4.3")
 }
