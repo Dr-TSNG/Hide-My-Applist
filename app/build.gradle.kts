@@ -3,29 +3,26 @@ import java.util.*
 val officialBuild: Boolean by rootProject.extra
 
 plugins {
-    kotlin("android")
-    kotlin("plugin.serialization")
-    id("com.android.application")
-    id("com.google.devtools.ksp")
-    id("dev.rikka.tools.autoresconfig")
-    id("dev.rikka.tools.materialthemebuilder")
-    id("dev.rikka.tools.refine")
-    id("androidx.navigation.safeargs.kotlin")
+    alias(libs.plugins.agp.app)
+    alias(libs.plugins.autoresconfig)
+    alias(libs.plugins.materialthemebuilder)
+    alias(libs.plugins.refine)
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.nav.safeargs.kotlin)
 }
 
 if (officialBuild) {
-    plugins.apply("com.google.gms.google-services")
+    plugins.apply(libs.plugins.gms.get().pluginId)
 }
 
 android {
     namespace = "com.tsng.hidemyapplist"
 
     buildFeatures {
+        buildConfig = true
         viewBinding = true
-    }
-
-    kotlinOptions {
-        jvmTarget = "11"
     }
 
     applicationVariants.all {
@@ -35,6 +32,10 @@ android {
             }
         }
     }
+}
+
+kotlin {
+    jvmToolchain(17)
 }
 
 autoResConfig {
@@ -99,27 +100,27 @@ dependencies {
     implementation(projects.common)
     runtimeOnly(projects.xposed)
 
-    val rxhttpVersion = "3.0.1"
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
-    implementation("androidx.preference:preference-ktx:1.2.0")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-    implementation("com.drakeet.about:about:2.5.2")
-    implementation("com.drakeet.multitype:multitype:4.3.0")
-    implementation("com.github.kirich1409:viewbindingpropertydelegate:1.5.6")
-    implementation("com.github.liujingxing.rxhttp:rxhttp:$rxhttpVersion")
-    implementation("com.github.liujingxing.rxhttp:converter-serialization:$rxhttpVersion")
-    implementation("com.github.topjohnwu.libsu:core:5.0.3")
-    implementation("com.google.android.material:material:1.7.0")
-    implementation("com.google.android.gms:play-services-ads:21.4.0")
-    implementation("com.google.firebase:firebase-analytics-ktx:21.2.0")
-    implementation("com.squareup.okhttp3:okhttp:4.10.0")
-    implementation("dev.rikka.hidden:compat:3.4.3")
-    implementation("dev.rikka.rikkax.material:material:2.5.1")
-    implementation("dev.rikka.rikkax.material:material-preference:2.0.0")
-    implementation("me.zhanghai.android.appiconloader:appiconloader:1.5.0")
-    compileOnly("dev.rikka.hidden:stub:3.4.3")
-    ksp("com.github.liujingxing.rxhttp:rxhttp-compiler:$rxhttpVersion")
+    implementation(platform(libs.com.google.firebase.bom))
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.preference.ktx)
+    implementation(libs.androidx.swiperefreshlayout)
+    implementation(libs.com.drakeet.about)
+    implementation(libs.com.drakeet.multitype)
+    implementation(libs.com.github.kirich1409.viewbindingpropertydelegate)
+    implementation(libs.com.github.liujingxing.rxhttp)
+    implementation(libs.com.github.liujingxing.rxhttp.converter.serialization)
+    implementation(libs.com.github.topjohnwu.libsu.core)
+    implementation(libs.com.google.android.material)
+    implementation(libs.com.google.android.gms.play.services.ads)
+    implementation(libs.com.google.firebase.analytics.ktx)
+    implementation(libs.com.squareup.okhttp3)
+    implementation(libs.dev.rikka.hidden.compat)
+    implementation(libs.dev.rikka.rikkax.material)
+    implementation(libs.dev.rikka.rikkax.material.preference)
+    implementation(libs.me.zhanghai.android.appiconloader)
+    compileOnly(libs.dev.rikka.hidden.stub)
+    ksp(libs.com.github.liujingxing.rxhttp.compiler)
 }
 
 configurations.all {

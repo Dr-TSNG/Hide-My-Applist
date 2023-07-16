@@ -2,23 +2,12 @@ import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.gradle.BaseExtension
 import org.jetbrains.kotlin.konan.properties.Properties
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath(kotlin("gradle-plugin", version = "1.8.0"))
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
-        classpath("com.android.tools.build:gradle:7.3.1")
-        classpath("com.google.gms:google-services:4.3.14")
-    }
-}
-
 plugins {
-    id("com.android.application") apply false
-    id("com.android.library") apply false
-    kotlin("android") apply false
+    alias(libs.plugins.kotlin) apply false
+    alias(libs.plugins.agp.app) apply false
+    alias(libs.plugins.agp.lib) apply false
+    alias(libs.plugins.gms) apply false
+    alias(libs.plugins.nav.safeargs.kotlin) apply false
 }
 
 fun String.execute(currentWorkingDir: File = file("./")): String {
@@ -31,20 +20,20 @@ fun String.execute(currentWorkingDir: File = file("./")): String {
     return String(byteOut.toByteArray()).trim()
 }
 
+val gitCommitCount = "git rev-list HEAD --count".execute().toInt()
+val gitCommitHash = "git rev-parse --verify --short HEAD".execute()
+
 val minSdkVer by extra(24)
-val targetSdkVer by extra(33)
-val buildToolsVer by extra("33.0.1")
+val targetSdkVer by extra(34)
+val buildToolsVer by extra("34.0.0")
 
 val appVerName by extra("3.1.1")
 val configVerCode by extra(90)
 val serviceVerCode by extra(95)
 val minBackupVerCode by extra(65)
 
-val androidSourceCompatibility = JavaVersion.VERSION_11
-val androidTargetCompatibility = JavaVersion.VERSION_11
-
-val gitCommitCount = "git rev-list HEAD --count".execute().toInt()
-val gitCommitHash = "git rev-parse --verify --short HEAD".execute()
+val androidSourceCompatibility = JavaVersion.VERSION_17
+val androidTargetCompatibility = JavaVersion.VERSION_17
 
 val localProperties = Properties()
 localProperties.load(file("local.properties").inputStream())

@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
@@ -26,7 +27,6 @@ import icu.nullptr.hidemyapplist.ui.util.makeToast
 import icu.nullptr.hidemyapplist.ui.util.setupToolbar
 import icu.nullptr.hidemyapplist.util.LangList
 import icu.nullptr.hidemyapplist.util.SuUtils
-import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate
 import rikka.preference.SimpleMenuPreference
 import java.util.*
@@ -213,7 +213,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PreferenceFragmen
             findPreference<SimpleMenuPreference>("darkTheme")?.setOnPreferenceChangeListener { _, newValue ->
                 val newMode = (newValue as String).toInt()
                 if (PrefManager.darkTheme != newMode) {
-                    DayNightDelegate.setDefaultNightMode(newMode)
+                    AppCompatDelegate.setDefaultNightMode(newMode)
                     activity?.recreate()
                 }
                 true

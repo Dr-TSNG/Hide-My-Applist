@@ -4,12 +4,10 @@ import java.io.PrintStream
 import java.util.Locale
 
 plugins {
-    id("com.android.library")
-    id("dev.rikka.tools.refine")
-    kotlin("android")
+    alias(libs.plugins.agp.lib)
+    alias(libs.plugins.refine)
+    alias(libs.plugins.kotlin)
 }
-
-val agpVersion: String by project
 
 android {
     namespace = "icu.nullptr.hidemyapplist.xposed"
@@ -17,10 +15,10 @@ android {
     buildFeatures {
         buildConfig = false
     }
+}
 
-    kotlinOptions {
-        jvmTarget = "11"
-    }
+kotlin {
+    jvmToolchain(17)
 }
 
 afterEvaluate {
@@ -65,9 +63,9 @@ afterEvaluate {
 dependencies {
     implementation(projects.common)
 
-    implementation("com.android.tools.build:apksig:$agpVersion")
-    implementation("com.github.kyuubiran:EzXHelper:1.0.3")
-    implementation("dev.rikka.hidden:compat:3.4.3")
-    compileOnly("de.robv.android.xposed:api:82")
-    compileOnly("dev.rikka.hidden:stub:3.4.3")
+    implementation(libs.com.android.tools.build.apksig)
+    implementation(libs.com.github.kyuubiran.ezxhelper)
+    implementation(libs.dev.rikka.hidden.compat)
+    compileOnly(libs.de.robv.android.xposed.api)
+    compileOnly(libs.dev.rikka.hidden.stub)
 }

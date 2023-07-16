@@ -1,0 +1,45 @@
+[versions]
+agp = "8.0.2"
+kotlin = "1.9.0"
+rxhttp = "3.0.6"
+hidden-api = "4.2.0"
+
+[plugins]
+agp-app = { id = "com.android.application", version.ref = "agp" }
+agp-lib = { id = "com.android.library", version.ref = "agp" }
+kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version = "1.9.0-1.0.11" }
+gms = { id = "com.google.gms.google-services", version = "4.3.15" }
+nav-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version = "2.6.0" }
+autoresconfig = { id = "dev.rikka.tools.autoresconfig", version = "1.2.2" }
+materialthemebuilder = { id = "dev.rikka.tools.materialthemebuilder", version = "1.3.3" }
+refine = { id = "dev.rikka.tools.refine", version = "4.3.0" }
+
+[libraries]
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version = "2.5.3" }
+androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version = "2.5.3" }
+androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version = "1.2.0" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version = "1.1.0" }
+com-android-tools-build-apksig = { module = "com.android.tools.build:apksig", version.ref = "agp" }
+com-drakeet-about = { module = "com.drakeet.about:about", version = "2.5.2" }
+com-drakeet-multitype = { module = "com.drakeet.multitype:multitype", version = "4.3.0" }
+com-github-kirich1409-viewbindingpropertydelegate = { module = "com.github.kirich1409:viewbindingpropertydelegate", version = "1.5.9" }
+com-github-kyuubiran-ezxhelper = { module = "com.github.kyuubiran:EzXHelper", version = "1.0.3" }
+com-github-liujingxing-rxhttp = { module = "com.github.liujingxing.rxhttp:rxhttp", version.ref = "rxhttp" }
+com-github-liujingxing-rxhttp-compiler = { module = "com.github.liujingxing.rxhttp:rxhttp-compiler", version.ref = "rxhttp" }
+com-github-liujingxing-rxhttp-converter-serialization = { module = "com.github.liujingxing.rxhttp:converter-serialization", version.ref = "rxhttp" }
+com-github-topjohnwu-libsu-core = { module = "com.github.topjohnwu.libsu:core", version = "5.0.3" }
+com-google-android-material = { module = "com.google.android.material:material", version = "1.7.0" }
+com-google-android-gms-play-services-ads = { module = "com.google.android.gms:play-services-ads", version = "22.2.0" }
+com-google-firebase-firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx", version = "21.2.0" }
+com-google-firebase-bom = { module = "com.google.firebase:firebase-bom", version = "32.1.1" }
+com-google-firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
+com-squareup-okhttp3 = { module = "com.squareup.okhttp3:okhttp", version = "4.10.0" }
+de-robv-android-xposed-api = { module = "de.robv.android.xposed:api", version = "82" }
+dev-rikka-hidden-compat = { module = "dev.rikka.hidden:compat", version.ref = "hidden-api" }
+dev-rikka-hidden-stub = { module = "dev.rikka.hidden:stub", version.ref = "hidden-api" }
+dev-rikka-rikkax-material = { module = "dev.rikka.rikkax.material:material", version = "2.7.0" }
+dev-rikka-rikkax-material-preference = { module = "dev.rikka.rikkax.material:material-preference", version = "2.0.0" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.5.1" }
+me-zhanghai-android-appiconloader = { module = "me.zhanghai.android.appiconloader:appiconloader", version = "1.5.0" }

@@ -3,8 +3,8 @@ package icu.nullptr.hidemyapplist.service
 import android.content.ComponentName
 import android.content.Context.MODE_PRIVATE
 import android.content.pm.PackageManager
+import androidx.appcompat.app.AppCompatDelegate
 import icu.nullptr.hidemyapplist.hmaApp
-import rikka.material.app.DayNightDelegate
 
 object PrefManager {
 
@@ -42,7 +42,7 @@ object PrefManager {
         set(value) = pref.edit().putString(PREF_LOCALE, value).apply()
 
     var darkTheme: Int
-        get() = pref.getInt(PREF_DARK_THEME, DayNightDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        get() = pref.getInt(PREF_DARK_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         set(value) = pref.edit().putInt(PREF_DARK_THEME, value).apply()
 
     var blackDarkTheme: Boolean

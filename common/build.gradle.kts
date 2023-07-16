@@ -1,8 +1,8 @@
 plugins {
-    id("com.android.library")
-    id("dev.rikka.tools.refine")
-    kotlin("android")
-    kotlin("plugin.serialization")
+    alias(libs.plugins.agp.lib)
+    alias(libs.plugins.refine)
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 val configVerCode: Int by rootProject.extra
@@ -12,6 +12,11 @@ val minBackupVerCode: Int by rootProject.extra
 android {
     namespace = "icu.nullptr.hidemyapplist.common"
 
+    buildFeatures {
+        aidl = true
+        buildConfig = true
+    }
+
     defaultConfig {
         buildConfigField("int", "CONFIG_VERSION", configVerCode.toString())
         buildConfigField("int", "SERVICE_VERSION", serviceVerCode.toString())
@@ -19,7 +24,11 @@ android {
     }
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 dependencies {
-    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
-    compileOnly("dev.rikka.hidden:stub:3.4.3")
+    api(libs.kotlinx.serialization.json)
+    compileOnly(libs.dev.rikka.hidden.stub)
 }
