@@ -10,13 +10,13 @@
     <string name="title_app_select">Выберите приложения</string>
     <string name="title_app_settings">Настройки приложения</string>
     <string name="title_about">О модуле</string>
-    <string name="do_not_dual">Не устанавливайте HMA для второго пользователя</string>
+    <string name="do_not_dual">Не устанавливать HMA для второго пользователя</string>
     <string name="show_crash_log">Показывать логи вылета</string>
     <string name="config_damaged">Файл настроек повреждён. Пожалуйста, очистите данные приложения</string>
     <string name="edit_list">Редактировать список</string>
     <string name="delete">Удалить</string>
     <string name="enabled">Включено</string>
-    <string name="disabled">Disabled</string>
+    <string name="disabled">Отключено</string>
     <string name="work_mode">Режим работы</string>
     <string name="blacklist">Чёрный список</string>
     <string name="whitelist">Белый список</string>
@@ -27,7 +27,7 @@
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="search">Поиск</string>
-    <string name="system">System</string>
+    <string name="system">Система</string>
     <!-- Home -->
     <string name="home_xposed_activated">Модуль активирован [%s-%d]</string>
     <string name="home_xposed_not_activated">Модуль не активирован</string>
@@ -66,7 +66,7 @@
     <string name="template_delete">Вы уверены, что хотите удалить шаблон?</string>
     <string name="template_name">Название шаблона</string>
     <string name="template_name_invalid">Неверное название</string>
-    <string name="template_delete_title">Delete Template</string>
+    <string name="template_delete_title">Удалить шаблон</string>
     <string name="template_name_already_exist">Шаблон с таким названием уже существует</string>
     <string name="template_applied_count">Применено к %d приложениям</string>
     <string name="template_apps_visible_count">Видимы %d приложений</string>
@@ -87,16 +87,16 @@
     <string name="logs_saved">Логи сохранены</string>
     <!-- Settings -->
     <string name="settings_module">Модуль</string>
-    <string name="settings_data_isolation">Data isolation</string>
-    <string name="settings_data_isolation_summary">App data: %s\nVold app data: %s\nForce mount: %s</string>
-    <string name="settings_data_isolation_unsupported">This option is only available on Android 11 and above</string>
-    <string name="settings_app_data_isolation">App data isolation</string>
-    <string name="settings_vold_app_data_isolation">Vold app data isolation</string>
-    <string name="settings_change_require_root">Changing requires root permission</string>
-    <string name="settings_need_reboot">Changing requires reboot</string>
-    <string name="settings_permission_denied">Permission denied</string>
-    <string name="settings_force_mount_data">Enforce data isolation for all apps</string>
-    <string name="settings_force_mount_data_summary">Data isolation is disabled for apps target API lower than 30 by default</string>
+    <string name="settings_data_isolation">Изоляция данных</string>
+    <string name="settings_data_isolation_summary">Данных приложения: %s\nПринудительная данных приложения: %s\nПринудительное монтирование: %s</string>
+    <string name="settings_data_isolation_unsupported">Это опция доступна только на Android 11 и выше</string>
+    <string name="settings_app_data_isolation">Изоляция данных приложений</string>
+    <string name="settings_vold_app_data_isolation">Принудительная изоляция данных приложений</string>
+    <string name="settings_change_require_root">Изменение требует root-доступ</string>
+    <string name="settings_need_reboot">Изменение требует перезагрузки</string>
+    <string name="settings_permission_denied">Отказано в доступе</string>
+    <string name="settings_force_mount_data">Принудительно изолировать данные для всех приложений</string>
+    <string name="settings_force_mount_data_summary">Изоляция данных для приложений с targetAPI ниже 30 отключена по умолчанию</string>
     <string name="settings_detail_log">Подробные логи для отладки</string>
     <string name="settings_max_log_size">Размер буфера логов</string>
     <string name="settings_hide_icon">Скрыть иконку модуля на главном экране</string>
@@ -123,7 +123,7 @@
     <string name="settings_receive_beta_update">Получать обновления до бета-версий</string>
     <string name="settings_receive_beta_update_summary">Бета-версии могут быть нестабильными</string>
     <!-- About -->
-    <string name="about_description">        Хотя и неправильно определять наличие конкретных приложений, сейчас не каждое приложение, использующее root-права имеет поддержку случайного имени пакета. В этом случае обнаруженные приложения, использующие root-права (такие как Fake Location и Storage Isolation), равны обнаруженным root-правам.\n\nВ это же время некоторые умные приложения используют лазейки, чтобы получить список приложений, так что они всё ещё могут нарисовать себе вашу персону.\n\nЭто приложение предоставляет несколько методов для проверки того, насколько хорошо вы скрыли свой список приложений. Также это приложение может работать как Xposed модуль, чтобы скрыть какие-либо приложения или отклонять запросы на получение списка приложений для защиты вашей конфиденциальности.
+    <string name="about_description">        Хотя и неправильно определять наличие конкретных приложений, сейчас не каждое приложение, использующее root-права имеет поддержку случайного имени пакета. В этом случае обнаруженные приложения, использующие root-права (такие как Fake Location и Storage Isolation), будут равны обнаруженным root-правам.\n\nВ это же время некоторые умные приложения используют лазейки, чтобы получить список приложений и нарисовать себе вашу персону.\n\nЭто приложение предоставляет несколько методов для проверки того, насколько хорошо вы скрыли свой список приложений. Также это приложение может работать как Xposed модуль, чтобы скрыть какие-либо приложения или отклонять запросы на получение списка приложений для защиты вашей конфиденциальности.
     </string>
     <string name="about_how_to_use_title">Как использовать этот модуль</string>
     <string name="about_how_to_use_description_1">        Вы можете создать шаблоны в \"Управление шаблонами\".\nЗатем примените шаблоны к приложениям в \"Управление приложениями\". (Вы также можете выбрать дополнительные приложения для отдельных приложений.)\nВыбирайте ТОЛЬКО \"System Framework\" в настройках охвата этого Xposed-модуля / белого списка.
