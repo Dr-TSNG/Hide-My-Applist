@@ -1,2 +1,3 @@
 -keep class com.github.kyuubiran.ezxhelper.utils.** { *; }
 -keep class icu.nullptr.hidemyapplist.xposed.XposedEntry { *; }
+-ignorewarnings
