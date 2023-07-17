@@ -16,7 +16,7 @@
     <string name="edit_list">Liste ändern</string>
     <string name="delete">Löschen</string>
     <string name="enabled">Aktiviert</string>
-    <string name="disabled">Disabled</string>
+    <string name="disabled">Deaktiviert</string>
     <string name="work_mode">Arbeitsmodus</string>
     <string name="blacklist">Verweigerungsliste</string>
     <string name="whitelist">Zulassungsliste</string>
@@ -54,11 +54,11 @@
     <!-- App select -->
     <string name="list_show_system">System-Apps anzeigen</string>
     <string name="list_sorting">Einstellung</string>
-    <string name="list_reverse_order">Reverse order</string>
-    <string name="list_sort_by_label">By app name</string>
-    <string name="list_sort_by_package_name">By package name</string>
-    <string name="list_sort_by_install_time">By install time</string>
-    <string name="list_sort_by_update_time">By update time</string>
+    <string name="list_reverse_order">Umgekehrte Reihenfolge</string>
+    <string name="list_sort_by_label">Nach Anwendungsname</string>
+    <string name="list_sort_by_package_name">Nach Paketname</string>
+    <string name="list_sort_by_install_time">Nach Installationszeitpunkt</string>
+    <string name="list_sort_by_update_time">Nach Aktualisierungszeitpunkt</string>
     <!-- Template manage -->
     <string name="template_usage_hint">Establish templates for \"restless\" apps, controlling applist they can obtain.\n\nBlacklist (recommended): the apps selected in the template will be invisible to the apps applying the template.\nWhitelist: the apps not selected in the template will be invisible to the apps applying the template.</string>
     <string name="template_new_blacklist">Create a blacklist template</string>

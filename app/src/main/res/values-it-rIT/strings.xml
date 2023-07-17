@@ -16,7 +16,7 @@
     <string name="edit_list">Modifica lista</string>
     <string name="delete">Elimina</string>
     <string name="enabled">Abilitato</string>
-    <string name="disabled">Disabled</string>
+    <string name="disabled">Disabilitato</string>
     <string name="work_mode">Modalità lavoro</string>
     <string name="blacklist">Blacklist</string>
     <string name="whitelist">Whitelist</string>
@@ -27,7 +27,7 @@
     <string name="yes">Si</string>
     <string name="no">No</string>
     <string name="search">Cerca</string>
-    <string name="system">System</string>
+    <string name="system">Sistema</string>
     <!-- Home -->
     <string name="home_xposed_activated">Modulo attivato [%s-%d]</string>
     <string name="home_xposed_not_activated">Modulo non attivato</string>
@@ -66,7 +66,7 @@
     <string name="template_delete">Sei sicuro di voler eliminare il template?</string>
     <string name="template_name">Nome template</string>
     <string name="template_name_invalid">Nome non valido</string>
-    <string name="template_delete_title">Delete Template</string>
+    <string name="template_delete_title">Cancella Template</string>
     <string name="template_name_already_exist">Nome template già esistente</string>
     <string name="template_applied_count">Applicato a %d app</string>
     <string name="template_apps_visible_count">%d app visibili</string>
@@ -87,12 +87,12 @@
     <string name="logs_saved">Log salvati</string>
     <!-- Settings -->
     <string name="settings_module">Modulo</string>
-    <string name="settings_data_isolation">Data isolation</string>
+    <string name="settings_data_isolation">Isolamento dati</string>
     <string name="settings_data_isolation_summary">App data: %s\nVold app data: %s\nForce mount: %s</string>
-    <string name="settings_data_isolation_unsupported">This option is only available on Android 11 and above</string>
+    <string name="settings_data_isolation_unsupported">Questa opzione è disponibile solamente per Android 11 e superiori</string>
     <string name="settings_app_data_isolation">App data isolation</string>
     <string name="settings_vold_app_data_isolation">Vold app data isolation</string>
-    <string name="settings_change_require_root">Changing requires root permission</string>
+    <string name="settings_change_require_root">Le modifiche necessitano del permesso di root</string>
     <string name="settings_need_reboot">Changing requires reboot</string>
     <string name="settings_permission_denied">Permission denied</string>
     <string name="settings_force_mount_data">Enforce data isolation for all apps</string>

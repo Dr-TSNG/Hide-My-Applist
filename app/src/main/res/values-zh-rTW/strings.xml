@@ -16,7 +16,7 @@
     <string name="edit_list">編輯列表</string>
     <string name="delete">刪除</string>
     <string name="enabled">啟用</string>
-    <string name="disabled">Disabled</string>
+    <string name="disabled">停用</string>
     <string name="work_mode">工作模式</string>
     <string name="blacklist">黑名單</string>
     <string name="whitelist">白名單</string>
@@ -27,7 +27,7 @@
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="search">搜索</string>
-    <string name="system">System</string>
+    <string name="system">系統</string>
     <!-- Home -->
     <string name="home_xposed_activated">模組已啟用 [%s-%d]</string>
     <string name="home_xposed_not_activated">模組未啟用</string>
@@ -66,7 +66,7 @@
     <string name="template_delete">你確定要刪除該模板嗎?</string>
     <string name="template_name">模板名稱</string>
     <string name="template_name_invalid">名稱無效</string>
-    <string name="template_delete_title">Delete Template</string>
+    <string name="template_delete_title">删除模板</string>
     <string name="template_name_already_exist">模板名稱已經存在</string>
     <string name="template_applied_count">已對 %d 個應用程式啟用</string>
     <string name="template_apps_visible_count">對 %d 個應用程式顯示</string>
@@ -87,16 +87,16 @@
     <string name="logs_saved">日誌已儲存</string>
     <!-- Settings -->
     <string name="settings_module">模塊</string>
-    <string name="settings_data_isolation">Data isolation</string>
-    <string name="settings_data_isolation_summary">App data: %s\nVold app data: %s\nForce mount: %s</string>
-    <string name="settings_data_isolation_unsupported">This option is only available on Android 11 and above</string>
-    <string name="settings_app_data_isolation">App data isolation</string>
-    <string name="settings_vold_app_data_isolation">Vold app data isolation</string>
-    <string name="settings_change_require_root">Changing requires root permission</string>
-    <string name="settings_need_reboot">Changing requires reboot</string>
-    <string name="settings_permission_denied">Permission denied</string>
-    <string name="settings_force_mount_data">Enforce data isolation for all apps</string>
-    <string name="settings_force_mount_data_summary">Data isolation is disabled for apps target API lower than 30 by default</string>
+    <string name="settings_data_isolation">資料隔離</string>
+    <string name="settings_data_isolation_summary">App data：%s\nVold app data：%s\n強制掛載：%s</string>
+    <string name="settings_data_isolation_unsupported">該選項僅適用於 Android 11 或更低版本的系統</string>
+    <string name="settings_app_data_isolation">App data 隔離</string>
+    <string name="settings_vold_app_data_isolation">Vold app data 隔離</string>
+    <string name="settings_change_require_root">此更動需要 root 權限</string>
+    <string name="settings_need_reboot">重新啟動以確認更改</string>
+    <string name="settings_permission_denied">授權遭拒絕</string>
+    <string name="settings_force_mount_data">為所有應用程式啟用資料隔離</string>
+    <string name="settings_force_mount_data_summary">資料隔離對於 Target API 低於 30 的應用程式預設停用</string>
     <string name="settings_detail_log">除錯用的詳細日誌</string>
     <string name="settings_max_log_size">記錄器的緩衝區大小</string>
     <string name="settings_hide_icon">在啟動器中隱藏圖示</string>
