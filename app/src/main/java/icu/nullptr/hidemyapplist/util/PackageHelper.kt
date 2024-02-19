@@ -5,6 +5,10 @@ import android.content.pm.IPackageManager
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.os.Build
+import androidx.annotation.RequiresApi
+import com.topjohnwu.superuser.Shell
+import com.topjohnwu.superuser.ShellUtils
 import icu.nullptr.hidemyapplist.common.Constants
 import icu.nullptr.hidemyapplist.hmaApp
 import icu.nullptr.hidemyapplist.service.PrefManager
@@ -15,15 +19,26 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import org.lsposed.hiddenapibypass.HiddenApiBypass
 import java.text.Collator
 import java.util.*
 
 object PackageHelper {
+    class PackageInfoWithUser(
+        val info: PackageInfo,
+        val user: Int
+    )
 
     class PackageCache(
         val info: PackageInfo,
         val label: String,
-        val icon: Bitmap
+        val icon: Bitmap,
+        val user: Int
+    )
+
+    class UserInfo (
+        val id: Int,
+        val name: String,
     )
 
     private object Comparators {
@@ -69,13 +84,14 @@ object PackageHelper {
         hmaApp.globalScope.launch {
             mRefreshing.emit(true)
             val cache = withContext(Dispatchers.IO) {
-                val packages = pm.getInstalledPackages(0)
+                // Get packages from all users
+                val packages = getInstalledPackagesFromAllUsers()
                 mutableMapOf<String, PackageCache>().also {
                     for (packageInfo in packages) {
-                        if (packageInfo.packageName in Constants.packagesShouldNotHide) continue
-                        val label = pm.getApplicationLabel(packageInfo.applicationInfo).toString()
-                        val icon = hmaApp.appIconLoader.loadIcon(packageInfo.applicationInfo)
-                        it[packageInfo.packageName] = PackageCache(packageInfo, label, icon)
+                        if (packageInfo.info.packageName in Constants.packagesShouldNotHide) continue
+                        val label = pm.getApplicationLabel(packageInfo.info.applicationInfo).toString()
+                        val icon = hmaApp.appIconLoader.loadIcon(packageInfo.info.applicationInfo)
+                        it[packageInfo.info.packageName] = PackageCache(packageInfo.info, label, icon, packageInfo.user)
                     }
                 }
             }
@@ -111,5 +127,82 @@ object PackageHelper {
 
     fun isSystem(packageName: String): Boolean = runBlocking {
         packageCache.first()[packageName]!!.info.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+    }
+
+    fun shellGetUsers(): List<UserInfo> {
+        val users = mutableListOf<UserInfo>()
+        val result = Shell.cmd("pm list users").exec()
+        if (result.isSuccess) {
+            val lines = result.out
+            for (line in lines) {
+                val trimedLine = line.trim()
+                if (trimedLine.startsWith("UserInfo")) {
+                    val infos = trimedLine.substringAfter("UserInfo{").substringBefore("}").split(":")
+                    val id = infos[0].toInt()
+                    val name = infos[1]
+                    users.add(UserInfo(id, name))
+                }
+            }
+        }
+        return users
+    }
+
+    fun grantCrossUserPermissions() {
+        SuUtils.execPrivileged("pm grant ${hmaApp.packageName} android.permission.INTERACT_ACROSS_USERS --user 0")
+    }
+
+    fun getInstalledPackagesFromUser(user: Int, tryGrantPermission: Boolean = false): List<PackageInfo> {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            return pm.getInstalledPackages(0)
+        }
+
+        try {
+            val res = HiddenApiBypass.invoke(PackageManager::class.java, pm, "getInstalledPackagesAsUser", 0, user) as List<*>
+            val packages = mutableListOf<PackageInfo>()
+
+            for (i in res.indices) {
+                packages += res[i] as PackageInfo
+            }
+
+            return packages.toList()
+        } catch(e: SecurityException) {
+            if (tryGrantPermission) {
+                grantCrossUserPermissions()
+                return getInstalledPackagesFromUser(user)
+            }
+            return emptyList()
+        } catch (e: Exception) {
+            return emptyList()
+        }
+    }
+
+    private fun getInstalledPackagesFromAllUsers(deduplicate: Boolean = true): List<PackageInfoWithUser> {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            return pm.getInstalledPackages(0).map {
+                PackageInfoWithUser(it, 0)
+            }
+        }
+
+        val users = shellGetUsers()
+
+        if (users.isEmpty()) {
+            // Fall back to current user
+            return pm.getInstalledPackages(0).map {
+                PackageInfoWithUser(it, 0)
+            }
+        }
+
+        val packages = mutableListOf<PackageInfoWithUser>()
+
+        for (user in users) {
+            val userPackages = getInstalledPackagesFromUser(user.id)
+            for (packageInfo in userPackages) {
+                // Deduplicate
+                if (deduplicate && packages.any { it.info.packageName == packageInfo.packageName }) continue
+                packages += PackageInfoWithUser(packageInfo, user.id)
+            }
+        }
+
+        return packages.toList()
     }
 }
