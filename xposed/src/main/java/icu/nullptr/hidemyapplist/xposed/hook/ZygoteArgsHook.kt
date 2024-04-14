@@ -36,8 +36,8 @@ class ZygoteArgsHook(private val service: HMAService) : IFrameworkHook {
                 val apps = service.pms.getPackagesForUid(uid) ?: return@hookBefore
                 for (app in apps) {
                     if (service.isHookEnabled(app)) {
-                        if (sAppDataIsolationEnabled) param.args[param.args.size - 3] = true
-                        if (sVoldAppDataIsolationEnabled) param.args[param.args.size - 2] = true
+                        if (sAppDataIsolationEnabled) param.args[20] = true // boolean bindMountAppsData
+                        if (sVoldAppDataIsolationEnabled) param.args[21] = true // boolean bindMountAppStorageDirs
                         logI(TAG, "@startViaZygote force mount data: $uid $app")
                         return@hookBefore
                     }
