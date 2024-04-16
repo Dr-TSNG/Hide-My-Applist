@@ -33,7 +33,7 @@ object Utils {
         val result = verifier.verify()
         if (!result.isVerified) return false
         val mainCert = result.signerCertificates[0]
-        return Arrays.equals(mainCert.encoded, Magic.magicNumbers)
+        return mainCert.encoded.contentEquals(Magic.magicNumbers)
     }
 
     fun getRecursiveField(entry: Any, list: List<String>): Any? {

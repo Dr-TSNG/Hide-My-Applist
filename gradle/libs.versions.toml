@@ -1,5 +1,5 @@
 [versions]
-agp = "8.0.2"
+agp = "8.3.2"
 kotlin = "1.9.0"
 rxhttp = "3.0.6"
 hidden-api = "4.2.0"

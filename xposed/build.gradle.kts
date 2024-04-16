@@ -23,16 +23,16 @@ kotlin {
 
 afterEvaluate {
     android.libraryVariants.forEach { variant ->
-        val variantCapped = variant.name.capitalize(Locale.ROOT)
-        val variantLowered = variant.name.toLowerCase(Locale.ROOT)
+        val variantCapped = variant.name.replaceFirstChar { it.titlecase(Locale.ROOT) }
+        val variantLowered = variant.name.lowercase(Locale.ROOT)
 
-        val outSrcDir = file("$buildDir/generated/source/signInfo/${variantLowered}")
-        val outSrc = file("$outSrcDir/icu/nullptr/hidemyapplist/Magic.java")
+        val outSrcDir = layout.buildDirectory.dir("generated/source/signInfo/${variantLowered}")
+        val outSrc = outSrcDir.get().file("icu/nullptr/hidemyapplist/Magic.java")
         val signInfoTask = tasks.register("generate${variantCapped}SignInfo") {
             outputs.file(outSrc)
             doLast {
                 val sign = android.buildTypes[variantLowered].signingConfig
-                outSrc.parentFile.mkdirs()
+                outSrc.asFile.parentFile.mkdirs()
                 val certificateInfo = KeystoreHelper.getCertificateInfo(
                     sign?.storeType,
                     sign?.storeFile,
@@ -40,7 +40,7 @@ afterEvaluate {
                     sign?.keyPassword,
                     sign?.keyAlias
                 )
-                PrintStream(outSrc).apply {
+                PrintStream(outSrc.asFile).apply {
                     println("package icu.nullptr.hidemyapplist;")
                     println("public final class Magic {")
                     print("public static final byte[] magicNumbers = {")
@@ -51,7 +51,7 @@ afterEvaluate {
                 }
             }
         }
-        variant.registerJavaGeneratingTask(signInfoTask, outSrcDir)
+        variant.registerJavaGeneratingTask(signInfoTask, outSrcDir.get().asFile)
 
         val kotlinCompileTask = tasks.findByName("compile${variantCapped}Kotlin") as KotlinCompile
         kotlinCompileTask.dependsOn(signInfoTask)
