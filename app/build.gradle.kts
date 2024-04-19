@@ -111,6 +111,7 @@ dependencies {
     implementation(libs.dev.rikka.rikkax.material)
     implementation(libs.dev.rikka.rikkax.material.preference)
     implementation(libs.me.zhanghai.android.appiconloader)
+    implementation(libs.org.lsposed.hiddenapibypass)
     compileOnly(libs.dev.rikka.hidden.stub)
     ksp(libs.com.github.liujingxing.rxhttp.compiler)
 }
