@@ -40,7 +40,7 @@ localProperties.load(file("local.properties").inputStream())
 val officialBuild by extra(localProperties.getProperty("officialBuild", "false") == "true")
 
 tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+    delete(rootProject.layout.buildDirectory)
 }
 
 fun Project.configureBaseExtension() {
