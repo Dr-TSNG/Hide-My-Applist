@@ -73,9 +73,11 @@ object PackageHelper {
                 mutableMapOf<String, PackageCache>().also {
                     for (packageInfo in packages) {
                         if (packageInfo.packageName in Constants.packagesShouldNotHide) continue
-                        val label = pm.getApplicationLabel(packageInfo.applicationInfo).toString()
-                        val icon = hmaApp.appIconLoader.loadIcon(packageInfo.applicationInfo)
-                        it[packageInfo.packageName] = PackageCache(packageInfo, label, icon)
+                        packageInfo.applicationInfo?.let { appInfo ->
+                            val label = pm.getApplicationLabel(appInfo).toString()
+                            val icon = hmaApp.appIconLoader.loadIcon(appInfo)
+                            it[packageInfo.packageName] = PackageCache(packageInfo, label, icon)
+                        }
                     }
                 }
             }
@@ -110,6 +112,6 @@ object PackageHelper {
     }
 
     fun isSystem(packageName: String): Boolean = runBlocking {
-        packageCache.first()[packageName]!!.info.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+        packageCache.first()[packageName]?.info?.applicationInfo?.flags?.and(ApplicationInfo.FLAG_SYSTEM) != 0
     }
 }
