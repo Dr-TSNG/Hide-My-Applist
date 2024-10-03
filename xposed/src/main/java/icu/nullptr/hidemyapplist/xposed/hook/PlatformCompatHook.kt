@@ -36,7 +36,7 @@ class PlatformCompatHook(private val service: HMAService) : IFrameworkHook {
                 for (app in apps) {
                     if (service.isHookEnabled(app)) {
                         if (sAppDataIsolationEnabled) param.result = true
-                        logI(TAG, "@startViaZygote force mount data: ${appInfo.uid} $app")
+                        logI(TAG, "force mount data: ${appInfo.uid} $app")
                         return@hookBefore
                     }
                 }
