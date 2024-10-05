@@ -54,10 +54,13 @@ object Utils {
         return result
     }
 
-    fun getPackageNameFromPackageSettings(packageSettings: Any): String {
-        return with(packageSettings.toString()) {
-            substring(lastIndexOf(' ') + 1, lastIndexOf('/'))
-        }
+    fun getPackageNameFromPackageSettings(packageSettings: Any): String? {
+        return runCatching {
+            val fieldName = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) "mName" else "name"
+            val field = packageSettings::class.java.getDeclaredField(fieldName)
+            field.isAccessible = true
+            field.get(packageSettings) as? String
+        }.getOrNull()
     }
 
     fun getInstalledApplicationsCompat(pms: IPackageManager, flags: Long, userId: Int): List<ApplicationInfo> {
