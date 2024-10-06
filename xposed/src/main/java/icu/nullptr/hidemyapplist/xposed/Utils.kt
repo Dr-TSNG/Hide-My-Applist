@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo
 import android.os.Binder
 import android.os.Build
 import com.android.apksig.ApkVerifier
+import com.github.kyuubiran.ezxhelper.utils.findField
 import com.github.kyuubiran.ezxhelper.utils.invokeMethodAutoAs
 import de.robv.android.xposed.XposedHelpers
 import icu.nullptr.hidemyapplist.Magic
@@ -56,10 +57,9 @@ object Utils {
 
     fun getPackageNameFromPackageSettings(packageSettings: Any): String? {
         return runCatching {
-            val fieldName = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) "mName" else "name"
-            val field = packageSettings::class.java.getDeclaredField(fieldName)
-            field.isAccessible = true
-            field.get(packageSettings) as? String
+            findField(packageSettings::class.java, true) {
+                name == if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) "mName" else "name"
+            }.get(packageSettings) as? String
         }.getOrNull()
     }
 
