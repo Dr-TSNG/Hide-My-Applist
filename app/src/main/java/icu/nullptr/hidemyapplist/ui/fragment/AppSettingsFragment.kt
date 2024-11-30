@@ -32,10 +32,24 @@ class AppSettingsFragment : Fragment(R.layout.fragment_settings) {
         AppSettingsViewModel.Factory(pack)
     }
 
-    private fun onBack() {
+    private fun saveConfig() {
         if (!viewModel.pack.enabled) ConfigManager.setAppConfig(viewModel.pack.app, null)
         else ConfigManager.setAppConfig(viewModel.pack.app, viewModel.pack.config)
+    }
+
+    private fun onBack() {
+        saveConfig()
         navController.navigateUp()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveConfig()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        saveConfig()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

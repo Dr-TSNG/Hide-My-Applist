@@ -115,7 +115,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PreferenceFragmen
             findPreference<SwitchPreference>("appDataIsolation")?.let {
                 it.setOnPreferenceChangeListener { _, newValue ->
                     val value = if (newValue as Boolean) 1 else 0
-                    val result = SuUtils.execPrivileged("resetprop ${Constants.ANDROID_APP_DATA_ISOLATION_ENABLED_PROPERTY} $value")
+                    val result = SuUtils.execPrivileged("setprop ${Constants.ANDROID_APP_DATA_ISOLATION_ENABLED_PROPERTY} $value")
                     if (result) makeToast(R.string.settings_need_reboot)
                     else makeToast(R.string.settings_permission_denied)
                     it.isChecked = CommonUtils.isAppDataIsolationEnabled
@@ -126,7 +126,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PreferenceFragmen
             findPreference<SwitchPreference>("voldAppDataIsolation")?.let {
                 it.setOnPreferenceChangeListener { _, newValue ->
                     val value = if (newValue as Boolean) 1 else 0
-                    val result = SuUtils.execPrivileged("resetprop ${Constants.ANDROID_VOLD_APP_DATA_ISOLATION_ENABLED_PROPERTY} $value")
+                    val result = SuUtils.execPrivileged("setprop ${Constants.ANDROID_VOLD_APP_DATA_ISOLATION_ENABLED_PROPERTY} $value")
                     if (result) makeToast(R.string.settings_need_reboot)
                     else makeToast(R.string.settings_permission_denied)
                     it.isChecked = CommonUtils.isVoldAppDataIsolationEnabled
