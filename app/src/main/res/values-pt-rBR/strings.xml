@@ -114,7 +114,7 @@
     <string name="settings_stop_system_service">Stop system service</string>
     <string name="settings_stop_system_service_summary">Need reboot to restart service</string>
     <string name="settings_is_clean_env">Limpar o ambiente do runtime ao mesmo tempo?</string>
-    <string name="settings_is_clean_env_summary">Remover arquivo temporário do serviço do sistema em /data/system/hide_my_applist_*. Isso significa que você precisa iniciar o aplicativo de módulos uma vez manualmente no próximo reinício para habilitar interceptações, e a contagens de interceptações será apagada.</string>
+    <string name="settings_is_clean_env_summary">Remover arquivo temporário do serviço do sistema em /data/misc/hide_my_applist_*. Isso significa que você precisa iniciar o aplicativo de módulos uma vez manualmente no próximo reinício para habilitar interceptações, e a contagens de interceptações será apagada.</string>
     <string name="settings_force_clean_env">Forçar a limpar o ambiente do runtime (root)</string>
     <string name="settings_force_clean_env_summary">Apenas se o serviço de sistema falhar ao iniciar, por outro lado, você deve clicar acima da opção.</string>
     <string name="settings_force_clean_env_toast_successful">Ambiente do runtime limpado</string>

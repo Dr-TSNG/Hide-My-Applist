@@ -114,7 +114,7 @@
     <string name="settings_stop_system_service">Остановить системную службу</string>
     <string name="settings_stop_system_service_summary">Потребуется перезагрузка, чтобы перезапустить службу</string>
     <string name="settings_is_clean_env">Очистить также среду выполнения?</string>
-    <string name="settings_is_clean_env_summary">Удалить кэш системной службы в /data/system/hide_my_applist_*. Это означает, что вам нужно запустить приложение модуля вручную после следующей перезагрузки, чтобы включить перехваты, и количество перехватов также будет очищено.</string>
+    <string name="settings_is_clean_env_summary">Удалить кэш системной службы в /data/misc/hide_my_applist_*. Это означает, что вам нужно запустить приложение модуля вручную после следующей перезагрузки, чтобы включить перехваты, и количество перехватов также будет очищено.</string>
     <string name="settings_force_clean_env">Принудительно очистить среду выполнения (root)</string>
     <string name="settings_force_clean_env_summary">Только если не удается запустить системную службу, в противном случае вам следует нажать на опцию выше.</string>
     <string name="settings_force_clean_env_toast_successful">Среда выполнения очищена успешно</string>
