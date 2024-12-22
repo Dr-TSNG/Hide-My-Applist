@@ -114,7 +114,7 @@
     <string name="settings_stop_system_service">Stoppa servizio di sistema</string>
     <string name="settings_stop_system_service_summary">È necessario riavviare per riavviare il servizio</string>
     <string name="settings_is_clean_env">Pulire l\'ambiente di runtime allo stesso tempo?</string>
-    <string name="settings_is_clean_env_summary">Rimuove la cache del servizio di sistema in /data/system/hide_my_applist_*. Questo significa che è necessario avviare l\'app del modulo una volta manualmente dopo il prossimo riavvio per abilitare le intercettazioni e anche i conteggi delle intercettazioni verranno resettati.</string>
+    <string name="settings_is_clean_env_summary">Rimuove la cache del servizio di sistema in /data/misc/hide_my_applist_*. Questo significa che è necessario avviare l\'app del modulo una volta manualmente dopo il prossimo riavvio per abilitare le intercettazioni e anche i conteggi delle intercettazioni verranno resettati.</string>
     <string name="settings_force_clean_env">Forza pulizia ambiente runtime (root)</string>
     <string name="settings_force_clean_env_summary">Solo se il servizio di sistema non riesce ad avviarsi, altrimenti devi cliccare l\'opzione sopra.</string>
     <string name="settings_force_clean_env_toast_successful">Ambiente runtime pulito</string>

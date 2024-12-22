@@ -114,7 +114,7 @@
     <string name="settings_stop_system_service">Stop system service</string>
     <string name="settings_stop_system_service_summary">Need reboot to restart service</string>
     <string name="settings_is_clean_env">Clean runtime environment at the same time?</string>
-    <string name="settings_is_clean_env_summary">Remove system service cache in /data/system/hide_my_applist_*. This means you need to launch the module app once manually after next reboot in order to enable interceptions, and interception counts will also be cleaned.</string>
+    <string name="settings_is_clean_env_summary">Remove system service cache in /data/misc/hide_my_applist_*. This means you need to launch the module app once manually after next reboot in order to enable interceptions, and interception counts will also be cleaned.</string>
     <string name="settings_force_clean_env">Force clean runtime environment (root)</string>
     <string name="settings_force_clean_env_summary">Only if system service fails to start, otherwise you should click the above option.</string>
     <string name="settings_force_clean_env_toast_successful">Runtime environment cleaned</string>

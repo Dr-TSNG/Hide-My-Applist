@@ -114,7 +114,7 @@
     <string name="settings_stop_system_service">Зупинити системну службу</string>
     <string name="settings_stop_system_service_summary">Потрібне перезавантаження, щоб перезапустити службу</string>
     <string name="settings_is_clean_env">Очистити також середовище виконання?</string>
-    <string name="settings_is_clean_env_summary">Видаліть кеш системної служби в /data/system/hide_my_applist_*. Це означає, що вам потрібно один раз запустити програму модуля вручну після наступного перезавантаження, щоб увімкнути перехоплення, і кількість перехоплень також буде очищено.</string>
+    <string name="settings_is_clean_env_summary">Видаліть кеш системної служби в /data/misc/hide_my_applist_*. Це означає, що вам потрібно один раз запустити програму модуля вручну після наступного перезавантаження, щоб увімкнути перехоплення, і кількість перехоплень також буде очищено.</string>
     <string name="settings_force_clean_env">Примусово очистити середовище виконання (root)</string>
     <string name="settings_force_clean_env_summary">Лише якщо не вдається запустити системну службу, інакше вам слід натиснути вищезазначену опцію.</string>
     <string name="settings_force_clean_env_toast_successful">Середовище виконання очищено</string>

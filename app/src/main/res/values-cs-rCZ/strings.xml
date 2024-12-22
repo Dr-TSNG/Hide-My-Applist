@@ -114,7 +114,7 @@
     <string name="settings_stop_system_service">Zastavit systémovou službu</string>
     <string name="settings_stop_system_service_summary">K restartování služby je třeba restartovat</string>
     <string name="settings_is_clean_env">Vyčistit runtime prostředí ve stejnou dobu?</string>
-    <string name="settings_is_clean_env_summary">Odeberte mezipaměť systémové služby v /data/system/hide_my_applist_*. To znamená, že musíte po příštím restartu spustit aplikaci modulu jednou ručně, abyste povolili odposlechy a počty odposlechů budou také vyčištěny.</string>
+    <string name="settings_is_clean_env_summary">Odeberte mezipaměť systémové služby v /data/misc/hide_my_applist_*. To znamená, že musíte po příštím restartu spustit aplikaci modulu jednou ručně, abyste povolili odposlechy a počty odposlechů budou také vyčištěny.</string>
     <string name="settings_force_clean_env">Force clean runtime environment (root)</string>
     <string name="settings_force_clean_env_summary">Only if system service fails to start, otherwise you should click the above option.</string>
     <string name="settings_force_clean_env_toast_successful">Runtime environment cleaned</string>

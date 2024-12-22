@@ -114,7 +114,7 @@
     <string name="settings_stop_system_service">Dừng dịch vụ</string>
     <string name="settings_stop_system_service_summary">Cần chạy lại dịch vụ</string>
     <string name="settings_is_clean_env">Làm sạch môi trường thời gian chạy cùng lúc?</string>
-    <string name="settings_is_clean_env_summary">Xóa bộ nhớ cache của dịch vụ hệ thống trong /data/system/hide_my_applist_*. Điều này có nghĩa là bạn cần phải khởi chạy ứng dụng mô-đun một lần theo cách thủ công sau lần khởi động lại tiếp theo để cho phép đánh chặn và số lần đánh chặn cũng sẽ được xóa sạch.</string>
+    <string name="settings_is_clean_env_summary">Xóa bộ nhớ cache của dịch vụ hệ thống trong /data/misc/hide_my_applist_*. Điều này có nghĩa là bạn cần phải khởi chạy ứng dụng mô-đun một lần theo cách thủ công sau lần khởi động lại tiếp theo để cho phép đánh chặn và số lần đánh chặn cũng sẽ được xóa sạch.</string>
     <string name="settings_force_clean_env">Buộc môi trường thời gian chạy sạch (root)</string>
     <string name="settings_force_clean_env_summary">Chỉ khi dịch vụ hệ thống không khởi động được, nếu không bạn nên nhấp vào tùy chọn trên.</string>
     <string name="settings_force_clean_env_toast_successful">Môi trường Runtime đã sạch</string>

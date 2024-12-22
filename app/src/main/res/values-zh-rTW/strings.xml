@@ -114,7 +114,7 @@
     <string name="settings_stop_system_service">停止系統服務</string>
     <string name="settings_stop_system_service_summary">需要重啟來重啟服務</string>
     <string name="settings_is_clean_env">同時清理執行環境?</string>
-    <string name="settings_is_clean_env_summary">刪除 /data/system/hide_my_applist_* 中的系統服務快取。這意味著你需要在下次重啟後手動啟動一次模組應用，以便啟用攔截，攔截次數也將被清理</string>
+    <string name="settings_is_clean_env_summary">刪除 /data/misc/hide_my_applist_* 中的系統服務快取。這意味著你需要在下次重啟後手動啟動一次模組應用，以便啟用攔截，攔截次數也將被清理</string>
     <string name="settings_force_clean_env">強制清理執行環境 (root)</string>
     <string name="settings_force_clean_env_summary">只有在系統服務無法啟動的情況下使用</string>
     <string name="settings_force_clean_env_toast_successful">執行環境已清理</string>

@@ -114,7 +114,7 @@
     <string name="settings_stop_system_service">停止系统服务</string>
     <string name="settings_stop_system_service_summary">需要重启设备才能再次启动系统服务</string>
     <string name="settings_is_clean_env">同时清理运行环境？</string>
-    <string name="settings_is_clean_env_summary">删除 /data/system/hide_my_applist_* 中的系统服务缓存。这意味着你需要在下次重启后手动启动一次模块应用，以便启用拦截，同时拦截次数也将被清理。</string>
+    <string name="settings_is_clean_env_summary">删除 /data/misc/hide_my_applist_* 中的系统服务缓存。这意味着你需要在下次重启后手动启动一次模块应用，以便启用拦截，同时拦截次数也将被清理。</string>
     <string name="settings_force_clean_env">强制清理运行环境（root）</string>
     <string name="settings_force_clean_env_summary">只有在系统服务无法启动的情况下才应使用，否则请使用上面的选项。</string>
     <string name="settings_force_clean_env_toast_successful">运行环境已清理</string>
