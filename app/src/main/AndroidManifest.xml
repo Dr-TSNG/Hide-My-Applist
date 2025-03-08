@@ -16,11 +16,6 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
-        <property
-            android:name="android.adservices.AD_SERVICES_CONFIG"
-            android:resource="@xml/gma_ad_services_config"
-            tools:replace="android:resource" />
-
         <activity
             android:name="icu.nullptr.hidemyapplist.ui.activity.AboutActivity"
             android:theme="@style/AppTheme.About" />
