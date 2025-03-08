@@ -21,6 +21,22 @@ Additionally, some apps use various loopholes to acquire your app list, in order
 
 This module can work as an Xposed module to hide apps or reject app list requests, and provides some methods to test whether you have hidden your app list properly.
 
+## Copyright Notice
+
+Copyright © 2025 HMA developers. All rights reserved.
+
+The software Hide My Applist, starting from version v3.4, is no longer under the AGPL-3.0 License. Instead, certain rights to the software are reserved by the owner.
+
+The following conditions now apply:
+
+1. **No Modifications**: The software may not be modified in any way. This includes but is not limited to changing, adding, or removing any part of the software's code or functionality.
+
+2. **No Redistribution**: The software may not be redistributed in any form. This includes but is not limited to renaming, selling, or including the software as part of another project.
+
+3. **No Picking without Credit**: No parts, pieces, or components of the software may be extracted and submitted to other projects without proper credit. This includes, but is not limited to, code snippets, functions, and released binaries.
+
+4. **No Claim to Succession**: Any fork of the software that was created before the license change may not claim to be an official or unofficial successor to the project. This includes but is not limited to using the project's name, branding, or reputation to imply a connection to the original project.
+
 ## Translation Contributing
 You can contribute translation [here](https://crowdin.com/project/hide-my-applist).
 
