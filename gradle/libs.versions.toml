@@ -17,6 +17,7 @@ materialthemebuilder = { id = "dev.rikka.tools.materialthemebuilder", version = 
 refine = { id = "dev.rikka.tools.refine", version = "4.4.0" }
 
 [libraries]
+androidx-annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version = "1.9.1" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version = "2.8.8" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version = "2.8.8" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version = "1.2.1" }

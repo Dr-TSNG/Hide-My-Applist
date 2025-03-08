@@ -7,8 +7,6 @@ import android.os.Binder
 import android.os.Build
 import com.android.apksig.ApkVerifier
 import com.github.kyuubiran.ezxhelper.utils.findField
-import com.github.kyuubiran.ezxhelper.utils.invokeMethodAutoAs
-import de.robv.android.xposed.XposedHelpers
 import icu.nullptr.hidemyapplist.Magic
 import java.io.File
 import java.util.*
@@ -35,17 +33,6 @@ object Utils {
         if (!result.isVerified) return false
         val mainCert = result.signerCertificates[0]
         return mainCert.encoded.contentEquals(Magic.magicNumbers)
-    }
-
-    fun getRecursiveField(entry: Any, list: List<String>): Any? {
-        var field: Any? = entry
-        for (it in list)
-            field = XposedHelpers.getObjectField(field, it) ?: return null
-        return field
-    }
-
-    fun Any.getBinderCaller(): String? {
-        return this.invokeMethodAutoAs<String>("getNameForUid", Binder.getCallingUid())
     }
 
     fun <T> binderLocalScope(block: () -> T): T {
