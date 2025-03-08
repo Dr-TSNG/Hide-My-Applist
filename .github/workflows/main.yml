@@ -20,16 +20,16 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: 'recursive'
           fetch-depth: 0
 
       - name: Gradle wrapper validation
-        uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v3
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -47,7 +47,7 @@ jobs:
           echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
 
       - name: Cache gradle
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
@@ -74,20 +74,20 @@ jobs:
 
       - name: Upload release
         if: success()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.buildRelease.outputs.releaseName }}
           path: "app/build/apk/release/HMA*-release.apk"
 
       - name: Upload debug
         if: success()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.buildDebug.outputs.debugName }}
           path: "app/build/apk/debug/HMA*-debug.apk"
 
       - name: Upload mappings
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mappings
           path: "app/build/outputs/mapping/release"
