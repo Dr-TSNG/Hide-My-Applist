@@ -100,6 +100,8 @@
     <string name="settings_data_isolation_unsupported">This option is only available on Android 11 and above</string>
     <string name="settings_app_data_isolation">App data isolation</string>
     <string name="settings_vold_app_data_isolation">Vold app data isolation</string>
+    <string name="settings_warning">Warning</string>
+    <string name="settings_vold_warning">This will enable an AOSP feature which make app\'s external private storage directory isolated. This can help improve hiding apps while may cause stability issues. This feature may stop working at any time since it is abandoned in AOSP.</string>
     <string name="settings_change_require_root">Changing requires root permission</string>
     <string name="settings_need_reboot">Changing requires reboot</string>
     <string name="settings_permission_denied">Permission denied</string>
