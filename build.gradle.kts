@@ -23,9 +23,9 @@ fun String.execute(currentWorkingDir: File = file("./")): String {
 val gitCommitCount = "git rev-list HEAD --count".execute().toInt()
 val gitCommitHash = "git rev-parse --verify --short HEAD".execute()
 
-val minSdkVer by extra(24)
+val minSdkVer by extra(28)
 val targetSdkVer by extra(35)
-val buildToolsVer by extra("35.0.0")
+val buildToolsVer by extra("35.0.1")
 
 val appVerName by extra("3.3.1")
 val configVerCode by extra(90)

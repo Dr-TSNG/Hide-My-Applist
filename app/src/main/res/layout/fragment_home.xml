@@ -58,8 +58,7 @@
                     android:focusable="true"
                     android:outlineAmbientShadowColor="?colorPrimary"
                     android:outlineSpotShadowColor="?colorPrimary"
-                    app:cardBackgroundColor="?colorPrimary"
-                    tools:targetApi="p">
+                    app:cardBackgroundColor="?colorPrimary">
 
                     <LinearLayout
                         android:layout_width="match_parent"

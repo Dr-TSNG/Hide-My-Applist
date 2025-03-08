@@ -1,8 +1,6 @@
 package icu.nullptr.hidemyapplist.xposed.hook
 
-import android.annotation.TargetApi
 import android.content.pm.ResolveInfo
-import android.os.Build
 import com.github.kyuubiran.ezxhelper.utils.findMethod
 import com.github.kyuubiran.ezxhelper.utils.hookAfter
 import com.github.kyuubiran.ezxhelper.utils.hookBefore
@@ -11,7 +9,6 @@ import icu.nullptr.hidemyapplist.common.Constants
 import icu.nullptr.hidemyapplist.xposed.*
 import java.util.concurrent.atomic.AtomicReference
 
-@TargetApi(Build.VERSION_CODES.P)
 class PmsHookTarget28(private val service: HMAService) : IFrameworkHook {
 
     companion object {
