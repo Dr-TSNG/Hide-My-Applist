@@ -92,6 +92,8 @@
     <string name="settings_data_isolation_unsupported">此选项仅适用于 Android 11 及以上版本的系统</string>
     <string name="settings_app_data_isolation">App data 隔离</string>
     <string name="settings_vold_app_data_isolation">Vold app data 隔离</string>
+    <string name="settings_warning">警告</string>
+    <string name="settings_vold_warning">这将启用 AOSP 中用于隔离应用外部私有存储目录的功能。这可以帮助改善隐藏效果，但可能会导致稳定性问题。此功能在 AOSP 中已被废弃，可能随时停止工作。</string>
     <string name="settings_change_require_root">此更改需要 root 权限</string>
     <string name="settings_need_reboot">重启以应用更改</string>
     <string name="settings_permission_denied">权限被拒绝</string>

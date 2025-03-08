@@ -114,25 +114,55 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PreferenceFragmen
 
             findPreference<SwitchPreference>("appDataIsolation")?.let {
                 it.setOnPreferenceChangeListener { _, newValue ->
-                    val value = if (newValue as Boolean) 1 else 0
-                    val result = SuUtils.execPrivileged("setprop ${Constants.ANDROID_APP_DATA_ISOLATION_ENABLED_PROPERTY} $value")
-                    if (result) makeToast(R.string.settings_need_reboot)
-                    else makeToast(R.string.settings_permission_denied)
-                    it.isChecked = CommonUtils.isAppDataIsolationEnabled
+                    handleIsolationChange(
+                        preference = it,
+                        enabled = newValue as Boolean,
+                        property = Constants.ANDROID_APP_DATA_ISOLATION_ENABLED_PROPERTY,
+                        checker = CommonUtils::isAppDataIsolationEnabled
+                    )
                     false
                 }
             }
 
             findPreference<SwitchPreference>("voldAppDataIsolation")?.let {
                 it.setOnPreferenceChangeListener { _, newValue ->
-                    val value = if (newValue as Boolean) 1 else 0
-                    val result = SuUtils.execPrivileged("setprop ${Constants.ANDROID_VOLD_APP_DATA_ISOLATION_ENABLED_PROPERTY} $value")
-                    if (result) makeToast(R.string.settings_need_reboot)
-                    else makeToast(R.string.settings_permission_denied)
-                    it.isChecked = CommonUtils.isVoldAppDataIsolationEnabled
+                    val enabled = newValue as Boolean
+                    if (enabled) {
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(R.string.settings_warning)
+                            .setMessage(R.string.settings_vold_warning)
+                            .setPositiveButton(android.R.string.ok) { _, _ ->
+                                handleIsolationChange(
+                                    preference = it,
+                                    enabled = true,
+                                    property = Constants.ANDROID_VOLD_APP_DATA_ISOLATION_ENABLED_PROPERTY,
+                                    checker = CommonUtils::isVoldAppDataIsolationEnabled
+                                )
+                            }
+                            .setNegativeButton(android.R.string.cancel) { _, _ ->
+                                it.isChecked = false
+                            }
+                            .setCancelable(false)
+                            .show()
+                    } else {
+                        handleIsolationChange(
+                            preference = it,
+                            enabled = false,
+                            property = Constants.ANDROID_VOLD_APP_DATA_ISOLATION_ENABLED_PROPERTY,
+                            checker = CommonUtils::isVoldAppDataIsolationEnabled
+                        )
+                    }
                     false
                 }
             }
+        }
+
+        private fun handleIsolationChange(preference: SwitchPreference, enabled: Boolean, property: String, checker: () -> Boolean) {
+            val value = if (enabled) 1 else 0
+            val result = SuUtils.execPrivileged("setprop $property $value")
+            if (result) makeToast(R.string.settings_need_reboot)
+            else makeToast(R.string.settings_permission_denied)
+            preference.isChecked = checker()
         }
     }
 
