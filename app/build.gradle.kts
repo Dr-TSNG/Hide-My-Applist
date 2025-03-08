@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.Packaging
 import java.util.*
 
 val officialBuild: Boolean by rootProject.extra
@@ -23,6 +24,18 @@ android {
     buildFeatures {
         buildConfig = true
         viewBinding = true
+    }
+
+    packaging {
+        dex.useLegacyPackaging = true
+        resources {
+            excludes += arrayOf(
+                "/META-INF/*",
+                "/META-INF/androidx/**",
+                "/kotlin/**",
+                "/okhttp3/**",
+            )
+        }
     }
 }
 
