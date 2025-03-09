@@ -32,11 +32,11 @@ class MyApp : Application() {
     @SuppressLint("SdCardPath")
     override fun onCreate() {
         super.onCreate()
+        hmaApp = this
         if (!filesDir.absolutePath.startsWith("/data/user/0/")) {
             makeToast(R.string.do_not_dual)
             exitProcess(0)
         }
-        hmaApp = this
         AppChangeReceiver.register(this)
         ConfigManager.init()
 
