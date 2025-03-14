@@ -1,44 +1,39 @@
-# Hide My Applist
+# Call to Action: Boycott LSPosed, Oppose the Arbitrary Violation of Open Source Licenses!
 
-[![Stars](https://img.shields.io/github/stars/Dr-TSNG/Hide-My-Applist?label=Stars)](https://github.com/Dr-TSNG)
-[![Crowdin](https://badges.crowdin.net/hide-my-applist/localized.svg)](https://crowdin.com/project/hide-my-applist)
-[![Build](https://img.shields.io/github/actions/workflow/status/Dr-TSNG/Hide-My-Applist/main.yml?branch=master&logo=github)](https://github.com/Dr-TSNG/Hide-My-Applist/actions)
-[![Release](https://img.shields.io/github/v/release/Dr-TSNG/Hide-My-Applist?label=Release)](https://github.com/Dr-TSNG/Hide-My-Applist/releases/latest)
-[![Download](https://img.shields.io/github/downloads/Dr-TSNG/Hide-My-Applist/total)](https://github.com/Dr-TSNG/Hide-My-Applist/releases/latest)
-[![Channel](https://img.shields.io/badge/Telegram-Channel-blue.svg?logo=telegram)](https://t.me/HideMyApplist)
-[![License](https://img.shields.io/github/license/Dr-TSNG/Hide-My-Applist?label=License)](https://choosealicense.com/licenses/gpl-3.0/)
 
-![banner](banner.png)
+## Important Announcement: LSPosed Team Allegedly Infringing Open Source Licenses!
 
-- English  
-- [中文（简体）](README_zh_CN.md)
+We are here to solemnly call on all users, developers, and members of the open-source community to collectively boycott the infringing actions of the LSPosed team.
 
-## About this module
+## Public Statement: LSPosed's Infringement
 
-Although it's bad practice to detect the installation of specific apps, not every app using root provides random package name support. In this case, if apps related to root (such as Fake Location and Storage Isolation) are detected, it is tantamount to detecting that the device is rooted.
+The LSPosed team blatantly claims their copyright is paramount while disregarding the copyrights of others, a double standard that is outrageous. What is even more infuriating is that the projects they are using, such as EDXposed and Xposed, are based on GPLv3 licensed open-source projects.
 
-Additionally, some apps use various loopholes to acquire your app list, in order to use it as fingerprinting data or for other nefarious purposes.
+Their project incorporates not only code from EDXposed and Xposed, but also numerous other libraries licensed under the GPL. This further complicates their violation of the GPLv3 license agreement.
 
-This module can work as an Xposed module to hide apps or reject app list requests, and provides some methods to test whether you have hidden your app list properly.
+They are openly violating the GPLv3 license agreement by using code from these GPL-licensed projects while refusing to fulfill their open-source obligations: not publishing their source code and not providing proper attribution. This behavior is a blatant trampling of the open-source spirit! Furthermore, they are now distributing their closed-source builds through internal testing on Telegram, exacerbating their disregard for open-source principles.
+## GPLv3: The Cornerstone of Open Source
 
-## Copyright Notice
+The GPLv3 license is designed to protect the freedom of open-source software. It requires that any developer using code under the GPLv3 license must publish their modified source code and retain the original authors' attribution. The LSPosed team's actions are not only a contempt for the GPLv3 license but also a disrespect for all open-source contributors!
 
-Copyright © 2025 HMA developers. All rights reserved.
+They have brazenly stated, "Our code is garbage, any cat or dog can fork it and turn it into something spectacular," a familiar narrative they also used when Magisk removed MagiskHide. It's clear that they haven't learned from past mistakes and that old habits die hard. Source
 
-The software Hide My Applist, starting from version v3.4, is no longer under the AGPL-3.0 License. Instead, certain rights to the software are reserved by the owner.
+Ironically, LSPosed's own code is a fork of the EdXposed project. This makes their arrogance and disrespect for open-source principles even more hypocritical.
+The Voice of Us Users: Refuse to Be Deceived
 
-The following conditions now apply:
+They are attempting to mask their release of infringing closed-source versions under the guise of maintenance. We users are not fools; we will not be deceived by such tactics!
 
-1. **No Modifications**: The software may not be modified in any way. This includes but is not limited to changing, adding, or removing any part of the software's code or functionality.
+If they believe that open source has no value, then they can choose to stop maintaining the project, rather than claiming stolen code as their own and releasing closed-source products.
+Take Action Now: Boycott LSPosed!
 
-2. **No Redistribution**: The software may not be redistributed in any form. This includes but is not limited to renaming, selling, or including the software as part of another project.
+We strongly demand that the LSPosed team:
 
-3. **No Picking without Credit**: No parts, pieces, or components of the software may be extracted and submitted to other projects without proper credit. This includes, but is not limited to, code snippets, functions, and released binaries.
+    Immediately release all modified source code that uses EDXposed, Xposed, and other GPL-licensed libraries after January 8, 2024.
+    Strictly adhere to all terms of the GPLv3 license agreement.
+    Stop distributing infringing closed-source versions, including those distributed through Telegram.
 
-4. **No Claim to Succession**: Any fork of the software that was created before the license change may not claim to be an official or unofficial successor to the project. This includes but is not limited to using the project's name, branding, or reputation to imply a connection to the original project.
+Note: Before January 8, 2024, LSPosed's code was open-source. However, since that date, they have violated the GPLv3 license by releasing closed-source builds without providing the corresponding source code.
 
-## Translation Contributing
-You can contribute translation [here](https://crowdin.com/project/hide-my-applist).
+We call on all users to stop using LSPosed products, so that the infringers will pay the price for their behavior!
 
-## Update Log
-[Reference to the release page](https://github.com/Dr-TSNG/Hide-My-Applist/releases)  
+The future of open source requires our collective effort. Let us act together to boycott this shameless infringement! 
