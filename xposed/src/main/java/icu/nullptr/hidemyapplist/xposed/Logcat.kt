@@ -4,6 +4,9 @@ import android.util.Log
 import de.robv.android.xposed.XposedBridge
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.Executors
+
+private val logExecutor = Executors.newSingleThreadExecutor()
 
 private fun parseLog(level: Int, tag: String, msg: String, cause: Throwable? = null) = buildString {
     val levelStr = when (level) {
@@ -22,9 +25,11 @@ private fun parseLog(level: Int, tag: String, msg: String, cause: Throwable? = n
 
 private fun log(level: Int, tag: String, msg: String, cause: Throwable? = null) {
     if (level <= Log.DEBUG && HMAService.instance?.config?.detailLog == false) return
-    val parsedLog = parseLog(level, tag, msg, cause)
-    HMAService.instance?.addLog(parsedLog)
-    XposedBridge.log(parsedLog)
+    logExecutor.execute {
+        val parsedLog = parseLog(level, tag, msg, cause)
+        HMAService.instance?.addLog(parsedLog)
+        XposedBridge.log(parsedLog)
+    }
 }
 
 fun logD(tag: String, msg: String, cause: Throwable? = null) = log(Log.DEBUG, tag, msg, cause)
