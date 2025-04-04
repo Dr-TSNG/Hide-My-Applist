@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hide My Applist</string>
+    <string name="title_home">হোম</string>
+    <string name="title_logs">লগ</string>
+    <string name="title_settings">সেটিংস</string>
+    <string name="title_template_manage">টেমপ্লেট ব্যবস্থাপনা</string>
+    <string name="title_template_settings">টেমপ্লেট সেটিংস</string>
+    <string name="title_app_manage">অ্যাপ ব্যবস্থাপনা</string>
+    <string name="title_app_select">অ্যাপ নির্বাচন করুন</string>
+    <string name="title_app_settings">অ্যাপ সেটিংস</string>
+    <string name="title_about">সম্পর্কিত</string>
+
+    <string name="do_not_dual">HMA দ্বিতীয় ব্যবহারকারীর জন্য ইনস্টল করবেন না</string>
+    <string name="show_crash_log">ক্র্যাশ লগ দেখান</string>
+    <string name="config_damaged">কনফিগ ফাইল ক্ষতিগ্রস্ত হয়েছে। অনুগ্রহ করে অ্যাপের তথ্য মুছুন</string>
+    <string name="edit_list">তালিকা সম্পাদনা করুন</string>
+    <string name="delete">মুছে ফেলুন</string>
+    <string name="enabled">সক্রিয়</string>
+    <string name="disabled">নিষ্ক্রিয়</string>
+    <string name="work_mode">কর্মপ্রণালী</string>
+    <string name="blacklist">ব্ল্যাকলিস্ট</string>
+    <string name="whitelist">হোয়াইটলিস্ট</string>
+    <string name="application">অ্যাপ্লিকেশন</string>
+    <string name="preferences">পছন্দসমূহ</string>
+    <string name="refresh">রিফ্রেশ</string>
+    <string name="filter">ফিল্টার</string>
+    <string name="yes">হ্যাঁ</string>
+    <string name="no">না</string>
+    <string name="search">অনুসন্ধান</string>
+    <string name="system">সিস্টেম</string>
+
+    <!-- হোম -->
+    <string name="home_xposed_activated">মডিউল সক্রিয় [%s-%d]</string>
+    <string name="home_xposed_not_activated">মডিউল সক্রিয় নয়</string>
+    <string name="home_xposed_service_on">সিস্টেম পরিষেবা চালু [%d]</string>
+    <string name="home_xposed_service_off">সিস্টেম পরিষেবা বন্ধ</string>
+    <string name="home_xposed_service_old">মডিউল আপডেট হয়েছে, পুনরায় চালু করা দরকার</string>
+    <string name="home_xposed_filter_count">Hide My Applist মোট %d অনুরোধ ফিল্টার করেছে</string>
+    <string name="home_manage">ব্যবস্থাপনা</string>
+    <string name="home_detection_test">সনাক্তকরণ পরীক্ষা</string>
+    <string name="home_download_test_app_title">পরীক্ষার অ্যাপ ডাউনলোড করুন</string>
+    <string name="home_download_test_app_message">আমরা একটি স্বতন্ত্র সনাক্তকরণ পরীক্ষা অ্যাপ তৈরি করেছি এবং এটি এখানে স্থানান্তরিত করেছি। আপনি কি এটি এখন ডাউনলোড করতে চান?</string>
+    <string name="home_backup_and_restore">ব্যাকআপ ও পুনরুদ্ধার</string>
+    <string name="home_backup_config">ব্যাকআপ কনফিগ</string>
+    <string name="home_restore_config">পুনরুদ্ধার কনফিগ</string>
+    <string name="home_import_successful">আমদানি সফল</string>
+    <string name="home_import_failed">আমদানি ব্যর্থ</string>
+    <string name="home_import_app_version_too_old">মডিউল সংস্করণ ব্যাকআপের চেয়ে কম</string>
+    <string name="home_import_backup_version_too_old">ব্যাকআপ সংস্করণ খুব পুরানো</string>
+    <string name="home_import_file_damaged">ব্যাকআপ ফাইল ক্ষতিগ্রস্ত হয়েছে</string>
+    <string name="home_export_failed">রপ্তানি ব্যর্থ</string>
+    <string name="home_exported">ব্যাকআপ কনফিগ সংরক্ষিত</string>
+    <string name="home_new_update">নতুন আপডেট উপলব্ধ: %s</string>
+    <string name="home_update">আপডেট: %s</string>
+
+    <!-- অ্যাপ নির্বাচন -->
+    <string name="list_show_system">সিস্টেম অ্যাপ দেখান</string>
+    <string name="list_sorting">সাজানো</string>
+    <string name="list_reverse_order">উল্টানো ক্রম</string>
+    <string name="list_sort_by_label">অ্যাপ নাম অনুযায়ী</string>
+    <string name="list_sort_by_package_name">প্যাকেজ নাম অনুযায়ী</string>
+    <string name="list_sort_by_install_time">ইনস্টল সময় অনুযায়ী</string>
+    <string name="list_sort_by_update_time">আপডেট সময় অনুযায়ী</string>
+
+    <!-- সেটিংস -->
+    <string name="settings_language">ভাষা</string>
+    <string name="settings_theme">থিম</string>
+    <string name="settings_dark_theme">ডার্ক থিম</string>
+    <string name="settings_pure_black_dark_theme">খাঁটি কালো ডার্ক থিম</string>
+    <string name="settings_service">পরিষেবা</string>
+    <string name="settings_update">আপডেট</string>
+    <string name="settings_disable_update">আপডেট বিজ্ঞপ্তি অক্ষম করুন</string>
+
+    <!-- সম্পর্কিত -->
+    <string name="about_developer">ডেভেলপার</string>
+    <string name="about_support">সমর্থন এবং প্রতিক্রিয়া</string>
+    <string name="about_open_source">ওপেন সোর্স লাইসেন্স</string>
+
+    <!-- রঙ -->
+    <string name="color_red">লাল</string>
+    <string name="color_blue">নীল</string>
+    <string name="color_green">সবুজ</string>
+    <string name="color_yellow">হলুদ</string>
+</resources>
