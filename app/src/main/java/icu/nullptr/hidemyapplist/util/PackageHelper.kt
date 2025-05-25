@@ -18,6 +18,21 @@ import kotlinx.coroutines.withContext
 import java.text.Collator
 import java.util.*
 
+interface PackageManagerDelegate {
+    fun getInstalledPackages(flags: Int): List<PackageInfo>
+    fun getApplicationLabel(info: ApplicationInfo): CharSequence
+}
+
+class DefaultPackageManagerDelegate(private val packageManager: PackageManager) : PackageManagerDelegate {
+    override fun getInstalledPackages(flags: Int): List<PackageInfo> {
+        return packageManager.getInstalledPackages(flags)
+    }
+
+    override fun getApplicationLabel(info: ApplicationInfo): CharSequence {
+        return packageManager.getApplicationLabel(info)
+    }
+}
+
 object PackageHelper {
 
     class PackageCache(
@@ -50,7 +65,7 @@ object PackageHelper {
     }
 
     private lateinit var ipm: IPackageManager
-    private lateinit var pm: PackageManager
+    private lateinit var packageManagerDelegate: PackageManagerDelegate
 
     private val packageCache = MutableSharedFlow<Map<String, PackageCache>>(replay = 1)
     private val mAppList = MutableSharedFlow<List<String>>(replay = 1)
@@ -60,21 +75,24 @@ object PackageHelper {
     val isRefreshing: SharedFlow<Boolean> = mRefreshing
 
     init {
-        // TODO: PackageManagerDelegate
-        pm = hmaApp.packageManager
+        packageManagerDelegate = DefaultPackageManagerDelegate(hmaApp.packageManager)
         invalidateCache()
+    }
+
+    fun setPackageManagerDelegate(delegate: PackageManagerDelegate) {
+        packageManagerDelegate = delegate
     }
 
     fun invalidateCache() {
         hmaApp.globalScope.launch {
             mRefreshing.emit(true)
             val cache = withContext(Dispatchers.IO) {
-                val packages = pm.getInstalledPackages(0)
+                val packages = packageManagerDelegate.getInstalledPackages(0)
                 mutableMapOf<String, PackageCache>().also {
                     for (packageInfo in packages) {
                         if (packageInfo.packageName in Constants.packagesShouldNotHide) continue
                         packageInfo.applicationInfo?.let { appInfo ->
-                            val label = pm.getApplicationLabel(appInfo).toString()
+                            val label = packageManagerDelegate.getApplicationLabel(appInfo).toString()
                             val icon = hmaApp.appIconLoader.loadIcon(appInfo)
                             it[packageInfo.packageName] = PackageCache(packageInfo, label, icon)
                         }
