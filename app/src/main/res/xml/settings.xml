@@ -37,7 +37,7 @@
             android:icon="@drawable/outline_dark_mode_24"
             android:key="darkTheme"
             android:summary="%s"
-            android:title="@string/dark_theme" />
+            android:title="@string/settings_dark_theme" />
         <SwitchPreference
             android:icon="@drawable/outline_invert_colors_24"
             android:key="blackDarkTheme"
