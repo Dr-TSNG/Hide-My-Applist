@@ -14,6 +14,7 @@
     <string name="show_crash_log">显示崩溃日志</string>
     <string name="config_damaged">配置文件损坏，请清除应用数据</string>
     <string name="edit_list">编辑列表</string>
+    <string name="save">保存</string>
     <string name="delete">删除</string>
     <string name="enabled">启用</string>
     <string name="disabled">已禁用</string>
@@ -66,8 +67,12 @@
     <string name="template_delete">你确定要删除此模板吗？</string>
     <string name="template_name">模板名称</string>
     <string name="template_name_invalid">名称无效</string>
+    <string name="template_name_empty">模板名称不能为空</string>
     <string name="template_delete_title">删除模板</string>
     <string name="template_name_already_exist">模板名称已存在</string>
+    <string name="template_discard_title">放弃修改？</string>
+    <string name="template_discard_message">当前模板有未保存的修改，确定要放弃吗？</string>
+    <string name="template_discard">放弃</string>
     <string name="template_applied_count">已应用于 %d 个应用</string>
     <string name="template_apps_visible_count">%d 个应用可见</string>
     <string name="template_apps_invisible_count">%d 个应用不可见</string>

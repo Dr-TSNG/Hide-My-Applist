@@ -14,6 +14,7 @@
     <string name="show_crash_log">顯示崩潰日誌</string>
     <string name="config_damaged">設定損毀，請清理應用程式的資料</string>
     <string name="edit_list">編輯列表</string>
+    <string name="save">儲存</string>
     <string name="delete">刪除</string>
     <string name="enabled">啟用</string>
     <string name="disabled">停用</string>
@@ -66,8 +67,12 @@
     <string name="template_delete">你確定要刪除該模板嗎?</string>
     <string name="template_name">模板名稱</string>
     <string name="template_name_invalid">名稱無效</string>
+    <string name="template_name_empty">模板名稱不能為空</string>
     <string name="template_delete_title">删除模板</string>
     <string name="template_name_already_exist">模板名稱已經存在</string>
+    <string name="template_discard_title">放棄修改？</string>
+    <string name="template_discard_message">目前模板有未儲存的修改，確定要放棄嗎？</string>
+    <string name="template_discard">放棄</string>
     <string name="template_applied_count">已對 %d 個應用程式啟用</string>
     <string name="template_apps_visible_count">對 %d 個應用程式顯示</string>
     <string name="template_apps_invisible_count">對 %d 個應用程式執行攔截</string>

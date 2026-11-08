@@ -1,6 +1,8 @@
 name: Pull Request
 
-on: pull_request
+on:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -10,7 +12,6 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-    if: ${{ !startsWith(github.event.head_commit.message, 'docs:') }}
 
     steps:
       - name: Check out
@@ -41,4 +42,10 @@ jobs:
         id: buildDebug
         run: |
           ./gradlew :app:assembleDebug
-          echo "debugName=$(ls app/build/apk/debug/HMA*-debug.apk | awk -F '(/|.apk)' '{print $6}')" >> $GITHUB_OUTPUT
+          echo "debugName=$(ls app/build/apk/debug/HMA*-debug.apk | awk -F '(/|.apk)' '{print $5}')" >> $GITHUB_OUTPUT
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.buildDebug.outputs.debugName }}
+          path: app/build/apk/debug/HMA*-debug.apk

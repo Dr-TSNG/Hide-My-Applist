@@ -16,6 +16,7 @@
     <string name="show_crash_log">Show crash log</string>
     <string name="config_damaged">Config file damaged. Please clean the app data</string>
     <string name="edit_list">Edit list</string>
+    <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
@@ -71,8 +72,12 @@
     <string name="template_delete">Are you sure to delete the template?</string>
     <string name="template_name">Template name</string>
     <string name="template_name_invalid">Name invalid</string>
+    <string name="template_name_empty">Template name cannot be empty</string>
     <string name="template_delete_title">Delete Template</string>
     <string name="template_name_already_exist">Template name already exist</string>
+    <string name="template_discard_title">Discard changes?</string>
+    <string name="template_discard_message">The template has unsaved changes. Discard them?</string>
+    <string name="template_discard">Discard</string>
     <string name="template_applied_count">Applied to %d apps</string>
     <string name="template_apps_visible_count">%d apps visible</string>
     <string name="template_apps_invisible_count">%d apps invisible</string>
